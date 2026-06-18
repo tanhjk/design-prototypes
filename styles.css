@@ -1,0 +1,249 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #fefff6;
+  color: #0f1115;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fefff6;
+}
+
+.page-shell {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 24px 160px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  background: #fefff6;
+  z-index: 2;
+  transition: box-shadow 180ms ease, backdrop-filter 180ms ease;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scrolled .site-header {
+  box-shadow: 0 12px 40px rgba(16, 17, 21, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-mark {
+  width: 12px;
+  height: 12px;
+  background: #0052ff;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.brand-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #101010;
+}
+
+.brand-meta,
+.selected-work__meta {
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.875rem;
+  color: #666;
+  letter-spacing: 0.12em;
+}
+
+.page-main {
+  padding-top: 112px;
+  transition: padding-top 160ms ease;
+}
+
+.hero {
+  max-width: 1061px;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #0052ff;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  transition: opacity 180ms ease, transform 180ms ease, max-height 180ms ease;
+  max-height: 42px;
+  overflow: hidden;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 160px;
+  line-height: 0.85;
+  font-weight: 800;
+  transition: font-size 180ms ease, line-height 180ms ease;
+}
+
+.hero__intro {
+  margin-top: 48px;
+  margin-left: 437px;
+  max-width: 624px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  max-height: 320px;
+  overflow: hidden;
+  transition: opacity 180ms ease, transform 180ms ease, max-height 220ms ease,
+    margin-top 220ms ease;
+}
+
+.hero__lead {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  color: #000;
+}
+
+.hero__link {
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 200ms ease;
+}
+
+.hero__link:hover,
+.hero__link:focus-visible {
+  color: #0052ff;
+  outline: none;
+}
+
+.scrolled .page-main {
+  padding-top: 64px;
+}
+
+.scrolled .hero h1 {
+  font-size: 48px;
+  line-height: 1.05;
+}
+
+.scrolled .hero__intro {
+  opacity: 0;
+  transform: translateY(-8px);
+  max-height: 0;
+  margin-top: 0;
+}
+
+.selected-work {
+  margin-top: 80px;
+}
+
+.selected-work__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.selected-work__heading h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.work-item {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.15;
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.work-item:hover,
+.work-item:focus-visible {
+  color: #0052ff;
+  transform: translateX(4px);
+  outline: none;
+}
+
+.work-item::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 6px;
+  background: #0052ff;
+  transition: width 200ms ease;
+}
+
+.work-item:hover::after,
+.work-item:focus-visible::after {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .page-shell {
+    padding: 32px 80px 160px;
+  }
+}
+
+@media (max-width: 700px) {
+  .page-shell {
+    padding: 24px;
+  }
+
+  .selected-work__heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero h1 {
+    font-size: 2.75rem;
+  }
+
+  .hero__intro {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .work-item {
+    font-size: 1.25rem;
+  }
+}
