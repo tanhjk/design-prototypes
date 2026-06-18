@@ -11,6 +11,7 @@
 
 html {
   font-size: 16px;
+  overflow-y: scroll;
 }
 
 body {
@@ -28,14 +29,17 @@ body {
 .site-header {
   position: sticky;
   top: 0;
+  z-index: 2;
+  padding: 24px 0;
+  background: #fefff6;
+  transition: box-shadow 180ms ease, backdrop-filter 180ms ease;
+}
+
+.site-header__bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  padding: 24px 0;
-  background: #fefff6;
-  z-index: 2;
-  transition: box-shadow 180ms ease, backdrop-filter 180ms ease;
 }
 
 .site-header::after {
@@ -46,8 +50,7 @@ body {
 }
 
 .scrolled .site-header {
-  box-shadow: 0 12px 40px rgba(16, 17, 21, 0.08);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(16, 17, 21, 0.08);
 }
 
 .brand {
@@ -81,12 +84,13 @@ body {
 }
 
 .page-main {
-  padding-top: 112px;
-  transition: padding-top 160ms ease;
+  min-height: 70vh;
 }
 
 .hero {
-  max-width: 1061px;
+  padding-top: 120px;
+  padding-bottom: 24px;
+  transition: padding-top 180ms ease;
 }
 
 .eyebrow {
@@ -147,8 +151,8 @@ body {
   outline: none;
 }
 
-.scrolled .page-main {
-  padding-top: 64px;
+.scrolled .hero {
+  padding-top: 40px;
 }
 
 .scrolled .hero h1 {
@@ -193,7 +197,7 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.15;
-  transition: transform 200ms ease, color 200ms ease;
+  transition: all 200ms ease, color 200ms ease;
 }
 
 .work-item:hover,
@@ -210,7 +214,7 @@ body {
   height: 2px;
   margin-top: 6px;
   background: #0052ff;
-  transition: width 200ms ease;
+  transition: all 200ms ease;
 }
 
 .work-item:hover::after,
@@ -222,6 +226,10 @@ body {
   .page-shell {
     padding: 32px 80px 160px;
   }
+
+.page-main {
+  min-height: 60vh;
+}
 }
 
 @media (max-width: 700px) {

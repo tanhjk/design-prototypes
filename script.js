@@ -1,13 +1,36 @@
 const rootElement = document.documentElement;
-const scrollThreshold = 80;
 
-function updateScrollState() {
-  if (window.scrollY > scrollThreshold) {
+// Hysteresis: enter the collapsed state once the user scrolls past
+// `enterThreshold`, but only leave it when they come back above
+// `exitThreshold`. The gap between the two prevents the collapse from
+// shrinking the page enough to bounce the scroll position back across a
+// single threshold, which is what caused the jitter.
+const enterThreshold = 140;
+const exitThreshold = 40;
+
+let isScrolled = false;
+let ticking = false;
+
+function applyScrollState() {
+  ticking = false;
+  const y = window.scrollY;
+
+  if (!isScrolled && y > enterThreshold) {
+    isScrolled = true;
     rootElement.classList.add("scrolled");
-  } else {
+  } else if (isScrolled && y < exitThreshold) {
+    isScrolled = false;
     rootElement.classList.remove("scrolled");
   }
 }
 
-window.addEventListener("scroll", updateScrollState, { passive: true });
-window.addEventListener("DOMContentLoaded", updateScrollState);
+function requestScrollState() {
+  if (!ticking) {
+    ticking = true;
+    window.requestAnimationFrame(applyScrollState);
+  }
+}
+
+window.addEventListener("scroll", requestScrollState, { passive: true });
+window.addEventListener("resize", requestScrollState, { passive: true });
+window.addEventListener("DOMContentLoaded", applyScrollState);
