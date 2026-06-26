@@ -84,13 +84,19 @@ body {
 }
 
 .page-main {
-  min-height: 70vh;
+  min-height: 120vh;
+  padding-top: 480px;
 }
 
 .hero {
   padding-top: 120px;
   padding-bottom: 24px;
-  transition: padding-top 180ms ease;
+  height: auto;
+  background-color: #fefff6;
+  z-index: 99;
+  /* display: none; */
+  position:absolute;
+  transition: all 180ms ease;
 }
 
 .eyebrow {
@@ -151,8 +157,11 @@ body {
   outline: none;
 }
 
+
 .scrolled .hero {
+  
   padding-top: 40px;
+  height: auto;
 }
 
 .scrolled .hero h1 {
@@ -222,14 +231,20 @@ body {
   width: 100%;
 }
 
+.scrolled .page-main {
+  padding-top: 350px;
+}
 @media (min-width: 900px) {
   .page-shell {
     padding: 32px 80px 160px;
   }
 
+  .scrolled .page-main {
+    padding-top: 500px;
+  }
 .page-main {
-  min-height: 1000px;
-  padding-top: 24px;
+  min-height: 120vh;
+  padding-top: 500px;
 }
 }
 
