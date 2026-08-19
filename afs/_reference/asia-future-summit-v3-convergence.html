@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asia Future Summit 2026 — Navigating a Divided World</title>
+<meta name="description" content="Asia Future Summit 2026 · 15–16 October · Marina Bay Sands, Hall D, Singapore. Presented by the flagship titles of SPH Media.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+Tamil:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==================================================================
+   ASIA FUTURE SUMMIT 2026 — V3 "CURRENTS & CONVERGENCE"
+   Direction 04 adapted for a heads-of-state / policy audience.
+   Full-bleed, desktop-first, fluid type scale.
+   ================================================================== */
+
+/* ---------- 1. TOKENS ---------- */
+:root{
+  /* brand — derived from the AFS mark */
+  --cyan:#00A6DD;
+  --cyan-bright:#4FD1F0;
+  --teal:#007A9E;
+  --navy:#003059;
+  --navy-deep:#002B4C;
+  --green:#00B389;
+  --green-bright:#4FE3B4;
+  --green-deep:#0A6B58;
+  --meet:#12C9BE;
+
+  /* ground & ink — near-black teal, ivory-leaning white */
+  --ink-900:#00121B;
+  --ink-850:#00151F;
+  --ink-800:#031C27;
+  --ink-700:#082835;
+  --paper:#F5F7F7;
+  --paper-dim:#EAF2F5;
+  --ink-on-light:#0B1A22;
+
+  --t-100:rgba(234,242,245,1);
+  --t-80:rgba(234,242,245,.80);
+  /* the three tints below are tuned so every one clears WCAG AA (4.5:1) on the ink grounds;
+     --t-30 is reserved for decorative marks only, never for reading copy */
+  --t-62:rgba(234,242,245,.68);
+  --t-46:rgba(234,242,245,.54);
+  --t-30:rgba(234,242,245,.44);
+  --hair:rgba(234,242,245,.13);
+  --hair-strong:rgba(234,242,245,.24);
+
+  --grad-sweep:linear-gradient(100deg,#FFFFFF 4%,var(--cyan-bright) 28%,var(--meet) 50%,var(--green-bright) 72%,#FFFFFF 96%);
+  --grad-rule:linear-gradient(90deg,transparent,var(--cyan) 22%,var(--meet) 50%,var(--green) 78%,transparent);
+  --grad-btn:linear-gradient(100deg,var(--cyan-bright),var(--meet) 55%,var(--green));
+
+  /* fluid modular type scale — 1.2 @ 320px → 1.333 @ 1600px (Utopia method) */
+  --step--2:clamp(0.6944rem,0.6790rem + 0.0769vw,0.7383rem);
+  --step--1:clamp(0.8333rem,0.7986rem + 0.1736vw,0.9323rem);
+  --step-0: clamp(1.0000rem,0.9375rem + 0.3125vw,1.1250rem);
+  --step-1: clamp(1.2000rem,1.0982rem + 0.5090vw,1.4996rem);
+  --step-2: clamp(1.4400rem,1.2833rem + 0.7833vw,1.9989rem);
+  --step-3: clamp(1.7280rem,1.4933rem + 1.1736vw,2.6642rem);
+  --step-4: clamp(2.0736rem,1.7301rem + 1.7176vw,3.5513rem);
+  --step-5: clamp(2.4883rem,1.9945rem + 2.4691vw,4.7338rem);
+  --step-6: clamp(2.9860rem,2.2864rem + 3.4979vw,6.3097rem);
+
+  /* fluid space scale */
+  --sp-3xs:clamp(0.25rem,0.24rem + 0.06vw,0.28rem);
+  --sp-2xs:clamp(0.50rem,0.47rem + 0.16vw,0.56rem);
+  --sp-xs: clamp(0.75rem,0.70rem + 0.23vw,0.88rem);
+  --sp-s:  clamp(1.00rem,0.94rem + 0.31vw,1.13rem);
+  --sp-m:  clamp(1.50rem,1.41rem + 0.47vw,1.69rem);
+  --sp-l:  clamp(2.00rem,1.88rem + 0.63vw,2.25rem);
+  --sp-xl: clamp(3.00rem,2.81rem + 0.94vw,3.38rem);
+  --sp-2xl:clamp(4.00rem,3.44rem + 2.81vw,5.63rem);
+  --sp-3xl:clamp(5.50rem,4.31rem + 5.94vw,9.00rem);
+
+  --gutter:clamp(1.25rem,0.60rem + 3.25vw,5.50rem);
+  --measure:68ch;
+  --shell:1680px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  margin:0;background:var(--ink-850);color:var(--t-100);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:var(--step-0);line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5{margin:0;font-family:'Archivo',sans-serif;font-weight:700;letter-spacing:-.022em;line-height:1.08;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+img,svg,video{display:block;max-width:100%;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+::selection{background:var(--meet);color:var(--ink-900);}
+:focus-visible{outline:2px solid var(--cyan-bright);outline-offset:3px;border-radius:2px;}
+
+/* ---------- 2. PRIMITIVES ---------- */
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:var(--gutter);}
+.full{width:100%;position:relative;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:var(--step--2);
+  letter-spacing:.20em;text-transform:uppercase;color:var(--cyan-bright);
+  display:flex;align-items:center;gap:var(--sp-xs);
+}
+.eyebrow::before{content:"";width:clamp(18px,2.4vw,34px);height:1px;background:var(--grad-rule);flex:none;}
+.eyebrow.g{color:var(--green-bright);}
+.lede{
+  font-family:'Source Serif 4',Georgia,serif;font-size:var(--step-1);
+  line-height:1.5;color:var(--t-80);font-weight:350;max-width:60ch;
+}
+.body-copy{color:var(--t-62);font-size:var(--step-0);line-height:1.72;max-width:var(--measure);}
+.hairline{height:1px;background:var(--hair);border:0;margin:0;}
+.grad-text{
+  background:var(--grad-sweep);-webkit-background-clip:text;background-clip:text;
+  color:transparent;background-size:180% 100%;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  font-size:var(--step--1);font-weight:600;letter-spacing:.01em;
+  padding:.95em 1.9em;border-radius:100px;transition:.35s var(--ease);
+  white-space:nowrap;
+}
+.btn .ar{transition:transform .35s var(--ease);}
+.btn:hover .ar{transform:translateX(4px);}
+.btn-p{background:var(--grad-btn);color:#00243F;font-weight:600;box-shadow:0 0 0 0 rgba(18,201,190,.35);}
+.btn-p:hover{box-shadow:0 8px 34px -8px rgba(18,201,190,.55);transform:translateY(-1px);}
+.btn-s{border:1px solid var(--hair-strong);color:var(--t-100);}
+.btn-s:hover{border-color:var(--cyan);background:rgba(79,209,240,.07);}
+.chip{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;
+  font-size:var(--step--2);letter-spacing:.14em;text-transform:uppercase;
+  padding:.42em .85em;border:1px solid var(--hair-strong);border-radius:100px;color:var(--t-62);
+}
+
+/* ---------- 3. NAV ---------- */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:80;
+  transition:background .4s var(--ease),border-color .4s var(--ease),backdrop-filter .4s;
+  border-bottom:1px solid transparent;
+}
+.nav.stuck{background:rgba(0,18,27,.78);backdrop-filter:blur(18px) saturate(140%);border-bottom-color:var(--hair);}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-l);padding-block:clamp(.85rem,1.1vw,1.35rem);}
+.lockup{display:flex;align-items:center;flex:none;}
+.lockup img{height:clamp(34px,3.2vw,46px);width:auto;display:block;transition:opacity .3s var(--ease);}
+.lockup:hover img{opacity:.85;}
+.nav-links{display:flex;gap:clamp(1rem,2vw,2.2rem);font-size:var(--step--1);color:var(--t-62);}
+.nav-links a{position:relative;padding-block:.4em;transition:color .3s;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--grad-rule);transition:width .35s var(--ease);}
+.nav-links a:hover{color:var(--t-100);}
+.nav-links a:hover::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:var(--sp-s);flex:none;}
+.nav.menu-open{background:rgba(0,18,27,.94);backdrop-filter:blur(18px) saturate(140%);border-bottom-color:var(--hair);}
+/* hamburger — three bars that fold into a cross */
+.nav-toggle{
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  width:44px;height:44px;flex:none;border:1px solid var(--hair-strong);border-radius:50%;
+  transition:border-color .3s var(--ease),background .3s var(--ease);
+}
+.nav-toggle:hover{border-color:rgba(79,209,240,.5);background:rgba(79,209,240,.06);}
+.nav-toggle span{
+  display:block;width:17px;height:1.5px;background:var(--t-100);border-radius:2px;
+  transition:transform .38s var(--ease),opacity .22s var(--ease);
+}
+.nav-toggle[aria-expanded="true"]{border-color:rgba(79,209,240,.5);}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;transform:scaleX(.3);}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+/* language switcher — dropdown */
+.lang{position:relative;flex:none;}
+.lang-btn{
+  display:flex;align-items:center;gap:.5rem;
+  border:1px solid var(--hair);border-radius:100px;padding:.62em 1em;
+  font-family:'IBM Plex Mono',monospace;font-size:var(--step--2);letter-spacing:.10em;
+  color:var(--t-62);transition:.3s var(--ease);
+}
+.lang-btn:hover{border-color:rgba(79,209,240,.5);color:var(--t-100);}
+.lang-btn .glb{width:13px;height:13px;flex:none;}
+.lang-btn .car{font-size:.62em;opacity:.65;transition:transform .3s var(--ease);}
+.lang.open .lang-btn{border-color:rgba(79,209,240,.5);color:var(--t-100);}
+.lang.open .lang-btn .car{transform:rotate(180deg);}
+.lang-menu{
+  position:absolute;top:calc(100% + 10px);right:0;min-width:222px;z-index:90;
+  background:rgba(0,18,27,.97);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--hair-strong);border-radius:12px;overflow:hidden;
+  box-shadow:0 18px 48px -18px rgba(0,0,0,.75);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
+}
+.lang.open .lang-menu{opacity:1;visibility:visible;transform:none;}
+.lang-menu a{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding:.72rem .9rem;font-size:var(--step--1);color:var(--t-62);transition:.25s var(--ease);
+}
+.lang-menu a+a{border-top:1px solid var(--hair);}
+.lang-menu a:hover{background:rgba(79,209,240,.09);color:var(--t-100);}
+.lang-menu a .src{font-family:'IBM Plex Mono',monospace;font-size:var(--step--2);color:var(--t-46);letter-spacing:.06em;}
+.lang-menu a[aria-current="true"]{color:var(--cyan-bright);}
+.lang-menu a[aria-current="true"] .src{color:var(--green-bright);}
+.lang-menu .zh{font-family:'Noto Sans SC',sans-serif;}
+.lang-menu .ta{font-family:'Noto Sans Tamil',sans-serif;}
+
+/* helper used by the translated fact-bar values */
+.factbar .v .lo{color:var(--t-46);font-weight:400;}
+
+/* ---- script-specific font stacks + tracking ---- */
+html[lang="zh-Hans"] body{font-family:'Inter','Noto Sans SC',sans-serif;}
+html[lang="zh-Hans"] h1,html[lang="zh-Hans"] h2,html[lang="zh-Hans"] h3,html[lang="zh-Hans"] h4,
+html[lang="zh-Hans"] .slot-title,html[lang="zh-Hans"] .factbar .v,html[lang="zh-Hans"] .stats .n,
+html[lang="zh-Hans"] .spk .nm,html[lang="zh-Hans"] .daytab b{font-family:'Archivo','Noto Sans SC',sans-serif;letter-spacing:0;}
+html[lang="zh-Hans"] .lede,html[lang="zh-Hans"] .pull,html[lang="zh-Hans"] .abstract,
+html[lang="zh-Hans"] .info-copy .pull{font-family:'Source Serif 4','Noto Serif SC',serif;}
+html[lang="zh-Hans"] h1{line-height:1.14;}
+html[lang="zh-Hans"] .hero h1{letter-spacing:.01em;}
+
+html[lang="ta"] body{font-family:'Inter','Noto Sans Tamil',sans-serif;}
+html[lang="ta"] h1,html[lang="ta"] h2,html[lang="ta"] h3,html[lang="ta"] h4,
+html[lang="ta"] .slot-title,html[lang="ta"] .factbar .v,html[lang="ta"] .stats .n,
+html[lang="ta"] .spk .nm,html[lang="ta"] .daytab b{font-family:'Archivo','Noto Sans Tamil',sans-serif;letter-spacing:-.005em;}
+html[lang="ta"] .lede,html[lang="ta"] .pull,html[lang="ta"] .abstract{font-family:'Source Serif 4','Noto Serif Tamil',serif;}
+html[lang="ta"] h1,html[lang="ta"] h2{line-height:1.22;}
+html[lang="ta"] body{line-height:1.75;}
+html[lang="ms"] .hero h1{font-size:clamp(2.6rem,1.9rem + 3.2vw,5.4rem);}
+.nav-toggle{display:none;}
+
+/* ---------- 4. HERO ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:center;overflow:hidden;
+  padding-block:clamp(7rem,12vh,10rem) var(--sp-xl);
+  background:
+    radial-gradient(120% 80% at 50% 42%,rgba(18,201,190,.06),transparent 62%),
+    var(--ink-900);
+}
+/* --- warping gradient field: soft colour masses pushed through animated noise --- */
+.kv-warp{position:absolute;inset:-8%;z-index:0;pointer-events:none;opacity:.62;}
+.kv-warp svg{width:100%;height:100%;}
+.warp-g{filter:url(#heroWarp);}
+.kv-warp .b{transform-box:fill-box;transform-origin:50% 50%;will-change:transform;}
+.kv-warp .b1{animation:warpA 52s var(--ease) infinite alternate;}
+.kv-warp .b2{animation:warpB 64s var(--ease) infinite alternate;}
+.kv-warp .b3{animation:warpC 44s var(--ease) infinite alternate;}
+.kv-warp .b4{animation:warpD 72s var(--ease) infinite alternate;}
+.kv-warp .b5{animation:warpE 58s var(--ease) infinite alternate;}
+@keyframes warpA{0%{transform:translate(0,0) scale(1);}50%{transform:translate(5%,4%) scale(1.14);}100%{transform:translate(-4%,-5%) scale(1.06);}}
+@keyframes warpB{0%{transform:translate(0,0) scale(1.06);}50%{transform:translate(-6%,3%) scale(1);}100%{transform:translate(4%,-4%) scale(1.16);}}
+@keyframes warpC{0%{transform:translate(-3%,2%) scale(1.1);}50%{transform:translate(4%,-3%) scale(1);}100%{transform:translate(-2%,4%) scale(1.12);}}
+@keyframes warpD{0%{transform:translate(3%,-2%) scale(1);}50%{transform:translate(-5%,-4%) scale(1.2);}100%{transform:translate(2%,3%) scale(1.04);}}
+@keyframes warpE{0%{transform:translate(0,3%) scale(1.08);}50%{transform:translate(3%,-4%) scale(1);}100%{transform:translate(-4%,1%) scale(1.14);}}
+
+.kv{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.kv svg{width:100%;height:100%;}
+.kv-grain{
+  position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.30;mix-blend-mode:overlay;
+}
+.hero-in{position:relative;z-index:3;width:100%;}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-l);}
+.hero h1{
+  font-size:var(--step-6);line-height:.98;letter-spacing:-.035em;font-weight:800;
+  max-width:16ch;margin-top:var(--sp-m);
+}
+.hero h1 .sw{
+  background:var(--grad-sweep);-webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:220% 100%;animation:sweep 14s linear infinite;
+}
+@keyframes sweep{0%{background-position:0% 0;}100%{background-position:220% 0;}}
+.hero .lede{margin-top:var(--sp-m);max-width:52ch;}
+.hero-cta{display:flex;gap:var(--sp-xs);margin-top:var(--sp-l);flex-wrap:wrap;}
+
+/* event fact bar */
+.factbar{
+  margin-top:var(--sp-2xl);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  background:rgba(255,255,255,.018);backdrop-filter:blur(6px);
+}
+.factbar>div{padding:var(--sp-m) clamp(1rem,1.8vw,1.75rem);border-right:1px solid var(--hair);}
+.factbar>div:last-child{border-right:0;}
+.factbar .k{
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--t-46);margin-bottom:.7em;
+}
+.factbar .v{font-family:'Archivo';font-weight:700;font-size:var(--step-1);line-height:1.15;letter-spacing:-.02em;}
+.factbar .v em{font-style:normal;color:var(--cyan-bright);}
+.factbar .s{font-size:var(--step--1);color:var(--t-46);margin-top:.4em;}
+
+/* partners — supplied logo artwork, optically balanced rather than uniformly sized */
+.sponsors{
+  margin-top:var(--sp-l);display:flex;align-items:flex-end;
+  gap:clamp(1.5rem,3vw,3.25rem);flex-wrap:wrap;
+}
+.sp-group{display:flex;flex-direction:column;gap:var(--sp-xs);}
+.sponsors .lbl{
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--t-46);
+}
+.sp-row{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2.25rem);flex-wrap:wrap;min-height:34px;}
+.sp-rule{width:1px;align-self:stretch;background:var(--hair);margin-inline:clamp(.25rem,1vw,1rem);}
+.sp-row img{
+  width:auto;display:block;opacity:.82;
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.sp-row img:hover{opacity:1;transform:translateY(-1px);}
+/* per-mark heights: the mastheads ship at wildly different aspect ratios,
+   so a single height would make the wide ones shout and the stacked ones vanish */
+.ms-st{height:clamp(11px,1.00vw,15px);}
+.ms-bt{height:clamp(11px,1.00vw,15px);}
+.ms-bh{height:clamp(11px,1.00vw,15px);}
+.ms-tm{height:clamp(16px,1.45vw,22px);}
+.ms-zb{height:clamp(20px,1.80vw,27px);}
+.sp-ocbc{height:clamp(21px,1.95vw,30px);}
+.sp-mbs{height:clamp(23px,2.10vw,33px);}
+.scroll-cue{
+  position:absolute;left:50%;bottom:clamp(1rem,3vh,2rem);transform:translateX(-50%);z-index:4;
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t-30);display:flex;flex-direction:column;align-items:center;gap:.6rem;
+}
+.scroll-cue i{display:block;width:1px;height:34px;background:linear-gradient(180deg,var(--cyan),transparent);animation:cue 2.4s var(--ease) infinite;}
+@keyframes cue{0%,100%{opacity:.25;transform:scaleY(.6);transform-origin:top;}50%{opacity:1;transform:scaleY(1);}}
+
+/* ---------- 5. INFO / VIDEO ---------- */
+.info{position:relative;overflow:hidden;background:var(--ink-900);}
+.info-media{position:absolute;inset:0;z-index:0;}
+.info-media video{width:100%;height:100%;object-fit:cover;opacity:.42;}
+.info-media .fallback{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(70% 90% at 20% 30%,rgba(0,166,221,.30),transparent 60%),
+    radial-gradient(70% 90% at 80% 70%,rgba(0,179,137,.26),transparent 60%),
+    linear-gradient(160deg,#031C27,#00121B 70%);
+  animation:drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift{0%{transform:scale(1.04) translate3d(0,0,0);}100%{transform:scale(1.12) translate3d(-2%,-1.5%,0);}}
+.info-scrim{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,var(--ink-900) 0%,rgba(0,18,27,.62) 26%,rgba(0,18,27,.72) 74%,var(--ink-900) 100%);
+}
+.info-in{position:relative;z-index:2;padding-block:var(--sp-3xl);}
+.info-head{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:var(--sp-2xl);align-items:start;}
+.info h2{font-size:var(--step-4);max-width:14ch;margin-top:var(--sp-m);}
+.info-copy p+p{margin-top:var(--sp-s);}
+.info-copy .pull{
+  font-family:'Source Serif 4',Georgia,serif;font-size:var(--step-1);line-height:1.5;
+  color:var(--t-80);font-weight:350;border-left:1px solid var(--hair-strong);
+  padding-left:var(--sp-m);margin-top:var(--sp-m);
+}
+.info-copy .pull b{color:var(--green-bright);font-weight:600;}
+.playrow{display:flex;align-items:center;gap:var(--sp-s);margin-top:var(--sp-l);}
+.play{
+  width:clamp(52px,4.6vw,68px);aspect-ratio:1;border-radius:50%;flex:none;
+  border:1px solid var(--hair-strong);display:grid;place-items:center;
+  transition:.4s var(--ease);position:relative;
+}
+.play::before{content:"";border-left:11px solid var(--t-100);border-block:7px solid transparent;margin-left:3px;transition:border-left-color .4s;}
+.play::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--cyan);opacity:0;transform:scale(.9);transition:.5s var(--ease);}
+.playrow:hover .play{border-color:transparent;background:rgba(79,209,240,.08);}
+.playrow:hover .play::after{opacity:.6;transform:scale(1.18);}
+.playrow .pl{font-size:var(--step--1);color:var(--t-62);}
+.playrow .pl b{display:block;color:var(--t-100);font-weight:600;font-size:var(--step-0);letter-spacing:-.01em;}
+
+.stats{
+  margin-top:var(--sp-2xl);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--hair);
+}
+.stats>div{padding:var(--sp-l) clamp(1rem,1.8vw,1.75rem) 0;border-right:1px solid var(--hair);}
+.stats>div:last-child{border-right:0;}
+.stats .n{font-family:'Archivo';font-weight:800;font-size:var(--step-4);line-height:1;letter-spacing:-.035em;}
+.stats>div:nth-child(odd) .n{color:var(--cyan-bright);}
+.stats>div:nth-child(even) .n{color:var(--green-bright);}
+.stats .l{font-size:var(--step--1);color:var(--t-46);margin-top:.7em;}
+
+/* ---------- 5b. VIDEO LIGHTBOX ---------- */
+.playrow{cursor:pointer;}
+.vmodal{
+  position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  padding:clamp(1rem,4vw,3.5rem);opacity:0;transition:opacity .38s var(--ease);
+}
+.vmodal[hidden]{display:none;}
+.vmodal.open{opacity:1;}
+.vmodal-scrim{
+  position:absolute;inset:0;
+  background:rgba(0,10,16,.74);
+  backdrop-filter:blur(20px) saturate(115%);
+  -webkit-backdrop-filter:blur(20px) saturate(115%);
+}
+.vmodal-box{
+  position:relative;width:min(1180px,100%);aspect-ratio:16/9;
+  transform:scale(.965) translateY(10px);
+  transition:transform .45s var(--ease);
+}
+.vmodal.open .vmodal-box{transform:none;}
+.vmodal-box video{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:14px;border:1px solid var(--hair-strong);background:#000;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.85);
+}
+.vmodal-x{
+  position:absolute;top:clamp(.6rem,1.4vw,1rem);right:clamp(.6rem,1.4vw,1rem);z-index:2;
+  width:clamp(38px,3.4vw,46px);aspect-ratio:1;border-radius:50%;
+  display:grid;place-items:center;
+  background:rgba(0,18,27,.72);backdrop-filter:blur(10px);
+  border:1px solid var(--hair-strong);
+  transition:background .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease);
+}
+.vmodal-x:hover{background:rgba(0,18,27,.92);border-color:rgba(79,209,240,.55);transform:rotate(90deg);}
+.vmodal-x span{position:absolute;width:15px;height:1.5px;background:var(--t-100);border-radius:2px;}
+.vmodal-x span:first-child{transform:rotate(45deg);}
+.vmodal-x span:last-child{transform:rotate(-45deg);}
+body.modal-open{overflow:hidden;}
+@media (max-width:680px){
+  .vmodal-box{aspect-ratio:auto;}
+  .vmodal-box video{aspect-ratio:16/9;height:auto;}
+}
+
+/* ---------- 6. PROGRAMME + SPEAKERS ---------- */
+.prog{background:var(--ink-850);position:relative;}
+.prog::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:var(--grad-rule);opacity:.5;}
+.prog-in{padding-block:var(--sp-3xl);}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--sp-l);flex-wrap:wrap;}
+.sec-head h2{font-size:var(--step-4);max-width:16ch;margin-top:var(--sp-m);}
+.sec-head .note{font-size:var(--step--1);color:var(--t-46);max-width:34ch;}
+.daytabs{display:flex;gap:var(--sp-2xs);margin-top:var(--sp-xl);border-bottom:1px solid var(--hair);}
+.daytab{
+  position:relative;padding:var(--sp-s) var(--sp-m);font-size:var(--step--1);color:var(--t-46);
+  transition:color .3s;display:flex;align-items:baseline;gap:.6em;
+}
+.daytab b{font-family:'Archivo';font-weight:700;font-size:var(--step-0);letter-spacing:-.01em;color:inherit;}
+.daytab span{font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.1em;}
+.daytab::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--grad-rule);opacity:0;transition:opacity .35s var(--ease);}
+.daytab:hover{color:var(--t-80);}
+.daytab[aria-selected="true"]{color:var(--t-100);}
+.daytab[aria-selected="true"]::after{opacity:1;}
+
+.day[hidden]{display:none;}
+.slot{border-bottom:1px solid var(--hair);}
+.slot-btn{
+  width:100%;display:grid;grid-template-columns:clamp(80px,8vw,132px) minmax(0,1fr) auto;
+  gap:var(--sp-m);align-items:start;text-align:left;
+  padding:var(--sp-m) 0;transition:background .35s var(--ease);
+}
+.slot-btn:hover{background:rgba(255,255,255,.022);}
+.slot-time{
+  display:block;font-family:'IBM Plex Mono';font-size:var(--step-0);color:var(--cyan-bright);
+  letter-spacing:.02em;padding-top:.18em;
+}
+.slot-kind{
+  display:block;font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--t-46);margin-bottom:.65em;
+}
+.slot-title{display:block;font-family:'Archivo';font-weight:700;font-size:var(--step-2);letter-spacing:-.025em;line-height:1.14;transition:color .3s;}
+.slot-sub{display:block;font-size:var(--step--1);color:var(--t-46);margin-top:.6em;}
+.slot-x{
+  width:clamp(34px,3vw,42px);aspect-ratio:1;border:1px solid var(--hair-strong);border-radius:50%;
+  display:grid;place-items:center;flex:none;position:relative;transition:.4s var(--ease);margin-top:.1em;
+}
+.slot-x::before,.slot-x::after{content:"";position:absolute;background:var(--t-80);transition:.4s var(--ease);}
+.slot-x::before{width:11px;height:1px;}
+.slot-x::after{width:1px;height:11px;}
+.slot[aria-expanded="true"] .slot-x{border-color:var(--cyan);background:rgba(79,209,240,.10);}
+.slot[aria-expanded="true"] .slot-x::after{transform:rotate(90deg);opacity:0;}
+.slot[aria-expanded="true"] .slot-title{color:#fff;}
+.slot-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease);}
+.slot[aria-expanded="true"] .slot-panel{grid-template-rows:1fr;}
+/* visibility removes collapsed content from the tab order and the a11y tree */
+.slot-panel>div{overflow:hidden;visibility:hidden;transition:visibility 0s linear .5s;}
+.slot[aria-expanded="true"] .slot-panel>div{visibility:visible;transition-delay:0s;}
+.panel-in{padding:0 0 var(--sp-l) clamp(80px,8vw,132px);margin-left:0;}
+.panel-in .abstract{
+  font-family:'Source Serif 4',Georgia,serif;font-size:var(--step-0);line-height:1.65;
+  color:var(--t-62);max-width:62ch;font-weight:350;
+  padding-left:var(--sp-m);border-left:1px solid var(--hair);
+}
+.spk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(240px,21vw,300px),1fr));gap:var(--sp-s);margin-top:var(--sp-m);}
+.spk{
+  border:1px solid var(--hair);border-radius:14px;padding:var(--sp-l) var(--sp-m) var(--sp-m);
+  background:linear-gradient(158deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  transition:.4s var(--ease);position:relative;overflow:hidden;
+}
+.spk::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:var(--grad-rule);opacity:0;transition:opacity .4s var(--ease);
+}
+.spk:hover{border-color:rgba(79,209,240,.34);transform:translateY(-2px);}
+.spk:hover::before{opacity:1;}
+.spk-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-s);}
+.av{
+  /* headshot: 50% larger than the original 48–58px and centred above the name */
+  width:clamp(72px,6vw,87px);aspect-ratio:1;border-radius:50%;flex:none;
+  display:grid;place-items:center;font-family:'Archivo';font-weight:700;
+  font-size:var(--step-0);letter-spacing:.02em;color:#00243F;overflow:hidden;
+  background:linear-gradient(140deg,var(--cyan-bright),var(--meet) 60%,var(--green-bright));
+}
+.av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.av.tba{background:none;border:1px dashed var(--hair-strong);color:var(--t-30);font-family:'IBM Plex Mono';font-size:var(--step--1);letter-spacing:.1em;}
+.spk .nm{font-family:'Archivo';font-weight:700;font-size:var(--step-1);letter-spacing:-.02em;line-height:1.22;}
+.spk .rl{font-size:var(--step--1);color:var(--t-46);margin-top:.45em;line-height:1.5;}
+.spk .bio{
+  font-size:var(--step--1);color:var(--t-62);line-height:1.6;text-align:center;
+  margin-top:var(--sp-s);padding-top:var(--sp-s);border-top:1px solid var(--hair);
+}
+.spk .role-tag{
+  position:absolute;top:var(--sp-xs);left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green-bright);white-space:nowrap;
+}
+.prog-foot{
+  margin-top:var(--sp-l);font-size:var(--step--1);color:var(--t-46);
+  display:flex;justify-content:space-between;gap:var(--sp-m);flex-wrap:wrap;align-items:center;
+}
+
+/* ---------- 7. ARTICLES ---------- */
+.arts{background:var(--ink-900);position:relative;}
+.arts-in{padding-block:var(--sp-3xl);}
+.filter-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:var(--sp-m);margin-top:var(--sp-xl);flex-wrap:wrap;
+}
+.filters{display:flex;gap:var(--sp-2xs);flex-wrap:wrap;flex:1 1 auto;}
+
+/* publication selector */
+.pubsel{position:relative;flex:none;}
+.pubsel-btn{
+  display:flex;align-items:center;gap:.6rem;
+  border:1px solid var(--hair-strong);border-radius:100px;padding:.5em .95em .5em .7em;
+  font-size:var(--step--1);color:var(--t-62);transition:.3s var(--ease);min-height:38px;
+}
+.pubsel-btn:hover,.pubsel.open .pubsel-btn{border-color:rgba(79,209,240,.5);color:var(--t-100);}
+.pubsel-cur{display:flex;align-items:center;gap:.5rem;white-space:nowrap;}
+.pubsel-cur img{width:20px;aspect-ratio:1;border-radius:4px;display:block;}
+.pubsel-btn .car{font-size:.62em;opacity:.65;transition:transform .3s var(--ease);}
+.pubsel.open .pubsel-btn .car{transform:rotate(180deg);}
+.pubsel-menu{
+  position:absolute;top:calc(100% + 10px);right:0;min-width:238px;z-index:60;
+  background:rgba(0,18,27,.97);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--hair-strong);border-radius:12px;overflow:hidden;
+  box-shadow:0 18px 48px -18px rgba(0,0,0,.75);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
+}
+.pubsel.open .pubsel-menu{opacity:1;visibility:visible;transform:none;}
+.pubsel-menu a{
+  display:flex;align-items:center;gap:.65rem;padding:.62rem .9rem;
+  font-size:var(--step--1);color:var(--t-62);transition:.25s var(--ease);
+}
+.pubsel-menu a+a{border-top:1px solid var(--hair);}
+.pubsel-menu a:hover{background:rgba(79,209,240,.09);color:var(--t-100);}
+.pubsel-menu a img{width:22px;aspect-ratio:1;border-radius:5px;display:block;flex:none;}
+.pubsel-menu a .dot{width:22px;aspect-ratio:1;border-radius:5px;border:1px dashed var(--hair-strong);flex:none;}
+.pubsel-menu a[aria-current="true"]{color:var(--cyan-bright);}
+.filter{
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.12em;text-transform:uppercase;
+  padding:.6em 1.15em;border:1px solid var(--hair);border-radius:100px;color:var(--t-62);transition:.3s var(--ease);
+}
+.filter:hover{color:var(--t-100);border-color:var(--hair-strong);}
+.filter[aria-pressed="true"]{color:var(--ink-900);background:var(--paper-dim);border-color:var(--paper-dim);}
+.art-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:var(--sp-l);
+}
+.art{
+  background:var(--ink-900);padding:var(--sp-m);display:flex;flex-direction:column;
+  min-height:clamp(260px,24vw,320px);transition:background .4s var(--ease);position:relative;
+  opacity:0;transform:translateY(14px);animation:rise .6s var(--ease) forwards;
+}
+@keyframes rise{to{opacity:1;transform:none;}}
+.art:hover{background:var(--ink-800);}
+.art-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-s);}
+.pub{display:flex;align-items:center;gap:.5rem;}
+.pub .mk{width:clamp(20px,1.9vw,26px);aspect-ratio:1;flex:none;display:block;border-radius:5px;}
+.pub .nm{font-family:'Source Serif 4',Georgia,serif;font-size:var(--step--1);color:var(--t-80);letter-spacing:.01em;}
+.cat{
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cyan-bright);flex:none;
+}
+.art h3{
+  font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:var(--step-1);
+  line-height:1.26;letter-spacing:-.012em;margin-top:var(--sp-m);
+}
+.art:hover h3{color:#fff;}
+.art .dek{font-size:var(--step--1);color:var(--t-46);line-height:1.6;margin-top:.7em;}
+.art-foot{
+  margin-top:auto;padding-top:var(--sp-m);display:flex;justify-content:space-between;
+  gap:var(--sp-s);align-items:baseline;border-top:1px solid var(--hair);
+  font-size:var(--step--1);color:var(--t-46);
+}
+.art-foot .by{color:var(--t-80);}
+.art-foot time{font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.06em;}
+
+.skel{background:var(--ink-900);padding:var(--sp-m);min-height:clamp(260px,24vw,320px);display:flex;flex-direction:column;gap:var(--sp-s);}
+.skel i{display:block;height:12px;border-radius:3px;background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.10),rgba(255,255,255,.04));background-size:200% 100%;animation:shim 1.4s linear infinite;}
+.skel i.w1{width:44%;} .skel i.w2{width:92%;height:22px;margin-top:auto;} .skel i.w3{width:70%;height:22px;} .skel i.w4{width:38%;margin-top:auto;}
+@keyframes shim{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.sentinel{height:1px;}
+.load-status{
+  text-align:center;padding-top:var(--sp-l);font-family:'IBM Plex Mono';
+  font-size:var(--step--2);letter-spacing:.16em;text-transform:uppercase;color:var(--t-46);
+}
+.load-more{margin-top:var(--sp-l);display:flex;justify-content:center;}
+
+/* ---------- 9. FOOTER ---------- */
+.foot{position:relative;background:var(--ink-900);overflow:hidden;padding-top:var(--sp-2xl);}
+.foot-kv{position:absolute;left:0;right:0;bottom:0;height:min(62%,520px);z-index:0;opacity:.85;pointer-events:none;}
+.foot-kv svg{width:100%;height:100%;}
+.foot-in{position:relative;z-index:2;}
+.foot-grid{
+  display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,.75fr));
+  gap:var(--sp-xl);padding-bottom:var(--sp-2xl);
+}
+.foot-brand .foot-logo{height:clamp(54px,5vw,74px);width:auto;display:block;}
+.foot-brand p{font-size:var(--step--1);color:var(--t-46);line-height:1.7;margin-top:var(--sp-m);max-width:38ch;}
+.foot h4{
+  font-family:'IBM Plex Mono';font-weight:500;font-size:var(--step--2);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--t-46);margin-bottom:var(--sp-s);
+}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.75rem;}
+.foot ul a{font-size:var(--step--1);color:var(--t-62);transition:color .3s;}
+.foot ul a:hover{color:var(--cyan-bright);}
+.mastheads{display:flex;flex-wrap:wrap;gap:.5rem .9rem;margin-top:var(--sp-s);}
+.mastheads span{font-family:'Source Serif 4',Georgia,serif;font-size:var(--step--1);color:var(--t-62);}
+.foot-bar{
+  border-top:1px solid var(--hair);padding-block:var(--sp-m) var(--sp-xl);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-m);flex-wrap:wrap;
+}
+.sph{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-xs);}
+.sph .lbl{
+  font-family:'IBM Plex Mono';font-size:var(--step--2);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--t-46);
+}
+.sph img{
+  height:clamp(30px,2.6vw,40px);width:auto;display:block;opacity:.9;
+  transition:opacity .3s var(--ease);
+}
+.sph img:hover{opacity:1;}
+.legal{font-size:var(--step--2);color:var(--t-46);line-height:1.8;max-width:74ch;}
+.legal a{color:var(--t-62);text-decoration:underline;text-underline-offset:2px;}
+.legal a:hover{color:var(--cyan-bright);}
+.foot-links{display:flex;gap:var(--sp-m);font-size:var(--step--2);color:var(--t-46);flex-wrap:wrap;}
+.foot-links a{transition:color .3s;}
+.foot-links a:hover{color:var(--cyan-bright);}
+
+/* ---------- 10. MOTION / REVEAL ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.rv.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  .warp-g{filter:blur(46px);}
+  .rv{opacity:1;transform:none;}
+  html{scroll-behavior:auto;}
+}
+
+/* ---------- 11. RESPONSIVE FALLBACKS ---------- */
+@media (max-width:1200px){
+  .info-head{grid-template-columns:1fr;gap:var(--sp-l);}
+  .info h2{max-width:20ch;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:var(--sp-l);}
+  .art-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:900px){
+  .nav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;inset:100% 0 auto 0;
+    background:rgba(0,18,27,.97);backdrop-filter:blur(20px) saturate(140%);
+    border-block:1px solid var(--hair);
+    padding:0 var(--gutter);
+    max-height:0;overflow:hidden;opacity:0;visibility:hidden;
+    transition:max-height .45s var(--ease),opacity .3s var(--ease),padding .45s var(--ease),visibility .45s;
+    box-shadow:0 24px 48px -24px rgba(0,0,0,.8);
+  }
+  .nav-links.open{
+    max-height:70svh;opacity:1;visibility:visible;
+    padding:var(--sp-2xs) var(--gutter) var(--sp-m);overflow-y:auto;
+  }
+  .nav-links a{padding-block:var(--sp-s);border-bottom:1px solid var(--hair);font-size:var(--step-0);color:var(--t-80);}
+  .nav-links a:last-child{border-bottom:0;}
+  .nav-links a::after{display:none;}
+  .nav-toggle{display:flex;}
+  .nav{position:fixed;}
+  .nav-in{position:relative;}
+  .factbar,.stats{grid-template-columns:1fr 1fr;}
+  .factbar>div:nth-child(2n){border-right:0;}
+  .factbar>div:nth-child(n+3){border-top:1px solid var(--hair);}
+  .stats>div:nth-child(2n){border-right:0;}
+  .hero h1{max-width:100%;}
+}
+@media (max-width:680px){
+  /* displacement mapping is costly on mobile GPUs — fall back to a plain blur */
+  .warp-g{filter:blur(40px);}
+  .filter-bar{align-items:flex-start;}
+  .pubsel{width:100%;}
+  .pubsel-btn{width:100%;justify-content:space-between;}
+  .pubsel-menu{left:0;right:0;min-width:0;}
+  .sponsors{flex-direction:column;align-items:flex-start;gap:var(--sp-m);}
+  .sp-rule{display:none;}
+  .art-grid{grid-template-columns:1fr;}
+  .factbar,.stats{grid-template-columns:1fr;}
+  .factbar>div{border-right:0;border-top:1px solid var(--hair);}
+  .factbar>div:first-child{border-top:0;}
+  .stats>div{border-right:0;}
+  .slot-btn{grid-template-columns:1fr auto;gap:var(--sp-s);}
+  .slot-time{grid-column:1/-1;padding-top:0;}
+  .panel-in{padding-left:0;}
+  .foot-grid{grid-template-columns:1fr;}
+  .daytabs{overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="lockup" href="#top" aria-label="Asia Future Summit 2026, home">
+      <img src="assets/Logo-afs-dark.svg" alt="" width="503" height="200" decoding="async">
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#programme">Programme &amp; Speakers</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#partners">Partners</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang" id="lang" aria-label="Language">
+        <button class="lang-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          <svg class="glb" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.4"/><path d="M1.6 8h12.8M8 1.6c1.8 2 2.6 4.1 2.6 6.4S9.8 12.4 8 14.4C6.2 12.4 5.4 10.3 5.4 8S6.2 3.6 8 1.6z"/>
+          </svg>
+          <span id="langCur">EN</span><span class="car" aria-hidden="true">▼</span>
+        </button>
+        <div class="lang-menu" role="menu" aria-labelledby="langBtn">
+          <a href="#" role="menuitem" data-lang="en" aria-current="true">English <span class="src">ST · BT</span></a>
+          <a href="#" role="menuitem" data-lang="zh" class="zh">简体中文 <span class="src">联合早报</span></a>
+          <a href="#" role="menuitem" data-lang="ms">Bahasa Melayu <span class="src">Berita Harian</span></a>
+          <a href="#" role="menuitem" data-lang="ta" class="ta">தமிழ் <span class="src">Tamil Murasu</span></a>
+        </div>
+      </div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<main id="top">
+<section class="hero full" aria-labelledby="hero-title">
+
+  <!-- warping gradient field beneath the line work -->
+  <div class="kv-warp" aria-hidden="true">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="wCy" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4FD1F0" stop-opacity=".85"/>
+          <stop offset="55%" stop-color="#00A6DD" stop-opacity=".38"/>
+          <stop offset="100%" stop-color="#00A6DD" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wGr" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4FE3B4" stop-opacity=".80"/>
+          <stop offset="55%" stop-color="#00B389" stop-opacity=".34"/>
+          <stop offset="100%" stop-color="#00B389" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wMe" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#12C9BE" stop-opacity=".72"/>
+          <stop offset="60%" stop-color="#0A6B58" stop-opacity=".26"/>
+          <stop offset="100%" stop-color="#0A6B58" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wNv" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#007A9E" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#003059" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- the warp itself: fractal noise drives a displacement map, and the
+             noise frequency drifts so the colour masses fold rather than slide -->
+        <filter id="heroWarp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0055 0.011" numOctaves="2" seed="7" result="n">
+            <animate attributeName="baseFrequency" dur="38s" repeatCount="indefinite"
+                     values="0.0055 0.011;0.0105 0.0062;0.0072 0.0135;0.0055 0.011"
+                     calcMode="spline" keyTimes="0;0.34;0.68;1"
+                     keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" xChannelSelector="R" yChannelSelector="G" result="d">
+            <animate attributeName="scale" dur="26s" repeatCount="indefinite"
+                     values="110;168;128;110" calcMode="spline" keyTimes="0;0.35;0.7;1"
+                     keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"/>
+          </feDisplacementMap>
+          <feGaussianBlur in="d" stdDeviation="26"/>
+        </filter>
+      </defs>
+
+      <g class="warp-g">
+        <ellipse class="b b1" cx="330" cy="250" rx="360" ry="250" fill="url(#wCy)"/>
+        <ellipse class="b b2" cx="880" cy="470" rx="380" ry="260" fill="url(#wGr)"/>
+        <ellipse class="b b3" cx="620" cy="330" rx="300" ry="205" fill="url(#wMe)"/>
+        <ellipse class="b b4" cx="150" cy="580" rx="330" ry="230" fill="url(#wNv)"/>
+        <ellipse class="b b5" cx="1050" cy="130" rx="290" ry="200" fill="url(#wCy)"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- abstract key visual: two currents converging -->
+  <div class="kv" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="kvCyan" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#00A6DD" stop-opacity="0"/>
+          <stop offset="38%"  stop-color="#4FD1F0" stop-opacity=".55"/>
+          <stop offset="52%"  stop-color="#4FD1F0" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#4FD1F0" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="kvGreen" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%"   stop-color="#00B389" stop-opacity="0"/>
+          <stop offset="38%"  stop-color="#4FE3B4" stop-opacity=".55"/>
+          <stop offset="52%"  stop-color="#4FE3B4" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#4FE3B4" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="kvMeet" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#00A6DD" stop-opacity="0"/>
+          <stop offset="30%"  stop-color="#00A6DD" stop-opacity=".42"/>
+          <stop offset="50%"  stop-color="#12C9BE" stop-opacity=".78"/>
+          <stop offset="70%"  stop-color="#00B389" stop-opacity=".42"/>
+          <stop offset="100%" stop-color="#00B389" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="kvBloom" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#12C9BE" stop-opacity=".22"/>
+          <stop offset="55%"  stop-color="#0A6B58" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#12C9BE" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="kvSoft" x="-20%" y="-40%" width="140%" height="180%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
+        <!-- bloom for the markers travelling along the contours -->
+        <filter id="kvDot" x="-260%" y="-260%" width="620%" height="620%">
+          <feGaussianBlur stdDeviation="2.6" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <ellipse cx="800" cy="470" rx="760" ry="380" fill="url(#kvBloom)"/>
+
+      <!-- soft blurred underlay for depth -->
+      <g filter="url(#kvSoft)" opacity=".55" fill="none" stroke-width="6">
+        <path d="M-60 250 C 400 300 520 452 800 452 C 1080 452 1200 300 1660 250" stroke="url(#kvCyan)"/>
+        <path d="M-60 700 C 400 650 520 478 800 478 C 1080 478 1200 650 1660 700" stroke="url(#kvGreen)"/>
+      </g>
+
+      <!-- cyan current, entering upper-left -->
+      <g fill="none" stroke="url(#kvCyan)" stroke-width="1.1" class="flow flow-a">
+        <path class="ln cy" d="M-60 180 C 400 230 520 440 800 440 C 1080 440 1200 230 1660 180"/>
+        <path class="ln cy" d="M-60 258 C 400 302 520 446 800 446 C 1080 446 1200 302 1660 258"/>
+        <path class="ln cy" d="M-60 336 C 400 372 520 452 800 452 C 1080 452 1200 372 1660 336"/>
+        <path class="ln cy" d="M-60 414 C 400 434 520 456 800 456 C 1080 456 1200 434 1660 414"/>
+      </g>
+
+      <!-- green current, entering lower-right -->
+      <g fill="none" stroke="url(#kvGreen)" stroke-width="1.1" class="flow flow-b">
+        <path class="ln gr" d="M-60 770 C 400 720 520 490 800 490 C 1080 490 1200 720 1660 770"/>
+        <path class="ln gr" d="M-60 692 C 400 648 520 484 800 484 C 1080 484 1200 648 1660 692"/>
+        <path class="ln gr" d="M-60 614 C 400 578 520 478 800 478 C 1080 478 1200 578 1660 614"/>
+        <path class="ln gr" d="M-60 536 C 400 516 520 474 800 474 C 1080 474 1200 516 1660 536"/>
+      </g>
+
+      <!-- the two ribbons that actually meet -->
+      <g fill="none" stroke="url(#kvMeet)" stroke-width="2.2">
+        <path class="ln me" d="M-60 120 C 420 176 500 434 800 434 C 1100 434 1180 176 1660 120"/>
+        <path class="ln me" d="M-60 830 C 420 774 500 496 800 496 C 1100 496 1180 774 1660 830"/>
+      </g>
+
+      <!-- convergence point -->
+      <g class="node">
+        <circle cx="800" cy="465" r="3.5" fill="#4FE3B4"/>
+        <circle cx="800" cy="465" r="26" fill="none" stroke="#12C9BE" stroke-width=".8" opacity=".45"/>
+        <circle cx="800" cy="465" r="58" fill="none" stroke="#12C9BE" stroke-width=".8" opacity=".22"/>
+        <circle cx="800" cy="465" r="104" fill="none" stroke="#12C9BE" stroke-width=".8" opacity=".10"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- film grain keeps the gradient from reading as a tech product page -->
+  <svg class="kv-grain" aria-hidden="true">
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#grain)" opacity=".22"/>
+  </svg>
+
+  <div class="hero-in shell">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Fourth Edition · Singapore</p>
+        <h1 id="hero-title" data-i18n-html="heroTitle">Navigating a <span class="sw">Divided</span> World</h1>
+        <p class="lede">Two days in which heads of government, central bankers, chief executives and scholars meet at a single vantage point — where separate currents converge on the decade ahead.</p>
+        <div class="hero-cta">
+          <a class="btn btn-p" href="#programme">View Programme <span class="ar" aria-hidden="true">→</span></a>
+          <a class="btn btn-s" href="#about">About the Summit</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="factbar">
+      <div>
+        <div class="k">Venue</div>
+        <div class="v" data-i18n-html="fbVenue">Marina Bay Sands<br><em>Hall D</em></div>
+        <div class="s">10 Bayfront Avenue, Singapore 018956</div>
+      </div>
+      <div>
+        <div class="k">Dates</div>
+        <div class="v" data-i18n-html="fbDates">15 – 16 October<br><em>2026</em></div>
+        <div class="s">Thursday &amp; Friday</div>
+      </div>
+      <div>
+        <div class="k">Programme Hours</div>
+        <div class="v" data-i18n-html="fbHours">18:30 <span class="lo">Day 1</span><br>08:30 <span class="lo">Day 2</span></div>
+        <div class="s">Welcome dinner, then full-day conference</div>
+      </div>
+      <div>
+        <div class="k">Attendance</div>
+        <div class="v" data-i18n-html="fbAtt">500+<br><em>delegates</em></div>
+        <div class="s">from 20+ countries</div>
+      </div>
+    </div>
+
+    <div class="sponsors">
+      <div class="sp-group">
+        <span class="lbl">Presented by</span>
+        <div class="sp-row">
+          <img class="ms-st" src="assets/st-logo-dark.png" alt="The Straits Times" width="230" height="18" decoding="async">
+          <img class="ms-bt" src="assets/bt-logo-dark.png" alt="The Business Times" width="195" height="18" decoding="async">
+          <img class="ms-zb" src="assets/zb-logo-dark.png" alt="联合早报 Lianhe Zaobao" width="117" height="40" decoding="async">
+          <img class="ms-bh" src="assets/bh-logo-dark.png" alt="Berita Harian" width="140" height="18" decoding="async">
+          <img class="ms-tm" src="assets/tm-logo-dark.png" alt="தமிழ் முரசு Tamil Murasu" width="149" height="30" decoding="async">
+        </div>
+      </div>
+
+      <span class="sp-rule" aria-hidden="true"></span>
+
+      <div class="sp-group">
+        <span class="lbl">Official Sponsor</span>
+        <div class="sp-row">
+          <img class="sp-ocbc" src="assets/ocbc-logo.png" alt="OCBC" width="1200" height="324" decoding="async">
+        </div>
+      </div>
+
+      <span class="sp-rule" aria-hidden="true"></span>
+
+      <div class="sp-group">
+        <span class="lbl">Venue by</span>
+        <div class="sp-row">
+          <img class="sp-mbs" src="assets/mbs-logo.png" alt="Marina Bay Sands Singapore" width="722" height="201" decoding="async">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>
+</section>
+
+<!-- ================= INFO / VIDEO ================= -->
+<section class="info full" id="about" aria-labelledby="about-title">
+  <div class="info-media" aria-hidden="true">
+    <div class="fallback"></div>
+    <video autoplay muted loop playsinline preload="none" poster="">
+      <!-- Ambient loop; the animated gradient behind remains the graceful fallback. -->
+      <source src="assets/summit-film.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="info-scrim" aria-hidden="true"></div>
+
+  <div class="info-in shell">
+    <div class="info-head">
+      <div class="rv">
+        <p class="eyebrow g">About the Summit</p>
+        <h2 id="about-title">A calm room in a turbulent decade.</h2>
+        <div class="playrow rv" role="group">
+          <button class="play" aria-label="Play summit film"></button>
+          <div class="pl" data-i18n-html="playPl"><b>Watch the 2025 film</b>2 min 14 sec · Highlights from the third edition</div>
+        </div>
+      </div>
+      <div class="info-copy rv">
+        <p class="body-copy">In turbulent times, people need more than ever access to accurate information, a calm mind and clear judgment. Peer and cross-sectoral exchange is particularly valuable for testing assumptions and collaboratively exploring new paths forward.</p>
+        <p class="body-copy">The Asia Future Summit, jointly organised by the flagship newspapers of SPH Media, once again bridges the gap for the exchange of ideas — inspiring forward-thinking and future-oriented leadership through keynote addresses, closed-door dialogues, panel discussions and structured networking.</p>
+        <p class="body-copy">Since its inception in 2022, the summit has become Asia's leading annual thought leadership conference, convening global judgment on the most consequential questions of our time.</p>
+        <p class="pull" data-i18n-html="pull">This year's theme is <b>Navigating a Divided World</b>. In a new era of disruption and division, policymakers and business leaders must possess not only resilience, but new strategies and new connections to forge bold paths forward.</p>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div><div class="n">4th</div><div class="l">Edition since 2022</div></div>
+      <div><div class="n">50+</div><div class="l">Global speakers on stage</div></div>
+      <div><div class="n">20+</div><div class="l">Countries represented</div></div>
+      <div><div class="n">500+</div><div class="l">Senior leaders attending</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROGRAMME + SPEAKERS ================= -->
+<section class="prog full" id="programme" aria-labelledby="prog-title">
+  <div class="prog-in shell">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow">Programme &amp; Speakers</p>
+        <h2 id="prog-title">Every session, and who is in the room.</h2>
+      </div>
+      <p class="note">Expand any session to see its speakers, moderators and framing. Further names are announced in the months leading up to the summit.</p>
+    </div>
+
+    <div class="daytabs" role="tablist" aria-label="Programme days">
+      <button class="daytab" role="tab" id="tab-d1" aria-controls="day1" aria-selected="true" data-i18n-html="tab1"><b>Day 1</b><span>THU 15 OCT · WELCOME DINNER</span></button>
+      <button class="daytab" role="tab" id="tab-d2" aria-controls="day2" aria-selected="false" data-i18n-html="tab2"><b>Day 2</b><span>FRI 16 OCT · CONFERENCE</span></button>
+    </div>
+
+    <!-- ---------- DAY 1 ---------- -->
+    <div class="day" id="day1" role="tabpanel" aria-labelledby="tab-d1">
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="s1p">
+          <span class="slot-time">18:30</span>
+          <span>
+            <span class="slot-kind">Registration</span>
+            <span class="slot-title">Guest arrival and reception</span>
+            <span class="slot-sub">Sands Grand Ballroom foyer · Champagne reception and delegate check-in</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="s1p"><div><div class="panel-in">
+          <p class="abstract">Delegates collect credentials and are seated by table host. Media accreditation desk opens at 18:00 at the Hall D east entrance.</p>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="s2p">
+          <span class="slot-time">18:45</span>
+          <span>
+            <span class="slot-kind">Welcome Address</span>
+            <span class="slot-title">Why this room, this year</span>
+            <span class="slot-sub">1 speaker</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="s2p"><div><div class="panel-in">
+          <p class="abstract">An opening framing of the summit's fourth edition: what has changed in the twelve months since delegates last met, and the questions this programme has been built to answer.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <span class="role-tag">Host</span>
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Chief Executive Officer<br>SPH Media</div></div></div>
+              <p class="bio">Speaker confirmation pending. This slot is reserved for the summit's host organisation.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="s3p">
+          <span class="slot-time">19:15</span>
+          <span>
+            <span class="slot-kind">Opening Dialogue</span>
+            <span class="slot-title">Business in a Divided World</span>
+            <span class="slot-sub">2 speakers · On the record</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="s3p"><div><div class="panel-in">
+          <p class="abstract">A founder-level conversation on operating across blocs that no longer trust one another — where capital still moves freely, where it has stopped, and what a genuinely regional strategy now costs to run.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Founder &amp; Chairman<br>Regional enterprise group</div></div></div>
+              <p class="bio">Reserved for a principal shareholder of a pan-Asian industrial or consumer group.</p>
+            </article>
+            <article class="spk">
+              <span class="role-tag">Moderator</span>
+              <div class="spk-top"><div class="av">JT</div><div><div class="nm">Jaime Ho</div><div class="rl">Editor<br>The Straits Times</div></div></div>
+              <p class="bio">Leads the newsroom's coverage of Singapore, the region and international affairs; moderates the summit's on-record dialogues.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="s4p">
+          <span class="slot-time">20:15</span>
+          <span>
+            <span class="slot-kind">Fireside Chat</span>
+            <span class="slot-title">Managing Risk, Seizing Opportunity</span>
+            <span class="slot-sub">2 speakers · Chatham House Rule</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="s4p"><div><div class="panel-in">
+          <p class="abstract">Held under the Chatham House Rule. A trade minister and a chief investment officer on where the next twelve months of policy risk sits, and which of it is already priced in.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Minister for Trade<br>ASEAN member state</div></div></div>
+              <p class="bio">Cabinet-level confirmation expected in Q3 2026.</p>
+            </article>
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Chief Investment Officer<br>Sovereign wealth fund</div></div></div>
+              <p class="bio">Reserved for an allocator with a mandate across public and private markets in Asia.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="s5p">
+          <span class="slot-time">21:15</span>
+          <span>
+            <span class="slot-kind">Close</span>
+            <span class="slot-title">End of Day 1</span>
+            <span class="slot-sub">Informal networking until 22:00</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="s5p"><div><div class="panel-in">
+          <p class="abstract">Delegates are invited to continue conversations in the Hall D lounge. Transport to partner hotels departs from the Bayfront Avenue drop-off.</p>
+        </div></div></div>
+      </div>
+    </div>
+
+    <!-- ---------- DAY 2 ---------- -->
+    <div class="day" id="day2" role="tabpanel" aria-labelledby="tab-d2" hidden>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t1p">
+          <span class="slot-time">08:30</span>
+          <span>
+            <span class="slot-kind">Registration</span>
+            <span class="slot-title">Registration and morning refreshments</span>
+            <span class="slot-sub">Hall D foyer</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t1p"><div><div class="panel-in">
+          <p class="abstract">Day passes are issued at the main desk. Simultaneous interpretation headsets (Mandarin, Bahasa Melayu, Tamil) are collected here.</p>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t2p">
+          <span class="slot-time">09:00</span>
+          <span>
+            <span class="slot-kind">Opening Keynote</span>
+            <span class="slot-title">Asia's Role in a New World Order</span>
+            <span class="slot-sub">1 speaker · Followed by 15 min Q&amp;A</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t2p"><div><div class="panel-in">
+          <p class="abstract">The summit's set-piece address. A cabinet-level assessment of where small and open economies find leverage when the rules-based order they were built on is being renegotiated by others.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <span class="role-tag">Keynote</span>
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Cabinet Minister<br>Government of Singapore</div></div></div>
+              <p class="bio">Confirmation subject to parliamentary schedule. Full text released to accredited media under embargo.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t3p">
+          <span class="slot-time">10:15</span>
+          <span>
+            <span class="slot-kind">Panel Discussion</span>
+            <span class="slot-title">Trade, Tariffs and Supply Chain Resilience</span>
+            <span class="slot-sub">4 speakers · 75 minutes</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t3p"><div><div class="panel-in">
+          <p class="abstract">Three years into the great re-routing: what "friend-shoring" has actually cost, which corridors have absorbed the displaced volume, and whether the region's new capacity is durable or merely a hedge.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Trade Minister<br>ASEAN member state</div></div></div>
+              <p class="bio">Panellist confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Group Chief Executive<br>Regional port and logistics operator</div></div></div>
+              <p class="bio">Panellist confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Chief Economist<br>Multilateral development bank</div></div></div>
+              <p class="bio">Panellist confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <span class="role-tag">Moderator</span>
+              <div class="spk-top"><div class="av">CH</div><div><div class="nm">Chen Huifen</div><div class="rl">Editor<br>The Business Times</div></div></div>
+              <p class="bio">Moderates the summit's markets and macro sessions.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t4p">
+          <span class="slot-time">11:30</span>
+          <span>
+            <span class="slot-kind">Break</span>
+            <span class="slot-title">Networking break</span>
+            <span class="slot-sub">30 minutes · Hall D foyer</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t4p"><div><div class="panel-in">
+          <p class="abstract">Partner exhibition stands open. Pre-booked bilateral meeting rooms are available on the mezzanine level.</p>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t5p">
+          <span class="slot-time">12:00</span>
+          <span>
+            <span class="slot-kind">Panel Discussion</span>
+            <span class="slot-title">Capital, Climate and Consequence</span>
+            <span class="slot-sub">3 speakers · 75 minutes</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t5p"><div><div class="panel-in">
+          <p class="abstract">Transition finance has become a political question as much as a commercial one. What blended capital is genuinely mobilising in Southeast Asia, and what remains a pledge without a project pipeline.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Head of Sustainable Finance<br>Regional bank</div></div></div>
+              <p class="bio">Panellist confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Director<br>International policy institute</div></div></div>
+              <p class="bio">Panellist confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <span class="role-tag">Moderator</span>
+              <div class="spk-top"><div class="av">ZB</div><div><div class="nm">To be announced</div><div class="rl">Editor<br>联合早报 Lianhe Zaobao</div></div></div>
+              <p class="bio">Session delivered in English with simultaneous Mandarin interpretation.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t6p">
+          <span class="slot-time">13:15</span>
+          <span>
+            <span class="slot-kind">Lunch</span>
+            <span class="slot-title">Delegate lunch and table dialogues</span>
+            <span class="slot-sub">Hosted tables by theme</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t6p"><div><div class="panel-in">
+          <p class="abstract">Twelve hosted tables, each convened around one question from the morning programme. Seating is assigned; delegates indicate preferences at registration.</p>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t7p">
+          <span class="slot-time">14:30</span>
+          <span>
+            <span class="slot-kind">Closing Dialogue</span>
+            <span class="slot-title">What Leadership Owes the Next Decade</span>
+            <span class="slot-sub">2 speakers · On the record</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t7p"><div><div class="panel-in">
+          <p class="abstract">The summit closes where it began — on judgment. A conversation about what institutions owe citizens who no longer share a common set of facts, and how leaders rebuild the standing to be believed.</p>
+          <div class="spk-grid">
+            <article class="spk">
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Former Head of Government<br>Asia-Pacific</div></div></div>
+              <p class="bio">Closing dialogue confirmation pending.</p>
+            </article>
+            <article class="spk">
+              <span class="role-tag">Moderator</span>
+              <div class="spk-top"><div class="av tba">TBA</div><div><div class="nm">To be announced</div><div class="rl">Editor-in-Chief<br>SPH Media</div></div></div>
+              <p class="bio">Closing dialogue confirmation pending.</p>
+            </article>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="slot" aria-expanded="false">
+        <button class="slot-btn" aria-controls="t8p">
+          <span class="slot-time">16:00</span>
+          <span>
+            <span class="slot-kind">Close</span>
+            <span class="slot-title">End of Summit</span>
+            <span class="slot-sub">Closing remarks and departure</span>
+          </span>
+          <span class="slot-x" aria-hidden="true"></span>
+        </button>
+        <div class="slot-panel" id="t8p"><div><div class="panel-in">
+          <p class="abstract">A summary report of both days is issued to delegates within ten working days.</p>
+        </div></div></div>
+      </div>
+    </div>
+
+    <div class="prog-foot">
+      <span>Programme is indicative and subject to change. Further speakers announced in the months leading up to the summit.</span>
+      <a class="btn btn-s" href="#">Download full programme (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARTICLES ================= -->
+<section class="arts full" id="coverage" aria-labelledby="arts-title">
+  <div class="arts-in shell">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow g">News &amp; Coverage</p>
+        <h2 id="arts-title">Reporting from across SPH Media.</h2>
+      </div>
+      <p class="note">Summit dispatches, analysis and interviews from The Straits Times, The Business Times, 联合早报, Berita Harian and தமிழ் முரசு.</p>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filters" role="group" aria-label="Filter coverage by category">
+        <button class="filter" aria-pressed="true" data-cat="all">All</button>
+        <button class="filter" aria-pressed="false" data-cat="Geopolitics">Geopolitics</button>
+        <button class="filter" aria-pressed="false" data-cat="Economy">Economy</button>
+        <button class="filter" aria-pressed="false" data-cat="Markets">Markets</button>
+        <button class="filter" aria-pressed="false" data-cat="Technology">Technology</button>
+        <button class="filter" aria-pressed="false" data-cat="Climate">Climate</button>
+        <button class="filter" aria-pressed="false" data-cat="Leadership">Leadership</button>
+        <button class="filter" aria-pressed="false" data-cat="ASEAN">ASEAN</button>
+      </div>
+
+      <div class="pubsel" id="pubSel" aria-label="Filter by publication">
+        <button class="pubsel-btn" id="pubBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="pubsel-cur" id="pubCur" data-no-i18n>All publications</span>
+          <span class="car" aria-hidden="true">▼</span>
+        </button>
+        <div class="pubsel-menu" role="menu" aria-labelledby="pubBtn">
+          <a href="#" role="menuitem" data-pub="all" aria-current="true"><span class="dot" aria-hidden="true"></span>All publications</a>
+          <a href="#" role="menuitem" data-pub="ST"><img src="assets/st-mini-logo.svg" alt="" width="50" height="50">The Straits Times</a>
+          <a href="#" role="menuitem" data-pub="BT"><img src="assets/bt-mini-logo.svg" alt="" width="50" height="50">The Business Times</a>
+          <a href="#" role="menuitem" data-pub="ZB"><img src="assets/zb-mini-logo.svg" alt="" width="50" height="50">联合早报</a>
+          <a href="#" role="menuitem" data-pub="BH"><img src="assets/bh-mini-logo.svg" alt="" width="50" height="50">Berita Harian</a>
+          <a href="#" role="menuitem" data-pub="TM"><img src="assets/tm-mini-logo.svg" alt="" width="50" height="50">தமிழ் முரசு</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-grid" id="artGrid" data-no-i18n aria-live="polite" aria-busy="false"></div>
+    <div class="sentinel" id="sentinel" aria-hidden="true"></div>
+    <p class="load-status" id="loadStatus" data-no-i18n>Loading coverage…</p>
+    <div class="load-more" id="loadMoreWrap" hidden><button class="btn btn-s" id="loadMore">Load more coverage</button></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot full" id="partners">
+  <!-- the hero key visual, inverted, anchoring the page -->
+  <div class="foot-kv" aria-hidden="true">
+    <svg viewBox="0 0 1600 520" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="fCyan" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#00A6DD" stop-opacity="0"/>
+          <stop offset="42%" stop-color="#4FD1F0" stop-opacity=".42"/>
+          <stop offset="100%" stop-color="#4FD1F0" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="fGreen" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%" stop-color="#00B389" stop-opacity="0"/>
+          <stop offset="42%" stop-color="#4FE3B4" stop-opacity=".42"/>
+          <stop offset="100%" stop-color="#4FE3B4" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="fMeet" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#00A6DD" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#12C9BE" stop-opacity=".62"/>
+          <stop offset="100%" stop-color="#00B389" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="fBloom" cx="50%" cy="100%" r="62%">
+          <stop offset="0%" stop-color="#12C9BE" stop-opacity=".20"/>
+          <stop offset="100%" stop-color="#12C9BE" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1600" height="520" fill="url(#fBloom)"/>
+      <g fill="none" stroke="url(#fCyan)" stroke-width="1">
+        <path d="M-60 60 C 420 110 520 470 800 470 C 1080 470 1180 110 1660 60"/>
+        <path d="M-60 150 C 420 195 520 476 800 476 C 1080 476 1180 195 1660 150"/>
+        <path d="M-60 240 C 420 275 520 482 800 482 C 1080 482 1180 275 1660 240"/>
+      </g>
+      <g fill="none" stroke="url(#fGreen)" stroke-width="1">
+        <path d="M-60 330 C 420 350 520 488 800 488 C 1080 488 1180 350 1660 330"/>
+        <path d="M-60 420 C 420 424 520 494 800 494 C 1080 494 1180 424 1660 420"/>
+      </g>
+      <g fill="none" stroke="url(#fMeet)" stroke-width="2">
+        <path d="M-60 10 C 440 70 500 464 800 464 C 1100 464 1160 70 1660 10"/>
+      </g>
+      <circle cx="800" cy="480" r="3" fill="#4FE3B4" opacity=".9"/>
+      <circle cx="800" cy="480" r="24" fill="none" stroke="#12C9BE" stroke-width=".8" opacity=".35"/>
+      <circle cx="800" cy="480" r="54" fill="none" stroke="#12C9BE" stroke-width=".8" opacity=".16"/>
+    </svg>
+  </div>
+
+  <div class="foot-in shell">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img class="foot-logo" src="assets/Logo-afs-dark.svg" alt="Asia Future Summit 2026 · 亚洲前瞻峰会" width="503" height="200" loading="lazy" decoding="async">
+        <p>Asia's leading annual thought leadership conference, presented by the flagship titles of SPH Media.</p>
+        <div class="mastheads">
+          <span>The Straits Times</span>
+          <span>The Business Times</span>
+          <span>联合早报</span>
+          <span>Berita Harian</span>
+          <span>தமிழ் முரசு</span>
+        </div>
+      </div>
+      <div>
+        <h4>Summit</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programme">Programme &amp; Speakers</a></li>
+          <li><a href="#coverage">News &amp; Coverage</a></li>
+          <li><a href="#">Venue &amp; travel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Partner with us</h4>
+        <ul>
+          <li><a href="#">Sponsorship opportunities</a></li>
+          <li><a href="#">Delegate packages</a></li>
+          <li><a href="#">Media accreditation</a></li>
+          <li><a href="#">Speaker nominations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Past editions</h4>
+        <ul>
+          <li><a href="#">Asia Future Summit 2025</a></li>
+          <li><a href="#">Asia Future Summit 2024</a></li>
+          <li><a href="#">Asia Future Summit 2023</a></li>
+          <li><a href="#">Asia Future Summit 2022</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bar">
+      <div style="display:grid;gap:var(--sp-s);">
+        <div class="sph">
+          <span class="lbl">ORGANISER</span>
+          <img src="assets/sph-logo-dark.svg" alt="SPH Media" width="239" height="80" loading="lazy" decoding="async">
+        </div>
+        <p class="legal" data-i18n-html="legal">© 2026 SPH Media Limited. Company registration no. 202120748H</p>
+      </div>
+      <div class="foot-links">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a><a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= VIDEO LIGHTBOX ================= -->
+<div class="vmodal" id="filmModal" role="dialog" aria-modal="true" aria-label="Summit film" hidden>
+  <div class="vmodal-scrim" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-x" id="filmClose" type="button" aria-label="Close video">
+      <span></span><span></span>
+    </button>
+    <video id="filmVideo" controls playsinline preload="metadata">
+      <source src="assets/summit-film.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- travelling markers on the hero contours ----------
+     Each marker rides one of the current paths at its own randomised speed and
+     direction, re-rolling both every time it wraps, so the field never falls
+     into a visible pattern. Paused when the hero scrolls out of view. ---------- */
+  (function(){
+    var svg = document.querySelector('.kv svg');
+    if(!svg || !svg.querySelector('.ln')) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var lines = [].slice.call(svg.querySelectorAll('.ln')).map(function(el){
+      return {el:el, len:el.getTotalLength(),
+              tone:el.classList.contains('gr') ? '#4FE3B4' : el.classList.contains('me') ? '#12C9BE' : '#4FD1F0',
+              heavy:el.classList.contains('me')};
+    }).filter(function(l){ return l.len > 0; });
+    if(!lines.length) return;
+
+    var layer = document.createElementNS(NS,'g');
+    layer.setAttribute('filter','url(#kvDot)');
+    svg.appendChild(layer);
+
+    var rand = function(a,b){ return a + Math.random() * (b - a); };
+    var COUNT = Math.min(26, lines.length * 3);
+    var dots = [];
+
+    for(var i = 0; i < COUNT; i++){
+      var line = lines[i % lines.length];
+      var c = document.createElementNS(NS,'circle');
+      var r = line.heavy ? rand(2.2,3.4) : rand(1.1,2.4);
+      c.setAttribute('r', r.toFixed(2));
+      c.setAttribute('fill', line.tone);
+      layer.appendChild(c);
+      dots.push({
+        el:c, line:line,
+        pos:rand(0, line.len),
+        dir:Math.random() < .5 ? 1 : -1,
+        speed:rand(40, 140),          /* user units per second: slow → medium */
+        base:rand(.35, .95),
+        phase:rand(0, Math.PI * 2),
+        pulse:rand(.35, .9)
+      });
+    }
+
+    var last = 0, raf = null, running = false;
+
+    function place(d){
+      var p = d.line.el.getPointAtLength(d.pos);
+      d.el.setAttribute('cx', p.x.toFixed(1));
+      d.el.setAttribute('cy', p.y.toFixed(1));
+    }
+
+    function frame(t){
+      if(!last) last = t;
+      var dt = Math.min((t - last) / 1000, .05);
+      last = t;
+      for(var i = 0; i < dots.length; i++){
+        var d = dots[i];
+        d.pos += d.speed * d.dir * dt;
+        if(d.pos > d.line.len || d.pos < 0){
+          /* wrapped — re-roll speed and direction so the motion stays unpredictable */
+          d.pos = d.pos < 0 ? d.line.len : 0;
+          d.speed = rand(40, 140);
+          if(Math.random() < .35) d.dir *= -1;
+          if(d.dir < 0) d.pos = d.line.len; else d.pos = 0;
+        }
+        place(d);
+        d.phase += dt * d.pulse;
+        d.el.setAttribute('opacity', (d.base * (0.62 + 0.38 * Math.sin(d.phase))).toFixed(3));
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    function start(){ if(running) return; running = true; last = 0; raf = requestAnimationFrame(frame); }
+    function stop(){ running = false; if(raf) cancelAnimationFrame(raf); raf = null; }
+
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    dots.forEach(function(d){ place(d); d.el.setAttribute('opacity', d.base.toFixed(2)); });
+
+    if(!still){
+      new IntersectionObserver(function(es){ es[0].isIntersecting ? start() : stop(); },
+        {threshold:0}).observe(document.querySelector('.hero'));
+      document.addEventListener('visibilitychange', function(){
+        document.hidden ? stop() : start();
+      });
+    }
+  })();
+
+  /* ---------- hero warp: honour reduced-motion for SMIL, which CSS cannot reach ---------- */
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.kv-warp svg').forEach(function(svg){
+      if(svg.pauseAnimations) svg.pauseAnimations();
+    });
+  }
+
+  /* ---------- nav state ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('stuck', window.scrollY > 40); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ---------- scroll reveal ---------- */
+  var revealIO = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -12% 0px', threshold:.08});
+  document.querySelectorAll('.rv').forEach(function(el){ revealIO.observe(el); });
+
+  /* ---------- programme: day tabs ---------- */
+  var tabs = [].slice.call(document.querySelectorAll('.daytab'));
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+    });
+    tab.addEventListener('keydown', function(e){
+      var i = tabs.indexOf(tab), n = null;
+      if(e.key === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  n = tabs[(i-1+tabs.length) % tabs.length];
+      if(n){ e.preventDefault(); n.focus(); n.click(); }
+    });
+  });
+
+  /* ---------- programme: session accordions ---------- */
+  document.querySelectorAll('.slot').forEach(function(slot){
+    var btn = slot.querySelector('.slot-btn');
+    var panelId = btn.getAttribute('aria-controls');
+    btn.setAttribute('aria-expanded','false');
+    btn.addEventListener('click', function(){
+      var open = slot.getAttribute('aria-expanded') === 'true';
+      slot.setAttribute('aria-expanded', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      document.getElementById(panelId).setAttribute('aria-hidden', open ? 'true' : 'false');
+    });
+  });
+
+  /* ---------- coverage data ---------- */
+  var PUBS = {
+    ST: {name:'The Straits Times',  logo:'assets/st-mini-logo.svg'},
+    BT: {name:'The Business Times', logo:'assets/bt-mini-logo.svg'},
+    ZB: {name:'联合早报',            logo:'assets/zb-mini-logo.svg'},
+    BH: {name:'Berita Harian',      logo:'assets/bh-mini-logo.svg'},
+    TM: {name:'தமிழ் முரசு',          logo:'assets/tm-mini-logo.svg'}
+  };
+
+  var ARTICLES = [
+    ['Asia Future Summit returns for a fourth edition at Marina Bay Sands','Rachel Tan','2026-08-04','Leadership','ST','Organisers confirm a two-day format, with a welcome dinner preceding a full conference day.'],
+    ['Summit theme set: Navigating a Divided World','Desmond Lim','2026-07-29','Geopolitics','BT','The 2026 programme will centre on how open economies operate across blocs that no longer trust one another.'],
+    ['Tariff truce holds, but Asian exporters are not unwinding their hedges','Ovais Subhani','2026-07-22','Economy','BT','Manufacturers say dual-sourcing has become permanent capital expenditure rather than a temporary insurance policy.'],
+    ['亚洲前瞻峰会将于10月举行 聚焦分裂世界中的领导力','林伟杰','2026-07-18','Leadership','ZB','第四届峰会将在滨海湾金沙D厅举行，为期两天。'],
+    ['Singapore courts the middle powers as great-power competition hardens','Bhavan Jaipragas','2026-07-15','Geopolitics','ST','Diplomats describe a quiet effort to build coalitions that do not require choosing sides.'],
+    ['Sovereign funds are quietly rebuilding their Asia allocations','Angela Tan','2026-07-11','Markets','BT','Allocators point to valuation gaps and a maturing private credit market across the region.'],
+    ['The data centre boom is running into Singapore’s power constraints','Lee Nian Tjoe','2026-07-08','Technology','ST','Capacity awards have resumed, but on far tighter efficiency and grid conditions than operators expected.'],
+    ['Persidangan Asia Future Summit kembali pada Oktober','Nur Adilah Kamsani','2026-07-04','ASEAN','BH','Sidang kemuncak tahunan itu akan menghimpunkan pemimpin perniagaan dan pembuat dasar dari serata rantau.'],
+    ['Transition finance in South-east Asia: pledges outpace pipelines','Sharanya Pillai','2026-06-30','Climate','BT','Bankers say the constraint is bankable projects, not capital — a gap the summit will examine directly.'],
+    ['Why Asean’s next chair inherits an unusually crowded agenda','Tan Tam Mei','2026-06-26','ASEAN','ST','Myanmar, the South China Sea and a stalled trade agenda all land on the same desk.'],
+    ['Central bankers signal patience as inflation paths diverge across Asia','Claudia Chong','2026-06-23','Economy','BT','Policy is no longer moving in lockstep, and currency desks are repricing accordingly.'],
+    ['ஆசிய எதிர்கால உச்சி மாநாடு அக்டோபரில் நடைபெறும்','ரமேஷ் குமார்','2026-06-20','Leadership','TM','நான்காவது பதிப்பு சிங்கப்பூரில் இரண்டு நாட்கள் நடைபெறும்.'],
+    ['AI governance is fragmenting — and Asian firms are caught in the middle','Osmond Chia','2026-06-17','Technology','ST','Compliance teams now maintain separate model documentation for three regulatory blocs.'],
+    ['Grid interconnection revives as Asean’s most credible climate project','Chuang Peck Ming','2026-06-13','Climate','BT','Cross-border power trade has moved from concept paper to signed term sheets.'],
+    ['A generation of Asian founders is planning for a slower exit','Vivienne Tay','2026-06-09','Markets','BT','With listings scarce, secondaries and strategic sales are absorbing the backlog.'],
+    ['新加坡如何在大国博弈中维持回旋空间','陈慧敏','2026-06-05','Geopolitics','ZB','分析人士指出，务实外交仍是小国最可靠的杠杆。'],
+    ['Semiconductor investment shifts south, but talent has not followed','Kang Wan Chern','2026-06-02','Technology','BT','Fabs are being built faster than engineers can be trained, and wage pressure is showing.'],
+    ['What leaders owe citizens who no longer share a set of facts','Chua Mui Hoong','2026-05-28','Leadership','ST','A summit-preview essay on institutional trust and the limits of communication strategy.'],
+    ['Rantaian bekalan serantau: kos sebenar strategi dua sumber','Hakim Yusof','2026-05-25','Economy','BH','Syarikat pembuatan mengakui bahawa lindung nilai kini menjadi kos tetap.'],
+    ['Private credit becomes Asia’s fastest-growing asset class','Jamie Lee','2026-05-21','Markets','BT','Banks retrenched; funds moved in. Regulators are now asking what sits inside the portfolios.'],
+    ['Climate adaptation spending is finally outpacing mitigation in the region','Audrey Tan','2026-05-18','Climate','ST','Flood defence and cooling infrastructure dominate new public capital plans.'],
+    ['Asean’s digital economy framework nears agreement after four years','Yong Jun Yuan','2026-05-14','ASEAN','BT','Negotiators say data flows remain the last unresolved chapter.'],
+    ['The quiet return of industrial policy across Asia','Ng Weng Hoong','2026-05-11','Economy','BT','Subsidies, screening rules and local content mandates are back in mainstream use.'],
+    ['为什么亚洲企业开始重新审视全球化战略','黄伟康','2026-05-07','Economy','ZB','高管们表示，效率不再是唯一的决策标准。'],
+    ['Highlights from the 2025 Asia Future Summit','SPH Media Newsroom','2025-10-17','Leadership','ST','A film and written summary of three days of dialogue in Singapore.'],
+    ['Key takeaways from the third edition','SPH Media Newsroom','2025-10-16','Leadership','BT','Nine conclusions from the 2025 programme, compiled by our editors.'],
+    ['ஆசியாவின் அடுத்த தசாப்தம்: வர்த்தகமும் நம்பிக்கையும்','சுரேஷ் ராஜா','2025-10-15','ASEAN','TM','2025 உச்சி மாநாட்டின் முக்கிய அமர்வுகள் குறித்த தொகுப்பு.']
+  ];
+
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function fmtDate(iso){
+    var p = iso.split('-');
+    return p[2].replace(/^0/,'') + ' ' + MONTHS[+p[1]-1] + ' ' + p[0];
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  var grid = document.getElementById('artGrid');
+  var status = document.getElementById('loadStatus');
+  var sentinel = document.getElementById('sentinel');
+  var moreWrap = document.getElementById('loadMoreWrap');
+  var moreBtn = document.getElementById('loadMore');
+
+  var PAGE = 9, cursor = 0, busy = false, filter = 'all', pub = 'all', pool = ARTICLES.slice();
+  var sentinelIO = null;
+
+  /* status strings come from the i18n layer when it is present */
+  function ui(k, a, b){
+    if(window.AFS && window.AFS.ui) return window.AFS.ui(k, a, b);
+    if(k === 'loading')  return 'Loading ' + a + ' more…';
+    if(k === 'showing')  return 'Showing ' + a + ' of ' + b;
+    if(k === 'empty')    return 'No coverage matches these filters';
+    if(k === 'allPubs')  return 'All publications';
+    return 'End of coverage — ' + a + ' article' + (a === 1 ? '' : 's');
+  }
+  window.AFS_refreshStatus = function(){
+    setPubLabel(pub);
+    if(busy) return;
+    if(!pool.length){ status.textContent = ui('empty'); return; }
+    status.textContent = cursor >= pool.length ? ui('end', pool.length) : ui('showing', cursor, pool.length);
+  };
+
+  function cardHTML(a, i){
+    var pub = PUBS[a[4]] || PUBS.ST;
+    return '<article class="art" style="animation-delay:' + (i % PAGE) * 45 + 'ms">' +
+      '<div class="art-top">' +
+        '<div class="pub">' +
+          '<img class="mk" src="' + pub.logo + '" alt="" width="50" height="50" loading="lazy" decoding="async">' +
+          '<span class="nm">' + esc(pub.name) + '</span>' +
+        '</div>' +
+        '<span class="cat">' + esc(a[3]) + '</span>' +
+      '</div>' +
+      '<h3>' + esc(a[0]) + '</h3>' +
+      '<p class="dek">' + esc(a[5]) + '</p>' +
+      '<div class="art-foot"><span class="by">By ' + esc(a[1]) + '</span>' +
+      '<time datetime="' + esc(a[2]) + '">' + fmtDate(a[2]) + '</time></div>' +
+    '</article>';
+  }
+
+  function skeletons(n){
+    var h = '';
+    for(var i=0;i<n;i++){
+      h += '<div class="skel" data-skel><i class="w1"></i><i class="w2"></i><i class="w3"></i><i class="w4"></i></div>';
+    }
+    return h;
+  }
+
+  function loadNext(){
+    if(busy || cursor >= pool.length) return;
+    busy = true;
+    grid.setAttribute('aria-busy','true');
+    var take = Math.min(PAGE, pool.length - cursor);
+    grid.insertAdjacentHTML('beforeend', skeletons(take));
+    status.textContent = ui('loading', take);
+
+    // simulated fetch latency — replace with a real API call
+    setTimeout(function(){
+      grid.querySelectorAll('[data-skel]').forEach(function(s){ s.remove(); });
+      var html = '';
+      for(var i=0;i<take;i++){ html += cardHTML(pool[cursor + i], cursor + i); }
+      grid.insertAdjacentHTML('beforeend', html);
+      cursor += take;
+      busy = false;
+      grid.setAttribute('aria-busy','false');
+      if(cursor >= pool.length){
+        status.textContent = ui('end', pool.length);
+        moreWrap.hidden = true;
+        if(sentinelIO) sentinelIO.unobserve(sentinel);
+      } else {
+        status.textContent = ui('showing', cursor, pool.length);
+        moreWrap.hidden = false;
+        // re-observe so a still-visible sentinel fires again on a short page
+        if(sentinelIO){ sentinelIO.unobserve(sentinel); sentinelIO.observe(sentinel); }
+      }
+    }, 520);
+  }
+
+  function resetGrid(){
+    cursor = 0; busy = false;
+    grid.innerHTML = '';
+    /* category and publication filters compose */
+    pool = ARTICLES.filter(function(a){
+      return (filter === 'all' || a[3] === filter) && (pub === 'all' || a[4] === pub);
+    });
+    if(sentinelIO){ sentinelIO.unobserve(sentinel); sentinelIO.observe(sentinel); }
+    if(!pool.length){
+      status.textContent = ui('empty');
+      moreWrap.hidden = true;
+      return;
+    }
+    loadNext();
+  }
+
+  /* ---------- publication selector ---------- */
+  var pubSel = document.getElementById('pubSel');
+  var pubBtn = document.getElementById('pubBtn');
+  var pubCur = document.getElementById('pubCur');
+
+  function setPubLabel(code){
+    if(!pubCur) return;
+    if(code === 'all'){
+      pubCur.innerHTML = '<span class="dot" aria-hidden="true"></span>' + esc(ui('allPubs'));
+    } else {
+      var p = PUBS[code];
+      pubCur.innerHTML = '<img src="' + p.logo + '" alt="" width="50" height="50">' + esc(p.name);
+    }
+  }
+
+  if(pubSel){
+    var closePub = function(){ pubSel.classList.remove('open'); pubBtn.setAttribute('aria-expanded','false'); };
+    pubBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = pubSel.classList.toggle('open');
+      pubBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', closePub);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && pubSel.classList.contains('open')){ closePub(); pubBtn.focus(); }
+    });
+    pubSel.querySelectorAll('.pubsel-menu a').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        pubSel.querySelectorAll('.pubsel-menu a').forEach(function(x){ x.removeAttribute('aria-current'); });
+        a.setAttribute('aria-current','true');
+        pub = a.dataset.pub;
+        setPubLabel(pub);
+        closePub();
+        resetGrid();
+      });
+    });
+    setPubLabel('all');
+  }
+
+  document.querySelectorAll('.filter').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.filter').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      filter = b.dataset.cat;
+      resetGrid();
+    });
+  });
+  moreBtn.addEventListener('click', loadNext);
+
+  sentinelIO = new IntersectionObserver(function(es){
+    if(es[0].isIntersecting) loadNext();
+  }, {rootMargin:'320px 0px'});
+  sentinelIO.observe(sentinel);
+
+  resetGrid();
+
+  /* ---------- video lightbox ---------- */
+  (function(){
+    var modal = document.getElementById('filmModal');
+    var video = document.getElementById('filmVideo');
+    var closeBtn = document.getElementById('filmClose');
+    var playBtn = document.querySelector('.play');
+    var playRow = document.querySelector('.playrow');
+    if(!modal || !video || !playBtn) return;
+    var lastFocus = null;
+
+    function open(){
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+      requestAnimationFrame(function(){ modal.classList.add('open'); });
+      video.currentTime = 0;
+      /* the click is a user gesture, so sound is permitted; fall back to muted if refused */
+      var p = video.play();
+      if(p && p.catch) p.catch(function(){ video.muted = true; video.play(); });
+      closeBtn.focus();
+    }
+
+    function close(){
+      modal.classList.remove('open');
+      video.pause();
+      document.body.classList.remove('modal-open');
+      var done = function(){
+        modal.hidden = true;
+        video.currentTime = 0;
+        video.muted = false;
+        modal.removeEventListener('transitionend', done);
+      };
+      modal.addEventListener('transitionend', done);
+      setTimeout(done, 500);            /* safety net if transitionend never fires */
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    playBtn.addEventListener('click', open);
+    if(playRow) playRow.addEventListener('click', function(e){
+      if(!e.target.closest('.play')) open();   /* the caption is clickable too */
+    });
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-close')) close(); });
+    document.addEventListener('keydown', function(e){
+      if(modal.hidden) return;
+      if(e.key === 'Escape'){ close(); return; }
+      if(e.key === 'Tab'){
+        /* keep focus inside the dialog */
+        var f = modal.querySelectorAll('button, video[controls]');
+        if(!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+    video.addEventListener('ended', close);
+  })();
+
+  /* ---------- mobile menu ---------- */
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+
+  function setMenu(open){
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open
+      ? (toggle.dataset.labelClose || 'Close menu')
+      : (toggle.dataset.labelOpen  || 'Open menu'));
+    links.classList.toggle('open', open);
+    nav.classList.toggle('menu-open', open);
+  }
+
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+  /* tapping a destination closes the panel */
+  links.addEventListener('click', function(e){
+    if(e.target.closest('a')) setMenu(false);
+  });
+  /* tapping outside, pressing Escape, or growing past the breakpoint closes it */
+  document.addEventListener('click', function(e){
+    if(links.classList.contains('open') && !e.target.closest('.nav-in')) setMenu(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ setMenu(false); toggle.focus(); }
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 900 && links.classList.contains('open')) setMenu(false);
+  });
+})();
+</script>
+<script>
+/* ==================================================================
+   LANGUAGE SWITCHER
+   Translates every text node on the page except the coverage cards
+   (#artGrid), which stay in their published language.
+   Elements carrying data-i18n-html are swapped wholesale so that
+   inline markup (<br>, <em>, <b>, <a>) survives translation.
+   ================================================================== */
+(function(){
+  'use strict';
+
+  var T = {
+    zh:{
+      /* nav */
+      "About":"介绍","Programme & Speakers":"议程与讲者","Coverage":"新闻报道","Partners":"合作伙伴",
+      "View Programme":"查看议程","About the Summit":"关于峰会",
+      /* hero */
+      "Fourth Edition · Singapore":"第四届 · 新加坡",
+      "Two days in which heads of government, central bankers, chief executives and scholars meet at a single vantage point — where separate currents converge on the decade ahead.":"为期两天，政府首脑、央行行长、企业总裁与学者齐聚同一制高点——不同的潮流在此交汇，共议未来十年。",
+      /* fact bar */
+      "Venue":"会场","10 Bayfront Avenue, Singapore 018956":"新加坡海湾大道10号 018956",
+      "Dates":"日期","Thursday & Friday":"星期四与星期五",
+      "Programme Hours":"议程时间","Welcome dinner, then full-day conference":"欢迎晚宴，翌日全天会议",
+      "Attendance":"出席","from 20+ countries":"来自20多个国家和地区",
+      "Day 1":"第一天","Day 2":"第二天",
+      /* sponsors */
+      "Presented by":"主办","Official Sponsor":"官方赞助商","Venue by":"会场伙伴","Scroll":"向下滚动",
+      /* info */
+      "A calm room in a turbulent decade.":"动荡十年中的一方静室。",
+      "Watch the 2025 film":"观看2025年短片",
+      "2 min 14 sec · Highlights from the third edition":"2分14秒 · 第三届精彩回顾",
+      "In turbulent times, people need more than ever access to accurate information, a calm mind and clear judgment. Peer and cross-sectoral exchange is particularly valuable for testing assumptions and collaboratively exploring new paths forward.":"在动荡时期，人们比以往任何时候都更需要准确的资讯、冷静的头脑与清晰的判断。同侪之间与跨领域的交流，尤其有助于检验既有假设，携手探索前行的新路径。",
+      "The Asia Future Summit, jointly organised by the flagship newspapers of SPH Media, once again bridges the gap for the exchange of ideas — inspiring forward-thinking and future-oriented leadership through keynote addresses, closed-door dialogues, panel discussions and structured networking.":"由新报业媒体旗下各大报章联合主办的亚洲前瞻峰会，将再次为思想交流搭建桥梁，通过主旨演讲、闭门对话、专题讨论与有序的交流环节，激发具前瞻性与未来视野的领导力。",
+      "Since its inception in 2022, the summit has become Asia's leading annual thought leadership conference, convening global judgment on the most consequential questions of our time.":"自2022年创办以来，峰会已成为亚洲首屈一指的年度思想领袖会议，汇聚全球智慧，共同思考当今最具影响力的课题。",
+      "Edition since 2022":"自2022年以来的届数","4th":"第四届",
+      "Global speakers on stage":"全球讲者登台","Countries represented":"国家与地区","Senior leaders attending":"高层领袖出席",
+      /* programme */
+      "Every session, and who is in the room.":"每一场议程，以及在场的每一位。",
+      "Expand any session to see its speakers, moderators and framing. Further names are announced in the months leading up to the summit.":"展开任何一场议程，即可查看讲者、主持人及议题背景。更多讲者名单将在峰会举行前陆续公布。",
+      "Registration":"报到","Guest arrival and reception":"嘉宾入场与迎宾酒会",
+      "Sands Grand Ballroom foyer · Champagne reception and delegate check-in":"金沙大宴会厅前厅 · 香槟迎宾与代表登记",
+      "Delegates collect credentials and are seated by table host. Media accreditation desk opens at 18:00 at the Hall D east entrance.":"代表领取证件并由席主引导入座。媒体认证柜台于晚间6时在D厅东门开放。",
+      "Welcome Address":"欢迎辞","Why this room, this year":"今年，为何是这个场合","1 speaker":"1位讲者",
+      "An opening framing of the summit's fourth edition: what has changed in the twelve months since delegates last met, and the questions this programme has been built to answer.":"为第四届峰会定调：自代表们上次聚首以来的十二个月里发生了哪些变化，以及本届议程意在回答哪些问题。",
+      "Host":"主人","To be announced":"待公布","Chief Executive Officer":"首席执行长",
+      "Speaker confirmation pending. This slot is reserved for the summit's host organisation.":"讲者尚待确认。此环节由峰会主办机构主讲。",
+      "Opening Dialogue":"开幕对话","Business in a Divided World":"分裂世界中的商业",
+      "2 speakers · On the record":"2位讲者 · 公开发言",
+      "A founder-level conversation on operating across blocs that no longer trust one another — where capital still moves freely, where it has stopped, and what a genuinely regional strategy now costs to run.":"一场创办人层级的对话：在彼此互不信任的阵营之间经营事业——资本仍在何处自由流动、在何处停滞，以及一套真正的区域战略如今需要付出多大代价。",
+      "Founder & Chairman":"创办人兼主席","Regional enterprise group":"区域企业集团",
+      "Reserved for a principal shareholder of a pan-Asian industrial or consumer group.":"此席位预留予泛亚工业或消费企业集团的主要股东。",
+      "Moderator":"主持人","Editor":"总编辑",
+      "Leads the newsroom's coverage of Singapore, the region and international affairs; moderates the summit's on-record dialogues.":"统筹新加坡、区域及国际时事报道；主持峰会的公开对话环节。",
+      "Fireside Chat":"炉边对话","Managing Risk, Seizing Opportunity":"管理风险，把握机遇",
+      "2 speakers · Chatham House Rule":"2位讲者 · 遵循查塔姆宫守则",
+      "Held under the Chatham House Rule. A trade minister and a chief investment officer on where the next twelve months of policy risk sits, and which of it is already priced in.":"本环节遵循查塔姆宫守则。一位贸易部长与一位首席投资官，探讨未来十二个月的政策风险所在，以及其中哪些已反映在价格之中。",
+      "Minister for Trade":"贸易部长","ASEAN member state":"东盟成员国",
+      "Cabinet-level confirmation expected in Q3 2026.":"内阁层级人选预计于2026年第三季确认。",
+      "Chief Investment Officer":"首席投资官","Sovereign wealth fund":"主权财富基金",
+      "Reserved for an allocator with a mandate across public and private markets in Asia.":"此席位预留予横跨亚洲公开与私募市场的资产配置者。",
+      "Close":"结束","End of Day 1":"第一天结束","Informal networking until 22:00":"自由交流至晚间10时",
+      "Delegates are invited to continue conversations in the Hall D lounge. Transport to partner hotels departs from the Bayfront Avenue drop-off.":"欢迎代表移步D厅休息区继续交流。前往合作酒店的接驳车于海湾大道落客区发车。",
+      "Registration and morning refreshments":"报到与早茶点","Hall D foyer":"D厅前厅",
+      "Day passes are issued at the main desk. Simultaneous interpretation headsets (Mandarin, Bahasa Melayu, Tamil) are collected here.":"入场证于主柜台发放。同声传译耳机（华语、马来语、淡米尔语）亦在此领取。",
+      "Opening Keynote":"开幕主旨演讲","Asia's Role in a New World Order":"亚洲在新世界秩序中的角色",
+      "1 speaker · Followed by 15 min Q&A":"1位讲者 · 随后15分钟问答",
+      "The summit's set-piece address. A cabinet-level assessment of where small and open economies find leverage when the rules-based order they were built on is being renegotiated by others.":"峰会的重头演讲。当支撑小型开放经济体的规则秩序正被他人重新谈判之际，一场来自内阁层级的评估：这些经济体的筹码何在。",
+      "Keynote":"主旨演讲","Cabinet Minister":"内阁部长","Government of Singapore":"新加坡政府",
+      "Confirmation subject to parliamentary schedule. Full text released to accredited media under embargo.":"人选须视国会议程而定。演讲全文将于禁发期内提供予获认证媒体。",
+      "Panel Discussion":"专题讨论","Trade, Tariffs and Supply Chain Resilience":"贸易、关税与供应链韧性",
+      "4 speakers · 75 minutes":"4位讲者 · 75分钟",
+      "Three years into the great re-routing: what \"friend-shoring\" has actually cost, which corridors have absorbed the displaced volume, and whether the region's new capacity is durable or merely a hedge.":"供应链大迁移三年后：“友岸外包”的真实代价、哪些通道吸纳了被转移的货量，以及本区域的新增产能究竟是长久之计，还是仅仅一种对冲。",
+      "Trade Minister":"贸易部长","Panellist confirmation pending.":"讨论嘉宾尚待确认。",
+      "Group Chief Executive":"集团总裁","Regional port and logistics operator":"区域港口与物流营运商",
+      "Chief Economist":"首席经济师","Multilateral development bank":"多边开发银行",
+      "Moderates the summit's markets and macro sessions.":"主持峰会的市场与宏观经济环节。",
+      "Break":"休息","Networking break":"交流茶歇","30 minutes · Hall D foyer":"30分钟 · D厅前厅",
+      "Partner exhibition stands open. Pre-booked bilateral meeting rooms are available on the mezzanine level.":"合作伙伴展位开放。预订的双边会谈室设于夹层。",
+      "Capital, Climate and Consequence":"资本、气候与后果","3 speakers · 75 minutes":"3位讲者 · 75分钟",
+      "Transition finance has become a political question as much as a commercial one. What blended capital is genuinely mobilising in Southeast Asia, and what remains a pledge without a project pipeline.":"转型融资既是商业课题，也已成为政治课题。在东南亚，混合融资究竟真正撬动了什么，又有多少仍停留在没有项目储备的承诺阶段。",
+      "Head of Sustainable Finance":"可持续融资主管","Regional bank":"区域银行",
+      "Director":"总监","International policy institute":"国际政策研究机构",
+      "Session delivered in English with simultaneous Mandarin interpretation.":"本环节以英语进行，设华语同声传译。",
+      "Lunch":"午餐","Delegate lunch and table dialogues":"代表午宴与圆桌对话","Hosted tables by theme":"按主题设席",
+      "Twelve hosted tables, each convened around one question from the morning programme. Seating is assigned; delegates indicate preferences at registration.":"共设十二张主题席，每席围绕上午议程中的一个问题展开。座位为指定安排，代表可于报名时表明意向。",
+      "Closing Dialogue":"闭幕对话","What Leadership Owes the Next Decade":"领导者对下一个十年的责任",
+      "The summit closes where it began — on judgment. A conversation about what institutions owe citizens who no longer share a common set of facts, and how leaders rebuild the standing to be believed.":"峰会以开场时的命题作结——判断力。当公民之间不再共享同一套事实，机构对他们负有什么责任，领导者又该如何重建被信任的地位。",
+      "Former Head of Government":"前政府首脑","Asia-Pacific":"亚太地区",
+      "Closing dialogue confirmation pending.":"闭幕对话人选尚待确认。","Editor-in-Chief":"总编辑",
+      "End of Summit":"峰会结束","Closing remarks and departure":"闭幕致辞与散会",
+      "A summary report of both days is issued to delegates within ten working days.":"两日议程的总结报告将于十个工作日内发送予代表。",
+      "Programme is indicative and subject to change. Further speakers announced in the months leading up to the summit.":"议程仅供参考，如有更改恕不另行通知。更多讲者将在峰会举行前陆续公布。",
+      "Download full programme (PDF)":"下载完整议程（PDF）",
+      /* coverage */
+      "News & Coverage":"新闻报道","Reporting from across SPH Media.":"来自新报业媒体各报章的报道。",
+      "Summit dispatches, analysis and interviews from The Straits Times, The Business Times, 联合早报, Berita Harian and தமிழ் முரசு.":"峰会现场报道、分析与专访，来自《海峡时报》《商业时报》《联合早报》《每日新闻》与《淡米尔之声》。",
+      "All":"全部","All publications":"全部刊物","Geopolitics":"地缘政治","Economy":"经济","Markets":"市场","Technology":"科技",
+      "Climate":"气候","Leadership":"领导力","ASEAN":"东盟","Load more coverage":"加载更多报道",
+      /* band */
+      /* footer */
+      "Asia's leading annual thought leadership conference, presented by the flagship titles of SPH Media.":"亚洲首屈一指的年度思想领袖会议，由新报业媒体旗下各大报章呈献。",
+      "Summit":"峰会","Venue & travel":"会场与交通","Partner with us":"与我们合作",
+      "Sponsorship opportunities":"赞助机会","Delegate packages":"代表配套","Media accreditation":"媒体认证","Speaker nominations":"讲者推荐",
+      "Past editions":"历届峰会","ORGANISER":"主办机构",
+      "Privacy":"隐私","Terms":"条款","Cookies":"Cookie","Accessibility":"无障碍","Contact":"联络我们"
+    },
+
+    ms:{
+      "About":"Pengenalan","Programme & Speakers":"Atur Cara & Pemidato","Coverage":"Liputan","Partners":"Rakan Kongsi",
+      "View Programme":"Lihat Atur Cara","About the Summit":"Mengenai Sidang Kemuncak",
+      "Fourth Edition · Singapore":"Edisi Keempat · Singapura",
+      "Two days in which heads of government, central bankers, chief executives and scholars meet at a single vantage point — where separate currents converge on the decade ahead.":"Dua hari yang menghimpunkan ketua kerajaan, gabenor bank pusat, ketua eksekutif dan sarjana di satu titik pandang — tempat arus yang berbeza bertemu untuk membincangkan dekad mendatang.",
+      "Venue":"Tempat","10 Bayfront Avenue, Singapore 018956":"10 Bayfront Avenue, Singapura 018956",
+      "Dates":"Tarikh","Thursday & Friday":"Khamis & Jumaat",
+      "Programme Hours":"Waktu Atur Cara","Welcome dinner, then full-day conference":"Jamuan aluan, diikuti persidangan sehari penuh",
+      "Attendance":"Kehadiran","from 20+ countries":"dari 20+ negara",
+      "Day 1":"Hari 1","Day 2":"Hari 2",
+      "Presented by":"Dianjurkan oleh","Official Sponsor":"Penaja Rasmi","Venue by":"Tempat oleh","Scroll":"Tatal",
+      "A calm room in a turbulent decade.":"Sebuah ruang tenang dalam dekad yang bergelora.",
+      "Watch the 2025 film":"Tonton filem 2025",
+      "2 min 14 sec · Highlights from the third edition":"2 min 14 saat · Sorotan edisi ketiga",
+      "In turbulent times, people need more than ever access to accurate information, a calm mind and clear judgment. Peer and cross-sectoral exchange is particularly valuable for testing assumptions and collaboratively exploring new paths forward.":"Dalam masa yang bergelora, orang ramai lebih memerlukan akses kepada maklumat yang tepat, fikiran yang tenang dan pertimbangan yang jelas. Pertukaran antara rakan setara dan merentas sektor amat berharga untuk menguji andaian serta bersama-sama meneroka jalan baharu ke hadapan.",
+      "The Asia Future Summit, jointly organised by the flagship newspapers of SPH Media, once again bridges the gap for the exchange of ideas — inspiring forward-thinking and future-oriented leadership through keynote addresses, closed-door dialogues, panel discussions and structured networking.":"Asia Future Summit, yang dianjurkan bersama oleh akhbar utama SPH Media, sekali lagi merapatkan jurang pertukaran idea — memberi inspirasi kepada kepimpinan berpandangan jauh menerusi ucaptama, dialog tertutup, perbincangan panel dan sesi jaringan yang tersusun.",
+      "Since its inception in 2022, the summit has become Asia's leading annual thought leadership conference, convening global judgment on the most consequential questions of our time.":"Sejak penubuhannya pada 2022, sidang kemuncak ini telah menjadi persidangan kepimpinan pemikiran tahunan terkemuka Asia, menghimpunkan pertimbangan global terhadap persoalan paling penting pada zaman kita.",
+      "Edition since 2022":"Edisi sejak 2022","4th":"Ke-4",
+      "Global speakers on stage":"Pemidato global di pentas","Countries represented":"Negara diwakili","Senior leaders attending":"Pemimpin kanan hadir",
+      "Every session, and who is in the room.":"Setiap sesi, dan siapa yang berada di dalam dewan.",
+      "Expand any session to see its speakers, moderators and framing. Further names are announced in the months leading up to the summit.":"Kembangkan mana-mana sesi untuk melihat pemidato, moderator dan latar perbincangannya. Nama lanjut akan diumumkan menjelang sidang kemuncak.",
+      "Registration":"Pendaftaran","Guest arrival and reception":"Ketibaan tetamu dan resepsi",
+      "Sands Grand Ballroom foyer · Champagne reception and delegate check-in":"Foyer Sands Grand Ballroom · Resepsi champagne dan pendaftaran perwakilan",
+      "Delegates collect credentials and are seated by table host. Media accreditation desk opens at 18:00 at the Hall D east entrance.":"Perwakilan mengambil pas dan diiringi ke meja masing-masing. Kaunter akreditasi media dibuka pada 18:00 di pintu masuk timur Dewan D.",
+      "Welcome Address":"Ucapan Aluan","Why this room, this year":"Mengapa dewan ini, tahun ini","1 speaker":"1 pemidato",
+      "An opening framing of the summit's fourth edition: what has changed in the twelve months since delegates last met, and the questions this programme has been built to answer.":"Rangka pembukaan bagi edisi keempat: apa yang telah berubah dalam dua belas bulan sejak perwakilan bertemu kali terakhir, dan persoalan yang cuba dijawab oleh atur cara ini.",
+      "Host":"Hos","To be announced":"Akan diumumkan","Chief Executive Officer":"Ketua Pegawai Eksekutif",
+      "Speaker confirmation pending. This slot is reserved for the summit's host organisation.":"Pengesahan pemidato belum muktamad. Slot ini dikhaskan untuk organisasi penganjur.",
+      "Opening Dialogue":"Dialog Pembukaan","Business in a Divided World":"Perniagaan dalam Dunia yang Berpecah",
+      "2 speakers · On the record":"2 pemidato · Secara terbuka",
+      "A founder-level conversation on operating across blocs that no longer trust one another — where capital still moves freely, where it has stopped, and what a genuinely regional strategy now costs to run.":"Perbualan peringkat pengasas tentang beroperasi merentas blok yang tidak lagi saling mempercayai — di mana modal masih bergerak bebas, di mana ia terhenti, dan berapa kosnya untuk melaksanakan strategi serantau yang sebenar.",
+      "Founder & Chairman":"Pengasas & Pengerusi","Regional enterprise group":"Kumpulan perusahaan serantau",
+      "Reserved for a principal shareholder of a pan-Asian industrial or consumer group.":"Dikhaskan untuk pemegang saham utama kumpulan perindustrian atau pengguna pan-Asia.",
+      "Moderator":"Moderator","Editor":"Editor",
+      "Leads the newsroom's coverage of Singapore, the region and international affairs; moderates the summit's on-record dialogues.":"Mengetuai liputan Singapura, rantau ini dan hal ehwal antarabangsa; mengendalikan dialog terbuka sidang kemuncak.",
+      "Fireside Chat":"Perbualan Santai","Managing Risk, Seizing Opportunity":"Mengurus Risiko, Merebut Peluang",
+      "2 speakers · Chatham House Rule":"2 pemidato · Peraturan Chatham House",
+      "Held under the Chatham House Rule. A trade minister and a chief investment officer on where the next twelve months of policy risk sits, and which of it is already priced in.":"Diadakan di bawah Peraturan Chatham House. Seorang menteri perdagangan dan seorang ketua pegawai pelaburan membincangkan di mana letaknya risiko dasar dua belas bulan akan datang, dan berapa banyak daripadanya sudah pun diambil kira pasaran.",
+      "Minister for Trade":"Menteri Perdagangan","ASEAN member state":"Negara anggota ASEAN",
+      "Cabinet-level confirmation expected in Q3 2026.":"Pengesahan peringkat kabinet dijangka pada suku ketiga 2026.",
+      "Chief Investment Officer":"Ketua Pegawai Pelaburan","Sovereign wealth fund":"Dana kekayaan negara",
+      "Reserved for an allocator with a mandate across public and private markets in Asia.":"Dikhaskan untuk pelabur institusi dengan mandat merentas pasaran awam dan persendirian di Asia.",
+      "Close":"Penutup","End of Day 1":"Tamat Hari 1","Informal networking until 22:00":"Jaringan tidak formal sehingga 22:00",
+      "Delegates are invited to continue conversations in the Hall D lounge. Transport to partner hotels departs from the Bayfront Avenue drop-off.":"Perwakilan dijemput meneruskan perbualan di lounge Dewan D. Pengangkutan ke hotel rakan kongsi bertolak dari kawasan menurunkan penumpang di Bayfront Avenue.",
+      "Registration and morning refreshments":"Pendaftaran dan jamuan pagi","Hall D foyer":"Foyer Dewan D",
+      "Day passes are issued at the main desk. Simultaneous interpretation headsets (Mandarin, Bahasa Melayu, Tamil) are collected here.":"Pas harian dikeluarkan di kaunter utama. Alat dengar terjemahan serentak (Mandarin, Bahasa Melayu, Tamil) diambil di sini.",
+      "Opening Keynote":"Ucaptama Pembukaan","Asia's Role in a New World Order":"Peranan Asia dalam Tatanan Dunia Baharu",
+      "1 speaker · Followed by 15 min Q&A":"1 pemidato · Diikuti sesi soal jawab 15 minit",
+      "The summit's set-piece address. A cabinet-level assessment of where small and open economies find leverage when the rules-based order they were built on is being renegotiated by others.":"Ucapan utama sidang kemuncak. Penilaian peringkat kabinet tentang di mana ekonomi kecil dan terbuka boleh memperoleh kelebihan apabila tatanan berasaskan peraturan yang menjadi asasnya sedang dirundingkan semula oleh pihak lain.",
+      "Keynote":"Ucaptama","Cabinet Minister":"Menteri Kabinet","Government of Singapore":"Kerajaan Singapura",
+      "Confirmation subject to parliamentary schedule. Full text released to accredited media under embargo.":"Pengesahan tertakluk kepada jadual Parlimen. Teks penuh diedarkan kepada media bertauliah di bawah embargo.",
+      "Panel Discussion":"Perbincangan Panel","Trade, Tariffs and Supply Chain Resilience":"Perdagangan, Tarif dan Daya Tahan Rantaian Bekalan",
+      "4 speakers · 75 minutes":"4 pemidato · 75 minit",
+      "Three years into the great re-routing: what \"friend-shoring\" has actually cost, which corridors have absorbed the displaced volume, and whether the region's new capacity is durable or merely a hedge.":"Tiga tahun selepas penyusunan semula besar-besaran: berapa sebenarnya kos \"friend-shoring\", koridor mana yang menyerap volum yang beralih, dan sama ada kapasiti baharu rantau ini kekal atau sekadar lindung nilai.",
+      "Trade Minister":"Menteri Perdagangan","Panellist confirmation pending.":"Pengesahan ahli panel belum muktamad.",
+      "Group Chief Executive":"Ketua Eksekutif Kumpulan","Regional port and logistics operator":"Pengendali pelabuhan dan logistik serantau",
+      "Chief Economist":"Ketua Ekonomi","Multilateral development bank":"Bank pembangunan multilateral",
+      "Moderates the summit's markets and macro sessions.":"Mengendalikan sesi pasaran dan makroekonomi sidang kemuncak.",
+      "Break":"Rehat","Networking break":"Rehat jaringan","30 minutes · Hall D foyer":"30 minit · Foyer Dewan D",
+      "Partner exhibition stands open. Pre-booked bilateral meeting rooms are available on the mezzanine level.":"Gerai pameran rakan kongsi dibuka. Bilik mesyuarat dua hala yang ditempah lebih awal disediakan di aras mezanin.",
+      "Capital, Climate and Consequence":"Modal, Iklim dan Akibatnya","3 speakers · 75 minutes":"3 pemidato · 75 minit",
+      "Transition finance has become a political question as much as a commercial one. What blended capital is genuinely mobilising in Southeast Asia, and what remains a pledge without a project pipeline.":"Pembiayaan peralihan kini menjadi persoalan politik sebanyak mana ia persoalan komersial. Apa yang benar-benar digerakkan oleh modal campuran di Asia Tenggara, dan apa yang masih kekal sebagai ikrar tanpa saluran projek.",
+      "Head of Sustainable Finance":"Ketua Pembiayaan Mampan","Regional bank":"Bank serantau",
+      "Director":"Pengarah","International policy institute":"Institut dasar antarabangsa",
+      "Session delivered in English with simultaneous Mandarin interpretation.":"Sesi disampaikan dalam bahasa Inggeris dengan terjemahan serentak bahasa Mandarin.",
+      "Lunch":"Makan Tengah Hari","Delegate lunch and table dialogues":"Jamuan perwakilan dan dialog meja","Hosted tables by theme":"Meja dihoskan mengikut tema",
+      "Twelve hosted tables, each convened around one question from the morning programme. Seating is assigned; delegates indicate preferences at registration.":"Dua belas meja dihoskan, setiap satu berkisar pada satu persoalan daripada atur cara pagi. Tempat duduk ditetapkan; perwakilan menyatakan pilihan semasa pendaftaran.",
+      "Closing Dialogue":"Dialog Penutup","What Leadership Owes the Next Decade":"Tanggungjawab Kepimpinan kepada Dekad Akan Datang",
+      "The summit closes where it began — on judgment. A conversation about what institutions owe citizens who no longer share a common set of facts, and how leaders rebuild the standing to be believed.":"Sidang kemuncak berakhir di tempat ia bermula — pada pertimbangan. Perbualan tentang tanggungjawab institusi terhadap rakyat yang tidak lagi berkongsi set fakta yang sama, dan bagaimana pemimpin membina semula kewibawaan untuk dipercayai.",
+      "Former Head of Government":"Bekas Ketua Kerajaan","Asia-Pacific":"Asia-Pasifik",
+      "Closing dialogue confirmation pending.":"Pengesahan dialog penutup belum muktamad.","Editor-in-Chief":"Ketua Pengarang",
+      "End of Summit":"Tamat Sidang Kemuncak","Closing remarks and departure":"Ucapan penutup dan perlepasan",
+      "A summary report of both days is issued to delegates within ten working days.":"Laporan ringkasan kedua-dua hari dikeluarkan kepada perwakilan dalam tempoh sepuluh hari bekerja.",
+      "Programme is indicative and subject to change. Further speakers announced in the months leading up to the summit.":"Atur cara adalah indikatif dan tertakluk kepada perubahan. Pemidato lanjut akan diumumkan menjelang sidang kemuncak.",
+      "Download full programme (PDF)":"Muat turun atur cara penuh (PDF)",
+      "News & Coverage":"Berita & Liputan","Reporting from across SPH Media.":"Laporan daripada seluruh SPH Media.",
+      "Summit dispatches, analysis and interviews from The Straits Times, The Business Times, 联合早报, Berita Harian and தமிழ் முரசு.":"Laporan, analisis dan wawancara sidang kemuncak daripada The Straits Times, The Business Times, 联合早报, Berita Harian dan தமிழ் முரசு.",
+      "All":"Semua","All publications":"Semua penerbitan","Geopolitics":"Geopolitik","Economy":"Ekonomi","Markets":"Pasaran","Technology":"Teknologi",
+      "Climate":"Iklim","Leadership":"Kepimpinan","ASEAN":"ASEAN","Load more coverage":"Muat lagi liputan",
+      "Asia's leading annual thought leadership conference, presented by the flagship titles of SPH Media.":"Persidangan kepimpinan pemikiran tahunan terkemuka Asia, dipersembahkan oleh akhbar utama SPH Media.",
+      "Summit":"Sidang Kemuncak","Venue & travel":"Tempat & perjalanan","Partner with us":"Bekerjasama dengan kami",
+      "Sponsorship opportunities":"Peluang penajaan","Delegate packages":"Pakej perwakilan","Media accreditation":"Akreditasi media","Speaker nominations":"Pencalonan pemidato",
+      "Past editions":"Edisi lalu","ORGANISER":"PENGANJUR",
+      "Privacy":"Privasi","Terms":"Terma","Cookies":"Kuki","Accessibility":"Kebolehcapaian","Contact":"Hubungi"
+    },
+
+    ta:{
+      "About":"அறிமுகம்","Programme & Speakers":"நிகழ்ச்சி நிரல் & பேச்சாளர்கள்","Coverage":"செய்தி வெளியீடு","Partners":"கூட்டாளர்கள்",
+      "View Programme":"நிகழ்ச்சி நிரலைக் காண்க","About the Summit":"உச்சி மாநாடு பற்றி",
+      "Fourth Edition · Singapore":"நான்காவது பதிப்பு · சிங்கப்பூர்",
+      "Two days in which heads of government, central bankers, chief executives and scholars meet at a single vantage point — where separate currents converge on the decade ahead.":"அரசுத் தலைவர்கள், மத்திய வங்கியாளர்கள், தலைமை நிர்வாகிகள், அறிஞர்கள் ஆகியோர் ஒரே தளத்தில் சந்திக்கும் இரு நாட்கள் — வெவ்வேறு நீரோட்டங்கள் வரும் தசாப்தத்தை நோக்கி ஒன்றிணையும் இடம்.",
+      "Venue":"இடம்","10 Bayfront Avenue, Singapore 018956":"10 பேஃபிரண்ட் அவென்யூ, சிங்கப்பூர் 018956",
+      "Dates":"தேதிகள்","Thursday & Friday":"வியாழன் & வெள்ளி",
+      "Programme Hours":"நிகழ்ச்சி நேரம்","Welcome dinner, then full-day conference":"வரவேற்பு விருந்து, தொடர்ந்து முழு நாள் மாநாடு",
+      "Attendance":"பங்கேற்பு","from 20+ countries":"20+ நாடுகளிலிருந்து",
+      "Day 1":"நாள் 1","Day 2":"நாள் 2",
+      "Presented by":"வழங்குபவர்","Official Sponsor":"அதிகாரப்பூர்வ ஆதரவாளர்","Venue by":"இட வழங்குநர்","Scroll":"உருட்டவும்",
+      "A calm room in a turbulent decade.":"கொந்தளிப்பான தசாப்தத்தில் ஓர் அமைதியான அரங்கு.",
+      "Watch the 2025 film":"2025 திரைப்படத்தைக் காண்க",
+      "2 min 14 sec · Highlights from the third edition":"2 நிமி 14 வி · மூன்றாம் பதிப்பின் சிறப்பம்சங்கள்",
+      "In turbulent times, people need more than ever access to accurate information, a calm mind and clear judgment. Peer and cross-sectoral exchange is particularly valuable for testing assumptions and collaboratively exploring new paths forward.":"கொந்தளிப்பான காலங்களில், துல்லியமான தகவல், அமைதியான மனம், தெளிவான தீர்ப்பு ஆகியவை மக்களுக்கு முன்னெப்போதையும் விட அவசியம். சக நிலை மற்றும் துறைகளுக்கு இடையிலான கருத்துப் பரிமாற்றம், அனுமானங்களைச் சோதிக்கவும் புதிய பாதைகளை இணைந்து ஆராயவும் மிகவும் பயனுள்ளது.",
+      "The Asia Future Summit, jointly organised by the flagship newspapers of SPH Media, once again bridges the gap for the exchange of ideas — inspiring forward-thinking and future-oriented leadership through keynote addresses, closed-door dialogues, panel discussions and structured networking.":"SPH மீடியாவின் முன்னணி நாளிதழ்களால் இணைந்து ஏற்பாடு செய்யப்படும் ஆசிய எதிர்கால உச்சி மாநாடு, கருத்துப் பரிமாற்றத்துக்கான பாலமாக மீண்டும் அமைகிறது — முக்கிய உரைகள், மூடிய கதவு உரையாடல்கள், குழு விவாதங்கள், ஒழுங்கமைந்த தொடர்பு அமர்வுகள் வழியாக முன்நோக்கிய தலைமைத்துவத்தை ஊக்குவிக்கிறது.",
+      "Since its inception in 2022, the summit has become Asia's leading annual thought leadership conference, convening global judgment on the most consequential questions of our time.":"2022இல் தொடங்கியதிலிருந்து, இந்த உச்சி மாநாடு ஆசியாவின் முன்னணி ஆண்டு சிந்தனைத் தலைமை மாநாடாக உருவெடுத்துள்ளது; நம் காலத்தின் மிக முக்கியமான கேள்விகளுக்கு உலகளாவிய பார்வைகளை ஒன்றிணைக்கிறது.",
+      "Edition since 2022":"2022 முதல் பதிப்பு","4th":"4வது",
+      "Global speakers on stage":"மேடையில் உலகப் பேச்சாளர்கள்","Countries represented":"பிரதிநிதித்துவ நாடுகள்","Senior leaders attending":"மூத்த தலைவர்கள் பங்கேற்பு",
+      "Every session, and who is in the room.":"ஒவ்வொரு அமர்வும், அரங்கில் இருப்பவர்களும்.",
+      "Expand any session to see its speakers, moderators and framing. Further names are announced in the months leading up to the summit.":"எந்த அமர்வையும் விரிவாக்கி அதன் பேச்சாளர்கள், நெறியாளர்கள், பின்னணி ஆகியவற்றைக் காணலாம். மேலும் பெயர்கள் மாநாட்டுக்கு முன்னதாக அறிவிக்கப்படும்.",
+      "Registration":"பதிவு","Guest arrival and reception":"விருந்தினர் வருகையும் வரவேற்பும்",
+      "Sands Grand Ballroom foyer · Champagne reception and delegate check-in":"சாண்ட்ஸ் கிராண்ட் பால்ரூம் முகப்பு · வரவேற்பு விருந்தும் பிரதிநிதிப் பதிவும்",
+      "Delegates collect credentials and are seated by table host. Media accreditation desk opens at 18:00 at the Hall D east entrance.":"பிரதிநிதிகள் அடையாள அட்டைகளைப் பெற்று மேசைத் தொகுப்பாளரால் இருக்கையில் அமர்த்தப்படுவர். ஊடக அங்கீகார மேசை மாலை 6 மணிக்கு மண்டபம் D கிழக்கு நுழைவாயிலில் திறக்கப்படும்.",
+      "Welcome Address":"வரவேற்புரை","Why this room, this year":"இந்த ஆண்டு, ஏன் இந்த அரங்கு","1 speaker":"1 பேச்சாளர்",
+      "An opening framing of the summit's fourth edition: what has changed in the twelve months since delegates last met, and the questions this programme has been built to answer.":"நான்காம் பதிப்பின் தொடக்கக் கட்டமைப்பு: பிரதிநிதிகள் கடைசியாகச் சந்தித்த பன்னிரண்டு மாதங்களில் என்ன மாறியுள்ளது, இந்த நிகழ்ச்சி நிரல் எந்தக் கேள்விகளுக்குப் பதிலளிக்க வடிவமைக்கப்பட்டுள்ளது.",
+      "Host":"தொகுப்பாளர்","To be announced":"அறிவிக்கப்படும்","Chief Executive Officer":"தலைமை நிர்வாக அதிகாரி",
+      "Speaker confirmation pending. This slot is reserved for the summit's host organisation.":"பேச்சாளர் உறுதிப்படுத்தல் நிலுவையில் உள்ளது. இந்த அமர்வு ஏற்பாட்டு நிறுவனத்துக்கு ஒதுக்கப்பட்டுள்ளது.",
+      "Opening Dialogue":"தொடக்க உரையாடல்","Business in a Divided World":"பிளவுபட்ட உலகில் வணிகம்",
+      "2 speakers · On the record":"2 பேச்சாளர்கள் · பதிவுக்குரியது",
+      "A founder-level conversation on operating across blocs that no longer trust one another — where capital still moves freely, where it has stopped, and what a genuinely regional strategy now costs to run.":"ஒன்றையொன்று நம்பாத கூட்டணிகளுக்கு இடையே வணிகம் நடத்துவது குறித்த நிறுவனர் நிலை உரையாடல் — மூலதனம் இன்னும் எங்கு சுதந்திரமாக நகர்கிறது, எங்கு நின்றுவிட்டது, உண்மையான பிராந்திய உத்தி இப்போது எவ்வளவு செலவாகிறது.",
+      "Founder & Chairman":"நிறுவனர் & தலைவர்","Regional enterprise group":"பிராந்திய தொழில் குழுமம்",
+      "Reserved for a principal shareholder of a pan-Asian industrial or consumer group.":"பான்-ஆசிய தொழில் அல்லது நுகர்வோர் குழுமத்தின் முதன்மைப் பங்குதாரருக்கு ஒதுக்கப்பட்டுள்ளது.",
+      "Moderator":"நெறியாளர்","Editor":"ஆசிரியர்",
+      "Leads the newsroom's coverage of Singapore, the region and international affairs; moderates the summit's on-record dialogues.":"சிங்கப்பூர், பிராந்தியம், சர்வதேச விவகாரங்கள் தொடர்பான செய்தி வெளியீட்டை வழிநடத்துகிறார்; மாநாட்டின் பதிவுக்குரிய உரையாடல்களை நெறிப்படுத்துகிறார்.",
+      "Fireside Chat":"நெருக்கமான உரையாடல்","Managing Risk, Seizing Opportunity":"இடர் மேலாண்மை, வாய்ப்பைப் பற்றுதல்",
+      "2 speakers · Chatham House Rule":"2 பேச்சாளர்கள் · சாத்தம் ஹவுஸ் விதி",
+      "Held under the Chatham House Rule. A trade minister and a chief investment officer on where the next twelve months of policy risk sits, and which of it is already priced in.":"சாத்தம் ஹவுஸ் விதியின் கீழ் நடத்தப்படுகிறது. அடுத்த பன்னிரண்டு மாதங்களின் கொள்கை இடர் எங்கு உள்ளது, அதில் எவ்வளவு ஏற்கெனவே சந்தையில் கணக்கிடப்பட்டுள்ளது என்பது குறித்து ஒரு வர்த்தக அமைச்சரும் ஒரு தலைமை முதலீட்டு அதிகாரியும் உரையாடுகின்றனர்.",
+      "Minister for Trade":"வர்த்தக அமைச்சர்","ASEAN member state":"ஆசியான் உறுப்பு நாடு",
+      "Cabinet-level confirmation expected in Q3 2026.":"அமைச்சரவை நிலை உறுதிப்படுத்தல் 2026 மூன்றாம் காலாண்டில் எதிர்பார்க்கப்படுகிறது.",
+      "Chief Investment Officer":"தலைமை முதலீட்டு அதிகாரி","Sovereign wealth fund":"இறையாண்மைச் செல்வ நிதி",
+      "Reserved for an allocator with a mandate across public and private markets in Asia.":"ஆசியாவின் பொது மற்றும் தனியார் சந்தைகளில் பணியாற்றும் முதலீட்டு ஒதுக்கீட்டாளருக்கு ஒதுக்கப்பட்டுள்ளது.",
+      "Close":"நிறைவு","End of Day 1":"நாள் 1 நிறைவு","Informal networking until 22:00":"இரவு 10 மணி வரை சாதாரண கலந்துரையாடல்",
+      "Delegates are invited to continue conversations in the Hall D lounge. Transport to partner hotels departs from the Bayfront Avenue drop-off.":"மண்டபம் D ஓய்வறையில் உரையாடலைத் தொடர பிரதிநிதிகள் அழைக்கப்படுகிறார்கள். கூட்டாளர் விடுதிகளுக்கான வாகனங்கள் பேஃபிரண்ட் அவென்யூ இறங்கும் இடத்திலிருந்து புறப்படும்.",
+      "Registration and morning refreshments":"பதிவும் காலை சிற்றுண்டியும்","Hall D foyer":"மண்டபம் D முகப்பு",
+      "Day passes are issued at the main desk. Simultaneous interpretation headsets (Mandarin, Bahasa Melayu, Tamil) are collected here.":"நாள் அனுமதிச் சீட்டுகள் முதன்மை மேசையில் வழங்கப்படும். ஒரே நேர மொழிபெயர்ப்பு கருவிகள் (மாண்டரின், மலாய், தமிழ்) இங்கே பெறப்படும்.",
+      "Opening Keynote":"தொடக்க முக்கிய உரை","Asia's Role in a New World Order":"புதிய உலக ஒழுங்கில் ஆசியாவின் பங்கு",
+      "1 speaker · Followed by 15 min Q&A":"1 பேச்சாளர் · தொடர்ந்து 15 நிமிட கேள்வி-பதில்",
+      "The summit's set-piece address. A cabinet-level assessment of where small and open economies find leverage when the rules-based order they were built on is being renegotiated by others.":"மாநாட்டின் முதன்மை உரை. சிறிய, திறந்த பொருளாதாரங்கள் தங்கள் அடித்தளமான விதி சார்ந்த ஒழுங்கு பிறரால் மறுபேச்சுவார்த்தைக்கு உட்படுத்தப்படும்போது எங்கு செல்வாக்கைக் காண்கின்றன என்பது குறித்த அமைச்சரவை நிலை மதிப்பீடு.",
+      "Keynote":"முக்கிய உரை","Cabinet Minister":"அமைச்சரவை அமைச்சர்","Government of Singapore":"சிங்கப்பூர் அரசாங்கம்",
+      "Confirmation subject to parliamentary schedule. Full text released to accredited media under embargo.":"உறுதிப்படுத்தல் நாடாளுமன்ற அட்டவணையைப் பொறுத்தது. முழு உரை தடைக் காலத்தின் கீழ் அங்கீகரிக்கப்பட்ட ஊடகங்களுக்கு வழங்கப்படும்.",
+      "Panel Discussion":"குழு விவாதம்","Trade, Tariffs and Supply Chain Resilience":"வர்த்தகம், வரிகள், விநியோகச் சங்கிலி நெகிழ்ச்சி",
+      "4 speakers · 75 minutes":"4 பேச்சாளர்கள் · 75 நிமிடங்கள்",
+      "Three years into the great re-routing: what \"friend-shoring\" has actually cost, which corridors have absorbed the displaced volume, and whether the region's new capacity is durable or merely a hedge.":"பெரும் மறுவழியாக்கத்தின் மூன்றாம் ஆண்டில்: \"நட்பு நாடு உற்பத்தி\" உண்மையில் எவ்வளவு செலவாகியுள்ளது, இடம்பெயர்ந்த அளவை எந்த வழித்தடங்கள் உள்வாங்கியுள்ளன, பிராந்தியத்தின் புதிய கொள்ளளவு நிலையானதா அல்லது வெறும் பாதுகாப்பு ஏற்பாடா.",
+      "Trade Minister":"வர்த்தக அமைச்சர்","Panellist confirmation pending.":"குழு உறுப்பினர் உறுதிப்படுத்தல் நிலுவையில்.",
+      "Group Chief Executive":"குழும தலைமை நிர்வாகி","Regional port and logistics operator":"பிராந்திய துறைமுக மற்றும் தளவாட நிறுவனம்",
+      "Chief Economist":"தலைமைப் பொருளியலாளர்","Multilateral development bank":"பன்முக வளர்ச்சி வங்கி",
+      "Moderates the summit's markets and macro sessions.":"மாநாட்டின் சந்தை மற்றும் பொருளாதார அமர்வுகளை நெறிப்படுத்துகிறார்.",
+      "Break":"இடைவேளை","Networking break":"கலந்துரையாடல் இடைவேளை","30 minutes · Hall D foyer":"30 நிமிடங்கள் · மண்டபம் D முகப்பு",
+      "Partner exhibition stands open. Pre-booked bilateral meeting rooms are available on the mezzanine level.":"கூட்டாளர் கண்காட்சி அரங்குகள் திறந்திருக்கும். முன்பதிவு செய்யப்பட்ட இருதரப்புக் கூட்ட அறைகள் இடைத்தளத்தில் உள்ளன.",
+      "Capital, Climate and Consequence":"மூலதனம், காலநிலை, விளைவு","3 speakers · 75 minutes":"3 பேச்சாளர்கள் · 75 நிமிடங்கள்",
+      "Transition finance has become a political question as much as a commercial one. What blended capital is genuinely mobilising in Southeast Asia, and what remains a pledge without a project pipeline.":"மாற்ற நிதி இப்போது வணிகக் கேள்வியைப் போலவே அரசியல் கேள்வியாகவும் மாறியுள்ளது. தென்கிழக்கு ஆசியாவில் கலப்பு மூலதனம் உண்மையில் எதைத் திரட்டுகிறது, திட்டத் தொடர் இல்லாத வெறும் வாக்குறுதியாக எது எஞ்சியுள்ளது.",
+      "Head of Sustainable Finance":"நிலைத்த நிதித் தலைவர்","Regional bank":"பிராந்திய வங்கி",
+      "Director":"இயக்குநர்","International policy institute":"சர்வதேசக் கொள்கை நிறுவனம்",
+      "Session delivered in English with simultaneous Mandarin interpretation.":"அமர்வு ஆங்கிலத்தில் நடத்தப்படும்; ஒரே நேர மாண்டரின் மொழிபெயர்ப்பு வழங்கப்படும்.",
+      "Lunch":"மதிய உணவு","Delegate lunch and table dialogues":"பிரதிநிதிகள் மதிய உணவும் மேசை உரையாடல்களும்","Hosted tables by theme":"கருப்பொருள் வாரியான மேசைகள்",
+      "Twelve hosted tables, each convened around one question from the morning programme. Seating is assigned; delegates indicate preferences at registration.":"பன்னிரண்டு மேசைகள், ஒவ்வொன்றும் காலை நிகழ்ச்சி நிரலின் ஒரு கேள்வியை மையமாகக் கொண்டவை. இருக்கைகள் ஒதுக்கப்படும்; பிரதிநிதிகள் பதிவின்போது விருப்பத்தைத் தெரிவிக்கலாம்.",
+      "Closing Dialogue":"நிறைவு உரையாடல்","What Leadership Owes the Next Decade":"அடுத்த தசாப்தத்துக்குத் தலைமை ஆற்ற வேண்டியது",
+      "The summit closes where it began — on judgment. A conversation about what institutions owe citizens who no longer share a common set of facts, and how leaders rebuild the standing to be believed.":"மாநாடு தொடங்கிய இடத்திலேயே நிறைவடைகிறது — தீர்ப்பாற்றலில். பொதுவான உண்மைகளைப் பகிர்ந்துகொள்ளாத குடிமக்களுக்கு நிறுவனங்கள் என்ன கடமைப்பட்டுள்ளன, நம்பப்படும் தகுதியை தலைவர்கள் எவ்வாறு மீட்டெடுப்பது என்பது குறித்த உரையாடல்.",
+      "Former Head of Government":"முன்னாள் அரசுத் தலைவர்","Asia-Pacific":"ஆசிய-பசிபிக்",
+      "Closing dialogue confirmation pending.":"நிறைவு உரையாடல் உறுதிப்படுத்தல் நிலுவையில்.","Editor-in-Chief":"தலைமை ஆசிரியர்",
+      "End of Summit":"மாநாடு நிறைவு","Closing remarks and departure":"நிறைவுரையும் விடைபெறலும்",
+      "A summary report of both days is issued to delegates within ten working days.":"இரு நாட்களின் சுருக்க அறிக்கை பத்து வேலை நாட்களுக்குள் பிரதிநிதிகளுக்கு வழங்கப்படும்.",
+      "Programme is indicative and subject to change. Further speakers announced in the months leading up to the summit.":"நிகழ்ச்சி நிரல் சுட்டிக்காட்டுவதற்கானது, மாற்றத்துக்கு உட்பட்டது. மேலும் பேச்சாளர்கள் மாநாட்டுக்கு முன்னதாக அறிவிக்கப்படுவர்.",
+      "Download full programme (PDF)":"முழு நிகழ்ச்சி நிரலைப் பதிவிறக்கு (PDF)",
+      "News & Coverage":"செய்திகளும் வெளியீடும்","Reporting from across SPH Media.":"SPH மீடியா முழுவதிலிருந்தும் அறிக்கைகள்.",
+      "Summit dispatches, analysis and interviews from The Straits Times, The Business Times, 联合早报, Berita Harian and தமிழ் முரசு.":"The Straits Times, The Business Times, 联合早报, Berita Harian, தமிழ் முரசு ஆகியவற்றிலிருந்து மாநாட்டுச் செய்திகள், பகுப்பாய்வுகள், நேர்காணல்கள்.",
+      "All":"அனைத்தும்","All publications":"அனைத்து வெளியீடுகளும்","Geopolitics":"புவிசார் அரசியல்","Economy":"பொருளாதாரம்","Markets":"சந்தைகள்","Technology":"தொழில்நுட்பம்",
+      "Climate":"காலநிலை","Leadership":"தலைமைத்துவம்","ASEAN":"ஆசியான்","Load more coverage":"மேலும் செய்திகளை ஏற்று",
+      "Asia's leading annual thought leadership conference, presented by the flagship titles of SPH Media.":"SPH மீடியாவின் முன்னணி நாளிதழ்கள் வழங்கும், ஆசியாவின் முன்னணி ஆண்டு சிந்தனைத் தலைமை மாநாடு.",
+      "Summit":"உச்சி மாநாடு","Venue & travel":"இடமும் பயணமும்","Partner with us":"எங்களுடன் இணையுங்கள்",
+      "Sponsorship opportunities":"ஆதரவு வாய்ப்புகள்","Delegate packages":"பிரதிநிதி தொகுப்புகள்","Media accreditation":"ஊடக அங்கீகாரம்","Speaker nominations":"பேச்சாளர் பரிந்துரைகள்",
+      "Past editions":"முந்தைய பதிப்புகள்","ORGANISER":"ஏற்பாட்டாளர்",
+      "Privacy":"தனியுரிமை","Terms":"விதிமுறைகள்","Cookies":"குக்கீகள்","Accessibility":"அணுகல்தன்மை","Contact":"தொடர்பு"
+    }
+  };
+
+  /* blocks that must be swapped as HTML so inline markup survives */
+  var H = {
+    en:{
+      heroTitle:'Navigating a <span class="sw">Divided</span> World',
+      fbVenue:'Marina Bay Sands<br><em>Hall D</em>',
+      fbDates:'15 – 16 October<br><em>2026</em>',
+      fbHours:'18:30 <span class="lo">Day 1</span><br>08:30 <span class="lo">Day 2</span>',
+      fbAtt:'500+<br><em>delegates</em>',
+      playPl:'<b>Watch the 2025 film</b>2 min 14 sec · Highlights from the third edition',
+      pull:'This year’s theme is <b>Navigating a Divided World</b>. In a new era of disruption and division, policymakers and business leaders must possess not only resilience, but new strategies and new connections to forge bold paths forward.',
+      tab1:'<b>Day 1</b><span>THU 15 OCT · WELCOME DINNER</span>',
+      tab2:'<b>Day 2</b><span>FRI 16 OCT · CONFERENCE</span>',
+      legal:'© 2026 SPH Media Limited. Company registration no. 202120748H'
+    },
+    zh:{
+      heroTitle:'驾驭<span class="sw">分裂</span>的世界',
+      fbVenue:'滨海湾金沙<br><em>D厅</em>',
+      fbDates:'10月15日至16日<br><em>2026</em>',
+      fbHours:'18:30 <span class="lo">第一天</span><br>08:30 <span class="lo">第二天</span>',
+      fbAtt:'500+<br><em>名代表</em>',
+      playPl:'<b>观看2025年短片</b>2分14秒 · 第三届精彩回顾',
+      pull:'本届主题为<b>驾驭分裂的世界</b>。在颠覆与分裂并存的新时代，政策制定者与商界领袖不仅需要韧性，更需要新的策略与新的连结，才能开辟前行的大道。',
+      tab1:'<b>第一天</b><span>10月15日 星期四 · 欢迎晚宴</span>',
+      tab2:'<b>第二天</b><span>10月16日 星期五 · 大会</span>',
+      legal:'© 2026 SPH Media Limited. 公司注册编号 202120748H'
+    },
+    ms:{
+      heroTitle:'Mendepani Dunia yang <span class="sw">Berpecah</span>',
+      fbVenue:'Marina Bay Sands<br><em>Dewan D</em>',
+      fbDates:'15 – 16 Oktober<br><em>2026</em>',
+      fbHours:'18:30 <span class="lo">Hari 1</span><br>08:30 <span class="lo">Hari 2</span>',
+      fbAtt:'500+<br><em>perwakilan</em>',
+      playPl:'<b>Tonton filem 2025</b>2 min 14 saat · Sorotan edisi ketiga',
+      pull:'Tema tahun ini ialah <b>Mendepani Dunia yang Berpecah</b>. Dalam era gangguan dan perpecahan yang baharu, pembuat dasar dan pemimpin perniagaan bukan sahaja perlu berdaya tahan, tetapi juga memerlukan strategi baharu dan hubungan baharu untuk merintis jalan yang berani ke hadapan.',
+      tab1:'<b>Hari 1</b><span>KHAMIS 15 OKT · JAMUAN ALUAN</span>',
+      tab2:'<b>Hari 2</b><span>JUMAAT 16 OKT · PERSIDANGAN</span>',
+      legal:'© 2026 SPH Media Limited. No. pendaftaran syarikat 202120748H'
+    },
+    ta:{
+      heroTitle:'<span class="sw">பிளவுபட்ட</span> உலகில் வழிநடத்தல்',
+      fbVenue:'மரினா பே சாண்ட்ஸ்<br><em>மண்டபம் D</em>',
+      fbDates:'அக்டோபர் 15 – 16<br><em>2026</em>',
+      fbHours:'18:30 <span class="lo">நாள் 1</span><br>08:30 <span class="lo">நாள் 2</span>',
+      fbAtt:'500+<br><em>பிரதிநிதிகள்</em>',
+      playPl:'<b>2025 திரைப்படத்தைக் காண்க</b>2 நிமி 14 வி · மூன்றாம் பதிப்பின் சிறப்பம்சங்கள்',
+      pull:'இந்த ஆண்டின் கருப்பொருள் <b>பிளவுபட்ட உலகில் வழிநடத்தல்</b>. சீர்குலைவும் பிளவும் நிறைந்த இந்தப் புதிய சகாப்தத்தில், கொள்கை வகுப்பாளர்களும் வணிகத் தலைவர்களும் நெகிழ்ச்சி மட்டுமின்றி, துணிச்சலான பாதைகளை உருவாக்க புதிய உத்திகளையும் புதிய தொடர்புகளையும் கொண்டிருக்க வேண்டும்.',
+      tab1:'<b>நாள் 1</b><span>வியாழன் அக் 15 · வரவேற்பு விருந்து</span>',
+      tab2:'<b>நாள் 2</b><span>வெள்ளி அக் 16 · மாநாடு</span>',
+      legal:'© 2026 SPH Media Limited. நிறுவனப் பதிவு எண் 202120748H'
+    }
+  };
+
+  /* strings written by JavaScript (coverage status line) */
+  var UI = {
+    en:{loading:function(n){return 'Loading '+n+' more…';},
+        showing:function(a,b){return 'Showing '+a+' of '+b;},
+        end:function(n){return 'End of coverage — '+n+' article'+(n===1?'':'s');},
+        empty:function(){return 'No coverage matches these filters';},
+        allPubs:function(){return 'All publications';}},
+    zh:{loading:function(n){return '正在加载另外'+n+'篇…';},
+        showing:function(a,b){return '已显示 '+a+' / '+b+' 篇';},
+        end:function(n){return '报道已全部显示 — 共'+n+'篇';},
+        empty:function(){return '没有符合筛选条件的报道';},
+        allPubs:function(){return '全部刊物';}},
+    ms:{loading:function(n){return 'Memuatkan '+n+' lagi…';},
+        showing:function(a,b){return 'Memaparkan '+a+' daripada '+b;},
+        end:function(n){return 'Tamat liputan — '+n+' artikel';},
+        empty:function(){return 'Tiada liputan sepadan dengan penapis ini';},
+        allPubs:function(){return 'Semua penerbitan';}},
+    ta:{loading:function(n){return 'மேலும் '+n+' ஏற்றப்படுகிறது…';},
+        showing:function(a,b){return b+' இல் '+a+' காட்டப்படுகிறது';},
+        end:function(n){return 'செய்திகள் முடிவு — '+n+' கட்டுரைகள்';},
+        empty:function(){return 'இந்த வடிகட்டலுக்கு செய்திகள் இல்லை';},
+        allPubs:function(){return 'அனைத்து வெளியீடுகளும்';}}
+  };
+
+  var ARIA = {
+    en:{primary:'Primary',menu:'Open menu',menuClose:'Close menu',lang:'Language',play:'Play summit film',closeVideo:'Close video',film:'Summit film',filters:'Filter coverage by category',pubs:'Filter by publication',days:'Programme days',home:'Asia Future Summit 2026, home'},
+    zh:{primary:'主导航',menu:'打开菜单',menuClose:'关闭菜单',lang:'语言',play:'播放峰会短片',closeVideo:'关闭视频',film:'峰会短片',filters:'按类别筛选报道',pubs:'按刊物筛选',days:'议程日期',home:'亚洲前瞻峰会2026，首页'},
+    ms:{primary:'Utama',menu:'Buka menu',menuClose:'Tutup menu',lang:'Bahasa',play:'Mainkan filem sidang kemuncak',closeVideo:'Tutup video',film:'Filem sidang kemuncak',filters:'Tapis liputan mengikut kategori',pubs:'Tapis mengikut penerbitan',days:'Hari atur cara',home:'Asia Future Summit 2026, laman utama'},
+    ta:{primary:'முதன்மை',menu:'பட்டியலைத் திற',menuClose:'பட்டியலை மூடு',lang:'மொழி',play:'மாநாட்டுத் திரைப்படத்தை இயக்கு',closeVideo:'வீடியோவை மூடு',film:'மாநாட்டுத் திரைப்படம்',filters:'வகைவாரியாக செய்திகளை வடிகட்டு',pubs:'வெளியீட்டு வாரியாக வடிகட்டு',days:'நிகழ்ச்சி நாட்கள்',home:'ஆசிய எதிர்கால உச்சி மாநாடு 2026, முகப்பு'}
+  };
+
+  var LABEL = {en:'EN', zh:'\u4e2d\u6587', ms:'BM', ta:'\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD'};
+  var current = 'en', nodes = [];
+
+  function collect(){
+    var skip = /^(SCRIPT|STYLE|SVG|TEXTAREA)$/;
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode:function(n){
+        var p = n.parentElement;
+        if(!p || skip.test(p.tagName)) return NodeFilter.FILTER_REJECT;
+        if(p.closest('[data-no-i18n],[data-i18n-html]')) return NodeFilter.FILTER_REJECT;
+        return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var n;
+    while((n = walker.nextNode())){
+      nodes.push({node:n, key:n.nodeValue.replace(/\s+/g,' ').trim(),
+                  pre:/^\s/.test(n.nodeValue) ? ' ' : '', post:/\s$/.test(n.nodeValue) ? ' ' : ''});
+    }
+  }
+
+  function apply(lang){
+    var dict = T[lang] || {};
+    nodes.forEach(function(r){
+      var v = dict[r.key];
+      r.node.nodeValue = r.pre + (v === undefined ? r.key : v) + r.post;
+    });
+    var hb = H[lang] || H.en;
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-html');
+      if(hb[k] !== undefined) el.innerHTML = hb[k];
+    });
+    var a = ARIA[lang] || ARIA.en;
+    var set = function(sel, val){ var e = document.querySelector(sel); if(e) e.setAttribute('aria-label', val); };
+    set('.nav-links', a.primary); set('.lang', a.lang);
+    var tg = document.querySelector('.nav-toggle');
+    if(tg){
+      tg.dataset.labelOpen = a.menu; tg.dataset.labelClose = a.menuClose;
+      tg.setAttribute('aria-label', tg.getAttribute('aria-expanded') === 'true' ? a.menuClose : a.menu);
+    }
+    set('.play', a.play); set('#filmClose', a.closeVideo); set('#filmModal', a.film);
+    set('.filters', a.filters); set('#pubSel', a.pubs); set('.daytabs', a.days); set('.lockup', a.home);
+
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-Hans' : lang);
+    var cur = document.getElementById('langCur');
+    if(cur) cur.textContent = LABEL[lang] || 'EN';
+    document.querySelectorAll('.lang-menu a').forEach(function(a){
+      if(a.dataset.lang === lang) a.setAttribute('aria-current','true');
+      else a.removeAttribute('aria-current');
+    });
+    current = lang;
+    if(typeof window.AFS_refreshStatus === 'function') window.AFS_refreshStatus();
+  }
+
+  window.AFS = {
+    ui:function(k, a, b){ return (UI[current] || UI.en)[k](a, b); },
+    lang:function(){ return current; }
+  };
+
+  function init(){
+    collect();
+    var wrap = document.getElementById('lang'), btn = document.getElementById('langBtn');
+    function close(){ wrap.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = wrap.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ close(); btn.focus(); } });
+    wrap.querySelectorAll('.lang-menu a').forEach(function(a){
+      a.addEventListener('click', function(e){ e.preventDefault(); apply(a.dataset.lang); close(); btn.focus(); });
+    });
+    apply('en');
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+</body>
+</html>
