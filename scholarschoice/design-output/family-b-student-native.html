@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family B — Student Native</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fcfaf6;
+  --sand:#efe7da;
+  --deep:#0f1f1c;      /* near-black green — dark bands, footer */
+  --teal:#0e5c54;      /* trust · links on light · secondary fill */
+  --lime:#c8f04a;      /* KEY — fills, accents on dark, active state */
+  --clay:#a8563a;      /* category labels on light */
+  --mist:#9fc4bc;      /* muted text on dark */
+  --body:#4a4a4f;
+  --muted:#78777e;
+  --line:#e3dbcc;
+  --line-2:#d2c8b5;
+  --disp:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --maxw:1160px;
+  --r:4px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:#0a1513;color:var(--deep);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+
+/* ═══════════ HARNESS ═══════════ */
+.harness{max-width:1340px;margin:0 auto;padding:44px 20px 100px}
+.hh .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);font-weight:500}
+.hh h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.8rem,5.6vw,5rem);line-height:.98;color:#fff;letter-spacing:-.04em;margin:.18em 0 .16em}
+.hh h1 span{color:var(--lime)}
+.hh .sub{font-size:1.14rem;color:#bdc9c5;max-width:62ch;line-height:1.6;margin-bottom:1.2rem}
+.hh p{color:#8fa19c;font-size:.94rem;line-height:1.72;max-width:78ch;margin-bottom:.6rem}
+.hh p b{color:#dfe9e6;font-weight:500}
+.tokens{display:flex;flex-wrap:wrap;gap:9px;margin:1.5rem 0 .4rem}
+.tok{display:flex;align-items:center;gap:8px;background:#12231f;border:1px solid #1f3733;border-radius:var(--r);padding:7px 12px;font-family:var(--mono);font-size:.66rem;color:#a9bcb7;letter-spacing:.06em;text-transform:uppercase}
+.sw{width:15px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,.2)}
+.hmeta{font-family:var(--mono);color:#657a75;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-top:1rem}
+.delta{margin-top:1.6rem;border-left:3px solid var(--lime);background:#12231f;border-radius:0 var(--r) var(--r) 0;padding:1.1rem 1.3rem}
+.delta h6{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--lime);margin-bottom:.6rem}
+.delta p{color:#9fb2ad;font-size:.84rem;line-height:1.85;margin:0;max-width:none}
+.delta b{color:#e2ece9;font-weight:500}
+.delta em{color:var(--lime);font-style:normal;background:#1a2f2a;padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:.78rem}
+
+.screen{margin:46px 0 0;border-radius:var(--r);overflow:hidden;box-shadow:0 34px 80px rgba(0,0,0,.6)}
+.chrome{background:#12231f;border-bottom:1px solid #1f3733;padding:9px 14px;display:flex;align-items:center;gap:11px}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;display:block}
+.bar{flex:1;background:#1a2f2a;border-radius:3px;padding:5px 12px;font-family:var(--mono);font-size:.68rem;color:#7e918c}
+.sctag{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);border:1px solid #3e5226;padding:3px 9px;border-radius:3px}
+.frame{background:var(--paper)}
+.note{font-family:var(--mono);font-size:.68rem;color:#657a75;letter-spacing:.09em;text-transform:uppercase;margin:16px 2px 0}
+.note b{color:var(--lime);font-weight:600}
+
+/* ═══════════ SITE ═══════════ */
+.container{max-width:var(--maxw);margin:0 auto;padding:0 2rem}
+
+.adband{background:var(--sand);text-align:center;padding:1rem;border-bottom:1px solid var(--line)}
+.adband .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#998f80}
+.adslot{margin:.6rem auto 0;max-width:970px;height:92px;border:1px dashed var(--line-2);border-radius:var(--r);background:repeating-linear-gradient(45deg,#f6f1e8,#f6f1e8 9px,#f0e9dd 9px,#f0e9dd 18px);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.66rem;color:#8c8374;letter-spacing:.12em;text-transform:uppercase}
+
+.sitehead{background:var(--paper);border-bottom:1px solid var(--line)}
+.sh-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1rem 0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:var(--disp);font-weight:800;font-size:1.2rem;letter-spacing:-.04em;color:var(--deep)}
+.logo .mk{width:27px;height:27px;border-radius:3px;background:var(--lime);color:var(--deep);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:.68rem;font-weight:800;letter-spacing:-.02em}
+nav.primary{display:flex;gap:.1rem;flex-wrap:wrap}
+nav.primary a{font-size:.85rem;font-weight:500;color:var(--body);text-decoration:none;padding:.45rem .7rem;border-radius:3px;border-bottom:2px solid transparent}
+nav.primary a:hover{background:var(--sand);color:var(--deep)}
+nav.primary a.active{color:var(--deep);font-weight:600;border-bottom-color:var(--lime)}
+nav.primary a.epaper{color:var(--teal)}
+
+.btn{display:inline-block;background:var(--lime);color:var(--deep);font-family:var(--sans);font-weight:700;font-size:.85rem;padding:.72rem 1.3rem;border-radius:var(--r);border:0;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.teal{background:var(--teal);color:#fff}
+.btn.out{background:transparent;color:var(--deep);border:1px solid var(--line-2);font-weight:600}
+.btn.block{display:block;width:100%;text-align:center}
+.btn.lg{padding:.85rem 1.55rem;font-size:.92rem}
+
+/* ═══════════ HERO ═══════════ */
+.hero{padding:3.6rem 0 3.6rem;border-bottom:1px solid var(--line)}
+.herogrid{display:grid;grid-template-columns:1.1fr .9fr;gap:3.2rem;align-items:center}
+.eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);font-weight:500}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,4.8vw,4.3rem);line-height:1;letter-spacing:-.045em;margin:.4rem 0 1rem;max-width:15ch}
+.slab{background:var(--lime);color:var(--deep);padding:0 .14em .04em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero .lede{font-size:1.06rem;line-height:1.6;color:var(--body);max-width:45ch;margin-bottom:1.7rem}
+.searchpod{display:flex;gap:.45rem;background:#fff;border:1.5px solid var(--deep);border-radius:var(--r);padding:.32rem;max-width:560px}
+.searchpod input{flex:1;min-width:0;border:0;outline:none;font-family:var(--sans);font-size:.94rem;padding:.62rem .7rem;background:transparent;color:var(--deep)}
+.hero .alt{margin-top:.9rem;font-size:.86rem;color:var(--muted)}
+.hero .alt a{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(14,92,84,.32)}
+
+.deadlines{background:var(--deep);border-radius:var(--r);overflow:hidden;color:#fff}
+.deadlines h4{font-family:var(--mono);font-size:.62rem;letter-spacing:.17em;text-transform:uppercase;color:var(--lime);padding:.9rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.12)}
+.drow{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.78rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.09);font-size:.9rem;color:#d7e2df}
+.drow:last-child{border-bottom:0}
+.drow b{font-family:var(--disp);font-weight:700;font-size:1.05rem;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums}
+.drow b.soon{color:var(--lime)}
+
+/* ═══════════ SECTIONS ═══════════ */
+section.band{padding:3.8rem 0;border-bottom:1px solid var(--line)}
+section.band.sand{background:var(--sand);border-bottom-color:var(--line-2)}
+section.band.deep{background:var(--deep);border-bottom:0}
+.sechead{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.9rem}
+.sechead .label{font-family:var(--mono);font-size:.64rem;letter-spacing:.17em;text-transform:uppercase;color:var(--clay);font-weight:500}
+.sechead h2{font-family:var(--disp);font-weight:700;font-size:2.1rem;letter-spacing:-.042em;color:var(--deep);margin-top:.3rem;line-height:1.04}
+.sechead .rule{height:4px;width:52px;background:var(--lime);margin-top:.8rem}
+.sechead.light .label{color:var(--lime)}
+.sechead.light h2{color:#fff}
+.more{font-size:.84rem;font-weight:700;color:var(--teal);text-decoration:none;white-space:nowrap}
+.sechead.light .more{color:var(--lime)}
+
+/* pathways */
+.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.path{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.5rem 1.5rem;display:flex;flex-direction:column;position:relative}
+.path .ico{width:32px;height:32px;color:var(--teal);margin-bottom:1rem}
+.path .ico svg{width:100%;height:100%;display:block}
+.path h3{font-family:var(--disp);font-weight:700;font-size:1.3rem;letter-spacing:-.036em;line-height:1.16;margin-bottom:.55rem}
+.path p{font-size:.89rem;line-height:1.6;color:var(--body);flex:1}
+.path .go{margin-top:1.1rem;font-size:.84rem;font-weight:700;color:var(--teal);text-decoration:none;align-self:flex-start;border-bottom:2px solid var(--lime);padding-bottom:2px}
+/* inverted card — the adventurous beat, and it marks the Phase 2 slot */
+.path.invert{background:var(--deep);border-color:var(--deep)}
+.path.invert h3{color:#fff}
+.path.invert p{color:var(--mist)}
+.path.invert .ico{color:var(--lime)}
+.path.invert .go{color:var(--lime)}
+.phase{font-family:var(--mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;color:var(--lime);border:1px solid rgba(200,240,74,.4);border-radius:3px;padding:.24rem .5rem;position:absolute;top:1.2rem;right:1.2rem}
+
+/* providers */
+.provs{display:flex;gap:.85rem;overflow:hidden}
+.prov{min-width:176px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.15rem}
+.prov .crest{width:38px;height:38px;border-radius:3px;background:var(--deep);color:var(--lime);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:.76rem;letter-spacing:-.02em}
+.prov h4{font-family:var(--disp);font-weight:700;font-size:.98rem;letter-spacing:-.03em;line-height:1.24;margin:.8rem 0 .26rem}
+.prov span{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.railctl{display:flex;gap:.45rem;margin-top:1.3rem}
+.railctl i{width:32px;height:32px;border:1px solid var(--line-2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-style:normal;background:#fff;color:var(--body);font-size:.8rem}
+.tags{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:1.6rem}
+.tags a{font-size:.8rem;font-weight:500;background:#fff;border:1px solid var(--line-2);padding:.42rem .8rem;color:var(--body);text-decoration:none;border-radius:3px}
+.tags a.on{background:var(--lime);border-color:var(--lime);color:var(--deep);font-weight:700}
+
+/* stories */
+.stories{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:1.3rem}
+.story{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.story .ph{aspect-ratio:16/10;position:relative;background:linear-gradient(150deg,#2a5f56,#0f1f1c)}
+.story:nth-child(2) .ph{background:linear-gradient(150deg,#6b4234,#241812)}
+.story:nth-child(3) .ph{background:linear-gradient(150deg,#3f4a3a,#161c15)}
+.story .ph::after{content:'PHOTO';position:absolute;left:.9rem;bottom:.7rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.2em;color:rgba(255,255,255,.5)}
+.story .bd{padding:1.15rem 1.2rem 1.3rem;display:flex;flex-direction:column;flex:1}
+.story .cat{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--clay);margin-bottom:.5rem}
+.story h3{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.1;color:var(--deep);margin-bottom:.45rem}
+.story.lead h3{font-size:1.72rem}
+.story h3{font-size:1.2rem}
+.story p{font-size:.87rem;line-height:1.58;color:var(--body);flex:1}
+.story .by{font-family:var(--mono);font-size:.58rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:.9rem}
+
+/* videos */
+.vgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:1.2rem}
+.vmain{position:relative;background:linear-gradient(150deg,#1c453f,#0b1715);aspect-ratio:16/9;border-radius:var(--r);display:flex;align-items:flex-end;padding:1.6rem;overflow:hidden}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:var(--lime);color:var(--deep);display:flex;align-items:center;justify-content:center;font-size:1rem;padding-left:3px}
+.vmain h3{font-family:var(--disp);font-weight:700;font-size:1.4rem;letter-spacing:-.04em;line-height:1.14;color:#fff;max-width:21ch;position:relative;z-index:1}
+.vlist{display:flex;flex-direction:column;gap:.6rem}
+.vitem{display:flex;gap:.8rem;align-items:center;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:.6rem}
+.vitem:last-child{border-bottom:0;padding-bottom:0}
+.vitem .th{width:84px;height:52px;border-radius:3px;background:#23392f;flex:none;position:relative}
+.vitem .th::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.65);font-size:.7rem}
+.vitem h4{font-family:var(--disp);font-weight:600;font-size:.92rem;letter-spacing:-.028em;line-height:1.26;color:#fff;margin-bottom:.2rem}
+.vitem span{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.smallprint{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);line-height:1.9;margin-top:1.5rem}
+
+/* reserved */
+.reserved{border:1px dashed var(--line-2);background:#fff;border-radius:var(--r);padding:1.5rem 1.7rem;display:flex;align-items:center;justify-content:space-between;gap:1.4rem;flex-wrap:wrap}
+.reserved h3{font-family:var(--disp);font-weight:700;font-size:1.35rem;letter-spacing:-.038em;margin:.3rem 0 .3rem}
+.reserved p{font-size:.86rem;color:var(--muted);line-height:1.55}
+.phase.stat{position:static;color:var(--body);border-color:var(--line-2)}
+
+/* CTA */
+.ctaband{background:var(--lime);padding:3.6rem 2rem;text-align:center}
+.ctaband h2{font-family:var(--disp);font-weight:800;font-size:2.4rem;letter-spacing:-.046em;color:var(--deep);margin-bottom:.6rem;line-height:1.02}
+.ctaband p{color:#2b3a25;font-size:.98rem;max-width:52ch;margin:0 auto 1.5rem;line-height:1.6}
+.ctaband .btn{background:var(--deep);color:var(--lime)}
+
+/* footer */
+.sitefoot{background:var(--deep);color:#96a9a4;padding:3.2rem 0 1.5rem}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.2rem}
+.sitefoot h5{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:.85rem}
+.sitefoot ul{list-style:none;font-size:.86rem;line-height:2.05}
+.sitefoot a{color:#96a9a4;text-decoration:none}
+.sitefoot a:hover{color:#fff}
+.flogo{font-family:var(--disp);font-weight:800;font-size:1.25rem;letter-spacing:-.04em;color:#fff}
+.fbase{border-top:1px solid rgba(255,255,255,.12);margin-top:2.2rem;padding-top:1.1rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:#66807a}
+
+/* ═══════════ ARTICLE ═══════════ */
+.artmast{background:var(--sand);border-bottom:1px solid var(--line-2);padding:2.8rem 0 0}
+.artgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:2.8rem;align-items:end}
+.artmast h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.02;letter-spacing:-.046em;margin:.4rem 0 1rem}
+.standfirst{font-size:1.06rem;line-height:1.62;color:var(--body);max-width:48ch;border-left:3px solid var(--lime);padding-left:1rem}
+.sf-lbl{display:block;font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
+.artmeta{display:flex;gap:2.2rem;flex-wrap:wrap;margin:1.7rem 0 2.2rem;padding-top:1.3rem;border-top:1px solid var(--line-2)}
+.artmeta div span{display:block;font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.28rem}
+.artmeta div b{font-family:var(--disp);font-weight:700;font-size:1.04rem;letter-spacing:-.032em}
+.artphoto{background:linear-gradient(150deg,#2a5f56,#0f1f1c);min-height:370px;border-radius:var(--r) var(--r) 0 0;position:relative}
+.artphoto::after{content:'PORTRAIT — 4:5';position:absolute;left:1.1rem;bottom:.9rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;color:rgba(255,255,255,.5)}
+
+.topicbar{background:var(--paper);border-bottom:1px solid var(--line);padding:1rem 0}
+.topicbar .inner{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;max-width:var(--maxw);margin:0 auto;padding:0 2rem}
+.topicbar .lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:.35rem}
+.topicbar a{font-size:.79rem;font-weight:500;text-decoration:none;color:var(--body);border:1px solid var(--line-2);padding:.34rem .7rem;border-radius:3px}
+.topicbar a:hover{background:var(--lime);border-color:var(--lime);color:var(--deep);font-weight:600}
+
+.artbody{max-width:var(--maxw);margin:0 auto;padding:3rem 2rem 4rem;display:grid;grid-template-columns:1fr 316px;gap:3.4rem;align-items:start}
+.module{margin-bottom:2.6rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line)}
+.module:last-child{border-bottom:0}
+.mlabel{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.mlabel i{font-style:normal;width:20px;height:20px;border-radius:3px;background:var(--lime);color:var(--deep);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:.6rem;font-weight:800}
+.module h2{font-family:var(--disp);font-weight:700;font-size:1.85rem;letter-spacing:-.044em;line-height:1.1;margin-bottom:.9rem}
+.module h3{font-family:var(--disp);font-weight:700;font-size:1.02rem;letter-spacing:-.028em;margin:1.5rem 0 .5rem}
+.module p{font-size:1.02rem;line-height:1.74;color:var(--body);margin-bottom:1rem}
+.module p:last-child{margin-bottom:0}
+.callout-box{background:var(--deep);border-radius:var(--r);padding:1.2rem 1.35rem;margin-top:1.2rem}
+.callout-box p{font-size:.92rem;color:var(--mist);margin:0;line-height:1.65}
+.callout-box strong{color:var(--lime);font-weight:600}
+
+.pq{background:var(--deep);border-radius:var(--r);padding:2rem 1.9rem;margin:2rem 0}
+.pq blockquote{font-family:var(--disp);font-weight:700;font-size:1.7rem;line-height:1.18;letter-spacing:-.046em;color:#fff;margin:0}
+.pq cite{display:block;font-family:var(--mono);font-style:normal;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-top:1.1rem}
+
+.rail .sticky{position:sticky;top:1.4rem;display:flex;flex-direction:column;gap:1rem}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.panel .ph{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.75rem 1.05rem;color:var(--muted);background:var(--sand);border-bottom:1px solid var(--line)}
+.panel.key .ph{background:var(--deep);color:var(--lime);border-bottom-color:var(--deep)}
+.panel .pb{padding:1.05rem}
+.share{display:flex;gap:.42rem}
+.share i{flex:1;height:36px;border:1px solid var(--line-2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:var(--body)}
+.panel .nm{font-family:var(--disp);font-weight:800;font-size:1.24rem;letter-spacing:-.042em;margin-bottom:.75rem;line-height:1.08}
+.kv{display:flex;justify-content:space-between;gap:1rem;font-size:.84rem;padding:.48rem 0;border-bottom:1px solid var(--line)}
+.kv:last-of-type{border-bottom:0}
+.kv span{color:var(--muted)}
+.kv b{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.pnote{font-family:var(--mono);font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;color:#9a968f;line-height:1.8;margin-top:.8rem}
+.rel{display:flex;gap:.75rem;padding:.7rem 0;border-bottom:1px solid var(--line)}
+.rel:last-of-type{border-bottom:0}
+.rel .th{width:58px;height:46px;border-radius:3px;background:linear-gradient(150deg,#2a5f56,#0f1f1c);flex:none}
+.rel h5{font-family:var(--disp);font-weight:700;font-size:.88rem;letter-spacing:-.028em;line-height:1.22;margin-bottom:.2rem}
+.rel span{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ═══════════ RESOURCES ═══════════ */
+.reshero{background:var(--deep);padding:3rem 0 2.8rem}
+.reshero .inner{max-width:var(--maxw);margin:0 auto;padding:0 2rem}
+.reshero h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.02;letter-spacing:-.046em;color:#fff;margin:.4rem 0 1.1rem;max-width:18ch}
+.reshero .standfirst{color:var(--mist);border-left-color:var(--lime);max-width:54ch}
+.reshero .sf-lbl{color:var(--lime)}
+.reshero .eyebrow{color:var(--lime)}
+.resbyline{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-top:1.4rem}
+
+.reslayout{max-width:var(--maxw);margin:0 auto;padding:2.9rem 2rem 4rem;display:grid;grid-template-columns:1fr 298px;gap:3.4rem;align-items:start}
+.blogpost h2{font-family:var(--disp);font-weight:700;font-size:1.6rem;letter-spacing:-.042em;line-height:1.14;margin:1.9rem 0 .75rem}
+.blogpost h2:first-of-type{margin-top:0}
+.blogpost h3{font-family:var(--disp);font-weight:700;font-size:1.02rem;letter-spacing:-.028em;margin:1.4rem 0 .5rem}
+.blogpost p{font-size:1.02rem;line-height:1.74;color:var(--body);margin-bottom:1rem}
+.blogpost ul{font-size:1rem;line-height:1.8;color:var(--body);padding-left:1.15rem}
+.seoflag{background:var(--deep);border-radius:var(--r);padding:.85rem 1.05rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mist);line-height:1.9;margin-bottom:1.7rem;border-left:4px solid var(--lime)}
+.others .item{padding:.75rem 0;border-bottom:1px solid var(--line)}
+.others .item:last-child{border-bottom:0;padding-bottom:0}
+.others .item span{font-family:var(--mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;color:var(--clay)}
+.others .item h4{font-family:var(--disp);font-weight:700;font-size:1rem;letter-spacing:-.034em;line-height:1.2;margin-top:.26rem}
+
+/* coverage */
+.coverage{margin-top:2.8rem;background:#12231f;border:1px solid #1f3733;border-radius:var(--r);padding:1.4rem 1.6rem}
+.coverage h6{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:.7rem}
+.coverage p{font-family:var(--mono);font-size:.68rem;line-height:2;color:#8fa19c;letter-spacing:.03em}
+.coverage .no{color:#61736e}
+
+@media(max-width:900px){
+  .herogrid,.paths,.stories,.vgrid,.artgrid,.artbody,.reslayout,.fgrid{grid-template-columns:1fr}
+  .artphoto{min-height:56vw}
+}
+</style>
+</head>
+<body>
+<div class="harness">
+
+<!-- ══════════ HARNESS ══════════ -->
+<div class="hh">
+  <p class="kicker">Scholar's Choice · UI/UX Refresh · Phase 1 Facelift</p>
+  <h1>Family B<br><span>Student Native</span></h1>
+  <p class="sub">Version 3 — lime as the key colour, Bricolage Grotesque carrying the tone, and the trust held by the deep green underneath rather than by restraint.</p>
+  <p>V2 solved "childish" by going quiet, and went too far — safe reads as forgettable, and a seventeen-year-old scrolling past has no reason to stop. V3 keeps the same warm-neutral base and the same teal, but puts a high-energy lime in the lead and swaps the neutral grotesque for a display face with real personality. The seriousness now comes from the near-black green ground and the editorial structure, not from the absence of anything interesting.</p>
+  <p><b>Scope:</b> all nineteen Phase 1 items from the UI/UX Refresh PRD. Phase 2 items appear as reserved placement only.</p>
+
+  <div class="tokens">
+    <div class="tok"><span class="sw" style="background:#c8f04a"></span>Lime c8f04a · KEY</div>
+    <div class="tok"><span class="sw" style="background:#0f1f1c"></span>Deep 0f1f1c</div>
+    <div class="tok"><span class="sw" style="background:#0e5c54"></span>Teal 0e5c54 · trust</div>
+    <div class="tok"><span class="sw" style="background:#a8563a"></span>Clay a8563a · labels</div>
+    <div class="tok"><span class="sw" style="background:#9fc4bc"></span>Mist 9fc4bc · on dark</div>
+    <div class="tok"><span class="sw" style="background:#efe7da"></span>Sand efe7da</div>
+    <div class="tok"><span class="sw" style="background:#fcfaf6"></span>Paper fcfaf6</div>
+    <div class="tok">Display · Bricolage Grotesque 700 / 800</div>
+    <div class="tok">Body · Inter</div>
+    <div class="tok">Label · IBM Plex Mono</div>
+    <div class="tok">Radius 4 / 3</div>
+  </div>
+
+  <div class="delta">
+    <h6>Where the adventure comes from</h6>
+    <p>
+      <b>01 · Bricolage Grotesque</b> at 700/800 with <em>−.04em</em> tracking. It is a deliberately irregular grotesque — slightly condensed, with odd, characterful curves that Inter and Poppins both lack. It is playful in the way a good magazine is playful, not in the way a children's app is. Crucially it is still a sans, so it stays clearly apart from A's Playfair and C's Bebas.<br>
+      <b>02 · Lime leads, green grounds it.</b> Lime <em>#C8F04A</em> is the key: buttons, active nav, the hero slab, tags, the play button, the CTA band. It sits on a near-black green <em>#0F1F1C</em> rather than a neutral black, so the whole palette reads as one family instead of "a bright colour on grey".<br>
+      <b>03 · An inverted card in the pathway row.</b> The third card flips to the dark ground with a lime icon. It breaks the grid's rhythm deliberately — and it does useful work, because that card is the Phase 2 placement.<br>
+      <b>04 · Full-bleed lime CTA band.</b> A whole section in the key colour, with the button inverted to deep-on-lime. This is the page's loudest moment and it is placed where a decision is being asked for.<br>
+      <b>05 · Sharper geometry.</b> Radius down from 6px to <em>4px</em>, tags to <em>3px</em>. Combined with heavier display type, sharp corners read editorial and confident rather than app-like.
+    </p>
+  </div>
+
+  <div class="delta" style="border-left-color:#0e5c54">
+    <h6>Where the trust is held</h6>
+    <p>
+      Teal is still doing the credibility work — it sets every link on a light ground and the secondary button, so the calm colour is the one attached to reading and comparing. Lime never sets text on a light ground: at <em>1.26:1</em> against paper it is illegible, so it is confined to fills and to dark grounds where it measures <em>12.99:1</em>. Body copy stays Inter at 1.02rem/1.74, the article structure is unchanged, and the warm paper keeps the reading surface quiet. The energy is all in the furniture; none of it is in the running text.
+    </p>
+  </div>
+
+  <p class="hmeta">Three screens · Homepage (full restructure) · Scholar profile (new modular template) · Guides &amp; Tips (restructure)</p>
+</div>
+
+<!-- ══════════════════ SCREEN 01 — HOMEPAGE ══════════════════ -->
+<p class="note"><b>Screen 01</b> — Homepage · PRD Phase 1 items 1–10</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg</div><div class="sctag">Homepage</div></div>
+  <div class="frame">
+
+    <!-- [2] AD BANNER -->
+    <div class="adband">
+      <p class="lbl">Advertisement · Uniform Groups</p>
+      <div class="adslot">970 × 250 — Uniform Groups placement only</div>
+    </div>
+
+    <!-- [1] NAV -->
+    <header class="sitehead"><div class="container"><div class="sh-inner">
+      <div class="logo"><span class="mk">SC</span>Scholar's Choice</div>
+      <nav class="primary">
+        <a href="#" class="active">Find a Scholarship</a>
+        <a href="#">Scholars' Experience</a>
+        <a href="#">Guides &amp; Tips</a>
+        <a href="#">Compare</a>
+        <a href="#" class="epaper">E-paper ↗</a>
+      </nav>
+      <a href="#" class="btn out">Save your shortlist</a>
+    </div></div></header>
+
+    <!-- [3] HEADLINE + CTA -->
+    <div class="hero"><div class="container"><div class="herogrid">
+      <div>
+        <p class="eyebrow">214 scholarships · Intake 2027</p>
+        <h1>Find the one that <span class="slab">actually fits.</span></h1>
+        <p class="lede">Search every scholarship in Singapore, then put any three side by side — bond, coverage, deadline, local or overseas.</p>
+        <div class="searchpod">
+          <input placeholder="Try &ldquo;engineering, no bond, overseas&rdquo;" aria-label="Search scholarships">
+          <button class="btn lg">Search &amp; compare</button>
+        </div>
+        <p class="alt">Or go straight to the <a href="#">comparison tool</a> · <a href="#">browse all providers</a></p>
+      </div>
+      <div class="deadlines">
+        <h4>Closing soonest</h4>
+        <div class="drow"><span>PSC Scholarship</span><b class="soon">14 days</b></div>
+        <div class="drow"><span>MINDEF — SAF Merit</span><b class="soon">21 days</b></div>
+        <div class="drow"><span>HTX Undergraduate</span><b>02 Apr</b></div>
+        <div class="drow"><span>MHA Uniformed</span><b>18 Apr</b></div>
+      </div>
+    </div></div></div>
+
+    <!-- [4][5][6] PATHWAYS -->
+    <section class="band"><div class="container">
+      <div class="sechead">
+        <div><p class="label">Three ways in</p><h2>Pick a starting point</h2><div class="rule"></div></div>
+        <a class="more" href="#">See all →</a>
+      </div>
+      <div class="paths">
+
+        <div class="path">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></div>
+          <h3>Find your scholarship</h3>
+          <p>You already have a rough idea. Filter by agency, field, bond and deadline, then shortlist and compare.</p>
+          <a class="go" href="#">Open the finder →</a>
+        </div>
+
+        <div class="path">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5a2.5 2.5 0 0 1-2.5 2.5H9l-4 3.5V6.5A2.5 2.5 0 0 1 7.5 4h10A2.5 2.5 0 0 1 20 6.5Z"/><path d="M9 9h7M9 12.5h4.5"/></svg></div>
+          <h3>Hear from real scholars</h3>
+          <p>Read and watch first-hand accounts from people who took the exact award you are weighing up.</p>
+          <a class="go" href="#">Read their stories →</a>
+        </div>
+
+        <div class="path invert">
+          <span class="phase">Phase 2 · placement</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.2 8.8-2.1 4.4-4.3 2.1 2.1-4.4Z"/></svg></div>
+          <h3>Not sure where to start</h3>
+          <p>Answer a short set of questions and we will point you towards the scholarships worth a look.</p>
+          <a class="go" href="#">Take the quiz →</a>
+        </div>
+
+      </div>
+    </div></section>
+
+    <!-- [7] PROVIDERS + TAGS -->
+    <section class="band sand"><div class="container">
+      <div class="sechead">
+        <div><p class="label">Who is offering</p><h2>Featured providers</h2><div class="rule"></div></div>
+        <div class="railctl"><i>‹</i><i>›</i></div>
+      </div>
+      <div class="provs">
+        <div class="prov"><div class="crest">PSC</div><h4>Public Service Commission</h4><span>12 scholarships</span></div>
+        <div class="prov"><div class="crest">MDF</div><h4>MINDEF</h4><span>08 scholarships</span></div>
+        <div class="prov"><div class="crest">HTX</div><h4>HTX</h4><span>05 scholarships</span></div>
+        <div class="prov"><div class="crest">MHA</div><h4>Ministry of Home Affairs</h4><span>07 scholarships</span></div>
+        <div class="prov"><div class="crest">A*S</div><h4>A*STAR</h4><span>06 scholarships</span></div>
+        <div class="prov" style="opacity:.45"><div class="crest">EDB</div><h4>Economic Development Board</h4><span>04 scholarships</span></div>
+      </div>
+      <div class="tags">
+        <a href="#" class="on">Bond-free</a><a href="#">Overseas</a><a href="#">Local university</a><a href="#">Mid-term</a>
+        <a href="#">Engineering</a><a href="#">Medicine</a><a href="#">Law</a><a href="#">Uniformed services</a>
+        <a href="#">Full coverage</a><a href="#">Polytechnic route</a><a href="#">Closing this month</a>
+      </div>
+    </div></section>
+
+    <!-- [8] STORIES -->
+    <section class="band"><div class="container">
+      <div class="sechead">
+        <div><p class="label">Scholars' experience</p><h2>In their own words</h2><div class="rule"></div></div>
+        <a class="more" href="#">All stories →</a>
+      </div>
+      <div class="stories">
+        <article class="story lead">
+          <div class="ph"></div>
+          <div class="bd">
+            <p class="cat">Overseas · Engineering</p>
+            <h3>She turned down a bond-free offer. Four years on, she would do it again.</h3>
+            <p>Wei Lin took the SAF Merit Scholarship to Imperial College. The trade she made at eighteen, and the part she got wrong.</p>
+            <p class="by">Editorial · 6 min read</p>
+          </div>
+        </article>
+        <article class="story">
+          <div class="ph"></div>
+          <div class="bd">
+            <p class="cat">Local · Medicine</p>
+            <h3>The year I nearly gave the scholarship back</h3>
+            <p>What happens when the course you committed to is not the one you want.</p>
+            <p class="by">Editorial · 5 min read</p>
+          </div>
+        </article>
+        <article class="story">
+          <div class="ph"></div>
+          <div class="bd">
+            <p class="cat">Polytechnic route</p>
+            <h3>From Ngee Ann to a HTX cyber posting</h3>
+            <p>The poly path is not the back door people assume it is.</p>
+            <p class="by">Editorial · 4 min read</p>
+          </div>
+        </article>
+      </div>
+    </div></section>
+
+    <!-- [9] VIDEOS -->
+    <section class="band deep"><div class="container">
+      <div class="sechead light">
+        <div><p class="label">On camera</p><h2>Watch</h2><div class="rule"></div></div>
+        <a class="more" href="#">Video page ↗</a>
+      </div>
+      <div class="vgrid">
+        <div class="vmain"><div class="play">▶</div><h3>"Ask me anything about the bond" — a PSC scholar answers</h3></div>
+        <div class="vlist">
+          <div class="vitem"><div class="th"></div><div><h4>A day inside HTX's cyber lab</h4><span>04:12 · Featured</span></div></div>
+          <div class="vitem"><div class="th"></div><div><h4>What the interview is actually like</h4><span>06:38</span></div></div>
+          <div class="vitem"><div class="th"></div><div><h4>Overseas vs local: two scholars compare</h4><span>08:01</span></div></div>
+          <div class="vitem"><div class="th"></div><div><h4>Reading the fine print on coverage</h4><span>03:44</span></div></div>
+        </div>
+      </div>
+      <p class="smallprint">Module rotates on each visit · Hosting, tracking and indexing owned by the Video Page PRD (Open Question #2) · Ships static if unresolved</p>
+    </div></section>
+
+    <!-- PHASE 2 SLOT -->
+    <section class="band sand"><div class="container">
+      <div class="reserved">
+        <div>
+          <p style="font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Reserved slot</p>
+          <h3>Monthly content module</h3>
+          <p>Space held in the layout at the correct mid-page position. The Editorial sourcing pipeline behind it is a Phase 2 dependency.</p>
+        </div>
+        <span class="phase stat">Phase 2</span>
+      </div>
+    </div></section>
+
+    <!-- CTA — the loudest moment, in the key colour -->
+    <div class="ctaband">
+      <h2>Narrow it down.</h2>
+      <p>Shortlist up to three scholarships and see bond, coverage, location and deadline against each other.</p>
+      <a href="#" class="btn lg">Open the comparison tool →</a>
+    </div>
+
+    <!-- [10] FOOTER -->
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div>
+          <div class="flogo">Scholar's Choice</div>
+          <p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p>
+        </div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited · Co. Regn. No. 202120748H</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- ══════════════════ SCREEN 02 — PROFILE ══════════════════ -->
+<p class="note"><b>Screen 02</b> — Scholar profile · new modular template · PRD Phase 1 items 11–17</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg/experience/lou-yang-saf-merit</div><div class="sctag">Profile article</div></div>
+  <div class="frame">
+
+    <header class="sitehead"><div class="container"><div class="sh-inner">
+      <div class="logo"><span class="mk">SC</span>Scholar's Choice</div>
+      <nav class="primary">
+        <a href="#">Find a Scholarship</a><a href="#" class="active">Scholars' Experience</a>
+        <a href="#">Guides &amp; Tips</a><a href="#">Compare</a><a href="#" class="epaper">E-paper ↗</a>
+      </nav>
+      <a href="#" class="btn out">Save your shortlist</a>
+    </div></div></header>
+
+    <!-- [11] MASTHEAD -->
+    <div class="artmast"><div class="container"><div class="artgrid">
+      <div>
+        <p class="eyebrow">SAF Merit Scholarship · RSAF · 2026</p>
+        <h1>Pilot, mother, mentor — and still the one flying the aircraft</h1>
+        <div class="standfirst">
+          <span class="sf-lbl">Standfirst — own section, excluded from H2/H3</span>
+          How LTC Lou Yang commands naval helicopters off moving frigates, raises two young sons, and returns to the flying club that started it all.
+        </div>
+        <div class="artmeta">
+          <div><span>Scholar</span><b>LTC Lou Yang, 37</b></div>
+          <div><span>Award</span><b>SAF Merit</b></div>
+          <div><span>Read at</span><b>Duke &amp; Yale</b></div>
+        </div>
+      </div>
+      <div class="artphoto"></div>
+    </div></div></div>
+
+    <!-- [12] TAGS -->
+    <div class="topicbar"><div class="inner">
+      <span class="lbl">Topics</span>
+      <a href="#">MINDEF</a><a href="#">RSAF</a><a href="#">Overseas</a><a href="#">Engineering</a><a href="#">Bonded</a><a href="#">Uniformed services</a><a href="#">JC route</a>
+    </div></div>
+
+    <div class="artbody">
+      <main>
+        <!-- [13] MODULAR SECTIONS -->
+        <div class="module">
+          <p class="mlabel"><i>1</i> The story</p>
+          <h2>How the decision actually got made</h2>
+          <p>A Singapore Youth Flying Club talk at her junior college changed everything. There was no grand plan — just a chance session, a first flight, and what she calls falling in love with flying.</p>
+          <p>The scholarship came after, not before. By the time the SAF Merit offer arrived, the question was no longer whether to serve but where the degrees would take her.</p>
+          <h3>What the family said</h3>
+          <p>Her parents were split, which turned out to be useful. Arguing both sides out loud made the trade-offs concrete in a way a comparison table never had.</p>
+          <div class="callout-box"><p><strong>The SAF difference:</strong> careers are planned with life stages in mind. The Servicewomen Network actively surfaces issues unique to women in uniform — and gets results.</p></div>
+        </div>
+
+        <!-- [14] PULL-QUOTE -->
+        <div class="pq">
+          <blockquote>"At work, I give my best, so that when I return to my children, I can be fully present with them."</blockquote>
+          <cite>LTC Lou Yang · SAF Merit Scholarship recipient</cite>
+        </div>
+
+        <div class="module">
+          <p class="mlabel"><i>2</i> The work</p>
+          <h2>What the job turned out to be</h2>
+          <p>Deployments last a week or two, sometimes a month. At sea she manages complex multi-crew operations, coordinating navy deck crews and air force personnel in real time — landing a 20-metre Seahawk on a deck that will not stay still.</p>
+          <p>Between postings there has been plans work, flight leadership, a diplomatic aide role between air forces, and media lead on the Shangri-La Dialogue. The engineering degree earns its keep in places the brochure never mentioned.</p>
+        </div>
+
+        <div class="module">
+          <p class="mlabel"><i>3</i> What surprised me</p>
+          <h2>Three things nobody mentions</h2>
+          <p>The cohort matters more than the course. The bond gets shorter psychologically once it actually starts. And returning to the flying club as the pilot rather than the student is stranger, and better, than she expected.</p>
+        </div>
+      </main>
+
+      <!-- [15][16][17] STICKY RAIL -->
+      <aside class="rail"><div class="sticky">
+        <div class="panel">
+          <div class="ph">Share this story</div>
+          <div class="pb"><div class="share"><i>WA</i><i>TG</i><i>IG</i><i>LINK</i></div></div>
+        </div>
+
+        <div class="panel key">
+          <div class="ph">Scholarship information</div>
+          <div class="pb">
+            <div class="nm">SAF Merit Scholarship</div>
+            <div class="kv"><span>Provider</span><b>MINDEF</b></div>
+            <div class="kv"><span>Bond</span><b>6 years</b></div>
+            <div class="kv"><span>Study location</span><b>Local or overseas</b></div>
+            <div class="kv"><span>Coverage</span><b>Full tuition + allowance</b></div>
+            <div class="kv"><span>Mid-term</span><b>Available</b></div>
+            <div class="kv"><span>Deadline</span><b>21 Mar 2027</b></div>
+            <a href="#" class="btn block" style="margin-top:.9rem">View scholarship &amp; apply →</a>
+            <p class="pnote">Links out to the scholarship page. The application flow itself is owned by the Registration PRD (Open Question #8).</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph">Related · matched by tag</div>
+          <div class="pb">
+            <div class="rel"><div class="th"></div><div><h5>Two MINDEF scholars, two very different postings</h5><span>5 min</span></div></div>
+            <div class="rel"><div class="th"></div><div><h5>What a six-year bond looks like from year five</h5><span>7 min</span></div></div>
+            <div class="rel"><div class="th"></div><div><h5>Reading coverage clauses properly</h5><span>4 min</span></div></div>
+            <p class="pnote">Phase 1 is a simple tag match. Fully curated matching is Phase 2.</p>
+          </div>
+        </div>
+      </div></aside>
+    </div>
+
+    <div class="ctaband">
+      <h2>Defend what matters.</h2>
+      <p>The SAF Merit Scholarship funds degrees at world-class universities and opens doors to careers that are anything but ordinary.</p>
+      <a href="#" class="btn lg">Explore the SAF Merit Scholarship →</a>
+    </div>
+
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div><div class="flogo">Scholar's Choice</div><p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p></div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- ══════════════════ SCREEN 03 — GUIDES & TIPS ══════════════════ -->
+<p class="note"><b>Screen 03</b> — Guides &amp; Tips · PRD Phase 1 items 18–19</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg/resources/how-to-read-a-bond</div><div class="sctag">Guides &amp; Tips</div></div>
+  <div class="frame">
+
+    <header class="sitehead"><div class="container"><div class="sh-inner">
+      <div class="logo"><span class="mk">SC</span>Scholar's Choice</div>
+      <nav class="primary">
+        <a href="#">Find a Scholarship</a><a href="#">Scholars' Experience</a>
+        <a href="#" class="active">Guides &amp; Tips</a><a href="#">Compare</a><a href="#" class="epaper">E-paper ↗</a>
+      </nav>
+      <a href="#" class="btn out">Save your shortlist</a>
+    </div></div></header>
+
+    <!-- [18] MASTHEAD -->
+    <div class="reshero"><div class="inner">
+      <p class="eyebrow">Guides &amp; Tips · Money</p>
+      <h1>How to read a scholarship bond before you sign it</h1>
+      <div class="standfirst">
+        <span class="sf-lbl">Standfirst — own section, not an H2</span>
+        Six years, four years, "service obligation" — the wording varies, and so does what it actually costs you. A plain-English walkthrough of the five clauses that matter.
+      </div>
+      <p class="resbyline">By Editorial · Updated 12 January 2027 · 8 min read</p>
+    </div></div>
+
+    <div class="reslayout">
+      <article class="blogpost">
+        <!-- [19] SEO STRUCTURE -->
+        <div class="seoflag">SEO structure fix — the standfirst sits above and outside the heading tree. Body uses a single H1, then sequential H2 › H3. No decorative headings.</div>
+        <p>Almost every bonded scholarship in Singapore uses one of three contract shapes. Once you can tell them apart, the comparison table stops being a wall of numbers.</p>
+
+        <h2>1. Bond length is not the same as bond start</h2>
+        <p>Two awards both listed as "six years" can differ by two full years depending on when the clock starts — graduation, commissioning, or completion of initial training.</p>
+        <h3>What to look for in the letter</h3>
+        <p>The phrase "commencing upon" does almost all the work here. Find it before you compare anything else.</p>
+
+        <h2>2. Coverage is a list, and lists have gaps</h2>
+        <ul>
+          <li>Tuition — almost always covered in full</li>
+          <li>Maintenance allowance — varies widely by study location</li>
+          <li>Airfare — often one return trip per academic year, not per term</li>
+          <li>Settling-in and computer grants — one-off, easy to miss</li>
+        </ul>
+
+        <h2>3. Breaking a bond has a formula</h2>
+        <p>Liquidated damages are usually pro-rated against served time. Ask for the formula, not the headline figure.</p>
+      </article>
+
+      <aside class="rail"><div class="sticky">
+        <div class="panel others">
+          <div class="ph">Other stories</div>
+          <div class="pb">
+            <div class="item"><span>Guides</span><h4>The interview: 12 questions that keep coming up</h4></div>
+            <div class="item"><span>Guides</span><h4>Overseas or local — a decision framework</h4></div>
+            <div class="item"><span>Money</span><h4>What "full coverage" leaves out</h4></div>
+            <div class="item"><span>Timeline</span><h4>A month-by-month application calendar</h4></div>
+          </div>
+        </div>
+        <div class="panel key">
+          <div class="ph">Compare</div>
+          <div class="pb">
+            <p style="font-size:.88rem;line-height:1.6;color:var(--body);margin-bottom:.9rem">Put the bonds you are weighing up side by side.</p>
+            <a href="#" class="btn block">Open comparison tool →</a>
+          </div>
+        </div>
+      </div></aside>
+    </div>
+
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div><div class="flogo">Scholar's Choice</div><p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p></div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- COVERAGE -->
+<div class="coverage">
+  <h6>Phase 1 coverage — all 19 items</h6>
+  <p>01 Nav ✓ · 02 Ad banner ✓ · 03 Headline + CTA ✓ · 04 Pathway: find ✓ · 05 Pathway: scholars ✓ · 06 Pathway: quiz placement ✓ · 07 Provider carousel + tags ✓ · 08 Stories ✓ · 09 Videos ✓ · 10 Footer ✓ · 11 Large masthead ✓ · 12 Tags/topics ✓ · 13 Modular template ✓ · 14 Pull-quote ✓ · 15 Share panel ✓ · 16 Scholarship info panel ✓ · 17 Related, tag-based ✓ · 18 Resources masthead + other stories + blog template ✓ · 19 SEO structure ✓</p>
+  <p class="no" style="margin-top:.6rem">Not built — Phase 2: quiz logic · monthly content pipeline · profile backfill · curated related articles · rebuilt comparison attributes · agency hubs · evergreen · AMA</p>
+</div>
+
+</div>
+</body>
+</html>

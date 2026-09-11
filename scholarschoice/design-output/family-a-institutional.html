@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family A — Institutional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── Option 2 palette · graphite / bone / cobalt ──
+     Cobalt is the only chromatic colour. Split by ground:
+     cobalt on light, powder on dark. Cobalt against graphite
+     is 2.23:1, so it never sits as text or a fill on dark.   */
+  --graphite:#17181c;     /* grounds, masthead, footer, dark bands  */
+  --graphite-2:#23252d;   /* raised surfaces on dark                */
+  --bone:#f6f6f4;         /* paper                                  */
+  --mist:#e9ecf5;         /* tinted band, ad band, share buttons    */
+  --cobalt:#1b3bd6;       /* ACTION — light grounds only            */
+  --slate:#5a6072;        /* structure — labels, 3px card rules     */
+  --powder:#9db0fa;       /* display type on dark, 24px and above   */
+  --powder-lt:#b8c8fc;    /* small text on dark — labels, cites     */
+  --white:#ffffff;
+  --gray:#6f7280;         /* muted text on light                    */
+  --ink-body:#454750;     /* body copy                              */
+  --disp:'Playfair Display',Georgia,'Times New Roman',serif;
+  --disp-w:600;        /* SemiBold — hard ceiling, never 700+ */
+  --disp-w-soft:500;   /* Medium — for display sizes 2.5rem and up */
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display',Georgia,serif;
+  --maxw:1100px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:#0c0d11;color:var(--graphite);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+
+/* ─────────── MOCKUP HARNESS ─────────── */
+.harness{max-width:1340px;margin:0 auto;padding:44px 20px 100px}
+.hh .kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--powder-lt);font-weight:700}
+.hh h1{font-family:var(--disp);font-weight:var(--disp-w-soft);font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.02;color:#fff;letter-spacing:-.022em;margin:.2em 0 .14em}
+.hh h1 span{color:var(--powder)}
+.hh .sub{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:rgba(255,255,255,.62);max-width:60ch;line-height:1.6;margin-bottom:1.2rem}
+.hh p{color:#9aa0b4;font-size:.94rem;line-height:1.7;max-width:74ch;margin-bottom:.6rem}
+.hh p b{color:var(--powder-lt);font-weight:500}
+.tokens{display:flex;flex-wrap:wrap;gap:9px;margin:1.5rem 0 .4rem}
+.tok{display:flex;align-items:center;gap:8px;background:#171a24;border:1px solid #252a38;border-radius:3px;padding:7px 12px;font-size:.68rem;color:#aab0c4;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.sw{width:15px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,.2)}
+.typenote{margin-top:1.6rem;border-left:3px solid var(--cobalt);background:#171a24;border-radius:0 6px 6px 0;padding:1rem 1.2rem}
+.typenote h6{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--powder-lt);margin-bottom:.5rem}
+.typenote p{color:#a3a9bc;font-size:.84rem;line-height:1.75;margin:0;max-width:none}
+.typenote b{color:#e2e5f0;font-weight:500}
+.hmeta{color:#8a90a6;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;margin-top:1rem}
+
+.screen{margin:46px 0 0;border-radius:6px;overflow:hidden;box-shadow:0 34px 80px rgba(0,0,0,.6)}
+.chrome{background:#171a24;border-bottom:1px solid #252a38;padding:9px 14px;display:flex;align-items:center;gap:11px}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;display:block}
+.bar{flex:1;background:#1f2432;border-radius:3px;padding:5px 12px;font-size:.7rem;color:#7f889e;letter-spacing:.03em}
+.sctag{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--powder-lt);border:1px solid #303a5c;padding:3px 9px;border-radius:2px;font-weight:700}
+.frame{background:var(--bone)}
+.note{font-size:.7rem;color:#8a90a6;letter-spacing:.09em;text-transform:uppercase;margin:16px 2px 0;font-weight:500}
+.note b{color:var(--powder-lt);font-weight:700}
+
+/* ─────────── SHARED SITE CHROME ─────────── */
+.container{max-width:var(--maxw);margin:0 auto;padding:0 2rem}
+
+.adband{background:var(--mist);text-align:center;padding:1rem}
+.adband .lbl{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:#8b8f9c;font-weight:700}
+.adslot{margin:.6rem auto 0;max-width:970px;height:92px;border:1px dashed #c4c7d2;background:repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6 9px,#e7e9f0 9px,#e7e9f0 18px);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:#828693;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+
+.sitehead{background:var(--graphite)}
+.sh-top{display:flex;align-items:center;justify-content:space-between;padding:1.15rem 0;gap:1.5rem}
+.logo{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.5rem;color:#fff;letter-spacing:-.012em;line-height:1}
+.logo span{color:var(--powder)}
+.sh-util{display:flex;gap:1.3rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:500}
+.sh-util a{color:rgba(255,255,255,.6);text-decoration:none}
+.mainnav{border-top:1px solid rgba(255,255,255,.12)}
+.mainnav ul{display:flex;list-style:none;flex-wrap:wrap}
+.mainnav a{display:block;padding:.95rem 0;margin-right:2rem;color:rgba(255,255,255,.88);text-decoration:none;font-size:.74rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mainnav a:hover{color:#fff;border-bottom-color:var(--slate)}
+.mainnav a.active{color:#fff;border-bottom-color:var(--powder)}
+.mainnav a.epaper{color:var(--powder-lt);margin-right:0}
+
+/* section furniture */
+.section-label{text-align:center;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--slate);font-weight:700;margin-bottom:.6rem}
+.section-title{text-align:center;font-family:var(--disp);font-weight:var(--disp-w-soft);font-size:2.45rem;color:var(--graphite);letter-spacing:-.019em;margin-bottom:2.4rem;line-height:1.1}
+.section-title.light{color:#fff}
+.center-more{text-align:center;margin-top:2.4rem}
+.link-more{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--slate);text-decoration:none;border-bottom:2px solid var(--cobalt);padding-bottom:3px}
+
+/* Buttons invert by ground. Cobalt vs graphite is 2.23:1, so a
+   cobalt button on a dark panel would have no edge at all.      */
+.cta-btn{display:inline-block;background:var(--cobalt);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:.95rem 2.1rem;border-radius:4px;border:0;cursor:pointer;font-family:var(--sans)}
+.cta-btn.on-dark{background:var(--bone);color:var(--cobalt)}
+/* search: graphite fill, light cobalt label — 10.73:1, Lc 72.9 */
+.cta-btn.search{background:var(--graphite);color:var(--powder-lt)}
+.cta-btn.slate{background:var(--slate);color:#fff}
+.cta-btn.block{display:block;width:100%;text-align:center}
+
+/* ─────────── HOMEPAGE HERO (split, from sample) ─────────── */
+.hero{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:78vh;overflow:hidden}
+.hero-image-side{position:relative;background:var(--graphite);overflow:hidden}
+.hero-image-side .fill{position:absolute;inset:0;background:linear-gradient(160deg,#3a4360,#17181c 75%)}
+.hero-image-side .ghostmark{position:absolute;bottom:-3.4rem;left:-.5rem;font-family:var(--disp);font-weight:var(--disp-w);font-size:11rem;color:rgba(255,255,255,.05);letter-spacing:-.02em;line-height:1;pointer-events:none}
+.hero-image-overlay{position:absolute;inset:0;background:linear-gradient(135deg,var(--graphite) 0%,transparent 62%)}
+.hero-tag{position:absolute;top:2rem;left:2rem;background:var(--bone);color:var(--cobalt);font-weight:700;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;padding:.4rem .9rem;border-radius:2px}
+.imgcap{position:absolute;left:2rem;bottom:1.4rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:700}
+.hero-content{background:var(--graphite);padding:3.6rem 3.2rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero-content::before{content:'';position:absolute;top:-40%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(58,155,213,.15) 0%,transparent 70%);border-radius:50%}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--powder);margin-bottom:1.1rem;font-weight:500;position:relative}
+.hero-title{font-family:var(--disp);font-weight:var(--disp-w-soft);font-size:clamp(2.3rem,3.9vw,3.75rem);line-height:1.06;color:#fff;letter-spacing:-.024em;margin-bottom:1.3rem;position:relative}
+.hero-title span{color:var(--powder);display:block}
+.hero-subtitle{font-family:var(--serif);font-style:italic;font-size:1.08rem;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:2rem;position:relative;max-width:40ch}
+.searchpod{background:#fff;border-radius:4px;padding:.4rem;display:flex;gap:.5rem;position:relative;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.searchpod input{flex:1;border:0;outline:none;font-family:var(--sans);font-size:.95rem;padding:.85rem .9rem;color:var(--graphite)}
+.hero-alt{margin-top:.95rem;font-size:.85rem;color:rgba(255,255,255,.55);position:relative}
+.hero-alt a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.2rem;position:relative}
+.stat{border-left:2px solid var(--slate);padding-left:1rem}
+.stat-num{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.95rem;color:var(--powder);line-height:1.04;letter-spacing:-.015em;font-variant-numeric:lining-nums tabular-nums}
+.stat-label{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.2rem}
+
+/* intro banner */
+.intro-banner{background:var(--slate);color:#fff;padding:2.2rem;text-align:center}
+.intro-banner p{font-size:1.05rem;line-height:1.7;max-width:760px;margin:0 auto;font-weight:300}
+.intro-banner strong{font-weight:700}
+
+/* ─────────── TAB NAV (from sample) ─────────── */
+.tab-nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid rgba(10,22,40,.08);box-shadow:0 2px 12px rgba(10,22,40,.07)}
+.tab-nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 2rem;display:flex}
+.tab-link{display:flex;align-items:center;gap:.5rem;padding:1rem 1.4rem 1rem 0;margin-right:1.4rem;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gray);border-bottom:2px solid transparent;white-space:nowrap;margin-bottom:-1px}
+.tab-link:hover{color:var(--slate)}
+.tab-link.active{color:var(--graphite);border-bottom-color:var(--cobalt)}
+.tab-icon{font-size:.95rem;line-height:1}
+.tab-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--mist);font-size:.58rem;font-weight:700;color:var(--gray)}
+.tab-link.active .tab-num{background:var(--slate);color:#fff}
+
+/* ─────────── CARD GRIDS (fact-card language) ─────────── */
+.band{padding:4.2rem 2rem}
+.band.white{background:#fff}
+.band.cream{background:var(--bone)}
+.band.navy{background:var(--graphite)}
+
+.facts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto}
+.fact-card{background:var(--bone);border-radius:8px;padding:2rem 1.6rem;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.band.cream .fact-card{background:#fff;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slate)}
+.fact-card.key::after{background:var(--cobalt)}
+.fact-icon{font-size:1.7rem;margin-bottom:.8rem;line-height:1}
+.fact-title{font-weight:700;font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin-bottom:.5rem}
+.fact-card.key .fact-title{color:var(--cobalt)}
+.fact-head{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.4rem;letter-spacing:-.014em;color:var(--graphite);line-height:1.2;margin-bottom:.55rem}
+.fact-body{font-size:.92rem;line-height:1.58;color:var(--ink-body);flex:1}
+.fact-go{margin-top:1.1rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--graphite);text-decoration:none;align-self:flex-start;border-bottom:2px solid var(--cobalt);padding-bottom:2px}
+.phasechip{position:absolute;top:1rem;right:1rem;background:var(--graphite);color:var(--powder-lt);font-size:.55rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:.3rem .6rem;border-radius:2px}
+
+/* providers */
+.prov-rail{display:flex;gap:1.1rem;overflow:hidden;max-width:1000px;margin:0 auto}
+.prov{min-width:180px;background:#fff;border-radius:8px;padding:1.4rem;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.prov::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slate)}
+.crest{width:44px;height:44px;border-radius:6px;background:var(--graphite);color:var(--powder-lt);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:var(--disp-w);font-size:.95rem;letter-spacing:0}
+.prov h4{font-size:.9rem;font-weight:700;margin:.85rem 0 .25rem;line-height:1.3;color:var(--graphite)}
+.prov span{font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gray);font-weight:700}
+.railctl{display:flex;gap:.5rem;justify-content:center;margin-top:1.6rem}
+.railctl i{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid #dcdee6;display:flex;align-items:center;justify-content:center;font-style:normal;color:var(--slate);box-shadow:0 2px 8px rgba(10,22,40,.06)}
+.tagcloud{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;max-width:840px;margin:1.9rem auto 0}
+.tagcloud a{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff;border:1px solid #dcdee6;color:var(--graphite);text-decoration:none;padding:.55rem 1rem;border-radius:3px}
+.tagcloud a.on{background:var(--slate);border-color:var(--slate);color:#fff}
+
+/* stories */
+.stories{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.5rem;max-width:1000px;margin:0 auto}
+.story{background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.story .ph{aspect-ratio:16/10;position:relative;background:linear-gradient(140deg,#3d4560,#17181c)}
+.story:nth-child(2) .ph{background:linear-gradient(140deg,#4a5170,#17181c)}
+.story:nth-child(3) .ph{background:linear-gradient(140deg,#5a6278,#23252d)}
+.story .ph::after{content:'PHOTO';position:absolute;left:1rem;bottom:.8rem;font-size:.58rem;letter-spacing:.22em;color:rgba(255,255,255,.45);font-weight:700}
+.story .cardbody{padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;flex:1;position:relative}
+.story .cardbody::before{content:'';position:absolute;top:0;left:0;width:44px;height:3px;background:var(--cobalt)}
+.story .cat{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin:.35rem 0 .6rem}
+.story h3{font-family:var(--disp);font-weight:var(--disp-w);letter-spacing:-.016em;line-height:1.16;color:var(--graphite);margin-bottom:.55rem}
+.story.lead h3{font-size:1.72rem;letter-spacing:-.019em}
+.story h3{font-size:1.22rem}
+.story p{font-size:.9rem;line-height:1.6;color:var(--ink-body);flex:1}
+.story .byline{font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:#8f939f;margin-top:1rem;font-weight:700}
+
+/* videos — navy with ghost wordmark */
+.ghostband{position:relative;overflow:hidden}
+.ghostband::before{content:attr(data-ghost);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--disp);font-weight:var(--disp-w);font-size:12rem;color:rgba(255,255,255,.045);letter-spacing:-.01em;white-space:nowrap;pointer-events:none;line-height:1}
+.vgrid{display:grid;grid-template-columns:1.55fr 1fr;gap:1.4rem;max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.vmain{position:relative;background:linear-gradient(135deg,#2c3352 0%,var(--graphite) 100%);aspect-ratio:16/9;border-radius:8px;display:flex;align-items:flex-end;padding:1.7rem;overflow:hidden}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;background:var(--bone);color:var(--cobalt);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.vmain h3{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.48rem;color:#fff;letter-spacing:-.016em;line-height:1.18;max-width:22ch;position:relative;z-index:1}
+.vlist{display:flex;flex-direction:column;gap:.7rem}
+.vitem{display:flex;gap:.85rem;align-items:center;background:rgba(255,255,255,.06);border-radius:8px;padding:.65rem;position:relative;overflow:hidden}
+.vitem::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--slate)}
+.vitem .th{width:88px;height:54px;border-radius:5px;background:#2b2e3a;flex:none;position:relative}
+.vitem .th::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);font-size:.8rem}
+.vitem h4{font-size:.85rem;color:#fff;font-weight:700;line-height:1.35;margin-bottom:.25rem}
+.vitem span{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--powder);font-weight:700}
+.smallprint{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.34);line-height:1.8;max-width:1000px;margin:1.6rem auto 0;position:relative;z-index:1;text-align:center;font-weight:700}
+
+/* reserved slot */
+.reserved{max-width:1000px;margin:0 auto;border:1px dashed #c3ceda;background:#fff;border-radius:8px;padding:1.8rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.reserved h3{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.48rem;letter-spacing:-.016em;color:var(--graphite);line-height:1.14;margin:.4rem 0 .35rem}
+.reserved p{font-size:.88rem;color:var(--gray);line-height:1.55}
+
+/* CTA band */
+.scholarship-cta{background:linear-gradient(135deg,var(--cobalt) 0%,var(--graphite) 100%);padding:4.4rem 2rem;text-align:center;position:relative;overflow:hidden}
+.scholarship-cta h2{font-family:var(--disp);font-weight:var(--disp-w-soft);font-size:2.45rem;color:#fff;letter-spacing:-.019em;margin-bottom:.7rem;position:relative;z-index:1;line-height:1.1}
+.scholarship-cta p{color:rgba(255,255,255,.75);font-size:1rem;max-width:560px;margin:0 auto 1.8rem;line-height:1.6;position:relative;z-index:1}
+
+/* footer */
+.sitefoot{background:var(--graphite);color:rgba(255,255,255,.55);padding:3.4rem 0 1.6rem}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.2rem}
+.sitefoot h5{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--powder-lt);margin-bottom:.9rem;font-weight:700}
+.sitefoot ul{list-style:none;font-size:.86rem;line-height:2.1}
+.sitefoot a{color:rgba(255,255,255,.55);text-decoration:none}
+.sitefoot a:hover{color:#fff}
+.flogo{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.4rem;color:#fff;letter-spacing:-.012em}
+.fbase{border-top:1px solid rgba(255,255,255,.1);margin-top:2.2rem;padding-top:1.2rem;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:rgba(255,255,255,.36)}
+
+/* ─────────── ARTICLE ─────────── */
+.art-hero{display:grid;grid-template-columns:1fr 1fr;min-height:74vh;overflow:hidden}
+.art-photo{position:relative;background:var(--graphite);overflow:hidden}
+.art-photo img{width:100%;height:100%;object-fit:cover;opacity:.75;filter:saturate(.7) contrast(1.1)}
+.art-photo .fallback{position:absolute;inset:0;background:linear-gradient(150deg,#434a68,#17181c 78%);z-index:-1}
+
+.topicbar{background:#fff;border-bottom:1px solid rgba(10,22,40,.08);padding:1rem 0}
+.topicbar .inner{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;max-width:var(--maxw);margin:0 auto;padding:0 2rem}
+.topicbar .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);font-weight:700;margin-right:.4rem}
+.topicbar a{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--graphite);background:var(--mist);padding:.45rem .85rem;border-radius:3px}
+.topicbar a:hover{background:var(--slate);color:#fff}
+
+.artwrap{background:var(--bone);padding:3.4rem 0 4.4rem}
+.artlayout{max-width:var(--maxw);margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 320px;gap:3.4rem;align-items:start}
+
+.module{background:#fff;border-radius:8px;padding:2.2rem 2.4rem;margin-bottom:1.4rem;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.module::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slate)}
+.mlabel{display:inline-flex;align-items:center;gap:.5rem;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);margin-bottom:.7rem}
+.mlabel i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--slate);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.58rem}
+.module h2{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.78rem;color:var(--graphite);letter-spacing:-.018em;line-height:1.18;margin-bottom:1rem}
+.module h3{font-size:.86rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin:1.6rem 0 .55rem}
+.module p{font-size:1rem;line-height:1.75;color:var(--ink-body);margin-bottom:1rem}
+.module p:last-child{margin-bottom:0}
+.highlight-box{background:var(--graphite);color:#fff;border-radius:8px;padding:1.4rem 1.5rem;margin-top:1.2rem}
+.highlight-box p{color:rgba(255,255,255,.8);font-size:.9rem;margin:0;line-height:1.65}
+.highlight-box strong{color:var(--powder-lt)}
+
+.pull-quote-section{background:var(--graphite);border-radius:8px;padding:3rem 2.4rem;margin-bottom:1.4rem;position:relative;overflow:hidden}
+.pull-quote-section::before{content:'\201C';position:absolute;top:-1.2rem;left:.6rem;font-family:var(--disp);font-weight:var(--disp-w);font-size:13rem;color:rgba(255,255,255,.05);line-height:1;pointer-events:none}
+.pull-quote{position:relative;z-index:1;text-align:center;max-width:660px;margin:0 auto}
+.pull-quote blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2.3vw,1.75rem);line-height:1.5;color:#fff;margin-bottom:1.1rem}
+.pull-quote cite{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--powder-lt);font-style:normal;font-weight:700}
+
+.rail .sticky{position:sticky;top:74px;display:flex;flex-direction:column;gap:1.1rem}
+.panel{background:#fff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.panel::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slate)}
+.panel.key::after{background:var(--cobalt)}
+.panel .ph{background:var(--graphite);color:#fff;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;padding:.8rem 1.15rem;font-weight:700}
+.panel .pb{padding:1.2rem 1.15rem 1.5rem}
+.share{display:flex;gap:.5rem}
+.share i{flex:1;height:40px;border-radius:4px;background:var(--mist);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.1em;color:var(--graphite)}
+.panel .pname{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.28rem;letter-spacing:-.014em;color:var(--graphite);line-height:1.18;margin-bottom:.9rem}
+.kv{display:flex;justify-content:space-between;gap:1rem;font-size:.84rem;padding:.55rem 0;border-bottom:1px solid var(--mist)}
+.kv:last-of-type{border:0}
+.kv span{color:var(--gray)}
+.kv b{font-weight:700;text-align:right;color:var(--graphite)}
+.pnote{font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:#8f939f;line-height:1.75;margin-top:.8rem;font-weight:700}
+.rel{display:flex;gap:.8rem;padding:.75rem 0;border-bottom:1px solid var(--mist)}
+.rel:last-of-type{border:0}
+.rel .th{width:62px;height:48px;border-radius:4px;background:linear-gradient(140deg,#3d4560,#17181c);flex:none}
+.rel h5{font-size:.84rem;font-weight:700;line-height:1.35;color:var(--graphite);margin-bottom:.25rem}
+.rel span{font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:#8f939f;font-weight:700}
+
+/* ─────────── RESOURCES ─────────── */
+.res-hero{background:var(--graphite);padding:3.4rem 0 3rem;position:relative;overflow:hidden}
+.res-hero::before{content:'Guides';position:absolute;right:-1.5rem;top:50%;transform:translateY(-50%);font-family:var(--disp);font-weight:var(--disp-w);font-style:italic;font-size:10.5rem;color:rgba(255,255,255,.045);letter-spacing:-.02em;line-height:1;pointer-events:none}
+.res-hero .inner{max-width:var(--maxw);margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+.res-hero h1{font-family:var(--disp);font-weight:var(--disp-w-soft);font-size:clamp(2.2rem,3.8vw,3.4rem);color:#fff;letter-spacing:-.022em;line-height:1.08;margin:.55rem 0 1.2rem;max-width:20ch}
+.res-hero h1 span{color:var(--powder)}
+.standfirst{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.6;color:rgba(255,255,255,.68);max-width:52ch;border-left:2px solid var(--slate);padding-left:1.1rem}
+.sf-lbl{display:block;font-family:var(--sans);font-style:normal;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--powder);margin-bottom:.5rem;font-weight:700}
+.res-byline{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-top:1.5rem;font-weight:700}
+
+.reslayout{max-width:var(--maxw);margin:0 auto;padding:3.2rem 2rem 4.4rem;display:grid;grid-template-columns:1fr 300px;gap:3.4rem;align-items:start}
+.blogpost{background:#fff;border-radius:8px;padding:2.4rem 2.6rem;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.blogpost::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slate)}
+.blogpost h2{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.62rem;color:var(--graphite);letter-spacing:-.018em;line-height:1.2;margin:2rem 0 .8rem}
+.blogpost h2:first-of-type{margin-top:0}
+.blogpost h3{font-size:.84rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin:1.5rem 0 .5rem}
+.blogpost p{font-size:1rem;line-height:1.75;color:var(--ink-body);margin-bottom:1rem}
+.blogpost ul{font-size:1rem;line-height:1.8;color:var(--ink-body);padding-left:1.2rem}
+.seoflag{background:#eef0f9;border-left:3px solid var(--cobalt);border-radius:4px;padding:.85rem 1.1rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#25369c;line-height:1.85;margin-bottom:1.8rem;font-weight:700}
+.others .item{padding:.85rem 0;border-bottom:1px solid var(--mist)}
+.others .item:last-child{border:0;padding-bottom:0}
+.others .item span{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);font-weight:700}
+.others .item h4{font-family:var(--disp);font-weight:var(--disp-w);font-size:1.06rem;letter-spacing:-.01em;color:var(--graphite);line-height:1.28;margin-top:.35rem}
+
+/* coverage footer */
+.coverage{margin-top:2.8rem;background:#171a24;border:1px solid #252a38;border-radius:6px;padding:1.4rem 1.6rem}
+.coverage h6{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--powder-lt);margin-bottom:.7rem}
+.coverage p{font-size:.72rem;line-height:2;color:#9aa0b4;letter-spacing:.04em}
+.coverage .no{color:#6f7688}
+
+@media(max-width:900px){
+  .hero,.art-hero{grid-template-columns:1fr;min-height:auto}
+  .hero-image-side,.art-photo{height:56vw;min-height:240px}
+  .hero-content{padding:2.4rem 1.5rem}
+  .facts-grid,.stories,.vgrid,.artlayout,.reslayout,.fgrid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .tab-nav-inner{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<div class="harness">
+
+<!-- ══════════ HARNESS HEADER ══════════ -->
+<div class="hh">
+  <p class="kicker">Scholar's Choice · UI/UX Refresh · Phase 1 Facelift</p>
+  <h1>Family A<br><span>The Institution</span></h1>
+  <p class="sub">Adapted to the visual system already proven on the LTC Lou Yang sponsored feature — graphite, bone and cobalt; Playfair Display over DM Sans; DM Serif italic for anything in the subject's own voice.</p>
+  <p>This is deliberately not a new look invented from scratch. It takes the split hero, the sticky tab nav, the 3px-rule cards, the ghost-type bands and the CTA treatment that already exist on Scholar's Choice and extends them into a full Phase 1 system — homepage, profile template and Guides &amp; Tips. Sales get a coherent masthead story; Engineering get one card component reused nine ways.</p>
+  <p><b>Scope:</b> every element below is a Phase 1 item from the UI/UX Refresh PRD. Phase 2 items appear as reserved placement only, marked <b>PHASE 2</b>.</p>
+  <div class="tokens">
+    <div class="tok"><span class="sw" style="background:#17181c"></span>Graphite 17181c</div>
+    <div class="tok"><span class="sw" style="background:#1b3bd6"></span>Cobalt 1b3bd6 · action</div>
+    <div class="tok"><span class="sw" style="background:#5a6072"></span>Slate 5a6072 · structure</div>
+    <div class="tok"><span class="sw" style="background:#9db0fa"></span>Powder 9db0fa · display on dark</div>
+    <div class="tok"><span class="sw" style="background:#b8c8fc"></span>Powder-lt b8c8fc · small on dark</div>
+    <div class="tok"><span class="sw" style="background:#f6f6f4"></span>Bone f6f6f4</div>
+    <div class="tok"><span class="sw" style="background:#e9ecf5"></span>Mist e9ecf5 · tinted</div>
+    <div class="tok">Display · Playfair 500 / 600</div>
+    <div class="tok">Body · DM Sans</div>
+    <div class="tok">Voice · DM Serif Italic</div>
+    <div class="tok">Radius 8px · Rule 3px</div>
+  </div>
+  <div class="typenote">
+    <h6>Palette change — navy &amp; gold → graphite, bone &amp; cobalt</h6>
+    <p>
+      <b>Gold is gone, and so is the navy.</b> The side-by-side study showed the navy was carrying as much of the heritage read as the gold was — deep navy on cream paper <em>is</em> the convention; gold was the ornament on it. So the whole palette moved: graphite grounds, bone paper, and cobalt as the only chromatic colour on the page. A cool slate carries labels and the 3px card rules.<br><br>
+      <b>Cobalt splits by ground, because it has to.</b> Cobalt against graphite measures <em>2.23:1</em> — as text or as a button fill on a dark panel it would have no edge at all. Gold escaped this only by being light. So: <b>cobalt on light grounds</b> (7.34:1 as a link, 7.94:1 as a fill under white text), and <b>powder #9DB0FA on dark</b> for display type, with <b>#B8C8FC</b> for anything under 24px. Buttons invert — cobalt fill on light, bone fill with cobalt text on dark.<br><br>
+      <b>Search button, per review:</b> graphite fill with a light cobalt label — <em>10.73:1</em>, Lc 72.9, and a 17.7:1 edge against the white search pod. It reads as part of the field rather than as a second CTA competing with the hero.<br><br>
+      <b>Separation from Family C:</b> C is navy plus warm ember. This is graphite plus cool cobalt. No shared hue, no shared ground.
+    </p>
+  </div>
+
+  <div class="typenote">
+    <h6>Typography change — Bebas Neue → Playfair Display</h6>
+    <p>
+      <b>Weight ceiling honoured:</b> the face is loaded at 400 / 500 / 600 only. Titles 2.45rem and above use <b>500 (Medium)</b>; everything smaller uses <b>600 (SemiBold)</b>, which is the hard ceiling. Nothing on the page is set heavier.<br><br>
+      <b>This was a retune, not a find-and-replace.</b> Bebas is a condensed all-caps grotesque with no lowercase; Playfair is a wide, high-contrast serif with a large lowercase. Swapping the family alone would have produced oversized, loose, tightly-leaded headlines. Every display rule was re-set: sizes down 12–18&percnt;, letter-spacing from positive (+.02 to +.04em, which caps need) to negative (−.01 to −.024em, which lowercase serifs need), and line-height up from 0.92–1.05 to 1.02–1.28 to clear the descenders.<br><br>
+      <b>Knock-on:</b> headlines now read in sentence case rather than forced caps, so they carry more words at the same width — the homepage hero and story decks gained roughly two words each.
+    </p>
+  </div>
+
+  <p class="hmeta">Three screens · Homepage (full restructure) · Scholar profile (new modular template) · Guides &amp; Tips (restructure)</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 01 — HOMEPAGE                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<p class="note"><b>Screen 01</b> — Homepage · PRD Phase 1 items 1–10</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg</div><div class="sctag">Homepage</div></div>
+  <div class="frame">
+
+    <!-- [2] AD BANNER — UNIFORM GROUPS ONLY -->
+    <div class="adband">
+      <p class="lbl">Advertisement · Uniform Groups</p>
+      <div class="adslot">970 × 250 — Uniform Groups placement only</div>
+    </div>
+
+    <!-- [1] HOME MENU / NAV -->
+    <header class="sitehead">
+      <div class="container">
+        <div class="sh-top">
+          <div class="logo">Scholar's <span>Choice</span></div>
+          <div class="sh-util"><a href="#">Search</a><a href="#">Newsletter</a><a href="#">Sign in</a></div>
+        </div>
+      </div>
+      <nav class="mainnav"><div class="container"><ul>
+        <li><a href="#" class="active">Find a Scholarship</a></li>
+        <li><a href="#">Scholars' Experience</a></li>
+        <li><a href="#">Guides &amp; Tips</a></li>
+        <li><a href="#">Compare Scholarships</a></li>
+        <li><a href="#" class="epaper">Read the E-paper ↗</a></li>
+      </ul></div></nav>
+    </header>
+
+    <!-- [3] MAIN HEADLINE + CTA INTO SEARCH × COMPARISON -->
+    <section class="hero">
+      <div class="hero-image-side">
+        <div class="fill"></div>
+        <div class="ghostmark">2027</div>
+        <div class="hero-image-overlay"></div>
+        <div class="hero-tag">Intake 2027 · Now open</div>
+        <div class="imgcap">Hero image — scholar portrait, 3:4 crop</div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">200+ Scholarships · Singapore</p>
+        <h1 class="hero-title">Search it.<br>Compare it.<br><span>Decide.</span></h1>
+        <p class="hero-subtitle">Every scholarship in Singapore in one place — then put any three side by side on bond, coverage, deadline and where you'd study.</p>
+        <div class="searchpod">
+          <input placeholder="Search by agency, field of study or school">
+          <button class="cta-btn search">Search &amp; Compare</button>
+        </div>
+        <p class="hero-alt">Or go straight to the <a href="#">comparison tool</a> · <a href="#">browse all providers</a></p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">214</div><div class="stat-label">Scholarships listed</div></div>
+          <div class="stat"><div class="stat-num">63</div><div class="stat-label">Providers</div></div>
+          <div class="stat"><div class="stat-num">14d</div><div class="stat-label">Next deadline</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO STRIP -->
+    <div class="intro-banner">
+      <p>Scholar's Choice is Singapore's reference guide to scholarships — <strong>published by SPH Media</strong>, updated with every agency's intake, and free to use. Start wherever you are.</p>
+    </div>
+
+    <!-- [4][5][6] THREE PATHWAYS -->
+    <section class="band white">
+      <div class="container">
+        <p class="section-label">Three ways in</p>
+        <h2 class="section-title">Where would you like to start?</h2>
+        <div class="facts-grid">
+
+          <div class="fact-card">
+            <div class="fact-icon">🔍</div>
+            <p class="fact-title">Pathway 01</p>
+            <div class="fact-head">Find your scholarship</div>
+            <div class="fact-body">You already know roughly what you're after. Filter by agency, field, bond and deadline, then shortlist and compare.</div>
+            <a class="fact-go" href="#">Open the finder →</a>
+          </div>
+
+          <div class="fact-card">
+            <div class="fact-icon">🎙️</div>
+            <p class="fact-title">Pathway 02</p>
+            <div class="fact-head">Hear from real scholars</div>
+            <div class="fact-body">Read and watch first-hand accounts from people who took the exact award you're weighing up. The unedited version.</div>
+            <a class="fact-go" href="#">Read their stories →</a>
+          </div>
+
+          <div class="fact-card key">
+            <div class="phasechip">Phase 2 · placement</div>
+            <div class="fact-icon">🧭</div>
+            <p class="fact-title">Pathway 03</p>
+            <div class="fact-head">I don't know where to start</div>
+            <div class="fact-body">Answer a short set of questions and we'll point you towards the scholarships worth a look.</div>
+            <a class="fact-go" href="#">Take the quiz →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- [7] FEATURED PROVIDER CAROUSEL + TAGS -->
+    <section class="band cream">
+      <div class="container">
+        <p class="section-label">Who's offering</p>
+        <h2 class="section-title">Featured Providers</h2>
+        <div class="prov-rail">
+          <div class="prov"><div class="crest">PSC</div><h4>Public Service Commission</h4><span>12 Scholarships</span></div>
+          <div class="prov"><div class="crest">MDF</div><h4>MINDEF</h4><span>08 Scholarships</span></div>
+          <div class="prov"><div class="crest">HTX</div><h4>HTX</h4><span>05 Scholarships</span></div>
+          <div class="prov"><div class="crest">MHA</div><h4>Ministry of Home Affairs</h4><span>07 Scholarships</span></div>
+          <div class="prov"><div class="crest">A*S</div><h4>A*STAR</h4><span>06 Scholarships</span></div>
+          <div class="prov" style="opacity:.4"><div class="crest">EDB</div><h4>Economic Dev. Board</h4><span>04 Scholarships</span></div>
+        </div>
+        <div class="railctl"><i>‹</i><i>›</i></div>
+        <div class="tagcloud">
+          <a href="#" class="on">Bond-free</a><a href="#">Overseas</a><a href="#">Local university</a><a href="#">Mid-term</a>
+          <a href="#">Engineering</a><a href="#">Medicine</a><a href="#">Law</a><a href="#">Uniformed services</a>
+          <a href="#">Full coverage</a><a href="#">Polytechnic route</a><a href="#">Closing this month</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- [8] STORIES MODULE -->
+    <section class="band white">
+      <div class="container">
+        <p class="section-label">Scholars' Experience</p>
+        <h2 class="section-title">In Their Own Words</h2>
+        <div class="stories">
+          <article class="story lead">
+            <div class="ph"></div>
+            <div class="cardbody">
+              <p class="cat">Overseas · Engineering</p>
+              <h3>She turned down a bond-free offer. Four years on, she'd do it again.</h3>
+              <p>Wei Lin took the SAF Merit Scholarship to Imperial College. The trade she made at eighteen, and the part she got wrong.</p>
+              <div class="byline">Editorial · 6 min read</div>
+            </div>
+          </article>
+          <article class="story">
+            <div class="ph"></div>
+            <div class="cardbody">
+              <p class="cat">Local · Medicine</p>
+              <h3>The year I nearly gave the scholarship back</h3>
+              <p>What happens when the course you committed to isn't the one you want.</p>
+              <div class="byline">Editorial · 5 min read</div>
+            </div>
+          </article>
+          <article class="story">
+            <div class="ph"></div>
+            <div class="cardbody">
+              <p class="cat">Polytechnic route</p>
+              <h3>From Ngee Ann to a HTX cyber posting</h3>
+              <p>The poly path is not the back door people assume it is.</p>
+              <div class="byline">Editorial · 4 min read</div>
+            </div>
+          </article>
+        </div>
+        <div class="center-more"><a class="link-more" href="#">All scholar stories →</a></div>
+      </div>
+    </section>
+
+    <!-- [9] VIDEOS MODULE -->
+    <section class="band navy ghostband" data-ghost="WATCH">
+      <div class="container">
+        <p class="section-label" style="color:var(--powder)">On camera</p>
+        <h2 class="section-title light">Watch</h2>
+        <div class="vgrid">
+          <div class="vmain"><div class="play">▶</div><h3>"Ask me anything about the bond" — a PSC scholar answers</h3></div>
+          <div class="vlist">
+            <div class="vitem"><div class="th"></div><div><h4>A day inside HTX's cyber lab</h4><span>04:12 · Featured</span></div></div>
+            <div class="vitem"><div class="th"></div><div><h4>What the interview is actually like</h4><span>06:38</span></div></div>
+            <div class="vitem"><div class="th"></div><div><h4>Overseas vs local: two scholars compare</h4><span>08:01</span></div></div>
+            <div class="vitem"><div class="th"></div><div><h4>Reading the fine print on coverage</h4><span>03:44</span></div></div>
+          </div>
+        </div>
+        <p class="smallprint">Module rotates on each visit · Hosting, tracking and indexing owned by the Video Page PRD (Open Question #2) · Ships static if unresolved</p>
+      </div>
+    </section>
+
+    <!-- MONTHLY CONTENT MODULE — PHASE 2 PLACEMENT -->
+    <section class="band cream" style="padding-top:3rem;padding-bottom:3rem">
+      <div class="container">
+        <div class="reserved">
+          <div>
+            <p class="fact-title" style="color:var(--gray)">Reserved slot</p>
+            <h3>Monthly Content Module</h3>
+            <p>Space held in the layout at the correct mid-page position. The Editorial sourcing pipeline behind it is a Phase 2 dependency.</p>
+          </div>
+          <span class="phasechip" style="position:static">Phase 2</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="scholarship-cta ghostband" data-ghost="COMPARE">
+      <h2>Narrow It Down</h2>
+      <p>Shortlist up to three scholarships and see bond, coverage, location and deadline against each other.</p>
+      <a class="cta-btn on-dark" href="#">Open the comparison tool →</a>
+    </section>
+
+    <!-- [10] FOOTER -->
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div>
+          <div class="flogo">Scholar's Choice</div>
+          <p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p>
+        </div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited · Co. Regn. No. 202120748H</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 02 — SCHOLAR PROFILE                             -->
+<!-- ══════════════════════════════════════════════════════ -->
+<p class="note"><b>Screen 02</b> — Scholar profile · new modular template · PRD Phase 1 items 11–17</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg/experience/lou-yang-saf-merit</div><div class="sctag">Profile article</div></div>
+  <div class="frame">
+
+    <header class="sitehead">
+      <div class="container"><div class="sh-top">
+        <div class="logo">Scholar's <span>Choice</span></div>
+        <div class="sh-util"><a href="#">Search</a><a href="#">Newsletter</a><a href="#">Sign in</a></div>
+      </div></div>
+      <nav class="mainnav"><div class="container"><ul>
+        <li><a href="#">Find a Scholarship</a></li>
+        <li><a href="#" class="active">Scholars' Experience</a></li>
+        <li><a href="#">Guides &amp; Tips</a></li>
+        <li><a href="#">Compare Scholarships</a></li>
+        <li><a href="#" class="epaper">Read the E-paper ↗</a></li>
+      </ul></div></nav>
+    </header>
+
+    <!-- [11] LARGE MASTHEAD — title, key profile info, photo -->
+    <section class="art-hero">
+      <div class="art-photo">
+        <div class="fallback"></div>
+        <img src="https://static.scholarschoice.com.sg/wp-content/uploads/2026/02/05172008/rsaf-helicopter-female-pilot-lou-yang.jpg" alt="LTC Lou Yang, RSAF helicopter pilot">
+        <div class="hero-image-overlay"></div>
+        <div class="hero-tag">Scholars' Experience</div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">SAF Merit Scholarship · RSAF · 2026</p>
+        <h1 class="hero-title">Pilot.<br>Mother.<br><span>Mentor.</span></h1>
+        <p class="hero-subtitle">
+          <span class="sf-lbl" style="color:var(--powder)">Standfirst — own section, excluded from H2/H3</span>
+          How LTC Lou Yang commands naval helicopters off moving frigates, raises two young sons, and returns to the flying club that started it all.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">123</div><div class="stat-label">Squadron Commander</div></div>
+          <div class="stat"><div class="stat-num">20m</div><div class="stat-label">S-70B Seahawk</div></div>
+          <div class="stat"><div class="stat-num">2</div><div class="stat-label">Degrees funded</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULAR SECTION NAV — makes item 13 navigable -->
+    <nav class="tab-nav" aria-label="Article sections">
+      <div class="tab-nav-inner">
+        <a class="tab-link active" href="#"><span class="tab-icon">💬</span><span>The Story</span><span class="tab-num">1</span></a>
+        <a class="tab-link" href="#"><span class="tab-icon">⚡</span><span>The Work</span><span class="tab-num">2</span></a>
+        <a class="tab-link" href="#"><span class="tab-icon">🗓</span><span>What Surprised Me</span><span class="tab-num">3</span></a>
+      </div>
+    </nav>
+
+    <!-- INTRO STRIP -->
+    <div class="intro-banner">
+      <p>LTC Lou Yang is a <strong>37-year-old Commanding Officer</strong> of the RSAF's 123 Squadron — one of the few women to fly naval helicopters off frigates at sea. She is also an SAF Merit Scholar who read Biomedical Engineering at Duke and East Asian Studies at Yale.</p>
+    </div>
+
+    <!-- [12] TAGS / TOPICS SECTION -->
+    <div class="topicbar"><div class="inner">
+      <span class="lbl">Topics</span>
+      <a href="#">MINDEF</a><a href="#">RSAF</a><a href="#">Overseas</a><a href="#">Engineering</a><a href="#">Bonded</a><a href="#">Uniformed services</a><a href="#">JC route</a>
+    </div></div>
+
+    <div class="artwrap"><div class="artlayout">
+      <main>
+
+        <!-- [13] MODULAR STORY STRUCTURE — 3 sections -->
+        <div class="module">
+          <p class="mlabel"><i>1</i> The Story</p>
+          <h2>How the decision actually got made</h2>
+          <p>A Singapore Youth Flying Club talk at her junior college changed everything. There was no grand plan — just a chance session, a first flight, and what she calls falling in love with flying.</p>
+          <p>The scholarship came after, not before. By the time the SAF Merit offer arrived, the question was no longer whether to serve but where the degrees would take her.</p>
+          <h3>What the family said</h3>
+          <p>Her parents were split, which turned out to be useful. Arguing both sides out loud made the trade-offs concrete in a way a comparison table never had.</p>
+          <div class="highlight-box"><p><strong>The SAF difference:</strong> careers are planned with life stages in mind. The Servicewomen Network actively surfaces issues unique to women in uniform — and gets results.</p></div>
+        </div>
+
+        <!-- [14] PULL-QUOTE REDESIGN -->
+        <div class="pull-quote-section">
+          <div class="pull-quote">
+            <blockquote>"At work, I give my best, so that when I return to my children, I can be fully present with them."</blockquote>
+            <cite>— LTC Lou Yang, SAF Merit Scholarship recipient</cite>
+          </div>
+        </div>
+
+        <div class="module">
+          <p class="mlabel"><i>2</i> The Work</p>
+          <h2>What the job turned out to be</h2>
+          <p>Deployments last a week or two, sometimes a month. At sea she manages complex multi-crew operations, coordinating navy deck crews and air force personnel in real time — landing a 20-metre Seahawk on a deck that will not stay still.</p>
+          <p>Between postings there has been plans work, flight leadership, a diplomatic aide role between air forces, and media lead on the Shangri-La Dialogue. The engineering degree earns its keep in places the brochure never mentioned.</p>
+        </div>
+
+        <div class="module">
+          <p class="mlabel"><i>3</i> What Surprised Me</p>
+          <h2>Three things nobody mentions</h2>
+          <p>The cohort matters more than the course. The bond gets shorter psychologically once it actually starts. And returning to SYFC as the pilot rather than the student is stranger, and better, than she expected.</p>
+          <div class="highlight-box"><p><strong>The bigger picture:</strong> "We are comfortable and confident knowing what we do keeps the public and our families safe. We say we have done a great job when life carries on as usual."</p></div>
+        </div>
+
+      </main>
+
+      <!-- [15][16][17] STICKY SIDE PANEL -->
+      <aside class="rail"><div class="sticky">
+
+        <div class="panel">
+          <div class="ph">Share this story</div>
+          <div class="pb"><div class="share"><i>WA</i><i>TG</i><i>IG</i><i>LINK</i></div></div>
+        </div>
+
+        <div class="panel key">
+          <div class="ph">Scholarship information</div>
+          <div class="pb">
+            <div class="pname">SAF Merit Scholarship</div>
+            <div class="kv"><span>Provider</span><b>MINDEF</b></div>
+            <div class="kv"><span>Bond</span><b>6 years</b></div>
+            <div class="kv"><span>Study location</span><b>Local or overseas</b></div>
+            <div class="kv"><span>Coverage</span><b>Full tuition + allowance</b></div>
+            <div class="kv"><span>Mid-term</span><b>Available</b></div>
+            <div class="kv"><span>Deadline</span><b>21 March 2027</b></div>
+            <a href="#" class="cta-btn block" style="margin-top:1rem">View scholarship &amp; apply →</a>
+            <p class="pnote">Links out to the scholarship page. The application flow itself is owned by the Registration PRD (Open Question #8).</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph">Related · matched by tag</div>
+          <div class="pb">
+            <div class="rel"><div class="th"></div><div><h5>Two MINDEF scholars, two very different postings</h5><span>5 min</span></div></div>
+            <div class="rel"><div class="th"></div><div><h5>What a six-year bond looks like from year five</h5><span>7 min</span></div></div>
+            <div class="rel"><div class="th"></div><div><h5>Reading coverage clauses properly</h5><span>4 min</span></div></div>
+            <p class="pnote">Phase 1 is a simple tag match. Fully curated matching is Phase 2.</p>
+          </div>
+        </div>
+
+      </div></aside>
+    </div></div>
+
+    <section class="scholarship-cta ghostband" data-ghost="SAF">
+      <h2>Defend What Matters</h2>
+      <p>The SAF Merit Scholarship funds degrees at world-class universities and opens doors to careers that are anything but ordinary.</p>
+      <a class="cta-btn on-dark" href="#">Explore the SAF Merit Scholarship →</a>
+    </section>
+
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div><div class="flogo">Scholar's Choice</div><p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p></div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 03 — GUIDES & TIPS                               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<p class="note"><b>Screen 03</b> — Guides &amp; Tips · PRD Phase 1 items 18–19</p>
+<div class="screen">
+  <div class="chrome"><div class="dots"><i style="background:#e05b4a"></i><i style="background:#e5b33f"></i><i style="background:#54b04a"></i></div>
+    <div class="bar">scholarschoice.com.sg/resources/how-to-read-a-bond</div><div class="sctag">Guides &amp; Tips</div></div>
+  <div class="frame">
+
+    <header class="sitehead">
+      <div class="container"><div class="sh-top">
+        <div class="logo">Scholar's <span>Choice</span></div>
+        <div class="sh-util"><a href="#">Search</a><a href="#">Newsletter</a><a href="#">Sign in</a></div>
+      </div></div>
+      <nav class="mainnav"><div class="container"><ul>
+        <li><a href="#">Find a Scholarship</a></li>
+        <li><a href="#">Scholars' Experience</a></li>
+        <li><a href="#" class="active">Guides &amp; Tips</a></li>
+        <li><a href="#">Compare Scholarships</a></li>
+        <li><a href="#" class="epaper">Read the E-paper ↗</a></li>
+      </ul></div></nav>
+    </header>
+
+    <!-- [18] MASTHEAD -->
+    <div class="res-hero"><div class="inner">
+      <p class="hero-eyebrow">Guides &amp; Tips · Money</p>
+      <h1>Read the bond <span>before you sign it</span></h1>
+      <div class="standfirst">
+        <span class="sf-lbl">Standfirst — own section, not an H2</span>
+        Six years, four years, "service obligation" — the wording varies, and so does what it actually costs you. A plain-English walkthrough of the five clauses that matter.
+      </div>
+      <p class="res-byline">By Editorial · Updated 12 January 2027 · 8 min read</p>
+    </div></div>
+
+    <div class="reslayout">
+      <article class="blogpost">
+        <!-- [19] SEO STRUCTURE FIX -->
+        <div class="seoflag">SEO structure fix — the standfirst sits above and outside the heading tree. Body uses a single H1, then sequential H2 › H3. No decorative headings.</div>
+        <p>Almost every bonded scholarship in Singapore uses one of three contract shapes. Once you can tell them apart, the comparison table stops being a wall of numbers.</p>
+
+        <h2>1. Bond length is not the same as bond start</h2>
+        <p>Two awards both listed as "six years" can differ by two full years depending on when the clock starts — graduation, commissioning, or completion of initial training.</p>
+        <h3>What to look for in the letter</h3>
+        <p>The phrase "commencing upon" does almost all the work here. Find it before you compare anything else.</p>
+
+        <h2>2. Coverage is a list, and lists have gaps</h2>
+        <ul>
+          <li>Tuition — almost always covered in full</li>
+          <li>Maintenance allowance — varies widely by study location</li>
+          <li>Airfare — often one return trip per academic year, not per term</li>
+          <li>Settling-in and computer grants — one-off, easy to miss</li>
+        </ul>
+
+        <h2>3. Breaking a bond has a formula</h2>
+        <p>Liquidated damages are usually pro-rated against served time. Ask for the formula, not the headline figure.</p>
+      </article>
+
+      <!-- "OTHER STORIES" WIDGET -->
+      <aside class="rail"><div class="sticky">
+        <div class="panel others">
+          <div class="ph">Other stories</div>
+          <div class="pb">
+            <div class="item"><span>Guides</span><h4>The interview: 12 questions that keep coming up</h4></div>
+            <div class="item"><span>Guides</span><h4>Overseas or local — a decision framework</h4></div>
+            <div class="item"><span>Money</span><h4>What "full coverage" leaves out</h4></div>
+            <div class="item"><span>Timeline</span><h4>A month-by-month application calendar</h4></div>
+          </div>
+        </div>
+        <div class="panel key">
+          <div class="ph">Compare</div>
+          <div class="pb">
+            <p style="font-size:.9rem;line-height:1.6;color:var(--ink-body);margin-bottom:1rem">Put the bonds you're weighing up side by side.</p>
+            <a href="#" class="cta-btn block">Open comparison tool →</a>
+          </div>
+        </div>
+      </div></aside>
+    </div>
+
+    <footer class="sitefoot"><div class="container">
+      <div class="fgrid">
+        <div><div class="flogo">Scholar's Choice</div><p style="font-size:.86rem;line-height:1.7;margin-top:.7rem;max-width:32ch">Singapore's reference guide to scholarships — published by SPH Media.</p></div>
+        <div><h5>Explore</h5><ul><li><a href="#">Find a Scholarship</a></li><li><a href="#">Scholars' Experience</a></li><li><a href="#">Guides &amp; Tips</a></li><li><a href="#">Compare Scholarships</a></li></ul></div>
+        <div><h5>More</h5><ul><li><a href="#">Opportunities</a></li><li><a href="#">Providers directory</a></li><li><a href="#">Read the E-paper</a></li><li><a href="#">Contact us</a></li></ul></div>
+        <div><h5>Follow</h5><ul><li><a href="#">Newsletter</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      </div>
+      <div class="fbase"><span>© 2027 SPH Media Limited</span><span>Terms · Privacy · Advertise with us</span></div>
+    </div></footer>
+
+  </div>
+</div>
+
+<!-- COVERAGE -->
+<div class="coverage">
+  <h6>Phase 1 coverage — all 19 items</h6>
+  <p>01 Nav ✓ · 02 Ad banner ✓ · 03 Headline + CTA ✓ · 04 Pathway: find ✓ · 05 Pathway: scholars ✓ · 06 Pathway: quiz placement ✓ · 07 Provider carousel + tags ✓ · 08 Stories ✓ · 09 Videos ✓ · 10 Footer ✓ · 11 Large masthead ✓ · 12 Tags/topics ✓ · 13 Modular template ✓ · 14 Pull-quote ✓ · 15 Share panel ✓ · 16 Scholarship info panel ✓ · 17 Related, tag-based ✓ · 18 Resources masthead + other stories + blog template ✓ · 19 SEO structure ✓</p>
+  <p class="no" style="margin-top:.6rem">Not built — Phase 2: quiz logic · monthly content pipeline · profile backfill · curated related articles · rebuilt comparison attributes · agency hubs · evergreen · AMA</p>
+</div>
+
+</div>
+</body>
+</html>

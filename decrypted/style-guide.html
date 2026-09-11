@@ -1,0 +1,933 @@
+<title>Institution vs Student Native</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   GUIDE CHROME — deliberately greyscale. The only saturated
+   colour on this page belongs to the specimens themselves.
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --g-ground:#F6F7F9;
+  --g-surface:#FFFFFF;
+  --g-ink:#12161D;
+  --g-ink-2:#39434F;
+  --g-muted:#66717F;
+  --g-faint:#8A94A1;
+  --g-line:#DCE1E8;
+  --g-line-2:#C6CDD7;
+  --g-accent:#46566B;
+  --g-ok:#2E7D5B;
+  --g-warn:#9A6212;
+  --g-bad:#A33A2C;
+  --g-sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --g-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --g-max:1260px;
+}
+/* @media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --g-ground:#0F1218;
+    --g-surface:#161B23;
+    --g-ink:#E8ECF2;
+    --g-ink-2:#BBC4D0;
+    --g-muted:#8E99A8;
+    --g-faint:#6C7684;
+    --g-line:#272E39;
+    --g-line-2:#333C49;
+    --g-accent:#93A7BE;
+    --g-ok:#5FB98C;
+    --g-warn:#D2A253;
+    --g-bad:#E08472;
+  }
+} */
+:root[data-theme="dark"]{
+  --g-ground:#0F1218;
+  --g-surface:#161B23;
+  --g-ink:#E8ECF2;
+  --g-ink-2:#BBC4D0;
+  --g-muted:#8E99A8;
+  --g-faint:#6C7684;
+  --g-line:#272E39;
+  --g-line-2:#333C49;
+  --g-accent:#93A7BE;
+  --g-ok:#5FB98C;
+  --g-warn:#D2A253;
+  --g-bad:#E08472;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--g-ground);color:var(--g-ink);
+  font-family:var(--g-sans);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+a{color:inherit}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+p{margin:0}
+
+.shell{max-width:var(--g-max);margin:0 auto;padding:0 24px}
+
+/* ── masthead ── */
+.doc-head{padding:56px 0 34px;border-bottom:1px solid var(--g-line)}
+.doc-eyebrow{font-family:var(--g-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--g-muted)}
+.doc-head h1{font-size:clamp(34px,4.6vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.02;margin:14px 0 16px;max-width:18ch}
+.doc-lede{font-size:17px;line-height:1.62;color:var(--g-ink-2);max-width:66ch}
+.doc-meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;font-family:var(--g-mono);font-size:11.5px;color:var(--g-faint);letter-spacing:.03em}
+.doc-meta b{color:var(--g-ink-2);font-weight:500}
+
+/* ── sticky index ── */
+.index{position:sticky;top:0;z-index:60;background:var(--g-ground);border-bottom:1px solid var(--g-line)}
+.index-inner{max-width:var(--g-max);margin:0 auto;padding:0 24px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.index-inner::-webkit-scrollbar{display:none}
+.index a{flex:none;padding:13px 14px;text-decoration:none;font-family:var(--g-mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--g-muted);border-bottom:2px solid transparent;white-space:nowrap}
+.index a:hover{color:var(--g-ink)}
+.index a:focus-visible{outline:2px solid var(--g-accent);outline-offset:-2px}
+
+/* ── section furniture ── */
+section{padding:52px 0;border-bottom:1px solid var(--g-line)}
+section:last-of-type{border-bottom:0}
+.sec-num{font-family:var(--g-mono);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--g-accent);text-transform:uppercase}
+.sec-title{font-size:27px;font-weight:700;letter-spacing:-.022em;margin:8px 0 10px}
+.sec-note{font-size:15px;color:var(--g-muted);max-width:70ch;line-height:1.65}
+.sec-head{margin-bottom:30px}
+
+/* ── the three-family grid ── */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+.col-head{display:flex;align-items:baseline;gap:9px;margin-bottom:12px;padding-bottom:9px;border-bottom:2px solid var(--g-line-2);flex-wrap:wrap}
+.col-head .tagname{font-family:var(--g-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g-faint)}
+.col-head h3{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.col-head.a{border-bottom-color:#1b3bd6}
+.col-head.b{border-bottom-color:#c8f04a}
+.col-head.c{border-bottom-color:#E8552F}
+
+/* a specimen paints its own world, whatever theme the guide is in */
+.spec{border-radius:6px;overflow:hidden;border:1px solid var(--g-line)}
+.spec-a{background:#f6f6f4;color:#17181c;font-family:"DM Sans",Helvetica,sans-serif}
+.spec-b{background:#fcfaf6;color:#0f1f1c;font-family:"Inter",Helvetica,sans-serif}
+.spec-c{background:#FAF7F2;color:#0a1628;font-family:"DM Sans",Helvetica,sans-serif}
+.spec-pad{padding:20px}
+.spec-dark{background:#17181c;color:#fff}
+
+/* ── swatches ── */
+.swatches{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--g-line)}
+.sw{padding:13px 11px 11px;min-height:104px;display:flex;flex-direction:column;justify-content:flex-end}
+.sw .name{font-family:var(--g-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.sw .hex{font-family:var(--g-mono);font-size:10.5px;opacity:.72;margin-top:2px}
+.sw .use{font-size:10px;line-height:1.45;margin-top:6px;opacity:.72}
+
+/* ── type specimen rows ── */
+.typerow{display:flex;flex-direction:column;gap:5px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.08)}
+.typerow:last-child{border-bottom:0}
+.typerow .stat{font-family:var(--g-mono);font-size:9.5px;letter-spacing:.04em;opacity:.62;line-height:1.5}
+
+/* ── spec table ── */
+.spectable{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+.spectable th{text-align:left;font-family:var(--g-mono);font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--g-faint);padding:0 14px 8px 0;border-bottom:1px solid var(--g-line);vertical-align:bottom}
+.spectable td{padding:10px 14px 10px 0;border-bottom:1px solid var(--g-line);vertical-align:top;color:var(--g-ink-2)}
+.spectable td:first-child{color:var(--g-ink);font-weight:600;width:17%}
+.spectable.narrow{min-width:520px}
+.spectable.narrow td:first-child{width:34%}
+.spectable code,.mono{font-family:var(--g-mono);font-size:11.5px}
+.tablewrap{overflow-x:auto}
+
+/* ── contrast chips ── */
+.ratio{display:inline-flex;align-items:center;font-family:var(--g-mono);font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.ratio.pass{background:color-mix(in srgb,var(--g-ok) 16%,transparent);color:var(--g-ok)}
+.ratio.large{background:color-mix(in srgb,var(--g-warn) 20%,transparent);color:var(--g-warn)}
+.ratio.fail{background:color-mix(in srgb,var(--g-bad) 16%,transparent);color:var(--g-bad)}
+
+.callout{border-left:3px solid var(--g-accent);background:var(--g-surface);padding:15px 17px;border-radius:0 6px 6px 0;margin-top:16px}
+.callout h4{font-size:12.5px;font-weight:700;margin-bottom:5px}
+.callout p{font-size:13px;color:var(--g-ink-2);line-height:1.6}
+.callout.warn{border-left-color:var(--g-bad)}
+.callout.good{border-left-color:var(--g-ok)}
+.callout.wide{margin-top:22px}
+
+.compo-label{font-family:var(--g-mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--g-faint);margin:30px 0 8px;padding-top:24px;border-top:1px solid var(--g-line)}
+.compo-label.first{border-top:0;padding-top:0;margin-top:0}
+.compo-why{font-size:13px;color:var(--g-muted);margin:0 0 14px;max-width:76ch;line-height:1.6}
+
+/* ═══════════ FAMILY A — graphite / slate / cobalt ═══════════ */
+.fa-nav{background:#17181c;padding:0 14px}
+.fa-nav-top{display:flex;align-items:center;justify-content:space-between;padding:10px 0;gap:10px}
+.fa-logo{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:16px;color:#fff;letter-spacing:-.012em}
+.fa-logo span{color:#9db0fa}
+.fa-util{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.fa-nav ul{display:flex;list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.fa-nav li a{display:block;padding:9px 0;margin-right:14px;color:#dfe8f2;text-decoration:none;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px}
+.fa-nav li a.on{color:#fff;border-bottom-color:#9db0fa}
+.fa-nav li a.alt{color:#b8c8fc}
+
+.fa-btn{display:inline-block;background:#1b3bd6;color:#fff;font-family:"DM Sans",Helvetica,sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;padding:10px 17px;border-radius:4px;border:0;text-decoration:none;cursor:pointer}
+.fa-btn.two{background:#5a6072;color:#fff}
+.fa-btn.three{background:transparent;color:#17181c;border:1px solid #dcdee6}
+
+.fa-pod{background:#fff;border-radius:4px;padding:5px;display:flex;gap:6px;box-shadow:0 10px 26px rgba(10,22,40,.3)}
+.fa-pod input{flex:1;min-width:0;border:0;outline:none;font-family:"DM Sans",Helvetica,sans-serif;font-size:12px;padding:9px;color:#17181c;background:transparent}
+
+.fa-card{background:#fff;border-radius:8px;padding:18px 16px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fa-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:#5a6072}
+.fa-card.hi::after{background:#1b3bd6}
+.fa-card .ico{font-size:20px;line-height:1;margin-bottom:8px}
+.fa-card .lbl{font-weight:700;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:#5a6072;margin-bottom:5px}
+.fa-card h4{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:17px;letter-spacing:-.014em;line-height:1.2;color:#17181c;margin-bottom:6px}
+.fa-card p{font-size:12px;line-height:1.55;color:#454750}
+.fa-card .go{display:inline-block;margin-top:11px;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#1b3bd6;text-decoration:none;border-bottom:2px solid #1b3bd6;padding-bottom:2px}
+
+.fa-story{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fa-story .ph{aspect-ratio:16/9;background:linear-gradient(140deg,#3d4560,#17181c);position:relative}
+.fa-story .ph::after{content:"PHOTO";position:absolute;left:11px;bottom:7px;font-size:7.5px;letter-spacing:.2em;color:rgba(255,255,255,.45);font-weight:700}
+.fa-story .bd{padding:13px 14px 15px;position:relative}
+.fa-story .bd::before{content:"";position:absolute;top:0;left:0;width:38px;height:3px;background:#1b3bd6}
+.fa-story .cat{font-size:8.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#5a6072;margin:5px 0 5px}
+.fa-story h4{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:16.5px;letter-spacing:-.016em;line-height:1.18;color:#17181c;margin-bottom:5px}
+.fa-story p{font-size:11.5px;line-height:1.5;color:#454750}
+.fa-story .by{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#8f939f;font-weight:700;margin-top:9px}
+
+.fa-tags{display:flex;flex-wrap:wrap;gap:6px}
+.fa-tags a{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:#fff;border:1px solid #dcdee6;color:#17181c;text-decoration:none;padding:6px 10px;border-radius:3px}
+.fa-tags a.on{background:#1b3bd6;border-color:#1b3bd6;color:#fff}
+
+.fa-quote{background:#17181c;border-radius:8px;padding:30px 20px 24px;position:relative;overflow:hidden}
+.fa-quote::before{content:'\201C';position:absolute;top:-14px;left:4px;font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:105px;color:rgba(255,255,255,.055);line-height:1}
+.fa-quote blockquote{font-family:"DM Serif Display",Georgia,serif;font-style:italic;font-size:16px;line-height:1.46;color:#fff;margin:0;position:relative;text-align:center}
+.fa-quote cite{display:block;text-align:center;font-family:"DM Sans",Helvetica,sans-serif;font-style:normal;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:#b8c8fc;font-weight:700;margin-top:12px;position:relative}
+
+.fa-panel{background:#fff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fa-panel::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:#1b3bd6}
+.fa-panel .ph{background:#17181c;color:#fff;font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;padding:9px 13px;font-weight:700}
+.fa-panel .pb{padding:13px}
+.fa-panel .nm{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:15.5px;letter-spacing:-.014em;color:#17181c;line-height:1.2;margin-bottom:8px}
+.fa-kv{display:flex;justify-content:space-between;gap:10px;font-size:11px;padding:5px 0;border-bottom:1px solid #e9ecf5}
+.fa-kv:last-of-type{border-bottom:0}
+.fa-kv span{color:#6f7280}
+.fa-kv b{color:#17181c}
+
+.fa-sechead{text-align:center}
+.fa-sechead .lb{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#5a6072;font-weight:700}
+.fa-sechead h4{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:24px;letter-spacing:-.019em;color:#17181c;line-height:1.1;margin-top:5px}
+
+.fa-phase{display:inline-block;background:#17181c;color:#b8c8fc;font-size:7.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:2px;font-family:"DM Sans",Helvetica,sans-serif}
+
+/* ═══════════ FAMILY B v3 — deep green / lime / teal ═══════════ */
+.fb-nav{background:#fcfaf6;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid #e3dbcc}
+.fb-logo{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:800;font-size:14px;letter-spacing:-.04em;display:flex;align-items:center;gap:6px;color:#0f1f1c}
+.fb-logo .mk{width:22px;height:22px;border-radius:3px;background:#c8f04a;color:#0f1f1c;display:flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-size:8.5px;font-weight:800}
+.fb-nav nav{display:flex;gap:1px;flex-wrap:wrap}
+.fb-nav nav a{font-size:10.5px;font-weight:500;color:#4a4a4f;text-decoration:none;padding:5px 8px;border-bottom:2px solid transparent}
+.fb-nav nav a.on{color:#0f1f1c;font-weight:600;border-bottom-color:#c8f04a}
+.fb-nav nav a.alt{color:#0e5c54}
+
+.fb-btn{display:inline-block;background:#c8f04a;color:#0f1f1c;font-family:"Inter",Helvetica,sans-serif;font-weight:700;font-size:11.5px;padding:9px 15px;border-radius:4px;border:0;text-decoration:none;cursor:pointer}
+.fb-btn.two{background:#0e5c54;color:#fff}
+.fb-btn.three{background:transparent;color:#0f1f1c;border:1px solid #d2c8b5;font-weight:600}
+
+.fb-pod{background:#fff;border:1.5px solid #0f1f1c;border-radius:4px;padding:3px;display:flex;gap:6px;align-items:center}
+.fb-pod input{flex:1;border:0;outline:none;font-family:"Inter",Helvetica,sans-serif;font-size:11.5px;padding:6px 8px;background:transparent;color:#0f1f1c;min-width:0}
+
+.fb-card{background:#fff;border:1px solid #e3dbcc;border-radius:4px;padding:16px 15px;position:relative}
+.fb-card.invert{background:#0f1f1c;border-color:#0f1f1c}
+.fb-card .ico{width:27px;height:27px;color:#0e5c54;margin-bottom:10px}
+.fb-card.invert .ico{color:#c8f04a}
+.fb-card .ico svg{width:100%;height:100%;display:block}
+.fb-card h4{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:700;font-size:16px;letter-spacing:-.038em;line-height:1.14;margin-bottom:6px;color:#0f1f1c}
+.fb-card.invert h4{color:#fff}
+.fb-card p{font-size:11.5px;line-height:1.55;color:#4a4a4f}
+.fb-card.invert p{color:#9fc4bc}
+.fb-card .go{display:inline-block;margin-top:10px;font-size:11px;font-weight:700;color:#0e5c54;text-decoration:none;border-bottom:2px solid #c8f04a;padding-bottom:2px}
+.fb-card.invert .go{color:#c8f04a}
+
+.fb-story{background:#fff;border:1px solid #e3dbcc;border-radius:4px;overflow:hidden}
+.fb-story .ph{aspect-ratio:16/9;background:linear-gradient(150deg,#2a5f56,#0f1f1c);position:relative}
+.fb-story .ph::after{content:"PHOTO";position:absolute;left:12px;bottom:8px;font-family:ui-monospace,Menlo,monospace;font-size:7.5px;letter-spacing:.18em;color:rgba(255,255,255,.5)}
+.fb-story .bd{padding:13px 14px 15px}
+.fb-story .cat{font-family:ui-monospace,Menlo,monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#a8563a;margin-bottom:6px}
+.fb-story h4{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.042em;line-height:1.1;color:#0f1f1c;margin-bottom:6px}
+.fb-story p{font-size:11.5px;line-height:1.5;color:#4a4a4f}
+.fb-story .by{font-family:ui-monospace,Menlo,monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#78777e;margin-top:10px}
+
+.fb-tags{display:flex;flex-wrap:wrap;gap:6px}
+.fb-tags a{font-size:10.5px;font-weight:500;background:#fff;border:1px solid #d2c8b5;padding:5px 10px;color:#4a4a4f;text-decoration:none;border-radius:3px}
+.fb-tags a.on{background:#c8f04a;border-color:#c8f04a;color:#0f1f1c;font-weight:700}
+
+.fb-quote{background:#0f1f1c;border-radius:4px;padding:22px 20px}
+.fb-quote blockquote{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:700;font-size:17px;line-height:1.18;letter-spacing:-.046em;color:#fff;margin:0}
+.fb-quote cite{display:block;font-family:ui-monospace,Menlo,monospace;font-style:normal;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#c8f04a;margin-top:12px}
+
+.fb-panel{background:#fff;border:1px solid #e3dbcc;border-radius:4px;overflow:hidden}
+.fb-panel .ph{background:#0f1f1c;color:#c8f04a;font-family:ui-monospace,Menlo,monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:9px 13px}
+.fb-panel .pb{padding:13px}
+.fb-panel .nm{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:800;font-size:16px;letter-spacing:-.044em;color:#0f1f1c;margin-bottom:8px;line-height:1.08}
+.fb-kv{display:flex;justify-content:space-between;gap:10px;font-size:11px;padding:5px 0;border-bottom:1px solid #e3dbcc}
+.fb-kv:last-of-type{border-bottom:0}
+.fb-kv span{color:#78777e}
+.fb-kv b{color:#0f1f1c;font-weight:600}
+
+.fb-sechead h4{font-family:"Bricolage Grotesque",Helvetica,sans-serif;font-weight:700;font-size:25px;letter-spacing:-.044em;color:#0f1f1c;line-height:1.02}
+.fb-sechead .lb{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:#a8563a}
+.fb-sechead .rule{height:4px;width:44px;background:#c8f04a;margin-top:9px}
+.fb-phase{display:inline-block;background:transparent;color:#c8f04a;border:1px solid rgba(200,240,74,.4);font-family:ui-monospace,Menlo,monospace;font-size:7.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:3px}
+
+/* ═══════════ FAMILY C — navy / sky / ember ═══════════ */
+.fc-nav{background:#0a1628;padding:0 14px}
+.fc-nav-top{display:flex;align-items:center;justify-content:space-between;padding:10px 0;gap:10px}
+.fc-logo{font-family:"Bebas Neue",Impact,sans-serif;font-size:18px;color:#fff;letter-spacing:.04em}
+.fc-logo span{color:#FBB094}
+.fc-util{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#8fa9c4}
+.fc-nav ul{display:flex;list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.fc-nav li a{display:block;padding:9px 0;margin-right:14px;color:#dfe8f2;text-decoration:none;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px}
+.fc-nav li a.on{color:#fff;border-bottom-color:#E8552F}
+.fc-nav li a.alt{color:#FBB094}
+
+.fc-btn{display:inline-block;background:#B33A18;color:#fff;font-family:"DM Sans",Helvetica,sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;padding:10px 17px;border-radius:6px;border:0;text-decoration:none;cursor:pointer}
+.fc-btn.two{background:#1a6bb5;color:#fff}
+.fc-btn.three{background:transparent;color:#0a1628;border:1px solid #cdc6bb}
+
+.fc-pod{background:#fff;border-radius:6px;padding:5px;display:flex;gap:6px;box-shadow:0 10px 26px rgba(10,22,40,.3)}
+.fc-pod input{flex:1;min-width:0;border:0;outline:none;font-family:"DM Sans",Helvetica,sans-serif;font-size:12px;padding:9px;color:#0a1628;background:transparent}
+
+.fc-card{background:#fff;border-radius:10px;padding:18px 16px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fc-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:#1a6bb5}
+.fc-card.hi::after{background:#E8552F}
+.fc-card .ico{font-size:20px;line-height:1;margin-bottom:8px}
+.fc-card .lbl{font-weight:700;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:#1a6bb5;margin-bottom:5px}
+.fc-card h4{font-family:"Bebas Neue",Impact,sans-serif;font-size:20px;letter-spacing:.03em;line-height:1.04;color:#17181c;margin-bottom:6px}
+.fc-card p{font-size:12px;line-height:1.55;color:#3d4149}
+.fc-card .go{display:inline-block;margin-top:11px;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#B33A18;text-decoration:none;border-bottom:2px solid #E8552F;padding-bottom:2px}
+
+.fc-story{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fc-story .ph{aspect-ratio:16/9;background:linear-gradient(140deg,#31597f,#0a1628);position:relative}
+.fc-story .ph::after{content:"PHOTO";position:absolute;left:11px;bottom:7px;font-size:7.5px;letter-spacing:.2em;color:rgba(255,255,255,.45);font-weight:700}
+.fc-story .bd{padding:13px 14px 15px;position:relative}
+.fc-story .bd::before{content:"";position:absolute;top:0;left:0;width:38px;height:3px;background:#E8552F}
+.fc-story .cat{font-size:8.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#B33A18;margin:5px 0 5px}
+.fc-story h4{font-family:"Bebas Neue",Impact,sans-serif;font-size:19px;letter-spacing:.02em;line-height:1.02;color:#0a1628;margin-bottom:5px}
+.fc-story p{font-size:11.5px;line-height:1.5;color:#3d4149}
+.fc-story .by{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#9a9288;font-weight:700;margin-top:9px}
+
+.fc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.fc-tags a{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:#fff;border:1px solid #ddd6cb;color:#0a1628;text-decoration:none;padding:6px 10px;border-radius:4px}
+.fc-tags a.on{background:#1a6bb5;border-color:#1a6bb5;color:#fff}
+
+.fc-quote{background:#0a1628;border-radius:10px;padding:30px 20px 24px;position:relative;overflow:hidden}
+.fc-quote::before{content:'\201C';position:absolute;top:-42px;left:6px;font-family:"Bebas Neue",Impact,sans-serif;font-size:130px;color:rgba(232,85,47,.11);line-height:1}
+.fc-quote blockquote{font-family:"DM Serif Display",Georgia,serif;font-style:italic;font-size:16px;line-height:1.46;color:#fff;margin:0;position:relative;text-align:center}
+.fc-quote cite{display:block;text-align:center;font-family:"DM Sans",Helvetica,sans-serif;font-style:normal;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:#FBB094;font-weight:700;margin-top:12px;position:relative}
+
+.fc-panel{background:#fff;border-radius:10px;overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(10,22,40,.06)}
+.fc-panel::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:#E8552F}
+.fc-panel .ph{background:#0a1628;color:#fff;font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;padding:9px 13px;font-weight:700}
+.fc-panel .pb{padding:13px}
+.fc-panel .nm{font-family:"Bebas Neue",Impact,sans-serif;font-size:18px;letter-spacing:.03em;color:#0a1628;line-height:1.05;margin-bottom:8px}
+.fc-kv{display:flex;justify-content:space-between;gap:10px;font-size:11px;padding:5px 0;border-bottom:1px solid #ece6dd}
+.fc-kv:last-of-type{border-bottom:0}
+.fc-kv span{color:#6d675f}
+.fc-kv b{color:#0a1628}
+
+.fc-sechead{text-align:left}
+.fc-sechead .lb{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#B33A18;font-weight:700}
+.fc-sechead h4{font-family:"Bebas Neue",Impact,sans-serif;font-size:29px;letter-spacing:.035em;color:#0a1628;line-height:1;margin-top:5px}
+.fc-sechead .rule{height:3px;width:44px;background:#E8552F;margin-top:10px}
+
+.fc-phase{display:inline-block;background:#0a1628;color:#FBB094;font-size:7.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:3px;font-family:"DM Sans",Helvetica,sans-serif}
+
+/* ── helpers ── */
+.stack{display:flex;flex-direction:column;gap:11px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.microcap{font-family:var(--g-mono);font-size:9.5px;margin-top:12px;line-height:1.6}
+
+/* ── decision block ── */
+.decide{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.decide .box{background:var(--g-surface);border:1px solid var(--g-line);border-radius:8px;padding:19px 20px}
+.decide .box h4{font-size:14.5px;font-weight:700;margin-bottom:4px}
+.decide .box .who{font-family:var(--g-mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--g-faint);margin-bottom:11px}
+.decide ul{margin:0;padding-left:16px;font-size:13px;line-height:1.72;color:var(--g-ink-2)}
+.decide .box.a{border-top:3px solid #1b3bd6}
+.decide .box.b{border-top:3px solid #c8f04a}
+.decide .box.c{border-top:3px solid #E8552F}
+
+.foot{padding:34px 0 60px;font-family:var(--g-mono);font-size:11px;color:var(--g-faint);letter-spacing:.03em;line-height:1.95}
+
+@media (max-width:1080px){
+  .trio,.decide{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:560px){
+  .swatches{grid-template-columns:repeat(2,1fr)}
+  .doc-head{padding:38px 0 26px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<header class="doc-head">
+  <div class="shell">
+    <p class="doc-eyebrow">Scholar's Choice · UI/UX Refresh · Phase 1 Facelift</p>
+    <h1>Institution vs Student Native</h1>
+    <p class="doc-lede">Three visual directions for the January 2027 facelift, specified side by side. <b>A</b> extends the system already running on the LTC Lou Yang feature. <b>B</b> proposes a high-energy student-facing alternative — lime over deep green, with the trust carried by the ground rather than by restraint. <b>C</b> keeps A's structure and swaps its one weak colour. All three cover the same nineteen Phase 1 elements — only the treatment differs.</p>
+    <div class="doc-meta">
+      <span><b>Scope</b> Foundations + key components</span>
+      <span><b>Status</b> For design review</span>
+      <span><b>Owner</b> Digital Products</span>
+      <span><b>Updated</b> 10 Sept 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="index">
+  <div class="index-inner">
+    <a href="#glance">At a glance</a>
+    <a href="#colour">Colour</a>
+    <a href="#type">Typography</a>
+    <a href="#shape">Shape &amp; space</a>
+    <a href="#components">Components</a>
+    <a href="#access">Contrast</a>
+    <a href="#choose">Choosing</a>
+  </div>
+</div>
+
+<main class="shell">
+
+<!-- ══════════════ 01 AT A GLANCE ══════════════ -->
+<section id="glance">
+  <div class="sec-head">
+    <p class="sec-num">01 — Positioning</p>
+    <h2 class="sec-title">At a glance</h2>
+    <p class="sec-note">A borrows authority from the institutions it covers. B borrows warmth from the students it serves. C is A with one token changed — the cheapest way to look meaningfully different from today's site.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="spectable">
+      <thead><tr><th>Dimension</th><th>A — The Institution</th><th>B — Student Native</th><th>C — Warm Institution</th></tr></thead>
+      <tbody>
+        <tr><td>Core idea</td><td>A publication of record for a serious decision</td><td>A confident young publication — energy with a serious ground</td><td>The same publication, with the warmth turned up</td></tr>
+        
+        <tr><td>Reads as</td><td>Authoritative, edited, official-adjacent</td><td>Bold and current; deliberately the loudest of the three</td><td>Edited but current; less ceremonial than A</td></tr>
+        <tr><td>Signature device</td><td>3px slate rule on every card's bottom edge</td><td>1px hairline plus inverted dark blocks. No shadows.</td><td>Same 3px rule; ember marks the primary card</td></tr>
+        <tr><td>Display voice</td><td>Playfair Display 500/600 — high-contrast serif, sentence case</td><td>Bricolage Grotesque 700/800 — irregular, characterful, sentence case</td><td>Bebas Neue — condensed caps, ranged left</td></tr>
+        <tr><td>Ground</td><td>Bone <span class="mono">#F6F6F4</span> with graphite bands</td><td>Paper <span class="mono">#FCFAF6</span> with sand and deep green</td><td>Warm white <span class="mono">#FAF7F2</span> with navy bands</td></tr>
+        <tr><td>Action colour</td><td>Cobalt — legible on light only</td><td>Lime <span class="mono">#C8F04A</span>, grounded on near-black green</td><td>Ember — legible on navy <em>and</em> on paper</td></tr>
+        <tr><td>Sponsor fit</td><td>Neutral — graphite and bone sit quietly under any crest</td><td>Check with Sales — lime is assertive next to agency crests</td><td>Native, same as A</td></tr>
+        <tr><td>Build cost</td><td>Lowest — components exist in production CSS</td><td>High — new component set and an inverted-card variant</td><td>Low — a token swap plus two layout tweaks</td></tr>
+        <tr><td>Risk carried</td><td>Cool and restrained; little warmth to hold attention</td><td>Lime may read as off-brand for uniformed-service sponsors</td><td>May read as a tweak rather than a relaunch</td></tr>
+        <tr>
+          <td>Preview</td>
+          <td><a class="fa-btn" target="_blank" href="family-a-institutional.html">View Preview</a></td>
+          <td><a class="fb-btn" target="_blank" href="family-b-student-native.html">View Preview</a></td>
+          <td><a class="fc-btn" target="_blank" href="family-c-warm-institution.html">View Preview</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout good wide">
+    <h4>What changed to make C a real option</h4>
+    <p>C was drawn from A's original navy-and-gold system, and promoting it required fixing the thing that made gold awkward: gold cannot set text on paper (2.2:1), so it only worked on half the site. C's ember ships as a pair — <span class="mono">#E8552F</span> for fills and <span class="mono">#B33A18</span> for text on light — clearing AA in both. A has since moved to graphite and cobalt, so C is no longer a variant of A; it is the one direction still carrying the navy.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 02 COLOUR ══════════════ -->
+<section id="colour">
+  <div class="sec-head">
+    <p class="sec-num">02 — Foundations</p>
+    <h2 class="sec-title">Colour</h2>
+    <p class="sec-note">Each family runs one dark ground, one warm paper, one structural colour and one action colour. None uses more than six values in production.</p>
+  </div>
+
+  <div class="trio">
+    <div>
+      <div class="col-head a"><span class="tagname">Family A</span><h3>The Institution</h3></div>
+      <div class="spec"><div class="swatches">
+        <div class="sw" style="background:#17181c;color:#fff"><span class="name">Graphite</span><span class="hex">#17181C</span><span class="use">Grounds, masthead, footer</span></div>
+        <div class="sw" style="background:#1b3bd6;color:#fff"><span class="name">Cobalt</span><span class="hex">#1B3BD6</span><span class="use">Action — on light grounds only</span></div>
+        <div class="sw" style="background:#5a6072;color:#fff"><span class="name">Slate</span><span class="hex">#5A6072</span><span class="use">Structure — labels, 3px rules</span></div>
+        <div class="sw" style="background:#9db0fa;color:#17181c"><span class="name">Powder</span><span class="hex">#9DB0FA</span><span class="use">Display type on dark, 24px+</span></div>
+        <div class="sw" style="background:#b8c8fc;color:#17181c"><span class="name">Powder lt</span><span class="hex">#B8C8FC</span><span class="use">Small text on dark</span></div>
+        <div class="sw" style="background:#f6f6f4;color:#17181c"><span class="name">Bone</span><span class="hex">#F6F6F4</span><span class="use">Paper</span></div>
+      </div></div>
+      <div class="callout warn">
+        <h4>Cobalt cannot touch a dark ground</h4>
+        <p>Cobalt against graphite measures <b>2.23:1</b> — as text or as a button fill on a dark panel it has no edge at all. Gold escaped this only by being light, which is also why gold could never be a link on paper. So buttons invert: <b>cobalt fill with white text on light</b> (7.94:1), <b>bone fill with cobalt text on dark</b> (7.34:1 text, 16.39:1 edge). Powder and powder-lt carry type on dark.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-head b"><span class="tagname">Family B</span><h3>Student Native</h3></div>
+      <div class="spec"><div class="swatches">
+        <div class="sw" style="background:#c8f04a;color:#0f1f1c"><span class="name">Lime · KEY</span><span class="hex">#C8F04A</span><span class="use">Fills, active state, accents on dark</span></div>
+        <div class="sw" style="background:#0f1f1c;color:#fff"><span class="name">Deep green</span><span class="hex">#0F1F1C</span><span class="use">Dark bands, footer, inverted cards</span></div>
+        <div class="sw" style="background:#0e5c54;color:#fff"><span class="name">Teal</span><span class="hex">#0E5C54</span><span class="use">Trust — links on light, secondary fill</span></div>
+        <div class="sw" style="background:#a8563a;color:#fff"><span class="name">Clay</span><span class="hex">#A8563A</span><span class="use">Category labels on light</span></div>
+        <div class="sw" style="background:#9fc4bc;color:#0f1f1c"><span class="name">Mist</span><span class="hex">#9FC4BC</span><span class="use">Muted text on dark grounds</span></div>
+        <div class="sw" style="background:#efe7da;color:#0f1f1c"><span class="name">Sand</span><span class="hex">#EFE7DA</span><span class="use">Tinted band, panel headers</span></div>
+      </div></div>
+      <div class="callout warn">
+        <h4>Lime never sets text on a light ground</h4>
+        <p>Against paper, lime measures <b>1.26:1</b> — effectively invisible. It is a fill and a dark-ground colour only, where it reaches <b>12.99:1</b>. Teal remains the text colour for links and labels on light, which is also what keeps the credibility attached to reading and comparing rather than to the loud furniture.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-head c"><span class="tagname">Family C</span><h3>Warm Institution</h3></div>
+      <div class="spec"><div class="swatches">
+        <div class="sw" style="background:#0a1628;color:#fff"><span class="name">Navy</span><span class="hex">#0A1628</span><span class="use">Unchanged from A</span></div>
+        <div class="sw" style="background:#1a6bb5;color:#fff"><span class="name">Sky</span><span class="hex">#1A6BB5</span><span class="use">Structure — labels, 3px rules</span></div>
+        <div class="sw" style="background:#E8552F;color:#fff"><span class="name">Ember</span><span class="hex">#E8552F</span><span class="use">Non-text only — 3px rules, ticks</span></div>
+        <div class="sw" style="background:#B33A18;color:#fff"><span class="name">Ember deep</span><span class="hex">#B33A18</span><span class="use">Button fills · text on light</span></div>
+        <div class="sw" style="background:#F9A184;color:#0a1628"><span class="name">Ember light</span><span class="hex">#F9A184</span><span class="use">Display type on navy, 24px+</span></div>
+        <div class="sw" style="background:#FBB094;color:#0a1628"><span class="name">Ember pale</span><span class="hex">#FBB094</span><span class="use">Small text on navy</span></div>
+        <div class="sw" style="background:#FAF7F2;color:#0a1628"><span class="name">Warm white</span><span class="hex">#FAF7F2</span><span class="use">Page paper — cleaner than A</span></div>
+      </div></div>
+      <div class="callout good">
+        <h4>Ember is a four-value ramp, split by contrast role</h4>
+        <p>Bright ember sits behind no text at all — it is rules and ticks. <b>Ember deep</b> fills buttons under white text and sets links on paper. <b>Ember light</b> takes display type on navy; <b>ember pale</b> takes small text on navy. Four values sounds like a lot until you see what happens with fewer — see the correction note in section 06.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout wide">
+    <h4>Tinted supports</h4>
+    <p>Family B v3 marks the Phase 2 pathway by <b>inverting the card</b> to the deep-green ground with a lime icon, rather than tinting it. The break in the row's rhythm is the most adventurous single move in the direction, and it earns its place by carrying real information — that card is the one that is not built yet. A and C distinguish the same three cards by the colour of the 3px rule alone.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 03 TYPOGRAPHY ══════════════ -->
+<section id="type">
+  <div class="sec-head">
+    <p class="sec-num">03 — Foundations</p>
+    <h2 class="sec-title">Typography</h2>
+    <p class="sec-note">All three run three roles: a display face, a workhorse, and a third face reserved for one job. A and C share the same three faces — C differs only in alignment and in the colour of its labels.</p>
+  </div>
+
+  <div class="trio">
+    <div>
+      <div class="col-head a"><span class="tagname">Family A</span><h3>Playfair · DM Sans · DM Serif</h3></div>
+      <div class="spec spec-a"><div class="spec-pad">
+        <div class="typerow">
+          <div style="font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:28px;letter-spacing:-.024em;line-height:1.06;color:#0a1628">Search it.<br>Compare it.</div>
+          <div class="stat">Hero · Playfair 500 · 37–60px · lh 1.06 · ls −.024em</div>
+        </div>
+        <div class="typerow">
+          <div style="font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:23px;letter-spacing:-.019em;color:#0a1628">Featured Providers</div>
+          <div class="stat">Section title · Playfair 500 · 39px · centred</div>
+        </div>
+        <div class="typerow">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#1a6bb5">Three ways in</div>
+          <div class="stat">Label · DM Sans 700 · 11px · sky</div>
+        </div>
+        <div class="typerow">
+          <div style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:14px;line-height:1.58;color:#374151">How LTC Lou Yang commands naval helicopters off moving frigates.</div>
+          <div class="stat">Standfirst · DM Serif italic · 17px</div>
+        </div>
+        <div class="typerow">
+          <div style="font-size:12.5px;line-height:1.7;color:#374151">Almost every bonded scholarship uses one of three contract shapes.</div>
+          <div class="stat">Body · DM Sans 400 · 16px · lh 1.75</div>
+        </div>
+        <div class="typerow">
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0a1628">Search &amp; Compare</div>
+          <div class="stat">Button · DM Sans 700 · 13px · caps</div>
+        </div>
+      </div></div>
+      <div class="callout">
+        <h4>Two display serifs now share the page</h4>
+        <p>Playfair sets headlines; DM Serif italic still sets standfirsts and pull-quotes. Both are high-contrast display serifs of a similar era, so they read as a near-match rather than a deliberate pairing. Playfair has its own italic, already loaded here — consolidating the voice role to <b>Playfair italic 400/500</b> would drop a font family and make the contrast intentional. Flagged, not changed: the swap brief covered titles and headlines only.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-head b"><span class="tagname">Family B</span><h3>Bricolage · Inter · Mono</h3></div>
+      <div class="spec spec-b"><div class="spec-pad">
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-family:'Bricolage Grotesque',Helvetica,sans-serif;font-weight:800;font-size:25px;letter-spacing:-.045em;line-height:1;color:#0f1f1c">Find the one that <span style="background:#c8f04a;padding:0 .14em .04em;border-radius:2px">actually fits.</span></div>
+          <div class="stat">Hero · Bricolage 800 · 42–69px · lh 1 · ls −.045em</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-family:'Bricolage Grotesque',Helvetica,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.042em;color:#0f1f1c">Featured providers</div>
+          <div class="stat">Section head · Bricolage 700 · 34px · lime rule beneath</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#a8563a">Three ways in</div>
+          <div class="stat">Label · Mono 500 · 11px · clay on light, lime on dark</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-size:12.5px;line-height:1.6;color:#4A4560">How LTC Lou Yang commands naval helicopters off moving frigates.</div>
+          <div class="stat">Standfirst · Inter 400 · 18px · in card</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-size:12.5px;line-height:1.7;color:#4A4560">Almost every bonded scholarship uses one of three contract shapes.</div>
+          <div class="stat">Body · Inter 400 · 17.5px · lh 1.72</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(24,21,40,.09)">
+          <div style="font-size:11.5px;font-weight:700;color:#181528">Search &amp; compare</div>
+          <div class="stat">Button · Inter 700 · 14px · sentence</div>
+        </div>
+      </div></div>
+      <div class="callout">
+        <h4>Bricolage is playful without being juvenile</h4>
+        <p>Poppins (v1) read as a children's app because it is built on near-perfect circles. Archivo (v2) fixed that but had no personality left. Bricolage Grotesque is deliberately irregular — slightly condensed, with odd characterful curves — so it carries tone the way a magazine masthead does rather than the way a toy does. At 800 with <span class="mono">−.045em</span> tracking it is the most distinctive display voice of the three, and still a sans, so it stays clearly apart from A's Playfair and C's Bebas.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-head c"><span class="tagname">Family C</span><h3>Bebas · DM Sans · DM Serif</h3></div>
+      <div class="spec spec-c"><div class="spec-pad">
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.02em;line-height:.94;color:#0a1628">Search it.<br>Compare it.</div>
+          <div class="stat">Hero · identical to A</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-family:'Bebas Neue',Impact,sans-serif;font-size:26px;letter-spacing:.035em;color:#0a1628">Featured Providers</div>
+          <div class="stat">Section title · Bebas 48px · <b>ranged left</b></div>
+        </div>
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#B33A18">Three ways in</div>
+          <div class="stat">Label · DM Sans 700 · 11px · <b>ember deep</b></div>
+        </div>
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:14px;line-height:1.58;color:#3d4149">How LTC Lou Yang commands naval helicopters off moving frigates.</div>
+          <div class="stat">Standfirst · identical to A</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-size:12.5px;line-height:1.7;color:#3d4149">Almost every bonded scholarship uses one of three contract shapes.</div>
+          <div class="stat">Body · DM Sans 400 · 16px · lh 1.75</div>
+        </div>
+        <div class="typerow" style="border-color:rgba(10,22,40,.08)">
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0a1628">Search &amp; Compare</div>
+          <div class="stat">Button · identical to A</div>
+        </div>
+      </div></div>
+      <div class="callout">
+        <h4>C now diverges from A on the display face</h4>
+        <p>C still runs Bebas Neue, because the Playfair swap was scoped to Family A. That changes the relationship: C was "A with one token swapped", and it is now a different headline voice as well. Either move C to Playfair too — the retune is already worked out — or accept that A and C are genuinely separate directions rather than near neighbours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 04 SHAPE & SPACE ══════════════ -->
+<section id="shape">
+  <div class="sec-head">
+    <p class="sec-num">04 — Foundations</p>
+    <h2 class="sec-title">Shape, space and elevation</h2>
+    <p class="sec-note">Each family separates objects by one mechanism and stays with it. Mixing the mechanisms is the fastest way to make any of them look wrong.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="spectable">
+      <thead><tr><th>Property</th><th>Family A</th><th>Family B</th><th>Family C</th></tr></thead>
+      <tbody>
+        <tr><td>Separation</td><td>Soft elevation plus a 3px slate bottom rule</td><td>A 2px ink outline. No blur shadows.</td><td>Same as A</td></tr>
+        <tr><td>Card radius</td><td><code>8px</code></td><td><code>4px</code></td><td><code>10px</code></td></tr>
+        <tr><td>Button radius</td><td><code>4px</code></td><td><code>3px</code> tags · <code>4px</code> buttons</td><td><code>6px</code></td></tr>
+        <tr><td>Chip / tag radius</td><td><code>2–3px</code></td><td><code>4px</code></td><td><code>4px</code></td></tr>
+        <tr><td>Elevation</td><td><code>0 2px 12px rgba(10,22,40,.06)</code>; hover <code>translateY(-4px)</code></td><td>None. 1px hairline, plus full inverted blocks.</td><td>Same as A</td></tr>
+        <tr><td>Spacing scale</td><td>rem, ~8pt — <code>.5 / .8 / 1.2 / 1.5 / 2 / 2.4 / 3 / 4.2</code></td><td>px on an 8 scale — <code>8 / 12 / 16 / 20 / 24 / 32 / 44 / 56</code></td><td>Same as A</td></tr>
+        <tr><td>Section band</td><td><code>4.2rem</code>, cream / white / navy</td><td><code>3.8rem</code>, paper / sand / deep green / lime</td><td><code>4.2rem</code>, warm white / white / navy</td></tr>
+        <tr><td>Section title</td><td>Centred, label stacked above</td><td>Ranged left, link on the right</td><td>Ranged left, with a 44px ember rule beneath</td></tr>
+        <tr><td>Content width</td><td><code>1100px</code></td><td><code>1140px</code></td><td><code>1100px</code></td></tr>
+        <tr><td>Iconography</td><td>Emoji, sparing — pathway cards and tabs</td><td>Line icons, 1.6px stroke — teal on light, lime on dark</td><td>Same as A</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout wide">
+    <h4>The radius nudge is doing real work</h4>
+    <p>C moves cards from 8px to 10px and buttons from 4px to 6px. On its own that is invisible; combined with the warmer paper and the left-ranged titles it is what stops C reading as "A with a different accent". Three small moves, no new components.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 05 COMPONENTS ══════════════ -->
+<section id="components">
+  <div class="sec-head">
+    <p class="sec-num">05 — Key components</p>
+    <h2 class="sec-title">Components, in all three</h2>
+    <p class="sec-note">The nine pieces Phase 1 actually needs. Everything below is live markup, not an image — inspect or copy from it directly.</p>
+  </div>
+
+  <p class="compo-label first">01 — Masthead and primary navigation</p>
+  <p class="compo-why">PRD item 1. Five links in fixed order, with the E-paper visually separated as an outbound destination.</p>
+  <div class="trio">
+    <div class="spec"><div class="fa-nav">
+      <div class="fa-nav-top"><div class="fa-logo">Scholar's <span>Choice</span></div><div class="fa-util">Sign in</div></div>
+      <ul><li><a href="#" class="on">Find</a></li><li><a href="#">Experience</a></li><li><a href="#">Guides</a></li><li><a href="#">Compare</a></li><li><a href="#" class="alt">E-paper ↗</a></li></ul>
+    </div></div>
+    <div class="spec"><div class="fb-nav">
+      <div class="fb-logo"><span class="mk">★</span>Scholar's Choice</div>
+      <nav><a href="#" class="on">Find</a><a href="#">Experience</a><a href="#">Guides</a><a href="#">Compare</a><a href="#" class="alt">E-paper ↗</a></nav>
+    </div></div>
+    <div class="spec"><div class="fc-nav">
+      <div class="fc-nav-top"><div class="fc-logo">Scholar's <span>Choice</span></div><div class="fc-util">Sign in</div></div>
+      <ul><li><a href="#" class="on">Find</a></li><li><a href="#">Experience</a></li><li><a href="#">Guides</a></li><li><a href="#">Compare</a></li><li><a href="#" class="alt">E-paper ↗</a></li></ul>
+    </div></div>
+  </div>
+
+  <p class="compo-label">02 — Buttons</p>
+  <p class="compo-why">One primary per view. The secondary never competes for the same click.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad">
+      <div class="row"><button class="fa-btn">Search</button><button class="fa-btn two">View</button><button class="fa-btn three">Browse</button></div>
+      <p class="microcap" style="color:#6f7280">Cobalt · slate · outline — radius 4px</p>
+    </div></div>
+    <div class="spec spec-b"><div class="spec-pad">
+      <div class="row"><button class="fb-btn">Search</button><button class="fb-btn two">View</button><button class="fb-btn three">Browse</button></div>
+      <p class="microcap" style="color:#78777e">Lime · teal · outline — radius 4px</p>
+    </div></div>
+    <div class="spec spec-c"><div class="spec-pad">
+      <div class="row"><button class="fc-btn">Search</button><button class="fc-btn two">View</button><button class="fc-btn three">Browse</button></div>
+      <p class="microcap" style="color:#6d675f">Ember-deep · sky · outline — radius 6px</p>
+    </div></div>
+  </div>
+
+  <p class="compo-label">03 — Search × comparison entry</p>
+  <p class="compo-why">PRD item 3. The most important control on the homepage — it carries both the search and the comparison tool.</p>
+  <div class="trio">
+    <div class="spec spec-dark"><div class="spec-pad">
+      <div class="fa-pod"><input placeholder="Agency, field or school" aria-label="Search scholarships"><button class="fa-btn">Go</button></div>
+      <p class="microcap" style="color:rgba(255,255,255,.55);font-family:'DM Sans',Helvetica,sans-serif">Or open the <span style="color:#fff;text-decoration:underline">comparison tool</span></p>
+    </div></div>
+    <div class="spec spec-b"><div class="spec-pad">
+      <div class="fb-pod"><input placeholder="Try &ldquo;no bond, overseas&rdquo;" aria-label="Search scholarships"><button class="fb-btn">Go</button></div>
+      <p class="microcap" style="color:#4f4e57;font-family:'Inter',Helvetica,sans-serif">Not sure yet? <span style="color:#0e5c54;font-weight:600">Open the comparison tool</span></p>
+    </div></div>
+    <div class="spec spec-dark"><div class="spec-pad">
+      <div class="fc-pod"><input placeholder="Agency, field or school" aria-label="Search scholarships"><button class="fc-btn">Go</button></div>
+      <p class="microcap" style="color:rgba(255,255,255,.55);font-family:'DM Sans',Helvetica,sans-serif">Or open the <span style="color:#FBB094;text-decoration:underline">comparison tool</span></p>
+    </div></div>
+  </div>
+
+  <p class="compo-label">04 — Pathway card</p>
+  <p class="compo-why">PRD items 4–6. Three per row. The third is a Phase 2 placement and must stay visibly marked until the quiz logic lands.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad"><div class="stack">
+      <div class="fa-card"><div class="ico">🔍</div><p class="lbl">Pathway 01</p><h4>Find your scholarship</h4><p>Filter by agency, field, bond and deadline.</p><a class="go" href="#">Open the finder →</a></div>
+      <div class="fa-card hi"><div class="ico">🧭</div><p class="lbl" style="color:#9c7a1e">Pathway 03 &nbsp;<span class="fa-phase">Phase 2</span></p><h4>I don't know where to start</h4><p>Answer a few questions and we'll point you somewhere.</p><a class="go" href="#">Take the quiz →</a></div>
+    </div></div></div>
+    <div class="spec spec-b"><div class="spec-pad"><div class="stack">
+      <div class="fb-card p1"><div class="ico">🔍</div><h4>Find your scholarship</h4><p>Filter by field, bond, location and deadline.</p><a class="go" href="#">Open the finder →</a></div>
+      <div class="fb-card p3"><div class="row" style="justify-content:space-between;align-items:flex-start"><div class="ico">🧭</div><span class="fb-phase">Phase 2</span></div><h4>I don't know where to start</h4><p>Totally fine. Answer a few questions.</p><a class="go" href="#">Take the quiz →</a></div>
+    </div></div></div>
+    <div class="spec spec-c"><div class="spec-pad"><div class="stack">
+      <div class="fc-card"><div class="ico">🔍</div><p class="lbl">Pathway 01</p><h4>Find your scholarship</h4><p>Filter by agency, field, bond and deadline.</p><a class="go" href="#">Open the finder →</a></div>
+      <div class="fc-card hi"><div class="ico">🧭</div><p class="lbl" style="color:#B33A18">Pathway 03 &nbsp;<span class="fc-phase">Phase 2</span></p><h4>I don't know where to start</h4><p>Answer a few questions and we'll point you somewhere.</p><a class="go" href="#">Take the quiz →</a></div>
+    </div></div></div>
+  </div>
+
+  <p class="compo-label">05 — Story card</p>
+  <p class="compo-why">PRD item 8. Runs at two sizes: a lead card and standard cards alongside it.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad">
+      <article class="fa-story"><div class="ph"></div><div class="bd">
+        <p class="cat">Overseas · Engineering</p>
+        <h4>She turned down a bond-free offer. Four years on, she'd do it again.</h4>
+        <p>Wei Lin took the SAF Merit Scholarship to Imperial College.</p>
+        <p class="by">Editorial · 6 min read</p>
+      </div></article>
+    </div></div>
+    <div class="spec spec-b"><div class="spec-pad">
+      <article class="fb-story"><div class="ph"></div><div class="bd">
+        <span class="chip">Overseas · Engineering</span>
+        <h4>She turned down a bond-free offer. Four years on, she'd do it again.</h4>
+        <p>Wei Lin took the SAF Merit Scholarship to Imperial College.</p>
+        <p class="by">6 MIN READ</p>
+      </div></article>
+    </div></div>
+    <div class="spec spec-c"><div class="spec-pad">
+      <article class="fc-story"><div class="ph"></div><div class="bd">
+        <p class="cat">Overseas · Engineering</p>
+        <h4>She turned down a bond-free offer. Four years on, she'd do it again.</h4>
+        <p>Wei Lin took the SAF Merit Scholarship to Imperial College.</p>
+        <p class="by">Editorial · 6 min read</p>
+      </div></article>
+    </div></div>
+  </div>
+
+  <p class="compo-label">06 — Filter tags</p>
+  <p class="compo-why">PRD item 7. All three change the ground for the selected state, not just the border, so selection survives a greyscale print or a low-contrast screen. In C, selection stays sky — ember is reserved for actions, not states.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad"><div class="fa-tags">
+      <a href="#" class="on">Bond-free</a><a href="#">Overseas</a><a href="#">Local uni</a><a href="#">Mid-term</a><a href="#">Engineering</a><a href="#">Full coverage</a>
+    </div></div></div>
+    <div class="spec spec-b"><div class="spec-pad"><div class="fb-tags">
+      <a href="#" class="on">Bond-free</a><a href="#">Overseas</a><a href="#">Local uni</a><a href="#">Mid-term</a><a href="#">Engineering</a><a href="#">Full coverage</a>
+    </div></div></div>
+    <div class="spec spec-c"><div class="spec-pad"><div class="fc-tags">
+      <a href="#" class="on">Bond-free</a><a href="#">Overseas</a><a href="#">Local uni</a><a href="#">Mid-term</a><a href="#">Engineering</a><a href="#">Full coverage</a>
+    </div></div></div>
+  </div>
+
+  <p class="compo-label">07 — Pull-quote</p>
+  <p class="compo-why">PRD item 14, called out in the PRD as needing a redesign. A and C set it as a quotation; B sets it as a statement.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad"><div class="fa-quote">
+      <blockquote>"At work, I give my best, so that when I return to my children, I can be fully present."</blockquote>
+      <cite>— LTC Lou Yang, SAF Merit Scholar</cite>
+    </div></div></div>
+    <div class="spec spec-b"><div class="spec-pad"><div class="fb-quote">
+      <blockquote>"At work, I give my best, so that when I return to my children, I can be fully present."</blockquote>
+      <cite>LTC Lou Yang · SAF Merit Scholar</cite>
+    </div></div></div>
+    <div class="spec spec-c"><div class="spec-pad"><div class="fc-quote">
+      <blockquote>"At work, I give my best, so that when I return to my children, I can be fully present."</blockquote>
+      <cite>— LTC Lou Yang, SAF Merit Scholar</cite>
+    </div></div></div>
+  </div>
+
+  <p class="compo-label">08 — Scholarship information panel</p>
+  <p class="compo-why">PRD item 16. Sticky in the article rail. The CTA links out only — the application flow belongs to the Registration PRD.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad"><div class="fa-panel">
+      <div class="ph">Scholarship information</div>
+      <div class="pb">
+        <div class="nm">SAF Merit Scholarship</div>
+        <div class="fa-kv"><span>Provider</span><b>MINDEF</b></div>
+        <div class="fa-kv"><span>Bond</span><b>6 years</b></div>
+        <div class="fa-kv"><span>Coverage</span><b>Full tuition</b></div>
+        <div class="fa-kv"><span>Deadline</span><b>21 Mar 2027</b></div>
+        <button class="fa-btn" style="width:100%;margin-top:11px">View &amp; apply →</button>
+      </div>
+    </div></div></div>
+    <div class="spec spec-b"><div class="spec-pad"><div class="fb-panel">
+      <div class="ph">Scholarship information</div>
+      <div class="pb">
+        <div class="nm">SAF Merit Scholarship</div>
+        <div class="fb-kv"><span>Provider</span><b>MINDEF</b></div>
+        <div class="fb-kv"><span>Bond</span><b>6 years</b></div>
+        <div class="fb-kv"><span>Coverage</span><b>Full tuition</b></div>
+        <div class="fb-kv"><span>Deadline</span><b>21 Mar 2027</b></div>
+        <button class="fb-btn" style="width:100%;margin-top:11px">View &amp; apply →</button>
+      </div>
+    </div></div></div>
+    <div class="spec spec-c"><div class="spec-pad"><div class="fc-panel">
+      <div class="ph">Scholarship information</div>
+      <div class="pb">
+        <div class="nm">SAF Merit Scholarship</div>
+        <div class="fc-kv"><span>Provider</span><b>MINDEF</b></div>
+        <div class="fc-kv"><span>Bond</span><b>6 years</b></div>
+        <div class="fc-kv"><span>Coverage</span><b>Full tuition</b></div>
+        <div class="fc-kv"><span>Deadline</span><b>21 Mar 2027</b></div>
+        <button class="fc-btn" style="width:100%;margin-top:11px">View &amp; apply →</button>
+      </div>
+    </div></div></div>
+  </div>
+
+  <p class="compo-label">09 — Section header</p>
+  <p class="compo-why">Sets the rhythm of the homepage — and it is where A and C part company most visibly.</p>
+  <div class="trio">
+    <div class="spec spec-a"><div class="spec-pad"><div class="fa-sechead">
+      <p class="lb">Scholars' Experience</p><h4>In Their Own Words</h4>
+    </div></div></div>
+    <div class="spec spec-b"><div class="spec-pad"><div class="fb-sechead">
+      <p class="lb">Scholars' experience</p><h4>In their own words</h4>
+    </div></div></div>
+    <div class="spec spec-c"><div class="spec-pad"><div class="fc-sechead">
+      <p class="lb">Scholars' Experience</p><h4>In Their Own Words</h4><div class="rule"></div>
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ══════════════ 06 CONTRAST ══════════════ -->
+<section id="access">
+  <div class="sec-head">
+    <p class="sec-num">06 — Contrast</p>
+    <h2 class="sec-title">Measured pairs</h2>
+    <p class="sec-note">Every combination used for text, measured two ways. <b>WCAG 2.1</b> is the compliance standard — 4.5:1 for normal text, 3:1 at 18.66px bold or 24px+. <b>APCA Lc</b> is the perceptual measure behind the draft WCAG 3 guidance, and it is the one that predicts what the eye actually does: Lc 75 for body text, Lc 60 for headlines and 16px bold, Lc 45 as the floor for large bold type. Both columns matter, because they disagree — and where they disagree, they disagree about saturated oranges.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="spectable narrow">
+      <thead><tr><th>Pair</th><th>Fam.</th><th>WCAG</th><th>APCA Lc</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Graphite on bone</td><td>A</td><td><span class="mono">16.4:1</span></td><td><span class="mono">99.1</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Bone on graphite</td><td>A</td><td><span class="mono">16.4:1</span></td><td><span class="mono">−100.7</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Graphite on mist</td><td>A</td><td><span class="mono">15.0:1</span></td><td><span class="mono">93.3</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Search button — powder-lt on graphite</td><td>A</td><td><span class="mono">10.7:1</span></td><td><span class="mono">−72.9</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Body <span class="mono">#454750</span> on bone</td><td>A</td><td><span class="mono">8.6:1</span></td><td><span class="mono">85.9</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Powder on graphite (display)</td><td>A</td><td><span class="mono">8.5:1</span></td><td><span class="mono">−60.2</span></td><td><span class="ratio pass">24px and above only</span></td></tr>
+        <tr><td>White on cobalt (button)</td><td>A</td><td><span class="mono">7.9:1</span></td><td><span class="mono">−91.1</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Cobalt on bone (links)</td><td>A</td><td><span class="mono">7.3:1</span></td><td><span class="mono">80.9</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Cobalt on mist</td><td>A</td><td><span class="mono">6.7:1</span></td><td><span class="mono">75.1</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Slate on bone (labels)</td><td>A</td><td><span class="mono">5.8:1</span></td><td><span class="mono">75.8</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Cobalt on graphite — <b>forbidden</b></td><td>A</td><td><span class="mono">2.23:1</span></td><td><span class="mono">−14.6</span></td><td><span class="ratio fail">No text, no fills</span></td></tr>
+        <tr><td>Deep green on paper</td><td>B</td><td><span class="mono">16.3:1</span></td><td><span class="mono">101.0</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Deep green on lime (button)</td><td>B</td><td><span class="mono">13.0:1</span></td><td><span class="mono">86.3</span></td><td><span class="ratio pass">Strongest button here</span></td></tr>
+        <tr><td>Lime on deep green</td><td>B</td><td><span class="mono">13.0:1</span></td><td><span class="mono">−86.9</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Deep green on sand</td><td>B</td><td><span class="mono">13.9:1</span></td><td><span class="mono">90.2</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>Body <span class="mono">#4A4A4F</span> on paper</td><td>B</td><td><span class="mono">8.5:1</span></td><td><span class="mono">87.3</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>White on teal (secondary)</td><td>B</td><td><span class="mono">7.8:1</span></td><td><span class="mono">−91.6</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Teal on paper (links)</td><td>B</td><td><span class="mono">7.5:1</span></td><td><span class="mono">83.9</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Lime on teal</td><td>B</td><td><span class="mono">6.0:1</span></td><td><span class="mono">−72.2</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Mist on deep green</td><td>B</td><td><span class="mono">9.0:1</span></td><td><span class="mono">−64.9</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Clay on paper</td><td>B</td><td><span class="mono">5.0:1</span></td><td><span class="mono">72.3</span></td><td><span class="ratio pass">AA / adequate</span></td></tr>
+        <tr><td>Lime on paper — <b>forbidden</b></td><td>B</td><td><span class="mono">1.26:1</span></td><td><span class="mono">12.3</span></td><td><span class="ratio fail">Never for text</span></td></tr>
+        <tr><td>Navy on warm white</td><td>C</td><td><span class="mono">17.0:1</span></td><td><span class="mono">100.2</span></td><td><span class="ratio pass">AAA / strong</span></td></tr>
+        <tr><td>White on ember-deep (button)</td><td>C</td><td><span class="mono">5.9:1</span></td><td><span class="mono">−83.9</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Ember-deep on white</td><td>C</td><td><span class="mono">5.9:1</span></td><td><span class="mono">78.6</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Ember-deep on warm white</td><td>C</td><td><span class="mono">5.6:1</span></td><td><span class="mono">74.0</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Sky on warm white</td><td>C</td><td><span class="mono">5.2:1</span></td><td><span class="mono">79.5</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Ember-pale on navy</td><td>C</td><td><span class="mono">10.1:1</span></td><td><span class="mono">−68.7</span></td><td><span class="ratio pass">AA / strong</span></td></tr>
+        <tr><td>Ember-light on navy (display)</td><td>C</td><td><span class="mono">9.0:1</span></td><td><span class="mono">−62.7</span></td><td><span class="ratio pass">AA / display only</span></td></tr>
+        <tr><td><s>Navy on bright ember</s> — withdrawn</td><td>C</td><td><span class="mono">4.98:1</span></td><td><span class="mono">39.8</span></td><td><span class="ratio fail">Passed WCAG, failed the eye</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout good wide">
+    <h4>Correction — and why the second column is here</h4>
+    <p>An earlier version of this guide put C's button at navy on bright ember <span class="mono">#E8552F</span>, and called it a pass on the strength of 4.98:1. It was reported as too dim on sight, and the eye was right: the same pair scores <b>Lc 39.8</b>, under the Lc 45 floor for large bold text and nowhere near the ~60 a 13px uppercase label wants. WCAG 2.x computes luminance in a way that systematically over-rates saturated mid-tone oranges and reds, so a legal ratio can still be an unreadable button. C's buttons are now white on ember-deep — 5.9:1 and Lc 83.9. Two other pairs failed the same way and were fixed: ember-light was carrying 10–13px text on navy at Lc 47.5, now ember-pale at Lc 68.7.<br><br>
+    <b>Family B had the same fault, and two reworks removed it.</b> v1's ink-on-coral was 5.78:1 at Lc 45.9 — legal, but bottom of the perceptual range for a bold label. v3's deep-green-on-lime is <b>12.99:1 at Lc 86.3</b>, the strongest primary button anywhere in this project. The one rule lime brings with it is the inverse of A's gold rule: it may never set text on a light ground.<br><br>
+    <b>The standing rules:</b> <b>A</b> — cobalt is a light-ground colour only; powder carries type on dark. <b>B</b> — lime is a fill and dark-ground colour only; teal carries text on light. <b>C</b> — bright ember touches no text at all.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 07 CHOOSING ══════════════ -->
+<section id="choose">
+  <div class="sec-head">
+    <p class="sec-num">07 — Decision</p>
+    <h2 class="sec-title">Which one, and when</h2>
+    <p class="sec-note">All three meet the brief. The choice is about which risk the business would rather carry into January 2027.</p>
+  </div>
+  <div class="decide">
+    <div class="box a">
+      <h4>Pick A if</h4>
+      <p class="who">Weighting precision and neutrality</p>
+      <ul>
+        <li>Sales need a credible, premium masthead story for agency conversations</li>
+        <li>Agency crests and uniform-group creative must sit natively in the page</li>
+        <li>The January date is at risk and you want zero new components</li>
+        <li>A cool, neutral shell is wanted so sponsor creative supplies the colour</li>
+        <li>You would rather look precise than warm</li>
+      </ul>
+    </div>
+    <div class="box b">
+      <h4>Pick B if</h4>
+      <p class="who">Weighting the 17–21 audience</p>
+      <ul>
+        <li>Pathway-module engagement is the metric that matters most</li>
+        <li>The site should stop a scrolling seventeen-year-old, not just reassure a parent</li>
+        <li>There is appetite to rebuild the component set rather than restyle it</li>
+        <li>Sales are comfortable placing agency crests beside a high-energy palette</li>
+        <li>You would rather be memorable than safe</li>
+      </ul>
+    </div>
+    <div class="box c">
+      <h4>Pick C if</h4>
+      <p class="who">Weighting both, on A's budget</p>
+      <ul>
+        <li>The relaunch needs to look visibly new, not like a re-skin of today</li>
+        <li>Sponsors still need an institutional frame around their creative</li>
+        <li>You want one action colour that works everywhere, without exceptions</li>
+        <li>Engineering time is the binding constraint, not design ambition</li>
+        <li>You would rather move one step than two</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout wide">
+    <h4>How to settle it</h4>
+    <p>These are now three genuinely separate directions, which was not true earlier in the process. C began as A with one token changed; A has since moved to graphite, cobalt and Playfair while C kept navy, ember and Bebas, so no two of them share a ground, an accent or a display face. That is worth saying out loud in the review, because the shortcut of "A and C are basically the same, so really it is A-or-B" no longer holds. Compare all three on their own terms.</p>
+  </div>
+</section>
+
+</main>
+
+<div class="shell">
+  <p class="foot">
+    Scholar's Choice UI/UX Refresh · Phase 1 facelift · target January 2027<br>
+    All three families cover the nineteen Phase 1 items. Phase 2 elements — quiz logic, monthly content pipeline, profile backfill, curated related articles, rebuilt comparison attributes, agency hub pages, evergreen content and AMA — appear as reserved placement only.<br>
+    Contrast ratios calculated to WCAG 2.1 relative luminance. All component specimens are live markup, not screenshots.
+  </p>
+</div>
