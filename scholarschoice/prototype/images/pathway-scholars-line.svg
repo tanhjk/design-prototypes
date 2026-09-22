@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="scholarsLineTitle scholarsLineDesc">
+  <title id="scholarsLineTitle">Hearing from real scholars</title>
+  <desc id="scholarsLineDesc">A speech bubble drawn in teal linework over an offset lime block, holding a scholar's portrait and two lines of text, with terracotta quotation marks and sound waves.</desc>
+
+  <!-- Scholar's Choice illustration set · Style B: line-work on colour blocks
+       The lime and terracotta blocks sit deliberately off-register behind the
+       teal linework, like a mis-struck print.
+       No background: the art is transparent and sits on any ground. The
+       200x200 viewBox still reserves the original margins. -->
+
+  <!-- Off-register colour blocks -->
+  <rect x="48" y="56" width="112" height="84" rx="26" fill="var(--sc-lime, #C8F04A)"
+        transform="rotate(-5 104 98)"/>
+  <g fill="var(--sc-accent, #A8563A)">
+    <circle cx="150" cy="28" r="9"/>
+    <path d="M143 34l7 16 7-16z"/>
+    <circle cx="174" cy="28" r="9"/>
+    <path d="M167 34l7 16 7-16z"/>
+  </g>
+
+  <!-- Linework -->
+  <g fill="none" stroke="var(--sc-lime-dark, #0E5C54)" stroke-width="3.5"
+     stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Bubble with tail -->
+    <path d="M78 66h74a22 22 0 0 1 22 22v34a22 22 0 0 1-22 22h-44l-22 22v-22h-8a22 22 0 0 1-22-22V88a22 22 0 0 1 22-22z"/>
+
+    <!-- Portrait -->
+    <circle cx="96" cy="98" r="15"/>
+    <path d="M76 132c0-18 40-18 40 0"/>
+
+    <!-- Lines of speech -->
+    <path d="M128 94h32M128 110h24"/>
+
+    <!-- Sound waves -->
+    <path d="M34 140a15 15 0 0 1 0 30"/>
+    <path d="M24 130a25 25 0 0 1 0 50"/>
+  </g>
+</svg>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>From volunteering in rental flats to shaping social policies — Scholar's Choice</title>
+<meta name="description" content="Vera started out knocking on doors in rental blocks as a student volunteer. A PSC scholarship later, she writes the social policies that decide what help arrives at those doors.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  NOTE FOR IMPLEMENTATION
+  The scholar in this article, her quotes, her employer and every scholarship
+  figure below are PLACEHOLDER CONTENT written to exercise the layout.
+  Replace with verified, consented editorial content before publication.
+  Images point at picsum.photos / pravatar.cc — swap the `src` attributes for
+  real assets (each is marked with a data-img-slot attribute).
+
+  TEMPLATE STRUCTURE
+    #article-hero        scholar portrait + name, scholarship, bond, studied,
+                         current role, and pull quote
+    #article-byline      author, date, read time, share
+    #article-video       OPTIONAL — delete the whole <section> when a story
+                         has no video. Nothing else depends on it.
+    #article-body        3 tabbed parts: #the-story / #the-work / #ama
+    #scholarship-sidebar sticky scholarship info panel
+    #related-stories     3 more Scholars' Experience cards
+  ============================================================================
+-->
+</head>
+<body class="page-article">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<div id="reading-progress" aria-hidden="true"><span></span></div>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/sc-logo.png"
+           alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="#scholarship-search">Find a Scholarship</a></li>
+        <li><a class="site-nav__link is-active" href="scholars-experience.html" aria-current="page">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <a class="sc-btn sc-btn--secondary sc-btn--sm site-header__login" href="#" aria-label="Login">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Login</span>
+      </a>
+      <a class="sc-btn sc-btn--primary sc-btn--sm site-header__register" href="#">Register</a>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+<article class="article" itemscope>
+
+  <!-- ========================================================================
+       01 · ARTICLE HERO — scholar portrait + profile facts + quote
+       ======================================================================== -->
+  <section id="article-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+          <li aria-current="page">Vera</li>
+        </ol>
+      </nav>
+
+      <div class="article-hero__layout">
+
+        <div class="article-hero__content">
+          <p class="sc-eyebrow sc-eyebrow--on-dark article-hero__eyebrow">Scholars&rsquo; Experience · Social policy</p>
+
+          <h1 class="article-hero__name">Vera</h1>
+          <p class="article-hero__role">Policy officer, social &amp; family development</p>
+
+          <blockquote class="article-hero__quote">
+            &ldquo;You can read every paper ever written about low-income households and still be wrong about the flat in front of you. Closing that gap is the whole job.&rdquo;
+          </blockquote>
+
+          <!-- Scholar facts: Name is the H1 above; these four are the spec facts -->
+          <dl class="scholar-profile__meta">
+            <div class="scholar-profile__meta-item">
+              <dt class="scholar-profile__meta-label">Scholarship</dt>
+              <dd class="scholar-profile__meta-value">PSC Scholarship (Public Administration)</dd>
+            </div>
+            <div class="scholar-profile__meta-item">
+              <dt class="scholar-profile__meta-label">Bond</dt>
+              <dd class="scholar-profile__meta-value">6 years, served from 2023</dd>
+            </div>
+            <div class="scholar-profile__meta-item">
+              <dt class="scholar-profile__meta-label">Studied</dt>
+              <dd class="scholar-profile__meta-value">Social Policy &amp; Economics, London School of Economics</dd>
+            </div>
+            <div class="scholar-profile__meta-item">
+              <dt class="scholar-profile__meta-label">Now working at</dt>
+              <dd class="scholar-profile__meta-value">Ministry of Social and Family Development</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Portrait. Add `scholar-portrait--duotone` for the lime duotone treatment. -->
+        <figure class="scholar-portrait">
+          <div class="sc-frame sc-frame--3x4">
+            <img data-img-slot="scholar-portrait" src="images/vera.jpg"
+                 alt="Portrait of Vera at Marina Bay" width="2560" height="1707" loading="eager"
+                 style="object-position: 38% center;">
+          </div>
+          <figcaption class="scholar-portrait__caption">Vera at Marina Bay, a short walk from the ministry where she has worked since returning from London. Photo: placeholder.</figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       02 · BYLINE BAR
+       ======================================================================== -->
+  <div id="article-byline">
+    <div class="sc-container article-byline__inner">
+
+      <div class="article-byline__who">
+        <span class="article-byline__avatar" aria-hidden="true">HL</span>
+        <div>
+          <p class="article-byline__author">By Hazel Lim</p>
+          <p class="sc-meta">Published 22 Sep 2026 · 12 min read</p>
+        </div>
+      </div>
+
+      <div class="article-share">
+        <span class="article-share__label">Share</span>
+        <a class="article-share__btn" href="#" aria-label="Share on WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-1.6.1-3.6-1.3-5-2.7-1.4-1.4-2.8-3.4-2.7-5 0-.5.6-1.5 1.2-1.7.3-.1.7 0 .9.4l.8 1.5c.1.3.1.6-.1.8l-.4.5c-.2.2-.2.4-.1.6.3.6 1.6 1.9 2.2 2.2.2.1.4.1.6-.1l.5-.4c.2-.2.5-.2.8-.1l1.5.8c.4.2.5.6.4.9Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" aria-label="Share on Telegram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.7 3.3 2.9 10.6c-.9.3-.9 1.5 0 1.8l4.3 1.4 1.6 5c.3.8 1.3 1 1.8.3l2.3-2.8 4.4 3.3c.7.5 1.7.1 1.9-.7l3.1-14.1c.2-.9-.7-1.6-1.6-1.2ZM9.5 14.1l-.3 3.3-1-3.1 8.2-5.5-6.9 5.3Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" aria-label="Share on LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h3v12H3V9Zm6 0h2.9v1.7h.1c.4-.8 1.5-1.9 3.3-1.9 2.6 0 3.7 1.6 3.7 4.4V21h-3v-6.6c0-1.6-.6-2.5-1.9-2.5-1.1 0-1.8.7-2 1.4-.1.2-.1.6-.1.9V21H9V9Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" aria-label="Copy link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 6.5 13 4.5a4 4 0 0 1 5.7 5.7l-2 2"/><path d="M13 17.5 11 19.5a4 4 0 0 1-5.7-5.7l2-2"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       03 · VIDEO SECTION — OPTIONAL
+       Delete this entire <section> for stories without a video.
+       ======================================================================== -->
+  <section id="article-video" class="sc-section sc-section--tight">
+    <div class="sc-container sc-container--narrow">
+
+      <p class="sc-eyebrow sc-eyebrow--on-dark">Watch · 4:12</p>
+      <h2 class="sc-h3 sc-mt-4" style="color: var(--sc-white);">Vera on the first door she knocked on</h2>
+
+      <div class="article-video__player sc-mt-6" data-video-id="vera-feature">
+        <div class="sc-frame sc-frame--16x9">
+          <img data-img-slot="article-video-poster" src="images/vera.jpg"
+               alt="Video: Vera on the first door she knocked on" width="2560" height="1707" loading="lazy">
+        </div>
+        <button class="article-video__play" type="button" aria-label="Play video">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+
+      <p class="article-video__caption">Filmed in Marina Bay in September 2026. Replace this block with your video embed — the player wrapper keeps a 16:9 ratio at every width.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       04 · ARTICLE BODY — The Story / The Work / #AMA  + sticky sidebar
+       ======================================================================== -->
+  <section id="article-body">
+    <div class="sc-container">
+      <div class="article-body__layout">
+
+        <!-- ---------------------------------------------------------------
+             MAIN COLUMN
+             --------------------------------------------------------------- -->
+        <div class="article-body__main">
+
+          <!-- Tabs. Panels below are the same three parts; JS toggles [hidden].
+               With JS off every panel stays visible and reads as one article. -->
+          <div class="article-tabs" role="tablist" aria-label="Article sections">
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-the-story" aria-controls="the-story" aria-selected="true">
+              <span class="article-tabs__num">01</span>The story
+            </button>
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-the-work" aria-controls="the-work" aria-selected="false" tabindex="-1">
+              <span class="article-tabs__num">02</span>The work
+            </button>
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-ama" aria-controls="ama" aria-selected="false" tabindex="-1">
+              <span class="article-tabs__num">03</span>#AMA
+            </button>
+            <!-- Mobile only: below 1000px the sidebar stacks, so it becomes the
+                 4th tab instead. JS drops this tab from the set on desktop. -->
+            <button class="article-tabs__tab article-tabs__tab--pinned" type="button" role="tab"
+                    id="tab-scholarship" aria-controls="scholarship-sidebar"
+                    aria-selected="false" tabindex="-1" data-mobile-only>
+              The scholarship
+            </button>
+          </div>
+
+          <!-- PART 1 ---------------------------------------------------- -->
+          <section class="article-part" id="the-story" role="tabpanel"
+                   aria-labelledby="tab-the-story" tabindex="0">
+            <p class="article-part__label">Part 01</p>
+            <h2 class="article-part__title">The story</h2>
+
+            <div class="article-prose">
+              <p class="article-prose__dropcap">The block was in Jalan Kukoh and the lift was out, so Vera walked up nine floors with a clipboard, a bag of rice and almost no idea what she was going to say. She was seventeen, a week into a school volunteering programme, and the door she knocked on was opened by a woman who had been asked the same questions by four different organisations that year.</p>
+
+              <p>&ldquo;She was very polite about it,&rdquo; Vera says. &ldquo;She told me, you all keep coming to ask, and nothing changes. I did not have an answer. I have been trying to build one ever since.&rdquo;</p>
+
+              <p>The rental blocks are where her interest in policy started, but they are not where she expected it to lead. She had assumed she would become a social worker &mdash; the person at the door. A teacher pointed out that the forms the social worker was filling in had been designed by someone else, in an office, years earlier, and that those forms decided as much as the visit did.</p>
+
+              <p>She applied for the PSC Scholarship (Public Administration) in her final year of junior college, and spent the interview talking about the nine floors.</p>
+
+              <p>&ldquo;I did not have a grand thesis about inequality,&rdquo; she says. &ldquo;I had one household, one conversation, and a very specific thing that had gone wrong. I think that is what they wanted to hear. The panel kept pulling me back to the details.&rdquo;</p>
+
+              <figure class="article-figure">
+                <div class="sc-frame sc-frame--16x9">
+                  <img data-img-slot="article-figure-1" src="images/vera.jpg"
+                       alt="Vera at Marina Bay, with the financial district behind her" width="2560" height="1707" loading="lazy"
+                       style="object-position: 60% center;">
+                </div>
+                <figcaption>&ldquo;The distance between where policy is written and where it lands is about twenty minutes on the train.&rdquo; Photo: placeholder.</figcaption>
+              </figure>
+
+              <p>London was harder than the scholarship brochures suggest, in ways that had nothing to do with grades. She arrived at the London School of Economics to read social policy and economics, and found herself in seminars where Singapore came up mainly as a case study &mdash; usually flattened into a single paragraph about public housing, usually by someone who had never been.</p>
+
+              <p>&ldquo;I got very good at saying &lsquo;it is more complicated than that&rsquo;,&rdquo; she says. &ldquo;Then I realised I was doing the same thing to Britain. That was a useful year.&rdquo;</p>
+
+              <div class="article-pullquote">
+                <blockquote>Policy is not the opposite of being on the ground. It is what happens to the ground when you are not looking.</blockquote>
+                <figcaption>Vera</figcaption>
+              </div>
+
+              <p>She came back in 2023 and was posted to the Ministry of Social and Family Development, which is where the nine floors caught up with her. One of her first assignments was a review of how often families on assistance had to re-declare the same information to different agencies.</p>
+
+              <p><strong>The part she wants prospective applicants to hear:</strong> a public administration scholarship is not a fast track to influence. &ldquo;Your first two years are spreadsheets, minutes and reading other people&rsquo;s drafts,&rdquo; she says. &ldquo;If you need the work to feel important every day, this will be a long six years.&rdquo;</p>
+
+              <div class="article-callout">
+                <h3 class="article-callout__title">If you are applying this cycle</h3>
+                <p>Panels for the administrative awards tend to probe one example hard rather than range across many. Pick something you were actually in the room for &mdash; including the parts that did not work &mdash; and be ready to be asked what you would do differently.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- PART 2 ---------------------------------------------------- -->
+          <section class="article-part" id="the-work" role="tabpanel"
+                   aria-labelledby="tab-the-work" tabindex="0">
+            <p class="article-part__label">Part 02</p>
+            <h2 class="article-part__title">The work</h2>
+
+            <div class="article-prose">
+              <p>Vera works on what the ministry calls &ldquo;the application journey&rdquo; &mdash; the sequence of forms, checks and appointments a household passes through between asking for help and receiving it. Her current file is a narrow one, and has taken two years: whether three separate schemes can accept a single declaration of income.</p>
+
+              <p>A normal week is less cinematic than the recruitment videos suggest.</p>
+
+              <ul>
+                <li><strong>Two days of data.</strong> Anonymised case records, mostly in Excel, mostly finding out that the pattern you were sure about is an artefact of how a field was coded in 2019.</li>
+                <li><strong>One day of meetings.</strong> With the agencies who would have to change their forms, none of whom asked for this.</li>
+                <li><strong>One day of writing.</strong> Submissions, ministerial replies, and a paper that has been through eleven drafts.</li>
+                <li><strong>One day on the ground.</strong> Family service centres and social service offices, sitting in on intake sessions when families agree to it.</li>
+              </ul>
+
+              <h3>What the bond actually feels like</h3>
+
+              <p>Vera is three years into six. She is candid that the bond shapes decisions in ways that are easy to underestimate at eighteen and impossible to ignore at twenty-seven.</p>
+
+              <p>&ldquo;A friend moved to a think tank in Geneva last year and I read the job posting twice before closing it,&rdquo; she says. &ldquo;That is what a bond is. It is not a prison, it is a door you walk past.&rdquo;</p>
+
+              <p>The trade she says she would make again: a seat in the room where the forms are designed, at twenty-four, with no loan. &ldquo;The people I volunteered with are still knocking on doors, and they are better at it than I ever was,&rdquo; she says. &ldquo;My job is to make sure fewer of those visits are needed. Ask me again in year six.&rdquo;</p>
+
+              <figure class="article-figure">
+                <div class="sc-frame sc-frame--16x9">
+                  <img data-img-slot="article-figure-2" src="https://picsum.photos/seed/scfigure2/1280/720"
+                       alt="" width="1280" height="720" loading="lazy">
+                </div>
+                <figcaption>Placeholder image &mdash; swap for a second commissioned photograph. Photo: placeholder.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <!-- PART 3 ---------------------------------------------------- -->
+          <section class="article-part" id="ama" role="tabpanel"
+                   aria-labelledby="tab-ama" tabindex="0">
+            <p class="article-part__label">Part 03</p>
+            <h2 class="article-part__title">Ask me anything <span aria-hidden="true">#AMA</span></h2>
+
+            <p class="sc-standfirst">We put reader questions to Vera. These are her answers, lightly edited for length.</p>
+
+            <div class="ama-list">
+
+              <div class="ama-item">
+                <p class="ama-item__q"><span>Do you actually get to change anything in your first posting?</span></p>
+                <p class="ama-item__a"><span>Not on your own, and not quickly. What you get early is the ability to put a question on the table that nobody had asked. My first accepted recommendation was one sentence long and took fourteen months. That is a normal ratio.</span></p>
+              </div>
+
+              <div class="ama-item">
+                <p class="ama-item__q"><span>Is a social policy degree worth it, or should I read economics?</span></p>
+                <p class="ama-item__a"><span>The ministry is full of economists and it is not short of them. What was scarce in my first year was people who could read a case file and a regression with the same attention. If you can only pick one, pick the one you will argue with rather than absorb.</span></p>
+              </div>
+
+              <div class="ama-item">
+                <p class="ama-item__q"><span>What did your interview panel actually want to hear?</span></p>
+                <p class="ama-item__a"><span>Specifics. I talked about one household in a rental block and a form that asked them the same question three times, and why that happened. Everyone says they care about inequality. Very few can describe one concrete thing that went wrong in front of them.</span></p>
+              </div>
+
+              <div class="ama-item">
+                <p class="ama-item__q"><span>Does volunteering help an application, or does everyone do it?</span></p>
+                <p class="ama-item__a"><span>Everyone does it, so the hours are worth nothing by themselves. What counted was that I had kept going back to the same block for three years and could say what had changed and what had not. Depth reads very differently from a list.</span></p>
+              </div>
+
+              <div class="ama-item">
+                <p class="ama-item__q"><span>Be honest &mdash; would you pick a shorter bond if you could go back?</span></p>
+                <p class="ama-item__a"><span>I would ask harder about what the bond years look like, which is a different question from how long they are. Six years on work you believe in is shorter than four years of waiting to be trusted. Nobody asked me &ldquo;what will you be doing in year three&rdquo; and I wish they had.</span></p>
+              </div>
+
+            </div>
+
+            <div class="ama-cta">
+              <div>
+                <p class="ama-cta__title">Got a question for a scholar?</p>
+                <p class="ama-cta__text">We collect reader questions and put them to scholars holding the awards you are considering.</p>
+              </div>
+              <a class="sc-btn sc-btn--primary" href="#">Submit a question</a>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ---------------------------------------------------------------
+             SIDEBAR — scholarship the scholar applied for
+             --------------------------------------------------------------- -->
+        <aside id="scholarship-sidebar" aria-label="About this scholarship">
+
+          <div class="sidebar-card">
+            <p class="sidebar-card__head">The scholarship</p>
+            <div class="sidebar-card__body">
+
+              <div class="sidebar-card__provider">
+                <span class="provider-card__logo provider-card__logo--img">
+                  <img src="images/psc-logo.png" alt="Public Service Commission logo" loading="lazy" decoding="async">
+                </span>
+                <span>
+                  <span class="sidebar-card__provider-name">Public Service Commission</span>
+                  <span class="sidebar-card__provider-type">Government</span>
+                </span>
+              </div>
+
+              <h2 class="sidebar-card__title">PSC Scholarship (Public Administration)</h2>
+
+              <dl class="sidebar-specs">
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Value</dt>
+                  <dd class="sidebar-specs__value">Full fees + allowance</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Bond</dt>
+                  <dd class="sidebar-specs__value">6 years</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Level</dt>
+                  <dd class="sidebar-specs__value">Undergraduate</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Study location</dt>
+                  <dd class="sidebar-specs__value">Overseas or local</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Field</dt>
+                  <dd class="sidebar-specs__value">Public service &amp; policy</dd>
+                </div>
+              </dl>
+
+              <p class="sc-field__label sc-mt-4">What it covers</p>
+              <ul class="sidebar-card__list">
+                <li>Tuition fees in full for an undergraduate degree</li>
+                <li>Monthly maintenance and accommodation allowance</li>
+                <li>One return airfare a year</li>
+                <li>Vacation attachments across ministries and agencies</li>
+              </ul>
+
+              <div class="sidebar-card__window">
+                <strong>Application window</strong>
+                1 Sep &ndash; 14 Nov 2026
+              </div>
+
+              <div class="sidebar-card__actions">
+                <a class="sc-btn sc-btn--primary sc-btn--block" href="#">View scholarship page</a>
+                <a class="sc-btn sc-btn--ghost sc-btn--block" href="#">Add to comparison</a>
+              </div>
+
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       05 · RELATED STORIES
+       ======================================================================== -->
+  <section id="related-stories" class="sc-section sc-section--warm">
+    <div class="sc-container">
+
+      <div class="sc-section-head">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">Keep reading</p>
+          <h2 class="sc-h2">More scholars&rsquo; experiences</h2>
+        </div>
+        <a class="sc-arrow-link" href="scholars-experience.html">
+          All 340 stories
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="sc-grid sc-grid--3">
+
+        <a class="story-card story-card--stacked" href="#">
+          <div class="sc-frame sc-frame--4x3">
+            <img data-img-slot="related-1" src="images/qi-hua.jpg" alt="Portrait of Qi Hua in ICA uniform" width="1536" height="1024" loading="lazy" style="object-position: 35% center;">
+          </div>
+          <div>
+            <p class="story-card__scholar">Qi Hua · ICA</p>
+            <h3 class="story-card__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</h3>
+            <p class="sc-meta story-card__meta">Home affairs · 7 min read</p>
+          </div>
+        </a>
+
+        <a class="story-card story-card--stacked" href="#">
+          <div class="sc-frame sc-frame--4x3">
+            <img data-img-slot="related-2" src="images/jun-hao.jpg" alt="Portrait of Jun Hao at the firing range" width="1536" height="1024" loading="lazy" style="object-position: 72% center;">
+          </div>
+          <div>
+            <p class="story-card__scholar">Jun Hao · SPF</p>
+            <h3 class="story-card__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</h3>
+            <p class="sc-meta story-card__meta">Home affairs · 9 min read</p>
+          </div>
+        </a>
+
+        <a class="story-card story-card--stacked" href="#">
+          <div class="sc-frame sc-frame--4x3">
+            <img data-img-slot="related-3" src="images/liu-shuang.jpg" alt="Portrait of Liu Shuang in the laboratory" width="1536" height="1024" loading="lazy">
+          </div>
+          <div>
+            <p class="story-card__scholar">Liu Shuang · A*STAR</p>
+            <h3 class="story-card__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</h3>
+            <p class="sc-meta story-card__meta">Research · 10 min read</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</article>
+</main>
+
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/sc-logo.png"
+               alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">The scholarship guide for students in Singapore — every award in one place, and the honest version of what comes after you sign.</p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

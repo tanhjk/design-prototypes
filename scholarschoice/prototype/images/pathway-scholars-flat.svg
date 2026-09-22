@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="scholarsFlatTitle scholarsFlatDesc">
+  <title id="scholarsFlatTitle">Hearing from real scholars</title>
+  <desc id="scholarsFlatDesc">Two overlapping speech bubbles in teal and lime; the front bubble holds a scholar's portrait next to two lines of text, with quotation marks above and sound waves at the lower left.</desc>
+
+  <!-- Scholar's Choice illustration set · Style A: flat / cut-paper
+       Colours reference the design-system tokens with literal fallbacks, so the
+       file picks up the token values when inlined in the page and still renders
+       correctly when used as an img src. Remove #illo-bg for any ground. -->
+
+  <rect id="illo-bg" width="200" height="200" rx="20" fill="var(--sc-paper, #FCFAF6)"/>
+
+  <!-- Sound waves -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M30 138a16 16 0 0 1 0 32" stroke="var(--sc-lime-dark, #0E5C54)" stroke-width="5"/>
+    <path d="M42 128a28 28 0 0 1 0 56" stroke="var(--sc-lime, #C8F04A)" stroke-width="5"/>
+  </g>
+
+  <!-- Quotation marks -->
+  <g fill="var(--sc-accent, #A8563A)">
+    <circle cx="150" cy="30" r="10"/>
+    <path d="M143 37l7 17 7-17z"/>
+    <circle cx="176" cy="30" r="10"/>
+    <path d="M169 37l7 17 7-17z"/>
+  </g>
+
+  <!-- Back bubble -->
+  <g transform="rotate(-7 74 68)">
+    <rect x="22" y="32" width="104" height="72" rx="18" fill="var(--sc-lime-dark, #0E5C54)"/>
+    <rect x="38" y="54" width="56" height="8" rx="4" fill="var(--sc-paper, #FCFAF6)" opacity=".85"/>
+    <rect x="38" y="72" width="38" height="8" rx="4" fill="var(--sc-lime, #C8F04A)"/>
+  </g>
+
+  <!-- Front bubble with portrait -->
+  <g transform="rotate(3 120 106)">
+    <path d="M84 140l-6 30 30-26z" fill="var(--sc-lime, #C8F04A)"/>
+    <rect x="64" y="64" width="112" height="84" rx="20" fill="var(--sc-lime, #C8F04A)"/>
+    <circle cx="94" cy="96" r="14" fill="var(--sc-lime-dark, #0E5C54)"/>
+    <path d="M76 132C76 114 112 114 112 132Z" fill="var(--sc-lime-dark, #0E5C54)"/>
+    <rect x="122" y="90" width="40" height="8" rx="4" fill="var(--sc-ink, #0F1F1C)"/>
+    <rect x="122" y="106" width="30" height="8" rx="4" fill="var(--sc-ink, #0F1F1C)" opacity=".35"/>
+  </g>
+</svg>

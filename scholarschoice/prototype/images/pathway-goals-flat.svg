@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="goalsFlatTitle goalsFlatDesc">
+  <title id="goalsFlatTitle">Matching your goals</title>
+  <desc id="goalsFlatDesc">A concentric target in teal and lime with a terracotta arrow landing dead centre, and three rising bars at the upper left.</desc>
+
+  <!-- Scholar's Choice illustration set · Style A: flat / cut-paper
+       Colours reference the design-system tokens with literal fallbacks.
+       Remove #illo-bg to sit the art on any ground. -->
+
+  <rect id="illo-bg" width="200" height="200" rx="20" fill="var(--sc-paper, #FCFAF6)"/>
+
+  <!-- Rising bars -->
+  <rect x="16" y="56" width="10" height="28" rx="5" fill="var(--sc-lime-dark, #0E5C54)"/>
+  <rect x="32" y="42" width="10" height="42" rx="5" fill="var(--sc-lime, #C8F04A)"/>
+  <rect x="48" y="28" width="10" height="56" rx="5" fill="var(--sc-accent, #A8563A)"/>
+
+  <!-- Target -->
+  <circle cx="118" cy="92" r="54" fill="var(--sc-lime-dark, #0E5C54)"/>
+  <circle cx="118" cy="92" r="37" fill="var(--sc-paper, #FCFAF6)"/>
+  <circle cx="118" cy="92" r="20" fill="var(--sc-lime, #C8F04A)"/>
+
+  <!-- Arrow shaft and fletching -->
+  <path d="M32 176 108 100" fill="none" stroke="var(--sc-accent, #A8563A)"
+        stroke-width="9" stroke-linecap="round"/>
+  <g fill="none" stroke="var(--sc-lime, #C8F04A)" stroke-width="6" stroke-linecap="round">
+    <path d="M37 157 51 171"/>
+    <path d="M49 145 63 159"/>
+  </g>
+
+  <!-- Arrowhead on the bullseye -->
+  <path d="M124 84 113 109 99 95z" fill="var(--sc-accent, #A8563A)"/>
+  <circle cx="118" cy="92" r="6" fill="var(--sc-ink, #0F1F1C)"/>
+</svg>

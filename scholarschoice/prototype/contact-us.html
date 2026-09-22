@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact us — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Send the Scholar's Choice team a question, a correction, or a partnership enquiry. We aim to reply within three working days.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  CONTACT US — built on inner-page-template.html
+
+  The #page-hero and #page-body shell is the template, unchanged. Only the
+  main column differs: the placeholder prose is replaced by the contact form.
+
+  THE FORM IS NOT WIRED UP.
+    <form> has no action and no method. js/main.js → contactForm() validates
+    on submit and shows the success panel without sending anything. Point the
+    form at a real endpoint (and add CSRF/spam protection) before publication.
+
+  PLACEHOLDER CONTENT — the reply-time promise, the email address, the phone
+  number and the office address in the aside are all invented. Replace them.
+  ============================================================================
+-->
+</head>
+<body class="page-inner">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/sc-logo.png"
+           alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="#scholarship-search">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <a class="sc-btn sc-btn--secondary sc-btn--sm site-header__login" href="#" aria-label="Login">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Login</span>
+      </a>
+      <a class="sc-btn sc-btn--primary sc-btn--sm site-header__register" href="#">Register</a>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + page title  (inner page template)
+       ======================================================================== -->
+  <section id="page-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li aria-current="page">Contact us</li>
+        </ol>
+      </nav>
+
+      <div class="page-hero__head">
+        <p class="sc-eyebrow sc-eyebrow--on-dark">We&rsquo;d like to hear from you</p>
+        <h1 class="page-hero__title">Contact us</h1>
+        <p class="page-hero__standfirst">
+          Questions about a scholarship listing, a correction to a story, or a partnership
+          idea &mdash; send it here and the right person on the team will pick it up.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · PAGE BODY — contact form + contact details aside
+       ======================================================================== -->
+  <section id="page-body" class="sc-section">
+    <div class="sc-container">
+      <div class="page-layout">
+
+        <div class="page-layout__main">
+
+          <!-- Shown after a successful submit; js/main.js moves focus here -->
+          <div id="contact-success" class="contact-form__success" role="status" tabindex="-1">
+            <h2>Thank you &mdash; your message is on its way</h2>
+            <p>We aim to reply within three working days. Placeholder confirmation copy.</p>
+          </div>
+
+          <!-- No action/method yet: js/main.js validates and fakes the send. -->
+          <form id="contact-form" class="contact-form" novalidate>
+
+            <h2 class="sc-h3">Send us a message</h2>
+            <p class="sc-field__hint sc-mt-2">
+              Fields marked <span class="sc-field__req" aria-hidden="true">*</span> are required.
+            </p>
+
+            <div class="contact-form__grid sc-mt-5">
+
+              <!-- Enquiry about ------------------------------------------- -->
+              <div class="sc-field sc-field--full">
+                <label class="sc-field__label" for="contact-enquiry">Enquiry about</label>
+                <select class="sc-select" id="contact-enquiry" name="enquiry">
+                  <option value="general-feedback" selected>General feedback</option>
+                  <option value="partnership-opportunities">Partnership opportunities</option>
+                  <option value="others">Others</option>
+                </select>
+              </div>
+
+              <!-- Name ----------------------------------------------------- -->
+              <div class="sc-field">
+                <label class="sc-field__label" for="contact-name">
+                  Name <span class="sc-field__req" aria-hidden="true">*</span>
+                </label>
+                <input class="sc-input" id="contact-name" name="name" type="text"
+                       autocomplete="name" placeholder="Your full name"
+                       required aria-describedby="contact-name-error">
+                <p class="sc-field__error" id="contact-name-error">Please enter your name.</p>
+              </div>
+
+              <!-- Contact No. ---------------------------------------------- -->
+              <div class="sc-field">
+                <label class="sc-field__label" for="contact-phone">
+                  Contact No. <span class="sc-field__req" aria-hidden="true">*</span>
+                </label>
+                <input class="sc-input" id="contact-phone" name="phone" type="tel"
+                       autocomplete="tel" inputmode="tel" placeholder="e.g. 9123 4567"
+                       required aria-describedby="contact-phone-error">
+                <p class="sc-field__error" id="contact-phone-error">Please enter a contact number.</p>
+              </div>
+
+              <!-- Email ---------------------------------------------------- -->
+              <div class="sc-field sc-field--full">
+                <label class="sc-field__label" for="contact-email">
+                  Email <span class="sc-field__req" aria-hidden="true">*</span>
+                </label>
+                <input class="sc-input" id="contact-email" name="email" type="email"
+                       autocomplete="email" placeholder="you@example.com"
+                       required aria-describedby="contact-email-error">
+                <p class="sc-field__error" id="contact-email-error">Please enter a valid email address.</p>
+              </div>
+
+              <!-- Message -------------------------------------------------- -->
+              <div class="sc-field sc-field--full">
+                <label class="sc-field__label" for="contact-message">
+                  Message <span class="sc-field__req" aria-hidden="true">*</span>
+                </label>
+                <textarea class="sc-textarea" id="contact-message" name="message" rows="7"
+                          placeholder="Tell us what you need &mdash; the more detail, the faster we can help."
+                          required aria-describedby="contact-message-error"></textarea>
+                <p class="sc-field__error" id="contact-message-error">Please enter a message.</p>
+              </div>
+
+              <div class="contact-form__foot">
+                <p class="contact-form__note">
+                  By sending this form you agree to us using your details to reply to you, in line
+                  with our <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>.
+                </p>
+                <button class="sc-btn sc-btn--primary contact-form__submit" type="submit">Send</button>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+
+        <aside class="page-layout__aside" aria-label="Other ways to reach us">
+
+          <div class="page-aside-card">
+            <h2 class="page-aside-card__title">Other ways to reach us</h2>
+            <p class="page-aside-card__body">
+              Placeholder contact details &mdash; replace before publication.<br>
+              Email: <a href="mailto:scholarschoice@example.com">scholarschoice@example.com</a><br>
+              Phone: 6000 0000, weekdays 9am&ndash;6pm
+            </p>
+          </div>
+
+          <div class="page-aside-card">
+            <h2 class="page-aside-card__title">Before you write</h2>
+            <p class="page-aside-card__body">
+              Placeholder copy. Many questions about eligibility, bond length and application
+              windows are answered on the scholarship listing itself.
+            </p>
+            <ul class="page-aside-card__list">
+              <li><a href="index.html#scholarship-search">Find a scholarship</a></li>
+              <li><a href="#">Guides &amp; Tips</a></li>
+              <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            </ul>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html" aria-current="page">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/sc-logo.png"
+               alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">The scholarship guide for students in Singapore — every award in one place, and the honest version of what comes after you sign.</p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

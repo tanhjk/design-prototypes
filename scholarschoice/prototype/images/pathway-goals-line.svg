@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="goalsLineTitle goalsLineDesc">
+  <title id="goalsLineTitle">Matching your goals</title>
+  <desc id="goalsLineDesc">A concentric target drawn in teal linework over an off-register lime disc, with a terracotta arrowhead landing dead centre and three rising bars at the upper left.</desc>
+
+  <!-- Scholar's Choice illustration set · Style B: line-work on colour blocks
+       The lime and terracotta blocks sit deliberately off-register behind the
+       teal linework, like a mis-struck print.
+       No background: the art is transparent and sits on any ground. The
+       200x200 viewBox still reserves the original margins. -->
+
+  <!-- Off-register colour blocks -->
+  <circle cx="112" cy="98" r="52" fill="var(--sc-lime, #C8F04A)"/>
+  <rect x="44" y="24" width="12" height="56" rx="6" fill="var(--sc-lime, #C8F04A)"/>
+
+  <!-- Linework -->
+  <g fill="none" stroke="var(--sc-lime-dark, #0E5C54)" stroke-width="3.5"
+     stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Target -->
+    <circle cx="118" cy="92" r="52"/>
+    <circle cx="118" cy="92" r="34"/>
+    <circle cx="118" cy="92" r="16"/>
+
+    <!-- Arrow shaft -->
+    <path d="M32 176 106 102"/>
+
+    <!-- Rising bars -->
+    <rect x="14" y="56" width="12" height="28" rx="6"/>
+    <rect x="32" y="42" width="12" height="42" rx="6"/>
+    <rect x="50" y="28" width="12" height="56" rx="6"/>
+  </g>
+
+  <!-- Fletching -->
+  <g fill="none" stroke="var(--sc-accent, #A8563A)" stroke-width="5" stroke-linecap="round">
+    <path d="M37 157 51 171"/>
+    <path d="M49 145 63 159"/>
+  </g>
+
+  <!-- Arrowhead on the bullseye -->
+  <path d="M124 84 113 109 99 95z" fill="var(--sc-accent, #A8563A)"/>
+  <circle cx="118" cy="92" r="6" fill="var(--sc-ink, #0F1F1C)"/>
+</svg>

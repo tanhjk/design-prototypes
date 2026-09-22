@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="optionsLineTitle optionsLineDesc">
+  <title id="optionsLineTitle">Weighing your options</title>
+  <desc id="optionsLineDesc">A balance scale drawn in teal linework, its two pans backed by off-register lime and terracotta blocks, the left pan carrying more weight.</desc>
+
+  <!-- Scholar's Choice illustration set · Style B: line-work on colour blocks
+       The lime and terracotta blocks sit deliberately off-register behind the
+       teal linework, like a mis-struck print.
+       No background: the art is transparent and sits on any ground. The
+       200x200 viewBox still reserves the original margins. -->
+
+  <!-- Off-register colour blocks behind each pan -->
+  <path d="M6 110h56l-8 28H16z" fill="var(--sc-lime, #C8F04A)"/>
+  <path d="M132 92h52l-8 26h-38z" fill="var(--sc-accent, #A8563A)"/>
+
+  <!-- Card of options, off-register block -->
+  <rect x="14" y="26" width="50" height="32" rx="8" fill="var(--sc-lime, #C8F04A)"
+        transform="rotate(-10 39 42)"/>
+
+  <!-- Linework -->
+  <g fill="none" stroke="var(--sc-lime-dark, #0E5C54)" stroke-width="3.5"
+     stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Card -->
+    <g transform="rotate(-10 44 39)">
+      <rect x="18" y="22" width="52" height="34" rx="8"/>
+      <path d="M28 33h30M28 44h20"/>
+    </g>
+
+    <!-- Beam, pivot, stand -->
+    <path d="M36 85 164 67"/>
+    <circle cx="100" cy="76" r="8"/>
+    <path d="M100 84v62"/>
+    <path d="M82 146h36l4 30H78z"/>
+    <path d="M68 180h64"/>
+
+    <!-- Hangers -->
+    <path d="M38 85 18 104M38 85l24 19"/>
+    <path d="M164 67 142 86M164 67l22 19"/>
+
+    <!-- Pans -->
+    <path d="M12 104h56l-8 28H20z"/>
+    <path d="M138 86h52l-8 26h-38z"/>
+  </g>
+
+  <!-- Weights -->
+  <g fill="var(--sc-ink, #0F1F1C)">
+    <circle cx="30" cy="118" r="6"/>
+    <circle cx="48" cy="118" r="6"/>
+    <circle cx="164" cy="99" r="7"/>
+  </g>
+</svg>

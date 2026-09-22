@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"
+     role="img" aria-labelledby="optionsFlatTitle optionsFlatDesc">
+  <title id="optionsFlatTitle">Weighing your options</title>
+  <desc id="optionsFlatDesc">A balance scale with a lime beam tipping left, a teal pan holding two discs and a terracotta pan holding one, with a small card of options floating above.</desc>
+
+  <!-- Scholar's Choice illustration set · Style A: flat / cut-paper
+       Colours reference the design-system tokens with literal fallbacks.
+       Remove #illo-bg to sit the art on any ground. -->
+
+  <rect id="illo-bg" width="200" height="200" rx="20" fill="var(--sc-paper, #FCFAF6)"/>
+
+  <!-- Floating options card -->
+  <g transform="rotate(-10 44 39)">
+    <rect x="18" y="22" width="52" height="34" rx="8" fill="var(--sc-lime, #C8F04A)"/>
+    <rect x="26" y="31" width="32" height="6" rx="3" fill="var(--sc-ink, #0F1F1C)"/>
+    <rect x="26" y="42" width="22" height="6" rx="3" fill="var(--sc-ink, #0F1F1C)" opacity=".4"/>
+  </g>
+
+  <!-- Stand -->
+  <g fill="var(--sc-ink, #0F1F1C)">
+    <rect x="96" y="76" width="8" height="70" rx="4"/>
+    <path d="M82 146h36l4 30H78z"/>
+    <rect x="64" y="174" width="72" height="10" rx="5"/>
+  </g>
+
+  <!-- Hangers -->
+  <g stroke="var(--sc-ink, #0F1F1C)" stroke-width="3" stroke-linecap="round">
+    <path d="M38 86 18 114M38 86l22 28"/>
+    <path d="M164 68 144 96M164 68l22 28"/>
+  </g>
+
+  <!-- Beam and pivot -->
+  <rect x="36" y="71" width="128" height="10" rx="5" fill="var(--sc-lime, #C8F04A)"
+        transform="rotate(-8 100 76)"/>
+  <circle cx="100" cy="76" r="9" fill="var(--sc-accent, #A8563A)"/>
+
+  <!-- Left pan, heavier -->
+  <path d="M12 114h54l-8 26H20z" fill="var(--sc-lime-dark, #0E5C54)"/>
+  <g fill="var(--sc-lime, #C8F04A)">
+    <circle cx="30" cy="127" r="6"/>
+    <circle cx="47" cy="127" r="6"/>
+  </g>
+
+  <!-- Right pan -->
+  <path d="M138 96h54l-8 26h-38z" fill="var(--sc-accent, #A8563A)"/>
+  <circle cx="165" cy="109" r="7" fill="var(--sc-paper, #FCFAF6)"/>
+</svg>

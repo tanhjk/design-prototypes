@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scholar's Choice — Find the scholarship that fits you</title>
+<meta name="description" content="Scholar's Choice helps students in Singapore find, compare and understand scholarships — with first-hand stories from the scholars who won them.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  NOTE FOR IMPLEMENTATION
+  All scholar names, quotes, scholarship figures, deadlines and provider
+  ad copy on this page are PLACEHOLDER CONTENT for design purposes only.
+  Replace with verified editorial/commercial content before publication.
+  Images point at picsum.photos / pravatar.cc placeholders — swap the `src`
+  attributes for real assets (each is marked with a data-img-slot attribute).
+  ============================================================================
+-->
+</head>
+<body class="page-home">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/sc-logo.png"
+           alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="#scholarship-search">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+      
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <a class="sc-btn sc-btn--secondary sc-btn--sm site-header__login" href="#" aria-label="Login">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Login</span>
+      </a>
+      <a class="sc-btn sc-btn--primary sc-btn--sm site-header__register" href="#">Register</a>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · ANCHOR BANNER CAROUSEL — provider ad banners
+       ======================================================================== -->
+  <section id="anchor-banner" class="anchor-banner" aria-label="Featured scholarship providers" aria-roledescription="carousel">
+    <p class="anchor-banner__label">Advertisement</p>
+
+    <div class="anchor-banner__viewport" id="anchor-banner-viewport">
+
+      <!-- Slide 1 · A*STAR -->
+      <a class="anchor-banner__slide is-active" href="#"
+         role="group" aria-roledescription="slide" aria-label="1 of 3">
+        <picture class="anchor-banner__picture">
+          <source data-img-slot="banner-1-mobile" media="(max-width: 860px)"
+                  srcset="images/moe-banner-mobile.jpeg"
+                  width="1080" height="1350">
+          <img data-img-slot="banner-1-desktop"
+               src="images/moe-banner-desktop.jpeg"
+               alt="Presented by A*STAR — full undergraduate and PhD scholarship funding, applications open for the 2027 intake." width="1920" height="640" loading="eager">
+        </picture>
+      </a>
+
+      <!-- Slide 2 · Public Service Commission -->
+      <a class="anchor-banner__slide" href="#"
+         role="group" aria-roledescription="slide" aria-label="2 of 3">
+        <picture class="anchor-banner__picture">
+          <source data-img-slot="banner-2-mobile" media="(max-width: 860px)"
+                  srcset="images/spf-banner-mobile.jpeg"
+                  width="1080" height="1350">
+          <img data-img-slot="banner-2-desktop"
+               src="images/spf-banner-desktop.jpeg"
+               alt="Presented by the Public Service Commission — study anywhere in the world, then return to policy work in the Singapore Public Service." width="1920" height="640" loading="lazy">
+        </picture>
+      </a>
+
+      <!-- Slide 3 · Temasek Foundation -->
+      <a class="anchor-banner__slide" href="#"
+         role="group" aria-roledescription="slide" aria-label="3 of 3">
+        <picture class="anchor-banner__picture">
+          <source data-img-slot="banner-3-mobile" media="(max-width: 860px)"
+                  srcset="images/scdf-banner-mobile.jpeg"
+                  width="1080" height="1350">
+          <img data-img-slot="banner-3-desktop"
+               src="images/scdf-banner-desktop.jpeg"
+               alt="Presented by Temasek Foundation — community leadership grants with no bond, three intakes a year." width="1920" height="640" loading="lazy">
+        </picture>
+      </a>
+    </div>
+
+    <button class="anchor-banner__nav anchor-banner__nav--prev" type="button" data-banner-prev aria-label="Previous banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+    </button>
+    <button class="anchor-banner__nav anchor-banner__nav--next" type="button" data-banner-next aria-label="Next banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+
+    <div class="anchor-banner__dots" id="anchor-banner-dots" role="tablist" aria-label="Choose banner">
+      <button class="anchor-banner__dot is-active" type="button" role="tab" aria-selected="true"  aria-label="Banner 1"></button>
+      <button class="anchor-banner__dot"            type="button" role="tab" aria-selected="false" aria-label="Banner 2"></button>
+      <button class="anchor-banner__dot"            type="button" role="tab" aria-selected="false" aria-label="Banner 3"></button>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       02 · SEARCH SECTION
+       ======================================================================== -->
+  <section id="scholarship-search" class="search-section">
+    <div class="sc-container">
+      <div class="search-panel">
+
+        <div class="search-section__head">
+          <h1 class="sc-h1">Find the scholarship that fits your future</h1>
+        </div>
+
+        <form class="search-form" id="search-form" action="#" method="get" role="search">
+
+          <div class="search-form__row search-form__row--inline">
+
+            <div class="sc-field">
+              <label class="sc-field__label" for="search-query">What are you looking for?</label>
+              <div class="search-form__query-wrap">
+                <svg class="search-form__query-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+                </svg>
+                <input class="sc-input" type="search" id="search-query" name="q"
+                       placeholder="Try &ldquo;biomedical engineering&rdquo;, &ldquo;no bond&rdquo;, or a provider name">
+              </div>
+            </div>
+
+            <div class="sc-field">
+              <label class="sc-field__label" for="filter-level">Study level</label>
+              <select class="sc-select" id="filter-level" name="level">
+                <option value="">Any level</option>
+                <option>Pre-university / Polytechnic</option>
+                <option>Undergraduate</option>
+                <option>Postgraduate (Masters)</option>
+                <option>Postgraduate (PhD)</option>
+                <option>Mid-career / Professional</option>
+              </select>
+            </div>
+
+            <button class="sc-btn sc-btn--dark search-form__submit" type="submit">
+              Search
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       03 · PROVIDERS — featured providers + featured scholarships
+       ======================================================================== -->
+  <section id="providers" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">Who is offering</p>
+          <h2 class="sc-h2">Scholarships &amp; providers</h2>
+          <p class="sc-standfirst">Ministries, statutory boards, universities and companies — each with their own idea of what a scholar looks like.</p>
+        </div>
+      </div>
+
+      <!-- 4a · Featured scholarships -->
+      <div class="providers__group sc-reveal">
+        <div class="providers__group-head">
+          <h3 class="providers__group-title">Featured scholarships</h3>
+          <a class="sc-arrow-link providers__group-link" href="#">View all scholarships
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="scholarship-carousel" aria-roledescription="carousel"
+             aria-label="Featured scholarships">
+          <div class="sc-rail scholarship-rail" id="scholarship-rail" tabindex="0">
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/dsta-logo.png" alt="Defence Science & Technology Agency logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag sc-tag--lime">Closing soon</span>
+            </div>
+            <h4 class="scholarship-card__name">DSTA Scholarship (Overseas)</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + allowance</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">6 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergrad → PhD</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Overseas or local</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 30 Oct</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/psc-logo.png" alt="Public Service Commission logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">PSC Scholarship (Overseas Merit)</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + living</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">6 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">UK, US, EU, Asia</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 14 Nov</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/mha-logo.png" alt="Ministry of Home Affairs logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">Home Affairs Uniformed Scholarship (Local)</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + $6k grant</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">4 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Local universities</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 21 Nov</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/aic-logo.png" alt="Agency for Integrated Care logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">Healthcare Merit Scholarship</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + allowance</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">4 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Local universities</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 05 Dec</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/npark-logo.png" alt="National Parks Board logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">NParks Undergraduate Scholarship</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + laptop</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">4 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Local or overseas</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 12 Dec</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/smu-logo.png" alt="Singapore Management University logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag sc-tag--lime">Closing soon</span>
+            </div>
+            <h4 class="scholarship-card__name">SMU Global Impact Scholarship</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + stipend</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">No bond</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">SMU, with exchange</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 28 Nov</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/sgis-logo.png" alt="Singapore-Industry Scholarship logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">Singapore-Industry Scholarship</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + allowance</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">4 to 6 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Local or overseas</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 19 Dec</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/smf-logo.png" alt="Singapore Maritime Foundation logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">MaritimeONE Scholarship</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Up to $20k a year</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">2 to 3 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Diploma → degree</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">Local or overseas</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 31 Jan</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="scholarship-card">
+            <div class="scholarship-card__head">
+              <span class="scholarship-card__provider-logo">
+                <img src="images/psc-logo.png" alt="Public Service Commission logo" loading="lazy" decoding="async">
+              </span>
+              <span class="sc-tag">Open</span>
+            </div>
+            <h4 class="scholarship-card__name">PSC Scholarship (Public Administration)</h4>
+            <div class="scholarship-card__body">
+              <div class="scholarship-card__specs">
+                <div>
+                  <p class="scholarship-card__spec-label">Value</p>
+                  <p class="scholarship-card__spec-value">Full fees + living</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Bond</p>
+                  <p class="scholarship-card__spec-value">6 years</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Level</p>
+                  <p class="scholarship-card__spec-value">Undergraduate</p>
+                </div>
+                <div>
+                  <p class="scholarship-card__spec-label">Study</p>
+                  <p class="scholarship-card__spec-value">UK, US, EU, Asia</p>
+                </div>
+              </div>
+            </div>
+            <div class="scholarship-card__foot">
+              <p class="scholarship-card__deadline">Closes 14 Nov</p>
+              <a class="sc-arrow-link" href="#">Details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          </div>
+
+          <div class="scholarship-carousel__controls">
+            <button class="carousel-nav carousel-nav--prev" type="button"
+                    data-carousel-prev aria-label="Previous scholarships">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+            </button>
+            <div class="scholarship-carousel__dots" data-carousel-dots role="tablist"
+                 aria-label="Choose scholarship page"></div>
+            <button class="carousel-nav carousel-nav--next" type="button"
+                    data-carousel-next aria-label="Next scholarships">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4b · Featured providers rail -->
+      <div class="providers__group sc-reveal">
+        <div class="providers__group-head">
+          <h3 class="providers__group-title">Featured providers</h3>
+          <a class="sc-arrow-link providers__group-link" href="#">View all providers
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="sc-rail provider-rail">
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/aic-logo.png" alt="Agency for Integrated Care logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Agency for Integrated Care</p>
+              <p class="provider-card__meta">4 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/psc-logo.png" alt="Public Service Commission logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Public Service Commission</p>
+              <p class="provider-card__meta">5 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/dsta-logo.png" alt="Defence Science & Technology Agency logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Defence Science &amp; Technology Agency</p>
+              <p class="provider-card__meta">4 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/mha-logo.png" alt="Ministry of Home Affairs logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Ministry of Home Affairs</p>
+              <p class="provider-card__meta">6 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/npark-logo.png" alt="National Parks Board logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">National Parks Board</p>
+              <p class="provider-card__meta">3 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/smu-logo.png" alt="Singapore Management University logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Singapore Management University</p>
+              <p class="provider-card__meta">9 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/sgis-logo.png" alt="Singapore-Industry Scholarship logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Singapore-Industry Scholarship</p>
+              <p class="provider-card__meta">7 awards</p>
+            </span>
+          </a>
+          <a class="provider-card" href="#">
+            <span class="provider-card__logo provider-card__logo--img">
+              <img src="images/smf-logo.png" alt="Singapore Maritime Foundation logo" loading="lazy" decoding="async">
+            </span>
+            <span>
+              <p class="provider-card__name">Singapore Maritime Foundation</p>
+              <p class="provider-card__meta">2 awards</p>
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       04 · PATHWAYS — how to find a suitable scholarship
+       ======================================================================== -->
+  <section id="pathways" class="pathways">
+    <div class="pathways__head sc-reveal">
+      <p class="sc-eyebrow">Where to start</p>
+      <h2 class="sc-h2 pathways__title">Three ways in</h2>
+      <p class="sc-standfirst">There is no single right route. Pick the one that matches how you already think about your next step.</p>
+    </div>
+
+    <ol class="pathways__list">
+        <li class="pathway-row pathway-row--lead sc-reveal">
+          <p class="pathway-row__index" aria-hidden="true"><span>01</span></p>
+
+          <div class="pathway-row__body">
+            <h3 class="pathway-row__title">
+              Hearing<span class="pathway-row__tag">from real scholars</span>
+            </h3>
+
+            <div class="pathway-row__art" aria-hidden="true">
+              <img src="images/pathway-scholars-line.svg" alt="" width="260" height="200"/>
+            </div>
+            <p class="pathway-row__text">Submit a question to someone who already holds the award you want. The good ones get answered in the next #AMA.</p>
+            <p class="pathway-row__link">
+              <a class="sc-arrow-link" href="#stories">Read an #AMA
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </p>
+          </div>
+        </li>
+
+        <li class="pathway-row sc-reveal">
+          <p class="pathway-row__index" aria-hidden="true"><span>02</span></p>
+
+          <div class="pathway-row__body">
+            <h3 class="pathway-row__title">
+              Weighing<span class="pathway-row__tag">your options</span>
+            </h3>
+
+            <div class="pathway-row__art" aria-hidden="true">
+              <img src="images/pathway-options-line.svg" alt="" width="260" height="200"/>
+            </div>
+            <p class="pathway-row__text">Put up to four awards next to each other — value, bond length, coverage, and what happens if you change your mind halfway through.</p>
+            <p class="pathway-row__link">
+              <a class="sc-arrow-link" href="#">Build a comparison
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </p>
+          </div>
+        </li>
+
+        <li class="pathway-row sc-reveal">
+          <p class="pathway-row__index" aria-hidden="true"><span>03</span></p>
+
+          <div class="pathway-row__body">
+            <h3 class="pathway-row__title">
+              Matching<span class="pathway-row__tag">your goals</span>
+            </h3>
+
+            <div class="pathway-row__art" aria-hidden="true">
+              <img src="images/pathway-goals-line.svg" alt="" width="260" height="200"/>
+            </div>
+            <p class="pathway-row__text">Answer nine questions about your subject, your grades and your appetite for a bond. We shortlist only the awards you are actually eligible for.</p>
+            <p class="pathway-row__link">
+              <a class="sc-arrow-link" href="#">Take the quiz
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </p>
+          </div>
+        </li>
+    </ol>
+  </section>
+
+
+  <!-- ========================================================================
+       05 · STORIES — featured Scholars' Experience articles
+       ======================================================================== -->
+  <section id="stories" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">Scholars&rsquo; Experience</p>
+          <h2 class="sc-h2">What it was actually like</h2>
+          <p class="sc-standfirst">Want to bag that scholarship? 🎓 Get the real, no-BS advice directly from students who’ve actually won them—public, private, and everything in between.</p>
+        </div>
+        <a class="sc-arrow-link" href="scholars-experience.html">
+          View all stories
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="stories__layout sc-reveal">
+
+        <!-- Lead story -->
+        <a class="story-lead" href="scholars-experience.html">
+          <div class="sc-frame sc-frame--16x9">
+            <img data-img-slot="story-lead" src="images/vera.jpg"
+                 alt="Vera at Marina Bay, with the financial district behind her" width="2560" height="1707" loading="lazy">
+          </div>
+          <ul class="sc-tag-list story-lead__tags">
+            <li class="sc-tag sc-tag--lime">PSC</li>
+            <li class="sc-tag">Social policy</li>
+            <li class="sc-tag">Public service</li>
+          </ul>
+          <h3 class="story-lead__title">From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</h3>
+          <p class="sc-standfirst story-lead__standfirst">Vera started out knocking on doors in rental blocks as a student volunteer. A PSC scholarship later, she writes the policies that decide what help arrives at those doors &mdash; and what still falls through.</p>
+          <div class="story-lead__byline">
+            <span class="sc-meta">By Hazel Lim</span>
+            <span class="sc-meta" aria-hidden="true">·</span>
+            <span class="sc-meta">12 min read</span>
+            <span class="sc-meta" aria-hidden="true">·</span>
+            <span class="sc-meta">Includes video</span>
+          </div>
+        </a>
+
+        <!-- Secondary stories -->
+        <div class="story-list">
+
+          <a class="story-card" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--1x1">
+              <img data-img-slot="story-1" src="images/elliot.jpg"
+                   alt="Portrait of Elliot at the payments gallery" width="1536" height="1024" loading="lazy">
+            </div>
+            <div>
+              <p class="story-card__scholar">Elliot · MAS</p>
+              <h3 class="story-card__title">He&rsquo;s helping to build a safe and trusted financial sector in Singapore</h3>
+              <p class="sc-meta story-card__meta">Financial regulation · 8 min read</p>
+            </div>
+          </a>
+
+          <a class="story-card" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--1x1">
+              <img data-img-slot="story-2" src="images/qi-hua.jpg"
+                   alt="Portrait of Qi Hua in ICA uniform" width="1536" height="1024" loading="lazy" style="object-position: 35% center;">
+            </div>
+            <div>
+              <p class="story-card__scholar">Qi Hua · ICA</p>
+              <h3 class="story-card__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</h3>
+              <p class="sc-meta story-card__meta">Home affairs · 7 min read</p>
+            </div>
+          </a>
+
+          <a class="story-card" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--1x1">
+              <img data-img-slot="story-3" src="images/jun-hao.jpg"
+                   alt="Portrait of Jun Hao at the firing range" width="1536" height="1024" loading="lazy" style="object-position: 72% center;">
+            </div>
+            <div>
+              <p class="story-card__scholar">Jun Hao · SPF</p>
+              <h3 class="story-card__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</h3>
+              <p class="sc-meta story-card__meta">Home affairs · 9 min read</p>
+            </div>
+          </a>
+
+          <a class="story-card" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--1x1">
+              <img data-img-slot="story-4" src="images/liu-shuang.jpg"
+                   alt="Portrait of Liu Shuang in the laboratory" width="1536" height="1024" loading="lazy">
+            </div>
+            <div>
+              <p class="story-card__scholar">Liu Shuang · A*STAR</p>
+              <h3 class="story-card__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</h3>
+              <p class="sc-meta story-card__meta">Research · 10 min read</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       06 · VIDEO SECTION — 5 vertical reels
+       ======================================================================== -->
+  <section id="videos" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow sc-eyebrow--on-dark">Watch</p>
+          <h2 class="sc-h2">60 seconds with a scholar</h2>
+          <p class="sc-standfirst sc-standfirst--on-dark">Short, vertical, no script. One question, one honest answer.</p>
+        </div>
+        <a class="sc-arrow-link sc-arrow-link--on-dark" href="#">
+          All videos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="sc-rail video-rail sc-reveal">
+
+        <a class="video-reel" href="#" data-video-id="reel-1"
+           data-video-src="https://download.samplelib.com/mp4/sample-10s.mp4">
+          <div class="sc-frame sc-frame--9x16">
+            <img data-img-slot="video-1" src="https://picsum.photos/seed/screel1/540/960"
+                 alt="" width="540" height="960" loading="lazy">
+          </div>
+          <span class="video-reel__scrim" aria-hidden="true"></span>
+          <span class="video-reel__duration">0:58</span>
+          <span class="video-reel__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <div class="video-reel__body">
+            <p class="video-reel__eyebrow">A*STAR</p>
+            <h3 class="video-reel__title">The interview question that threw me</h3>
+            <p class="video-reel__stats"><span>Aisyah R.</span><span>48.2K views</span></p>
+          </div>
+        </a>
+
+        <a class="video-reel" href="#" data-video-id="reel-2"
+           data-video-src="https://download.samplelib.com/mp4/sample-15s.mp4">
+          <div class="sc-frame sc-frame--9x16">
+            <img data-img-slot="video-2" src="https://picsum.photos/seed/screel2/540/960"
+                 alt="" width="540" height="960" loading="lazy">
+          </div>
+          <span class="video-reel__scrim" aria-hidden="true"></span>
+          <span class="video-reel__duration">1:12</span>
+          <span class="video-reel__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <div class="video-reel__body">
+            <p class="video-reel__eyebrow">PSC</p>
+            <h3 class="video-reel__title">Do I really have to stay six years?</h3>
+            <p class="video-reel__stats"><span>Marcus Y.</span><span>31.7K views</span></p>
+          </div>
+        </a>
+
+        <a class="video-reel" href="#" data-video-id="reel-3"
+           data-video-src="https://download.samplelib.com/mp4/sample-5s.mp4">
+          <div class="sc-frame sc-frame--9x16">
+            <img data-img-slot="video-3" src="https://picsum.photos/seed/screel3/540/960"
+                 alt="" width="540" height="960" loading="lazy">
+          </div>
+          <span class="video-reel__scrim" aria-hidden="true"></span>
+          <span class="video-reel__duration">0:44</span>
+          <span class="video-reel__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <div class="video-reel__body">
+            <p class="video-reel__eyebrow">MOE</p>
+            <h3 class="video-reel__title">My first week in front of a class</h3>
+            <p class="video-reel__stats"><span>Priya D.</span><span>22.4K views</span></p>
+          </div>
+        </a>
+
+        <a class="video-reel" href="#" data-video-id="reel-4"
+           data-video-src="https://download.samplelib.com/mp4/sample-20s.mp4">
+          <div class="sc-frame sc-frame--9x16">
+            <img data-img-slot="video-4" src="https://picsum.photos/seed/screel4/540/960"
+                 alt="" width="540" height="960" loading="lazy">
+          </div>
+          <span class="video-reel__scrim" aria-hidden="true"></span>
+          <span class="video-reel__duration">1:05</span>
+          <span class="video-reel__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <div class="video-reel__body">
+            <p class="video-reel__eyebrow">DSTA</p>
+            <h3 class="video-reel__title">Three things I can&rsquo;t talk about</h3>
+            <p class="video-reel__stats"><span>Daniel O.</span><span>18.9K views</span></p>
+          </div>
+        </a>
+
+        <a class="video-reel" href="#" data-video-id="reel-5"
+           data-video-src="https://download.samplelib.com/mp4/sample-30s.mp4">
+          <div class="sc-frame sc-frame--9x16">
+            <img data-img-slot="video-5" src="https://picsum.photos/seed/screel5/540/960"
+                 alt="" width="540" height="960" loading="lazy">
+          </div>
+          <span class="video-reel__scrim" aria-hidden="true"></span>
+          <span class="video-reel__duration">0:51</span>
+          <span class="video-reel__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <div class="video-reel__body">
+            <p class="video-reel__eyebrow">Temasek Foundation</p>
+            <h3 class="video-reel__title">How I wrote my essay in one night</h3>
+            <p class="video-reel__stats"><span>Chloe T.</span><span>27.3K views</span></p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/sc-logo.png"
+               alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">The scholarship guide for students in Singapore — every award in one place, and the honest version of what comes after you sign.</p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

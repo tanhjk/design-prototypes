@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- TEMPLATE: page title is "{Page name} — Scholar's Choice" -->
+<title>Inner page template — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Placeholder description. Replace with a 140–160 character summary of the page, written for search results.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  INNER PAGE TEMPLATE — copy this file to start any new standard page.
+
+  Every word of copy and every image below is PLACEHOLDER. Replace the lot.
+
+  STRUCTURE
+    #page-hero   Teal band. Breadcrumb (IA + navigation) and the page title
+                 that tells the user where they are. Optional eyebrow and
+                 standfirst. Styles live in css/main.css section 18.
+    #page-body   .page-layout — a main content column plus a sticky aside.
+                 Add .page-layout--single to drop the aside entirely.
+
+  TO ADAPT
+    1. <title>, <meta name="description">, the <h1> and the breadcrumb trail.
+    2. Mark the matching primary nav item with class "is-active" and
+       aria-current="page" — this template ships with none set, because no
+       top-level nav item matches a generic inner page.
+    3. Swap the placeholder prose, figure and aside cards for real content.
+       Images carry data-img-slot attributes — grep for them to find each one.
+
+  NOTE ON THE BREADCRUMB
+    The trail mirrors the URL path, one <li> per level, Home first and the
+    current page last. The last item is plain text with aria-current="page",
+    never a link. Keep it to one line of labels; if a level has no page of
+    its own, still show it as text so the hierarchy stays readable.
+  ============================================================================
+-->
+</head>
+<body class="page-inner">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/sc-logo.png"
+           alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="#scholarship-search">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <a class="sc-btn sc-btn--secondary sc-btn--sm site-header__login" href="#" aria-label="Login">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Login</span>
+      </a>
+      <a class="sc-btn sc-btn--primary sc-btn--sm site-header__register" href="#">Register</a>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + page title
+       The breadcrumb gives the page its place in the IA and a way back up;
+       the H1 confirms to the user which page they have landed on.
+       ======================================================================== -->
+  <section id="page-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Section</a></li>
+          <li aria-current="page">Inner page template</li>
+        </ol>
+      </nav>
+
+      <div class="page-hero__head">
+        <!-- Optional. Delete the eyebrow when the title carries the page alone. -->
+        <p class="sc-eyebrow sc-eyebrow--on-dark">Placeholder eyebrow</p>
+
+        <h1 class="page-hero__title">Inner page template</h1>
+
+        <!-- Optional. One or two sentences on what the page is for. -->
+        <p class="page-hero__standfirst">
+          Placeholder standfirst. One or two sentences telling the reader what this page
+          covers and why it is worth their time, kept short enough to scan in a breath.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · PAGE BODY — main column + optional aside
+       Add .page-layout--single to .page-layout and delete the <aside> for a
+       single-column page.
+       ======================================================================== -->
+  <section id="page-body" class="sc-section">
+    <div class="sc-container">
+      <div class="page-layout">
+
+        <div class="page-layout__main article-prose">
+
+          <p class="article-prose__dropcap">
+            Placeholder opening paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </p>
+
+          <p>
+            Placeholder body paragraph. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut
+            perspiciatis unde omnis iste natus error sit voluptatem.
+          </p>
+
+          <!-- Placeholder figure. .sc-frame holds the ratio so nothing shifts on load. -->
+          <figure class="page-figure">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="inner-page-figure"
+                   src="https://picsum.photos/seed/inner-page-figure/1280/720"
+                   alt="Placeholder image — replace with a real photograph and a real alt text."
+                   width="1280" height="720" loading="lazy" decoding="async">
+            </div>
+            <figcaption class="page-figure__caption">
+              Placeholder caption. Say what the image shows and credit the photographer.
+            </figcaption>
+          </figure>
+
+          <h2 class="sc-h3">Placeholder subheading</h2>
+
+          <p>
+            Placeholder body paragraph. Nemo enim ipsam voluptatem quia voluptas sit aspernatur
+            aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
+            sequi nesciunt.
+          </p>
+
+          <ul>
+            <li>Placeholder list item one, kept to a single line where possible.</li>
+            <li>Placeholder list item two, for a point that needs a clause more.</li>
+            <li>Placeholder list item three.</li>
+          </ul>
+
+          <p>
+            Placeholder closing paragraph. At vero eos et accusamus et iusto odio dignissimos
+            ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et
+            quas molestias excepturi sint occaecati cupiditate non provident.
+          </p>
+
+        </div>
+
+        <!-- OPTIONAL — delete this <aside> and add .page-layout--single above. -->
+        <aside class="page-layout__aside" aria-label="Related">
+
+          <div class="page-aside-card">
+            <h2 class="page-aside-card__title">Placeholder card</h2>
+            <p class="page-aside-card__body">
+              Placeholder supporting copy for a sidebar card — a summary, a deadline, a contact,
+              or anything that supports the main column without interrupting it.
+            </p>
+            <a class="sc-btn sc-btn--primary sc-btn--sm sc-mt-4" href="#">Placeholder CTA</a>
+          </div>
+
+          <div class="page-aside-card">
+            <h2 class="page-aside-card__title">Related links</h2>
+            <ul class="page-aside-card__list">
+              <li><a href="#">Placeholder related link one</a></li>
+              <li><a href="#">Placeholder related link two</a></li>
+              <li><a href="#">Placeholder related link three</a></li>
+            </ul>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/sc-logo.png"
+               alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">The scholarship guide for students in Singapore — every award in one place, and the honest version of what comes after you sign.</p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
