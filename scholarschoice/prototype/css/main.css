@@ -50,7 +50,7 @@
   --sc-lime-700:        #54720E;   /* darkened for AA on lime-50/100 grounds */
 
   /* --- Derived teal scale ---------------------------------------------- */
-  --sc-teal-50:         #E9F2F0;
+  --sc-teal-50:         #E9F2F0; 
   --sc-teal-100:        #CBE2DE;
   --sc-teal-300:        #6FA59D;
   --sc-teal-500:        #1A766C;
@@ -94,7 +94,7 @@
   /* Fluid type scale (min → max between 380px and 1400px viewport) */
   --sc-step--2:         clamp(0.69rem, 0.68rem + 0.06vw, 0.75rem);
   --sc-step--1:         clamp(0.81rem, 0.79rem + 0.09vw, 0.875rem);
-  --sc-step-0:          clamp(0.94rem, 0.92rem + 0.11vw, 1rem);
+  --sc-step-0:          1rem; /* 16px floor — minimum size for body/description copy */
   --sc-step-1:          clamp(1.06rem, 1.01rem + 0.23vw, 1.19rem);
   --sc-step-2:          clamp(1.19rem, 1.09rem + 0.44vw, 1.44rem);
   --sc-step-3:          clamp(1.44rem, 1.26rem + 0.79vw, 1.88rem);
@@ -282,7 +282,7 @@ button { cursor: pointer; }
 .sc-standfirst--on-dark { color: var(--sc-text-on-dark-muted); }
 
 .sc-meta {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-text-muted);
   letter-spacing: 0.01em;
 }
@@ -362,10 +362,8 @@ button { cursor: pointer; }
 .sc-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 @media (max-width: 1024px) {
+  .sc-grid--3,
   .sc-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 860px) {
-  .sc-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .sc-grid--2,
@@ -454,7 +452,7 @@ button { cursor: pointer; }
 .sc-btn--dark     { --btn-bg: var(--sc-teal-600); --btn-fg: var(--sc-white); --btn-bd: var(--sc-teal-600); }
 .sc-btn--accent   { --btn-bg: var(--sc-accent);   --btn-fg: var(--sc-white); --btn-bd: var(--sc-accent); }
 .sc-btn--ghost    { --btn-bg: transparent;        --btn-fg: var(--sc-teal-600); --btn-bd: var(--sc-teal-600); }
-.sc-btn--ghost:hover { --btn-bg: var(--sc-teal-600); --btn-fg: var(--sc-white); }
+.sc-btn--ghost:hover { --btn-bg: var(--sc-lime); --btn-fg: var(--sc-ink); }
 .sc-btn--ghost-light { --btn-bg: transparent; --btn-fg: var(--sc-lime); --btn-bd: var(--sc-lime); }
 .sc-btn--ghost-light:hover { --btn-bg: var(--sc-lime); --btn-fg: var(--sc-ink); }
 .sc-btn--sm { min-height: 38px; padding: 0.4rem 1rem; font-size: var(--sc-step--2); }
@@ -475,7 +473,7 @@ button { cursor: pointer; }
   letter-spacing: 0.08em;
   line-height: 1.6;
 }
-.sc-tag--lime   { background: var(--sc-lime-100); color: var(--sc-lime-700); }
+.sc-tag--lime   { background: var(--sc-lime-100); color: var(--sc-ink); }
 .sc-tag--accent { background: var(--sc-accent-50); color: var(--sc-accent-600); }
 .sc-tag--solid  { background: var(--sc-ink); color: var(--sc-lime); }
 .sc-tag--outline-light {
@@ -688,7 +686,7 @@ button { cursor: pointer; }
 .site-nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .site-nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateX(-50%) translateY(-6px) rotate(-45deg); }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .site-nav__toggle { display: block; }
 
   .site-header__login {
@@ -814,30 +812,62 @@ button { cursor: pointer; }
 
 .anchor-banner__dots {
   position: absolute;
-  /* Clears the search panel, which overlaps the foot of the banner */
-  bottom: calc(var(--sc-space-4) + clamp(1.75rem, 5vw, 4.5rem));
+  bottom: var(--sc-space-5);
   left: 50%;
   transform: translateX(-50%);
   z-index: 4;
   display: flex;
+  align-items: center;
   gap: var(--sc-space-2);
+  /* A backdrop so the rail stays legible over whatever creative is running */
+  padding: 0 var(--sc-space-4);
+  background: rgba(15, 31, 28, 0.5);
+  border-radius: var(--sc-radius-pill);
+  backdrop-filter: blur(3px);
 }
 .anchor-banner__dot {
-  width: 30px;
+  /* content-box on purpose: the page is border-box, which would otherwise eat
+     the 4px bar into the padding and leave nothing to paint */
+  box-sizing: content-box;
+  width: 24px;
   height: 4px;
-  padding: 0;
+  /* Visual bar stays 4px tall; the padding grows the tap target to 20px */
+  padding: 8px 0;
   background: rgba(255, 255, 255, 0.32);
+  background-clip: content-box;
   border: 0;
   border-radius: var(--sc-radius-pill);
   transition: background-color var(--sc-dur-fast) var(--sc-ease),
               width var(--sc-dur) var(--sc-ease);
 }
-.anchor-banner__dot.is-active { background: var(--sc-lime); width: 44px; }
+.anchor-banner__dot.is-active { background: var(--sc-lime); background-clip: content-box; width: 40px; }
 
-@media (max-width: 860px) {
-  /* Creative ratio: 1080 x 1350 (4:5) mobile */
-  .anchor-banner__viewport { aspect-ratio: 1080 / 1350; }
-  .anchor-banner__nav { display: none; }
+/* Swipe surface: keep the browser's vertical scroll, own the horizontal drag */
+.anchor-banner__viewport { touch-action: pan-y; }
+
+@media (max-width: 1024px) {
+  /* Nav stays visible on touch; sized down and tucked to the edges */
+  .anchor-banner__nav {
+    width: 38px;
+    height: 38px;
+    background: rgba(15, 31, 28, 0.55);
+  }
+  .anchor-banner__nav--prev { left: 0.5rem; }
+  .anchor-banner__nav--next { right: 0.5rem; }
+  .anchor-banner__nav svg { width: 16px; height: 16px; }
+  /* 15 dots have to fit a narrow viewport, so they shrink and sit tighter */
+  .anchor-banner__dots { gap: 4px; max-width: calc(100% - 6rem); }
+  .anchor-banner__dot { width: 10px; }
+  .anchor-banner__dot.is-active { width: 20px; }
+  /* No hover on touch — show the press instead */
+  .anchor-banner__nav:hover { background: rgba(15, 31, 28, 0.55); color: var(--sc-white); }
+  .anchor-banner__nav:active { background: var(--sc-lime); color: var(--sc-ink); }
+}
+
+@media (max-width: 767px) {
+  /* Creative ratio: 1080 x 1080 (1:1) mobile. Tablet keeps the 3:1 desktop
+     creative, which has the width to carry it. */
+  .anchor-banner__viewport { aspect-ratio: 1 / 1; }
 }
 
 
@@ -846,22 +876,24 @@ button { cursor: pointer; }
    ========================================================================== */
 
 /* The teal ground is now a box: it sits above the banner and the pathway rows
-   and is pulled into both by --search-overlap. */
+   and overhangs the section below it by --search-overlap. */
 #scholarship-search {
   --search-overlap: clamp(1.75rem, 5vw, 4.5rem);
   position: relative;
   z-index: calc(var(--sc-z-banner) + 1);
-  padding-block: 0;
-  /* flow-root keeps the panel's negative margins from collapsing into this
-     box, so the warm ground starts at the banner edge while the panel itself
-     still overhangs the banner above and the providers section below. */
+  /* Top padding replaces the old negative pull, so the card clears the banner */
+  padding-block: clamp(2rem, 5vw, 4rem) 0;
+  /* flow-root keeps the panel's negative bottom margin from collapsing into
+     this box, so the warm ground still ends where it should while the panel
+     overhangs the providers section below. */
   display: flow-root;
   background: var(--sc-paper-warm);
 }
 
 .search-panel {
   position: relative;
-  margin-block: calc(var(--search-overlap) * -1);
+  /* Overhangs the providers section below only; the banner above is untouched */
+  margin-block: 0 calc(var(--search-overlap) * -1);
   padding: clamp(1.75rem, 4vw, 3.25rem) clamp(1.25rem, 3vw, 3rem);
   background: var(--sc-lime);
   color: var(--sc-ink);
@@ -927,7 +959,7 @@ button { cursor: pointer; }
   pointer-events: none;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .search-form__row--inline { grid-template-columns: minmax(0, 1fr) auto; }
   .search-form__row--inline .sc-field:first-child { grid-column: 1 / -1; }
 }
@@ -1027,7 +1059,7 @@ button { cursor: pointer; }
   font-family: var(--sc-font-display);
   font-size: clamp(2.5rem, 7vw, 5.5rem);
   line-height: 1;
-  color: var(--sc-ink-40);
+  color: var(--sc-ink-60);
 }
 /* --- Body ------------------------------------------------------------- */
 /* The body carries the art so it can sit beside the copy on desktop and
@@ -1037,7 +1069,9 @@ button { cursor: pointer; }
   grid-template-columns: minmax(0, 1fr) clamp(150px, 22vw, 330px);
   align-items: center;
   column-gap: clamp(1rem, 3vw, 3rem);
-  row-gap: var(--sc-space-5);
+  /* Title, copy and link read as one block, so they sit close together —
+     the breathing room belongs between rows, not inside one. */
+  row-gap: 0;
   padding-block: var(--sc-space-6);
 }
 .pathway-row__title { grid-column: 1; grid-row: 1; }
@@ -1048,7 +1082,7 @@ button { cursor: pointer; }
   display: flex;
   align-items: flex-end;
   font-family: var(--sc-font-display);
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(3rem, 10vw, 6rem);
   line-height: 0.85;
   text-transform: uppercase;
   letter-spacing: var(--sc-display-tracking);
@@ -1074,11 +1108,12 @@ button { cursor: pointer; }
 .pathway-row__text {
   max-width: 34ch;
   color: var(--sc-ink-80);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   line-height: 1.6;
   transition: color var(--sc-dur) var(--sc-ease);
 }
-.pathway-row__link { margin-top: calc(var(--sc-space-2) * -1); }
+/* The arrow link carries its own leading, so pull it back up under the copy. */
+.pathway-row__link { margin-top: calc(var(--sc-space-1) * -1); }
 
 /* --- Doodle ----------------------------------------------------------- */
 .pathway-row__art {
@@ -1105,7 +1140,9 @@ button { cursor: pointer; }
 .pathway-art__dot--teal   { fill: var(--sc-teal-600); }
 .pathway-art__dot--accent { fill: var(--sc-accent); }
 
-@media (max-width: 900px) {
+/* Pathways is the one section that holds its desktop layout through tablet —
+   the two-column row survives down to the phone tier. */
+@media (max-width: 767px) {
   .pathway-row {
     grid-template-columns: clamp(72px, 16vw, 110px) minmax(0, 1fr);
     min-height: 0;
@@ -1138,7 +1175,14 @@ button { cursor: pointer; }
   .pathway-row__text,
   .pathway-row__link { grid-column: 1; grid-row: auto; }
   .pathway-row__title { order: 1; }
-  .pathway-row__art   { order: 2; justify-self: start; max-width: min(220px, 60%); }
+  /* Stacked, the doodle interrupts the title/copy/link trio — give it back
+     the room the tightened row-gap took away, so only the text closes up. */
+  .pathway-row__art {
+    order: 2;
+    justify-self: start;
+    max-width: min(220px, 60%);
+    margin-block: var(--sc-space-3);
+  }
   .pathway-row__text  { order: 3; }
   .pathway-row__link  { order: 4; }
 }
@@ -1148,42 +1192,17 @@ button { cursor: pointer; }
    10. PROVIDERS & SCHOLARSHIP CARDS
    ========================================================================== */
 
-#providers { background: var(--sc-paper-warm); }
-
-.providers__group + .providers__group { margin-top: var(--sc-space-8); }
-.providers__group-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sc-space-3) var(--sc-space-4);
-  margin-bottom: var(--sc-space-5);
-}
-.providers__group-head .providers__group-title {
-  flex: 1 1 auto;
-  margin-bottom: 0;
-}
-.providers__group-link { flex: 0 0 auto; }
-.providers__group-title {
-  display: flex;
-  align-items: center;
-  gap: var(--sc-space-4);
-  margin-bottom: var(--sc-space-5);
-  font-size: var(--sc-step--1);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--sc-ink-60);
-}
-.providers__group-title::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--sc-line-strong);
-}
+#scholarships { background: var(--sc-paper-warm ); }
+#providers { background: var(--sc-paper); }
 
 /* --- Provider logo tile ---------------------------------------------- */
 .provider-rail { grid-auto-columns: minmax(200px, 1fr); }
+
+/* The rail carries the full provider list so the markup stays the source of
+   truth, but only six ride along. main.js shuffles the cards first, so which
+   six show is a fresh draw each load — and with JS off the first six still
+   render rather than all of them. */
+.provider-rail > :nth-child(n + 7) { display: none; }
 
 .provider-card {
   display: flex;
@@ -1250,7 +1269,7 @@ button { cursor: pointer; }
   align-items: stretch;
 }
 .scholarship-rail:focus-visible { outline: 2px solid var(--sc-teal-600); outline-offset: 4px; }
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .scholarship-rail { grid-auto-columns: calc((100% - var(--card-gap)) / 2); }
 }
 @media (max-width: 620px) {
@@ -1370,10 +1389,10 @@ button { cursor: pointer; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--sc-ink-40);
+  color: var(--sc-ink-60);
 }
 .scholarship-card__spec-value {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   font-weight: 700;
   color: var(--sc-ink);
   line-height: 1.35;
@@ -1435,11 +1454,12 @@ button { cursor: pointer; }
 .story-lead:hover .sc-frame img { transform: scale(1.04); }
 .story-lead__tags { margin-bottom: var(--sc-space-3); }
 .story-lead__title {
-  font-family: var(--sc-font-display);
-  font-size: var(--sc-step-5);
-  text-transform: uppercase;
-  line-height: 0.94;
-  letter-spacing: var(--sc-display-tracking);
+  font-family: var(--sc-font-body);
+  font-size: 2rem; /* 36px desktop */
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  /* text-wrap: balance; */
   transition: color var(--sc-dur-fast) var(--sc-ease);
 }
 .story-lead:hover .story-lead__title { color: var(--sc-teal-600); }
@@ -1488,8 +1508,11 @@ button { cursor: pointer; }
 }
 .story-card--stacked .sc-frame { border-radius: var(--sc-radius); }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .stories__layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .story-lead__title { font-size: 1.75rem; } /* 28px mobile */
 }
 @media (max-width: 420px) {
   .story-card { grid-template-columns: 88px 1fr; }
@@ -1514,7 +1537,7 @@ button { cursor: pointer; }
   );
 }
 @media (max-width: 1100px) { .video-rail { --video-peek: 3.3; --video-gaps: 3; } }
-@media (max-width: 860px)  { .video-rail { --video-peek: 2.3; --video-gaps: 2; } }
+@media (max-width: 1024px)  { .video-rail { --video-peek: 2.3; --video-gaps: 2; } }
 @media (max-width: 560px)  { .video-rail { --video-peek: 1.25; --video-gaps: 1; } }
 
 .video-reel {
@@ -1811,23 +1834,49 @@ body.is-modal-open { overflow: hidden; }
   padding-block: var(--sc-space-7);
   border-bottom: 1px solid var(--sc-line-dark);
 }
-.site-footer__brand { flex: 0 1 auto; max-width: 38ch; }
+/* The credit sits on the baseline of the tallest link column rather than at
+   the top of the row, so it reads as a footnote to the list. */
+.site-footer__brand { flex: 0 1 auto; max-width: 38ch; align-self: flex-end; }
 
-/* The masthead is dark artwork on transparent, so it needs a light plate to
-   sit on against the teal footer. */
+/* The Scholar’s Choice lockup is dark artwork on transparent, so on the teal
+   footer it needs a white plate. It is a wide mark (566 x 279), so it is sized
+   on width rather than height. */
 .site-logo--footer {
-  padding: 0.65rem 0.9rem;
+  padding: var(--sc-space-3);
   background: var(--sc-white);
   border-radius: var(--sc-radius);
 }
-.site-logo--footer .site-logo__img { height: clamp(2.5rem, 4vw, 3.25rem); }
+.site-logo--footer .site-logo__img {
+  width: clamp(7.7rem, 18.2vw, 10.0625rem);
+  height: auto;
+}
 .site-footer__brand .site-logo { color: var(--sc-white); }
 .site-footer__brand .site-logo__word em { color: var(--sc-lime); }
 .site-footer__tagline {
   margin-top: var(--sc-space-4);
   max-width: 38ch;
   color: var(--sc-text-on-dark-muted);
+  font-size: var(--sc-step-0);
+}
+
+/* The Straits Times masthead is already white artwork on transparent, so it
+   sits straight on the teal footer — no light plate. It is a long, short
+   wordmark (230 x 18), so it is sized on width rather than height. */
+.site-footer__supported {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sc-space-2);
+  margin-top: var(--sc-space-4);
+}
+.site-footer__supported-label {
+  color: var(--sc-text-on-dark-muted);
   font-size: var(--sc-step--1);
+}
+.site-footer__supported-logo {
+  display: block;
+  width: clamp(12.75rem, 27vw, 16.5rem);
+  height: auto;
 }
 
 .newsletter__title {
@@ -1840,7 +1889,7 @@ body.is-modal-open { overflow: hidden; }
 }
 .newsletter__text {
   margin-block: var(--sc-space-3) var(--sc-space-4);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-text-on-dark-muted);
 }
 .newsletter__form { display: flex; gap: var(--sc-space-3); flex-wrap: wrap; }
@@ -1869,8 +1918,8 @@ body.is-modal-open { overflow: hidden; }
 }
 .site-footer__list { display: grid; gap: var(--sc-space-3); }
 .site-footer__list a {
-  font-size: var(--sc-step--1);
-  color: var(--sc-text-on-dark-muted);
+  font-size: var(--sc-step-0);
+  color: var(--sc-teal-200);
   transition: color var(--sc-dur-fast) var(--sc-ease);
 }
 .site-footer__list a:hover { color: var(--sc-lime); }
@@ -1883,16 +1932,16 @@ body.is-modal-open { overflow: hidden; }
   gap: var(--sc-space-4);
   padding-block: var(--sc-space-5);
   border-top: 1px solid var(--sc-line-dark);
-  font-size: var(--sc-step--2);
-  color: rgba(234, 243, 240, 0.55);
+  font-size: var(--sc-step-0);
+  color: var(--sc-teal-200);
 }
 .site-footer__legal-links { display: flex; flex-wrap: wrap; gap: var(--sc-space-4); }
 .site-footer__legal-links a:hover { color: var(--sc-lime); }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   /* Stacked: brand returns above the link columns. */
   .site-footer__main { flex-direction: column; }
-  .site-footer__brand { order: -1; max-width: none; }
+  .site-footer__brand { order: -1; max-width: none; align-self: flex-start; }
   .site-footer__links { gap: var(--sc-space-6) var(--sc-space-7); }
 }
 
@@ -1951,21 +2000,33 @@ body.is-modal-open { overflow: hidden; }
   pointer-events: none;
 }
 
+/* Two shared rows drive the hero's cross-column alignment:
+     row 1 — text block | portrait (image, credit, quote)
+     row 2 — fact table |
+   The text block and the image start at the same top edge; the fact table
+   bottom-aligns to the foot of the column. The caption flows straight after
+   the image so nothing stretches to fill the taller left column. */
 .article-hero__layout {
   position: relative;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: center;
+  grid-template-rows: auto auto;
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  row-gap: 0;
+  align-items: start;
   margin-top: var(--sc-space-6);
+}
+.article-hero__content { 
+  grid-column: 1; 
+  grid-row: 1; 
+  padding: var(--sc-space-6) 0 var(--sc-space-6); 
 }
 
 .article-hero__eyebrow { margin-bottom: var(--sc-space-4); }
 .article-hero__name {
-  font-family: var(--sc-font-display);
-  font-size: var(--sc-step-7);
-  line-height: 0.88;
-  text-transform: uppercase;
+  font-family: var(--sc-font-body);
+  font-size: 46px;
+  line-height: 1.1;
   letter-spacing: var(--sc-display-tracking);
   color: var(--sc-white);
 }
@@ -1978,6 +2039,9 @@ body.is-modal-open { overflow: hidden; }
 
 /* Scholar fact table */
 .scholar-profile__meta {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
@@ -2001,26 +2065,32 @@ body.is-modal-open { overflow: hidden; }
   margin-bottom: 0.35rem;
 }
 .scholar-profile__meta-value {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   font-weight: 500;
   color: var(--sc-white);
   line-height: 1.4;
 }
 
+/* Pull-quote now lives in the portrait caption, which sits on the lime block:
+   ink type and a teal rule, not white on lime. Size is unchanged. */
 .article-hero__quote {
   position: relative;
-  margin-top: var(--sc-space-6);
-  padding-left: var(--sc-space-5);
-  border-left: 3px solid var(--sc-lime);
-  font-size: var(--sc-step-2);
+  margin: var(--sc-space-4) 0 0;
+  padding-left: var(--sc-space-4);
+  border-left: 3px solid var(--sc-teal-600);
+  font-size: var(--sc-step-1);
   font-style: italic;
   line-height: 1.45;
-  color: var(--sc-white);
+  color: var(--sc-ink);
   max-width: 34ch;
 }
 
 /* Portrait with offset lime block + optional duotone treatment */
-.scholar-portrait { position: relative; }
+.scholar-portrait {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
 .scholar-portrait::before {
   content: "";
   position: absolute;
@@ -2030,6 +2100,7 @@ body.is-modal-open { overflow: hidden; }
 }
 .scholar-portrait .sc-frame {
   position: relative;
+  align-self: start; /* keep the 3:4 ratio if the text column makes row 1 taller */
   border-radius: var(--sc-radius-lg);
   background: var(--sc-teal-800);
 }
@@ -2050,10 +2121,17 @@ body.is-modal-open { overflow: hidden; }
    Left padding clears the block's own left edge (space-5) plus an inset. */
 .scholar-portrait__caption {
   position: relative;
-  margin-top: var(--sc-space-4);
+  margin-top: var(--sc-space-3);
   padding-left: calc(var(--sc-space-5) + var(--sc-space-4));
   padding-right: var(--sc-space-4);
-  font-size: var(--sc-step--2);
+  font-size: var(--sc-step-0);
+  color: var(--sc-ink-80);
+}
+/* Photo credit leads the caption block, with the pull-quote under it */
+.scholar-portrait__credit {
+  margin: 0;
+  font-size: var(--sc-step--1);
+  line-height: 1.5;
   color: var(--sc-ink-80);
 }
 
@@ -2080,10 +2158,10 @@ body.is-modal-open { overflow: hidden; }
   font-size: 1rem;
   color: var(--sc-ink);
 }
-.article-byline__author { font-size: var(--sc-step--1); font-weight: 700; }
+.article-byline__author { font-size: var(--sc-step-0); font-weight: 700; }
 .article-share { display: flex; align-items: center; gap: var(--sc-space-2); }
 .article-share__label {
-  font-size: var(--sc-step--2);
+  font-size: var(--sc-step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -2104,10 +2182,32 @@ body.is-modal-open { overflow: hidden; }
 .article-share__btn:hover { background: var(--sc-lime); border-color: var(--sc-lime); }
 .article-share__btn svg { width: 16px; height: 16px; }
 
-@media (max-width: 900px) {
-  .article-hero__layout { grid-template-columns: 1fr; }
-  .scholar-portrait { order: -1; max-width: 420px; }
-  .scholar-profile__meta { grid-template-columns: 1fr; }
+@media (max-width: 1024px) {
+  /* Single column stack. */
+  .article-hero__layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    row-gap: var(--sc-space-6);
+  }
+  .article-hero__content,
+  .scholar-profile__meta,
+  .scholar-portrait { grid-column: 1; grid-row: auto; align-self: auto; }
+  /* Stack as text -> portrait + quote -> fact table. The fact table sits
+     before the figure in the source (it needs the left column on desktop),
+     so `order` re-sequences it here. */
+  .article-hero__content { order: 1; }
+  .scholar-portrait { order: 2; max-width: 420px; }
+  .scholar-profile__meta {
+    order: 3;
+    grid-template-columns: 1fr;
+    /* The lime block behind the portrait overhangs the quote by space-5, so
+       add that back to leave the same visible gap as headline -> portrait. */
+    margin-top: var(--sc-space-5);
+  }
+}
+
+@media (max-width: 600px) {
+  .article-hero__name { font-size: 28px; }
 }
 
 
@@ -2152,7 +2252,7 @@ body.is-modal-open { overflow: hidden; }
   position: relative;
   z-index: 2;
   margin-top: var(--sc-space-4);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-text-on-dark-muted);
   max-width: 62ch;
 }
@@ -2183,95 +2283,100 @@ body.is-modal-open { overflow: hidden; }
 .article-body__main.is-tabbed .article-tabs {
   display: flex;
   flex-wrap: nowrap;
-  gap: var(--sc-space-2);
+  align-items: flex-end;
+  gap: var(--sc-space-1);
   margin-bottom: var(--sc-space-6);
-  padding-bottom: var(--sc-space-3);
-  border-bottom: 1px solid var(--sc-line);
+  /* `overflow-x: auto` clips vertically too, so the strip has to make room for
+     everything the tabs draw outside the content box: their top border and
+     focus ring above, and the 2px they drop over the rule below. */
+  padding-top: var(--sc-space-1);
+  padding-bottom: 2px;
+  /* The folder's edge. Tabs sit ON this rule, and the selected one merges
+     into it, so it is drawn in deep teal rather than as a hairline. */
+  border-bottom: 2px solid var(--sc-lime-dark);
   /* Horizontal scroller: the row never wraps, it scrolls. On desktop the
      three tabs fit and it simply never overflows. */
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
+  /* Holds under the header while its part of the article scrolls past. The
+     containing block is .article-body__main, so it releases on its own once
+     the last panel ends. Opaque, since the prose passes beneath it. */
+  position: sticky;
+  top: var(--sc-header-h);
+  z-index: var(--sc-z-sticky);
+  background: var(--sc-paper);
 }
 .article-body__main.is-tabbed .article-tabs::-webkit-scrollbar { display: none; }
 .article-tabs__tab { flex: 0 0 auto; }
+/* Folder tabs, cut to the same pattern as .sc-btn — same type treatment and
+   padding, square-bottomed so each one sits on the strip's rule. Resting tabs
+   are a pale lime tint with deep-teal type, hover brightens to full lime, and
+   the selected tab goes solid deep teal — its bottom edge drops over the rule
+   so it reads as attached to the panel below. */
 .article-tabs__tab {
   display: inline-flex;
   align-items: baseline;
   gap: var(--sc-space-2);
+  min-height: 44px;
   padding: var(--sc-space-3) var(--sc-space-5);
-  border: 1px solid var(--sc-line);
-  border-radius: 999px;
-  background: transparent;
+  margin-bottom: -2px;
+  border: 2px solid var(--sc-lime-dark);
+  border-bottom: 0;
+  border-radius: var(--sc-radius-lg) var(--sc-radius-lg) 0 0;
+  background: var(--sc-paper-warm);
   font: inherit;
   font-size: var(--sc-step--1);
-  font-weight: 600;
-  color: var(--sc-ink-80);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sc-lime-dark);
   cursor: pointer;
   transition: background var(--sc-dur) var(--sc-ease),
               color var(--sc-dur) var(--sc-ease),
               border-color var(--sc-dur) var(--sc-ease);
 }
-.article-tabs__tab:hover { border-color: var(--sc-ink); color: var(--sc-ink); }
+.article-tabs__tab:hover {
+  background: var(--sc-lime);
+  /* border-color: var(--sc-lime); */
+  color: var(--sc-lime-dark);
+}
 .article-tabs__num {
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: var(--sc-accent);
+  /* Darkened lime — the flat lime fails AA at 10px on the lime tints. */
+  color: var(--sc-lime-700);
 }
 .article-tabs__tab[aria-selected="true"] {
-  background: var(--sc-ink);
-  border-color: var(--sc-ink);
-  color: var(--sc-white);
+  background: var(--sc-lime-dark);
+  border-color: var(--sc-lime-dark);
+  color: var(--sc-lime);
 }
-.article-tabs__tab[aria-selected="true"] .article-tabs__num { color: var(--sc-lime); }
+.article-tabs__tab[aria-selected="true"] .article-tabs__num { color: var(--sc-white); }
+.article-tabs__tab:focus-visible {
+  outline: 2px solid var(--sc-lime-dark);
+  outline-offset: 2px;
+}
 
-/* The scholarship tab is a folder tab: pinned to the right edge of the
-   viewport, attached to the strip's baseline, and rounded only on the one
-   corner that touches neither. Hidden above 1000px, where the sidebar is a
-   column of its own — JS drops it from the tab set at the same width. */
+/* The scholarship tab is the last of the set and scrolls with it. Hidden
+   above 1024px, where the sidebar is a column of its own — JS drops it from
+   the tab set at the same width. */
 .article-tabs__tab--pinned { display: none; }
-.article-tabs__tab--pinned::before {
-  /* Fades the scrolling tabs out well before they reach the folder tab, so
-     the two groups read as separate things rather than one crowded row. */
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 100%;
-  width: 5rem;
-  height: 100%;
-  background: linear-gradient(to right,
-              rgba(252, 250, 246, 0) 0%,
-              rgba(252, 250, 246, 0.9) 55%,
-              var(--sc-paper) 100%);
-  pointer-events: none;
-}
-@media (max-width: 1000px) {
-  /* The strip runs out to the viewport edge so the folder tab can sit flush
-     against the screen rather than against the container gutter. */
-  .article-body__main.is-tabbed .article-tabs {
-    margin-right: calc(-1 * var(--sc-gutter));
-  }
+@media (max-width: 1024px) {
   .article-tabs__tab--pinned {
     display: inline-flex;
-    position: sticky;
-    right: 0;
-    margin-left: auto;
     align-self: stretch;
     align-items: center;
-    /* Drops over the strip's padding and bottom rule so the tab sits on the
-       line, the way a folder tab sits on the folder. */
-    margin-bottom: calc(-1 * var(--sc-space-3) - 1px);
-    padding: var(--sc-space-3) var(--sc-gutter) var(--sc-space-3) var(--sc-space-5);
-    border-right: 0;
-    border-bottom: 0;
-    border-radius: var(--sc-radius-lg) 0 0 0;
-    /* Paper, not white: the same surface the other tabs sit on, so the only
-       difference from them is the shape. It has to be opaque all the same —
-       the scrolling tabs pass behind it. */
-    background: var(--sc-paper);
   }
-  .article-tabs__tab--pinned[aria-selected="true"] { background: var(--sc-ink); }
+  /* Full bleed: the strip breaks out of the container's gutter so the folder
+     rule runs edge to edge, while the padding keeps the first and last tabs
+     lined up with the body copy. */
+  .article-body__main.is-tabbed .article-tabs {
+    margin-inline: calc(-1 * var(--sc-gutter));
+    padding-inline: var(--sc-gutter);
+    scroll-padding-inline: var(--sc-gutter);
+  }
 }
 
 /* In tab mode the tab already names and numbers the part, so the panel drops
@@ -2376,7 +2481,7 @@ body.is-modal-open { overflow: hidden; }
 }
 .article-pullquote figcaption {
   margin-top: var(--sc-space-4);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   font-weight: 700;
   color: var(--sc-ink-60);
 }
@@ -2386,7 +2491,7 @@ body.is-modal-open { overflow: hidden; }
 .article-figure .sc-frame { border-radius: var(--sc-radius-lg); }
 .article-figure figcaption {
   margin-top: var(--sc-space-3);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-ink-60);
   max-width: 60ch;
 }
@@ -2421,7 +2526,7 @@ body.is-modal-open { overflow: hidden; }
   transition: border-color var(--sc-dur-fast) var(--sc-ease),
               box-shadow var(--sc-dur-fast) var(--sc-ease);
 }
-.ama-item:hover { border-color: var(--sc-lime-300); box-shadow: var(--sc-shadow-sm); }
+.ama-item:hover { border-color: var(--sc-lime-500); box-shadow: var(--sc-shadow-sm); }
 
 .ama-item__q {
   display: grid;
@@ -2480,7 +2585,7 @@ body.is-modal-open { overflow: hidden; }
   border-radius: var(--sc-radius-lg);
   color: var(--sc-text-on-dark);
 }
-.ama-cta__text { font-size: var(--sc-step--1); color: var(--sc-text-on-dark-muted); max-width: 46ch; }
+.ama-cta__text { font-size: var(--sc-step-0); color: var(--sc-text-on-dark-muted); max-width: 46ch; }
 .ama-cta__title {
   font-family: var(--sc-font-display);
   font-size: var(--sc-step-3);
@@ -2504,13 +2609,15 @@ body.is-modal-open { overflow: hidden; }
 
 .sidebar-card {
   background: var(--sc-white);
-  border: 1px solid var(--sc-line);
+  border: 1px solid var(--sc-lime-500);
   border-radius: var(--sc-radius-lg);
   overflow: hidden;
 }
+/* Same scheme as the selected article tab — solid deep teal, lime label — so
+   the card head and the tab that opens it on mobile read as one object. */
 .sidebar-card__head {
   padding: var(--sc-space-4) var(--sc-space-5);
-  background: var(--sc-ink);
+  background: var(--sc-lime-dark);
   color: var(--sc-lime);
   font-size: var(--sc-step--2);
   font-weight: 700;
@@ -2531,7 +2638,7 @@ body.is-modal-open { overflow: hidden; }
 /* An image logo sizes to the artwork instead of the 40px lettered tile. */
 .sidebar-card__provider .provider-card__logo--img { width: max-content; height: auto; flex: none; }
 .sidebar-card__provider .provider-card__logo--img img { max-height: 36px; max-width: 110px; }
-.sidebar-card__provider-name { font-size: var(--sc-step--1); font-weight: 700; line-height: 1.3; }
+.sidebar-card__provider-name { font-size: var(--sc-step-0); font-weight: 700; line-height: 1.3; }
 .sidebar-card__provider-type {
   font-size: 0.625rem;
   text-transform: uppercase;
@@ -2555,7 +2662,7 @@ body.is-modal-open { overflow: hidden; }
   gap: var(--sc-space-3);
   padding-block: var(--sc-space-3);
   border-bottom: 1px solid var(--sc-line);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
 }
 .sidebar-specs__row:last-child { border-bottom: 0; }
 .sidebar-specs__label { color: var(--sc-ink-60); }
@@ -2565,7 +2672,7 @@ body.is-modal-open { overflow: hidden; }
 .sidebar-card__list li {
   position: relative;
   padding-left: 1.25rem;
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-ink-80);
   line-height: 1.5;
 }
@@ -2574,7 +2681,7 @@ body.is-modal-open { overflow: hidden; }
   position: absolute;
   left: 0; top: 0.5em;
   width: 7px; height: 7px;
-  background: var(--sc-lime);
+  background: var(--sc-lime-dark);
   border-radius: 2px;
 }
 
@@ -2585,7 +2692,7 @@ body.is-modal-open { overflow: hidden; }
   padding: var(--sc-space-3) var(--sc-space-4);
   background: var(--sc-accent-50);
   border-radius: var(--sc-radius);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   color: var(--sc-accent-600);
   font-weight: 500;
 }
@@ -2605,7 +2712,7 @@ body.is-modal-open { overflow: hidden; }
 .sidebar-stories .sidebar-story:last-child { border-bottom: 0; padding-bottom: 0; }
 .sidebar-story .sc-frame { border-radius: var(--sc-radius-sm); }
 .sidebar-story__title {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   font-weight: 700;
   line-height: 1.32;
   transition: color var(--sc-dur-fast) var(--sc-ease);
@@ -2620,7 +2727,7 @@ body.is-modal-open { overflow: hidden; }
   font-weight: 700;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .article-body__layout { grid-template-columns: minmax(0, 1fr); }
   #scholarship-sidebar { position: static; margin-top: var(--sc-space-8); }
   /* As the 4th tab panel it sits directly under the tablist, so it loses the
@@ -2720,7 +2827,7 @@ body.is-modal-open { overflow: hidden; }
 }
 .page-aside-card__body {
   margin-top: var(--sc-space-3);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   line-height: 1.65;
   color: var(--sc-ink-80);
 }
@@ -2728,7 +2835,7 @@ body.is-modal-open { overflow: hidden; }
   margin-top: var(--sc-space-4);
   display: grid;
   gap: var(--sc-space-3);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
 }
 .page-aside-card__list a {
   color: var(--sc-teal-600);
@@ -2743,12 +2850,12 @@ body.is-modal-open { overflow: hidden; }
 .page-figure { margin-top: var(--sc-space-7); }
 .page-figure__caption {
   margin-top: var(--sc-space-3);
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   line-height: 1.5;
   color: var(--sc-ink-60);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .page-layout { grid-template-columns: 1fr; }
   .page-layout__aside { position: static; margin-top: var(--sc-space-8); }
 }
@@ -2787,7 +2894,7 @@ body.is-modal-open { overflow: hidden; }
 .sc-field__req { color: var(--sc-accent-600); margin-left: 0.15em; }
 
 .sc-field__hint {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   line-height: 1.5;
   color: var(--sc-ink-60);
 }
@@ -2795,7 +2902,7 @@ body.is-modal-open { overflow: hidden; }
 /* Inline validation message — hidden until js/main.js sets .is-invalid */
 .sc-field__error {
   display: none;
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   font-weight: 600;
   color: var(--sc-accent-600);
 }
@@ -2832,7 +2939,7 @@ body.is-modal-open { overflow: hidden; }
 }
 .contact-form__note {
   flex: 1 1 22ch;
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step-0);
   line-height: 1.5;
   color: var(--sc-ink-60);
 }

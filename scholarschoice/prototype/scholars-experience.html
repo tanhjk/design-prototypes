@@ -28,7 +28,7 @@
   TEMPLATE STRUCTURE
     #article-hero        scholar portrait + name, scholarship, bond, studied,
                          current role, and pull quote
-    #article-byline      author, date, read time, share
+    #article-byline      author, date, share
     #article-video       OPTIONAL — delete the whole <section> when a story
                          has no video. Nothing else depends on it.
     #article-body        3 tabbed parts: #the-story / #the-work / #ama
@@ -110,33 +110,30 @@
         <div class="article-hero__content">
           <p class="sc-eyebrow sc-eyebrow--on-dark article-hero__eyebrow">Scholars&rsquo; Experience · Social policy</p>
 
-          <h1 class="article-hero__name">Vera</h1>
+          <h1 class="article-hero__name">From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</h1>
           <p class="article-hero__role">Policy officer, social &amp; family development</p>
-
-          <blockquote class="article-hero__quote">
-            &ldquo;You can read every paper ever written about low-income households and still be wrong about the flat in front of you. Closing that gap is the whole job.&rdquo;
-          </blockquote>
-
-          <!-- Scholar facts: Name is the H1 above; these four are the spec facts -->
-          <dl class="scholar-profile__meta">
-            <div class="scholar-profile__meta-item">
-              <dt class="scholar-profile__meta-label">Scholarship</dt>
-              <dd class="scholar-profile__meta-value">PSC Scholarship (Public Administration)</dd>
-            </div>
-            <div class="scholar-profile__meta-item">
-              <dt class="scholar-profile__meta-label">Bond</dt>
-              <dd class="scholar-profile__meta-value">6 years, served from 2023</dd>
-            </div>
-            <div class="scholar-profile__meta-item">
-              <dt class="scholar-profile__meta-label">Studied</dt>
-              <dd class="scholar-profile__meta-value">Social Policy &amp; Economics, London School of Economics</dd>
-            </div>
-            <div class="scholar-profile__meta-item">
-              <dt class="scholar-profile__meta-label">Now working at</dt>
-              <dd class="scholar-profile__meta-value">Ministry of Social and Family Development</dd>
-            </div>
-          </dl>
         </div>
+
+        <!-- Scholar facts: Name is the H1 above; these four are the spec facts.
+             Own grid item so it can bottom-align with the pull-quote. -->
+        <dl class="scholar-profile__meta">
+          <div class="scholar-profile__meta-item">
+            <dt class="scholar-profile__meta-label">Scholarship</dt>
+            <dd class="scholar-profile__meta-value">PSC Scholarship (Public Administration)</dd>
+          </div>
+          <div class="scholar-profile__meta-item">
+            <dt class="scholar-profile__meta-label">Bond</dt>
+            <dd class="scholar-profile__meta-value">6 years, served from 2023</dd>
+          </div>
+          <div class="scholar-profile__meta-item">
+            <dt class="scholar-profile__meta-label">Studied</dt>
+            <dd class="scholar-profile__meta-value">Social Policy &amp; Economics, London School of Economics</dd>
+          </div>
+          <div class="scholar-profile__meta-item">
+            <dt class="scholar-profile__meta-label">Now working at</dt>
+            <dd class="scholar-profile__meta-value">Ministry of Social and Family Development</dd>
+          </div>
+        </dl>
 
         <!-- Portrait. Add `scholar-portrait--duotone` for the lime duotone treatment. -->
         <figure class="scholar-portrait">
@@ -145,7 +142,12 @@
                  alt="Portrait of Vera at Marina Bay" width="2560" height="1707" loading="eager"
                  style="object-position: 38% center;">
           </div>
-          <figcaption class="scholar-portrait__caption">Vera at Marina Bay, a short walk from the ministry where she has worked since returning from London. Photo: placeholder.</figcaption>
+          <figcaption class="scholar-portrait__caption">
+            <p class="scholar-portrait__credit">Photo: SPH Media</p>
+            <blockquote class="article-hero__quote">
+              &ldquo;You can read every paper ever written about low-income households and still be wrong about the flat in front of you. Closing that gap is the whole job.&rdquo;
+            </blockquote>
+          </figcaption>
         </figure>
 
       </div>
@@ -160,10 +162,9 @@
     <div class="sc-container article-byline__inner">
 
       <div class="article-byline__who">
-        <span class="article-byline__avatar" aria-hidden="true">HL</span>
         <div>
-          <p class="article-byline__author">By Hazel Lim</p>
-          <p class="sc-meta">Published 22 Sep 2026 · 12 min read</p>
+          <p class="article-byline__author">By Scholar's Choice team</p>
+          <p class="sc-meta">Published 22 Sep 2026</p>
         </div>
       </div>
 
@@ -240,7 +241,7 @@
                     id="tab-ama" aria-controls="ama" aria-selected="false" tabindex="-1">
               <span class="article-tabs__num">03</span>#AMA
             </button>
-            <!-- Mobile only: below 1000px the sidebar stacks, so it becomes the
+            <!-- Mobile only: below 1024px the sidebar stacks, so it becomes the
                  4th tab instead. JS drops this tab from the set on desktop. -->
             <button class="article-tabs__tab article-tabs__tab--pinned" type="button" role="tab"
                     id="tab-scholarship" aria-controls="scholarship-sidebar"
@@ -477,7 +478,7 @@
           <div>
             <p class="story-card__scholar">Qi Hua · ICA</p>
             <h3 class="story-card__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</h3>
-            <p class="sc-meta story-card__meta">Home affairs · 7 min read</p>
+            <p class="sc-meta story-card__meta">Home affairs</p>
           </div>
         </a>
 
@@ -488,7 +489,7 @@
           <div>
             <p class="story-card__scholar">Jun Hao · SPF</p>
             <h3 class="story-card__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</h3>
-            <p class="sc-meta story-card__meta">Home affairs · 9 min read</p>
+            <p class="sc-meta story-card__meta">Home affairs</p>
           </div>
         </a>
 
@@ -499,7 +500,7 @@
           <div>
             <p class="story-card__scholar">Liu Shuang · A*STAR</p>
             <h3 class="story-card__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</h3>
-            <p class="sc-meta story-card__meta">Research · 10 min read</p>
+            <p class="sc-meta story-card__meta">Research</p>
           </div>
         </a>
 
@@ -542,9 +543,14 @@
       <div class="site-footer__brand">
         <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
           <img class="site-logo__img" src="images/sc-logo.png"
-               alt="The Straits Times Scholars&rsquo; Choice" width="566" height="279" loading="lazy" decoding="async">
+               alt="The Straits Times Scholar&rsquo;s Choice" width="566" height="279" loading="lazy" decoding="async">
         </a>
-        <p class="site-footer__tagline">The scholarship guide for students in Singapore — every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
       </div>
 
     </div>

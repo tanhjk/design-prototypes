@@ -13,8 +13,9 @@
    06. placeholderLinks() — stops "#" links from jumping the page
    07. videoModal()       — full-screen video carousel
    08. scholarshipCarousel() — paged rail of featured scholarships
-   09. articleTabs()      — the story / the work / #AMA panels
-   10. contactForm()      — contact-us.html validation (sends nothing yet)
+   09. providerRail()     — shuffles the featured providers
+   10. articleTabs()      — the story / the work / #AMA panels
+   11. contactForm()      — contact-us.html validation (sends nothing yet)
    ========================================================================== */
 
 (function () {
@@ -55,7 +56,7 @@
     });
 
     // Reset state when the viewport grows past the drawer breakpoint
-    window.matchMedia('(min-width: 981px)').addEventListener('change', function (e) {
+    window.matchMedia('(min-width: 1025px)').addEventListener('change', function (e) {
       if (e.matches) setOpen(false);
     });
   }
@@ -81,15 +82,42 @@
   /* ------------------------------------------------------------------------
      03 · ANCHOR BANNER CAROUSEL
      Auto-advances every 6s. Pauses on hover, on focus within, and when the
-     tab is hidden. Arrow keys work when a control has focus.
+     tab is hidden. Arrow keys work when a control has focus, and on touch
+     the viewport can be swiped left/right. Slide order is reshuffled on every
+     page load.
      ------------------------------------------------------------------------ */
   function anchorBanner() {
     var root = document.getElementById('anchor-banner');
     if (!root) return;
 
+    var viewport = root.querySelector('.anchor-banner__viewport');
     var slides = Array.prototype.slice.call(root.querySelectorAll('.anchor-banner__slide'));
     var dots = Array.prototype.slice.call(root.querySelectorAll('.anchor-banner__dot'));
     if (slides.length < 2) return;
+
+    /* Every page load gets a fresh running order, so no advertiser is
+       permanently stuck in the first position. */
+    function shuffleSlides() {
+      if (!viewport) return;
+      for (var i = slides.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = slides[i]; slides[i] = slides[j]; slides[j] = tmp;
+      }
+      var frag = document.createDocumentFragment();
+      slides.forEach(function (slide, i) {
+        slide.classList.remove('is-active');
+        slide.setAttribute('aria-label', (i + 1) + ' of ' + slides.length);
+        // Whichever creative drew first place is the one worth loading eagerly
+        var img = slide.querySelector('img');
+        if (img) {
+          img.loading = i === 0 ? 'eager' : 'lazy';
+          if (i === 0) img.fetchPriority = 'high';
+        }
+        frag.appendChild(slide);
+      });
+      viewport.appendChild(frag);
+    }
+    shuffleSlides();
 
     var index = 0;
     var timer = null;
@@ -123,6 +151,50 @@
     dots.forEach(function (dot, i) {
       dot.addEventListener('click', function () { go(i); start(); });
     });
+
+    /* Touch swipe. The slides are links, so a drag has to be told apart from
+       a tap: past the threshold we swallow the click that follows the swipe. */
+    if (viewport) {
+      var SWIPE_MIN = 40;      // px of travel before it counts as a swipe
+      var startX = 0, startY = 0, dragging = false, swiped = false;
+
+      viewport.addEventListener('touchstart', function (e) {
+        if (e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        dragging = true;
+        swiped = false;
+        stop();
+      }, { passive: true });
+
+      viewport.addEventListener('touchmove', function (e) {
+        if (!dragging) return;
+        var dx = e.touches[0].clientX - startX;
+        var dy = e.touches[0].clientY - startY;
+        // Vertical intent wins: let the page scroll and drop the gesture
+        if (Math.abs(dy) > Math.abs(dx)) { dragging = false; }
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', function (e) {
+        if (!dragging) { start(); return; }
+        dragging = false;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) >= SWIPE_MIN) {
+          swiped = true;
+          go(dx < 0 ? index + 1 : index - 1);
+        }
+        start();
+      });
+
+      viewport.addEventListener('touchcancel', function () {
+        dragging = false;
+        start();
+      });
+
+      viewport.addEventListener('click', function (e) {
+        if (swiped) { e.preventDefault(); swiped = false; }
+      });
+    }
 
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
@@ -418,6 +490,23 @@
     video.addEventListener('ended', function () { showReel(current + 1); });
   }
 
+  /* No card deserves the first slot every visit, so deal the rail afresh on
+     each load — Fisher-Yates over the real nodes, written back in one
+     fragment so the browser lays the rail out once. */
+  function shuffleRail(rail) {
+    var order = Array.prototype.slice.call(rail.children);
+    if (order.length < 2) return;
+    for (var i = order.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = order[i];
+      order[i] = order[j];
+      order[j] = tmp;
+    }
+    var frag = document.createDocumentFragment();
+    for (var k = 0; k < order.length; k++) frag.appendChild(order[k]);
+    rail.appendChild(frag);
+  }
+
   /* ------------------------------------------------------------------------
      08 · SCHOLARSHIP CAROUSEL
      A native scroll-snap rail: the CSS sizes cards so one viewport holds a
@@ -433,6 +522,9 @@
     var btnPrev = carousel.querySelector('[data-carousel-prev]');
     var btnNext = carousel.querySelector('[data-carousel-next]');
     var elDots = carousel.querySelector('[data-carousel-dots]');
+
+    shuffleRail(rail);
+
     var cards = Array.prototype.slice.call(rail.children);
     if (!cards.length) return;
 
@@ -517,17 +609,42 @@
       }, 150);
     });
 
+    /* Browsers restore an element's scrollLeft on reload and on a back/forward
+       restore, which would land the freshly shuffled rail mid-deck. Put it
+       back to card one — instantly, so no one sees it slide. */
+    function resetToStart() {
+      rail.scrollLeft = 0;
+      sync();
+    }
+
     measure();
     buildDots();
-    sync();
+    resetToStart();
+
+    /* Scroll restoration runs after this script, so claim the start position
+       again once the page has settled and whenever it comes out of bfcache. */
+    window.addEventListener('load', resetToStart);
+    window.addEventListener('pageshow', resetToStart);
   }
 
   /* ------------------------------------------------------------------------
-     09 · ARTICLE TABS  (article template only)
+     09 · PROVIDER RAIL
+     A plain scroll rail, no paging — it only needs the same fresh deal as the
+     scholarship carousel so no provider owns the leftmost slot.
+     ------------------------------------------------------------------------ */
+  function providerRail() {
+    var rail = document.getElementById('provider-rail');
+    if (!rail) return;
+    shuffleRail(rail);
+    rail.scrollLeft = 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     10 · ARTICLE TABS  (article template only)
      Progressive enhancement: the tablist is hidden until this runs, so with
      JS off all three parts stay on the page as one continuous article.
 
-     Below 1000px the scholarship sidebar stops being a column and becomes a
+     Below 1024px the scholarship sidebar stops being a column and becomes a
      4th tab. It stays where it is in the DOM — with every article panel
      hidden, the main column is just the tablist and the sidebar reads as the
      panel directly beneath it.
@@ -539,7 +656,7 @@
 
     var allTabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
     var aside = document.getElementById('scholarship-sidebar');
-    var mq = window.matchMedia('(max-width: 1000px)');
+    var mq = window.matchMedia('(max-width: 1024px)');
     var tabs = [];
     var active = 0;
 
@@ -656,6 +773,7 @@
     placeholderLinks();
     videoModal();
     scholarshipCarousel();
+    providerRail();
     articleTabs();
     contactForm();
   }
