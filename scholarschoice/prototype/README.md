@@ -7,8 +7,11 @@ index.html                  Homepage
 scholars-experience.html    Article page (Scholars' Experience)
 inner-page-template.html    Inner page template — copy this to start a new page
 contact-us.html             Contact us, built on the inner page template
+provider-template.html      Provider page template — copy per scholarship provider
+scholarship-template.html   Scholarship detail template — copy per scholarship
+scholarships.html           Scholarship listing — search, filters, lazy-loaded card grid
 css/main.css                Whole design system + all page styles
-js/main.js                  Nav, carousel, reveal, reading progress, contact form
+js/main.js                  Nav, carousel, reveal, reading progress, contact form, listing
 ```
 
 All four pages share an identical `#site-header` and `#site-footer` block, marked in the HTML as `partials/header` and `partials/footer` — extract those two first when moving to a templating layer.
@@ -85,17 +88,42 @@ BEM-ish, block-prefixed, one block per page section. Sections carry the `id`, co
 
 **Contact page** (`contact-us.html`) — the same two sections, with the main column replaced by `.contact-form`: `__grid`, `__foot`, `__note`, `__submit`, `__success`, built on the shared `.sc-field` / `.sc-input` / `.sc-select` / `.sc-textarea` controls.
 
+**Provider page** (`provider-template.html`) — the inner page chrome plus four sections. Cards are the homepage's own `.scholarship-card` and `.story-card`, unchanged; provider-only styles are `css/main.css` section 21.
+
+**Scholarship page** (`scholarship-template.html`) — the inner page hero (name + short description), a `#scholarship-bar` with the provider logo/name and the article's `.article-share` buttons, then `#page-body` with three tabs (Requirements / Value / Courses) built on the article's `.article-tabs` / `.article-part` and driven by the same `articleTabs()`, beside an "At a glance" `.sidebar-card`. Scholarship-only styles are `css/main.css` section 22. Picking a tab (here or on the article page) writes its panel's anchor to the URL — `#requirements`, `#value`, `#courses` — with `history.replaceState`, and opening a URL with one of those anchors opens that tab. 
+
+**Scholarship listing** (`scholarships.html`) — the inner page hero with the homepage's `.search-form` in place of the title (the `<h1>` is visually hidden), then a full-width `#listing-body`: the homepage's `.scholarship-card` in a grid on the left, a filter sidebar on the right. Listing-only styles are `css/main.css` section 23; behaviour is `scholarshipListing()` in `js/main.js`.
+
+| `id` | Component classes |
+|---|---|
+| `#page-hero` (+`.listing-hero`) | `.search-form`, `.search-form__row--query` |
+| `#listing-body` | `.listing-layout`, `.listing-results`, `.listing-grid`, `.listing-empty`, `.listing-status`, `.listing-sentinel` |
+| `#listing-filters` | `.listing-filters__panel`, `__head`, `__handle`, `__foot`, `.listing-selected`, `.listing-chip`, `.filter-group`, `.multi-select`, `.sc-check`, `.step-slider` |
+
+**Share widget** — one markup on every page: `.article-share` with Instagram, WhatsApp, Telegram, LinkedIn, Email and Copy link, in that order. `shareLinks()` in `js/main.js` fills the WhatsApp / Telegram / LinkedIn / Email hrefs; Instagram (which has no web share URL) and Copy link copy the page URL and show a "Copied" tooltip. On touch devices with a native share sheet, Instagram opens that instead.
+
+| `id` | Component classes |
+|---|---|
+| `#page-hero` (+`.provider-hero`) | `.provider-hero__grid`, `__logo` |
+| `#page-body` | `.page-layout`, `.page-aside-card`, `.provider-facts`, `__actions`, `.provider-share` (wraps the article's `.article-share`) |
+| `#provider-video` | `.article-video__player` — **optional section, delete when there is no video** |
+| `#provider-scholarships` | `.sc-grid--3`, `.provider-scholarships__grid`, `.scholarship-card` |
+| `#provider-stories` | `.story-list`, `.provider-stories__list`, `.story-card` |
+| `#provider-cta` | `.provider-cta`, `__text`, `__actions` |
+
 ## Things to know before refactoring
 
 **Starting a new inner page.** Copy `inner-page-template.html`, then change four things: the `<title>` and meta description, the `<h1>`, the breadcrumb trail, and the `is-active` / `aria-current="page"` pair on the matching primary nav item — the template ships with none set, because no top-level nav item matches a generic inner page. The breadcrumb mirrors the URL path, one `<li>` per level, Home first, and the last item is plain text with `aria-current="page"`, never a link. The aside is optional: delete `<aside class="page-layout__aside">` and add `.page-layout--single` to `.page-layout` for a single-column page.
 
 **The contact form sends nothing.** `<form id="contact-form">` has no `action` and no `method`. `contactForm()` in `js/main.js` validates the four required fields on blur and on submit (re-validating a field only once it has already been flagged, so the first pass through the form is never interrupted mid-typing), then hides the form and reveals `#contact-success`. The block to replace is marked in the source. Point it at a real endpoint, and add server-side validation and spam protection, before the page goes live. `novalidate` is set so the browser's own bubbles don't compete with the inline `.sc-field__error` messages — which means validation is entirely JS-dependent today.
 
+**The scholarship listing.** Cards are rendered from the JSON in `<script id="scholarship-data">` at the foot of `#listing-body`, 12 at a time; when `#listing-sentinel` scrolls into view the next 12 load. `fetchPage()` in `scholarshipListing()` is the one function that reads that JSON — replace its body with an API call that returns `{ items, total }` and the rest keeps working. Filters are AND across groups and OR within one; Sponsorship is a minimum (Any / 25 / 50 / 100%), Bond a maximum (0–6 years, 6 = any). Every change is written to the query string (`?provider=psc,dsta&bond=4`), and the page reads it back on load, accepting option labels as well as values — so pointing the homepage `#search-form` at `scholarships.html` would carry its `q` and `level` straight across. Filter checkbox values must match the keys in the JSON (listed in the comment above it). Grid: 4 per row above 1440px, 3 from 1025px to 1440px, 2 from 768px, 1 below; cards under 280px wide stack their specs to one column via a container query. Under 900px the sidebar becomes a right-hand drawer with a vertical "Filter" handle showing the active filter count.
+
 **The optional video section.** Delete the whole `<section id="article-video">` for stories with no video. Nothing else on the page references it, and the reading-progress bar measures `#article-body` only.
 
 **The stylised portrait.** `.scholar-portrait--duotone` applies a grayscale + lime `soft-light` blend so mixed-quality headshots read as a consistent treatment. Drop the modifier to show the photo untreated.
 
-**Placeholder links.** Every unbuilt destination is `href="#"`. `js/main.js` → `placeholderLinks()` intercepts those clicks so nothing jumps to the top of the page during reviews. Delete that function once real routes exist. Live links today: `index.html` and `scholars-experience.html` only.
+**Placeholder links.** Every unbuilt destination is `href="#"`. `js/main.js` → `placeholderLinks()` intercepts those clicks so nothing jumps to the top of the page during reviews. Delete that function once real routes exist. Live links today: `index.html`, `scholars-experience.html` and `scholarships.html` (nav, footer, the scholarship breadcrumb and the homepage "View all scholarships" CTA).
 
 **The search panel straddles two sections.** `#scholarship-search` has no background or padding of its own — `.search-panel` is the teal box, and it pulls itself into the sections above and below with `margin-block: calc(var(--search-overlap) * -1)`. Everything that has to clear it derives from the same `--search-overlap` value: the panel sits at `z-index: calc(var(--sc-z-banner) + 1)`, the carousel dots get it added to their `bottom` offset, and `#pathways` adds it to its top padding. Change the overlap and all three need to move together.
 
@@ -122,6 +150,7 @@ Everything editorial here was written to exercise the layout and is **not verifi
 - Scholarship values, bond lengths, coverage, deadlines and application windows
 - The "1,284 scholarships / 96 providers" counts in the #providers CTAs
 - Every word and image in `inner-page-template.html` — it is a layout harness, not copy
+- Every scholarship on `scholarships.html` (in `#scholarship-data`) — names, values, bonds, deadlines and eligibility are dummy data, and twelve providers (A\*STAR, MOE, NUS, NTU, GovTech, MAS, LTA, IMDA, SPF, SCDF, ICA, Temasek Foundation) show lettered tiles until logo files exist
 - On `contact-us.html`: the three-working-day reply promise, the email address, the phone number and the office hours in the aside
 
 Provider names (A\*STAR, PSC, MOE, DSTA, NUS, Temasek Foundation) are real organisations used as realistic examples — confirm any commercial or editorial relationship before these appear publicly, and replace the logo placeholder tiles (`.provider-card__logo`, currently two- or three-letter monograms) with licensed marks.

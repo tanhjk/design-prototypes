@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- TEMPLATE: page title is "{Scholarship name} — Scholar's Choice" -->
+<title>DSTA Undergraduate Scholarship — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Placeholder description. Replace with a 140–160 character summary of this scholarship — who it is for, what it covers and the bond — written for search results.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  SCHOLARSHIP PAGE TEMPLATE — copy this file to build one page per scholarship.
+  Built on inner-page-template.html (same header, hero and footer chrome).
+
+  Every word of copy below is PLACEHOLDER, written around a DSTA award so the
+  layout reads realistically. Replace the lot, and confirm every figure.
+
+  STRUCTURE
+    #page-hero          Teal band. Breadcrumb, eyebrow (level), scholarship
+                        name (H1) and a short description (standfirst).
+    #scholarship-bar    Provider logo + name (links to the provider page) on
+                        the left, share buttons on the right. Same bar and
+                        same .article-share buttons as the article byline.
+    #page-body          Tabbed details — Requirements / Value / Courses — plus
+                        a sticky "At a glance" aside with the key facts and
+                        the apply CTA.
+
+  TABS
+    Reuses the article tabs (.article-tabs / .article-part, css/main.css
+    section 16) and the same articleTabs() script. With JS off the tablist is
+    hidden and all three panels stay visible, so the page still reads top to
+    bottom. Link straight to a tab with #requirements, #value or #courses.
+
+  TO ADAPT
+    1. <title>, <meta name="description">, the breadcrumb trail and the <h1>.
+    2. The provider logo (data-img-slot="provider-logo") and name, and the
+       provider page link.
+    3. The provider's application URL — it appears once; grep for
+       data-cta="apply". Keep target="_blank" + rel.
+    4. The three tab panels and the aside specs.
+    Scholarship-only styles live in css/main.css section 22.
+  ============================================================================
+-->
+</head>
+<body class="page-inner page-scholarship">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/SC_Logo.svg"
+           alt="The Straits Times Scholars&rsquo; Choice" width="576" height="280" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="scholarships.html">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <button class="sc-btn sc-btn--primary sc-btn--sm site-header__login" type="button"
+              data-auth-open aria-haspopup="dialog" aria-label="Login or register">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Sign In</span>
+      </button>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + scholarship name + short description
+       ======================================================================== -->
+  <section id="page-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="scholarships.html">Find a Scholarship</a></li>
+          <li aria-current="page">DSTA Undergraduate Scholarship</li>
+        </ol>
+      </nav>
+
+      <div class="page-hero__head">
+        <!-- Level of study. Delete the eyebrow if it adds nothing. -->
+        <p class="sc-eyebrow sc-eyebrow--on-dark">Undergraduate scholarship</p>
+
+        <!-- Scholarship name -->
+        <h1 class="page-hero__title">DSTA Undergraduate Scholarship</h1>
+
+        <!-- Short description: one or two sentences on who it is for and what it leads to -->
+        <p class="page-hero__standfirst">
+          Placeholder description. A full undergraduate scholarship for students who want to
+          engineer the systems that keep Singapore safe, with a guaranteed career at DSTA after
+          graduation.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · PROVIDER + SHARE BAR
+       Same layout as the article byline bar; the share buttons are the
+       article's own .article-share (css/main.css section 14).
+       ======================================================================== -->
+  <div id="scholarship-bar">
+    <div class="sc-container scholarship-bar__inner">
+
+      <a class="scholarship-provider" href="provider-template.html">
+        <span class="scholarship-provider__logo">
+          <img data-img-slot="provider-logo" src="images/dsta-logo.png"
+               alt="" width="540" height="300" decoding="async">
+        </span>
+        <span>
+          <span class="scholarship-provider__label">Offered by</span>
+          <span class="scholarship-provider__name">Defence Science and Technology Agency</span>
+        </span>
+      </a>
+
+      <!-- Share — js/main.js shareLinks() fills each href from the page URL + title;
+           Instagram and Copy link copy the URL and show a "Copied" tooltip. -->
+      <div class="article-share">
+        <span class="article-share__label">Share</span>
+        <a class="article-share__btn" href="#" data-share="instagram" aria-label="Share on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" data-share="whatsapp" target="_blank" rel="noopener" aria-label="Share on WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-1.6.1-3.6-1.3-5-2.7-1.4-1.4-2.8-3.4-2.7-5 0-.5.6-1.5 1.2-1.7.3-.1.7 0 .9.4l.8 1.5c.1.3.1.6-.1.8l-.4.5c-.2.2-.2.4-.1.6.3.6 1.6 1.9 2.2 2.2.2.1.4.1.6-.1l.5-.4c.2-.2.5-.2.8-.1l1.5.8c.4.2.5.6.4.9Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" data-share="telegram" target="_blank" rel="noopener" aria-label="Share on Telegram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.7 3.3 2.9 10.6c-.9.3-.9 1.5 0 1.8l4.3 1.4 1.6 5c.3.8 1.3 1 1.8.3l2.3-2.8 4.4 3.3c.7.5 1.7.1 1.9-.7l3.1-14.1c.2-.9-.7-1.6-1.6-1.2ZM9.5 14.1l-.3 3.3-1-3.1 8.2-5.5-6.9 5.3Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" data-share="linkedin" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h3v12H3V9Zm6 0h2.9v1.7h.1c.4-.8 1.5-1.9 3.3-1.9 2.6 0 3.7 1.6 3.7 4.4V21h-3v-6.6c0-1.6-.6-2.5-1.9-2.5-1.1 0-1.8.7-2 1.4-.1.2-.1.6-.1.9V21H9V9Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" data-share="email" aria-label="Share by email">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v.3l-10 6.3L2 5.8v-.3Zm0 2.6v10.4A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5V8.1l-9.5 6a1 1 0 0 1-1 0L2 8.1Z"/></svg>
+        </a>
+        <a class="article-share__btn" href="#" data-share="copy" aria-label="Copy link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 6.5 13 4.5a4 4 0 0 1 5.7 5.7l-2 2"/><path d="M13 17.5 11 19.5a4 4 0 0 1-5.7-5.7l2-2"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       03 · PAGE BODY — tabbed details + "At a glance" aside
+       ======================================================================== -->
+  <section id="page-body" class="sc-section">
+    <div class="sc-container">
+      <div class="page-layout">
+
+        <!-- .article-body__main is the hook articleTabs() looks for -->
+        <div class="page-layout__main article-body__main">
+
+          <div class="article-tabs" role="tablist" aria-label="Scholarship details">
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-requirements" aria-controls="requirements" aria-selected="true">
+              <span class="article-tabs__num">01</span>Requirements
+            </button>
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1">
+              <span class="article-tabs__num">02</span>Value
+            </button>
+            <button class="article-tabs__tab" type="button" role="tab"
+                    id="tab-courses" aria-controls="courses" aria-selected="false" tabindex="-1">
+              <span class="article-tabs__num">03</span>Courses
+            </button>
+          </div>
+
+          <!-- TAB 1 · REQUIREMENTS --------------------------------------- -->
+          <section class="article-part" id="requirements" role="tabpanel"
+                   aria-labelledby="tab-requirements" tabindex="0">
+            <p class="article-part__label">Part 01</p>
+            <h2 class="article-part__title">Requirements</h2>
+
+            <div class="article-prose">
+              <p>Placeholder intro. One or two sentences on the kind of applicant this scholarship is looking for, beyond the grades.</p>
+
+              <h3>Who can apply</h3>
+              <ul>
+                <li>Singapore Citizens, or Permanent Residents willing to take up citizenship</li>
+                <li>Students in their final year of A-levels, IB, polytechnic or equivalent</li>
+                <li>Undergraduates in their first or second year of a relevant degree</li>
+                <li>Male applicants must have completed or be able to defer National Service</li>
+              </ul>
+
+              <h3>Academic results</h3>
+              <ul>
+                <li>Good A-level, IB or polytechnic results, with strength in mathematics and the sciences</li>
+                <li>Undergraduates: a strong grade point average in their current degree</li>
+                <li>A record of leadership or co-curricular involvement</li>
+              </ul>
+
+              <h3>What to prepare</h3>
+              <ul>
+                <li>Results slips for secondary and pre-university examinations</li>
+                <li>Testimonials and co-curricular records</li>
+                <li>University offer letters or applications, if available</li>
+              </ul>
+            </div>
+
+            <h3 class="scholarship-steps__title">How selection works</h3>
+            <ol class="scholarship-steps">
+              <li class="scholarship-steps__item">
+                <span class="scholarship-steps__step">Online application</span>
+                <span class="scholarship-steps__detail">Submit your application and documents through the provider&rsquo;s portal.</span>
+              </li>
+              <li class="scholarship-steps__item">
+                <span class="scholarship-steps__step">Assessment</span>
+                <span class="scholarship-steps__detail">Shortlisted applicants sit psychometric tests and a group exercise.</span>
+              </li>
+              <li class="scholarship-steps__item">
+                <span class="scholarship-steps__step">Interview</span>
+                <span class="scholarship-steps__detail">A panel interview with senior DSTA engineers and leaders.</span>
+              </li>
+              <li class="scholarship-steps__item">
+                <span class="scholarship-steps__step">Offer</span>
+                <span class="scholarship-steps__detail">Successful applicants hear back within placeholder weeks.</span>
+              </li>
+            </ol>
+          </section>
+
+          <!-- TAB 2 · VALUE ---------------------------------------------- -->
+          <section class="article-part" id="value" role="tabpanel"
+                   aria-labelledby="tab-value" tabindex="0">
+            <p class="article-part__label">Part 02</p>
+            <h2 class="article-part__title">Value</h2>
+
+            <div class="article-prose">
+              <p>Successful applicants will be given the following support* for up to 6 years:</p>
+              <ul>
+                <li>Full tuition fees</li>
+                <li>Monthly sustenance allowance, inclusive of CPF contribution (where applicable)</li>
+                <li>Monthly overseas living allowance</li>
+                <li>Annual return airfare</li>
+              </ul>
+
+              <h3>Other allowances</h3>
+              <ul>
+                <li>Conference allowance</li>
+                <li>Thesis allowance</li>
+                <li>Computer allowance</li>
+                <li>Settling-in allowance</li>
+                <li>Language programme fees (for scholars studying in non-anglophone countries, where applicable)</li>
+              </ul>
+
+              <p>Mid-term NSS (PhD) awardees will be offered the same terms of support as the full-term NSS (PhD) awardees from the point of the award, with retrospective payment for all tuition fees and/or any compulsory fees from Year 1 of study onwards.</p>
+
+              <h3>Service commitment</h3>
+              <ul>
+                <li>Upon completion of the PhD programme, scholars will return to Singapore and contribute to A*STAR&rsquo;s research institutes and/or relevant organisations for 4 years.</li>
+                <li>Scholars who complete their PhD in a non-anglophone country would serve a 3-year service commitment instead.</li>
+              </ul>
+
+              <p class="scholarship-footnote">*All rates/allowances vary according to country and university, and are subject to adjustments made by A*STAR.</p>
+            </div>
+          </section>
+
+          <!-- TAB 3 · COURSES -------------------------------------------- -->
+          <section class="article-part" id="courses" role="tabpanel"
+                   aria-labelledby="tab-courses" tabindex="0">
+            <p class="article-part__label">Part 03</p>
+            <h2 class="article-part__title">Courses</h2>
+
+            <div class="article-prose">
+              <p>Placeholder description. One or two sentences on the fields of study this scholarship supports and where scholars can take them up.</p>
+              <ul>
+                <li>Aerospace Engineering</li>
+                <li>Electrical &amp; Electronic Engineering</li>
+                <li>Mechanical Engineering</li>
+                <li>Computer Science</li>
+                <li>Data Science &amp; Artificial Intelligence</li>
+                <li>Physics</li>
+                <li>Mathematics</li>
+              </ul>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ---------------------------------------------------------------
+             ASIDE — at a glance + apply. Same .sidebar-card as the article.
+             --------------------------------------------------------------- -->
+        <aside class="page-layout__aside" aria-label="Scholarship at a glance">
+
+          <div class="sidebar-card">
+            <p class="sidebar-card__head">At a glance</p>
+            <div class="sidebar-card__body">
+
+              <dl class="sidebar-specs">
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Value</dt>
+                  <dd class="sidebar-specs__value">Full fees + allowance</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Bond</dt>
+                  <dd class="sidebar-specs__value">4&ndash;6 years</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Level</dt>
+                  <dd class="sidebar-specs__value">Undergraduate</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Study location</dt>
+                  <dd class="sidebar-specs__value">Local or overseas</dd>
+                </div>
+                <div class="sidebar-specs__row">
+                  <dt class="sidebar-specs__label">Field</dt>
+                  <dd class="sidebar-specs__value">Engineering &amp; computing</dd>
+                </div>
+              </dl>
+
+              <div class="sidebar-card__window">
+                <strong>Application window</strong>
+                1 Jan &ndash; 31 Mar 2027
+              </div>
+
+              <div class="sidebar-card__actions">
+                <a class="sc-btn sc-btn--primary sc-btn--block" href="https://www.dsta.gov.sg/"
+                   data-cta="apply" target="_blank" rel="noopener">
+                  Apply on DSTA&rsquo;s site
+                  <span class="sc-visually-hidden">(opens in a new tab)</span>
+                </a>
+                <a class="sc-btn sc-btn--ghost sc-btn--block" href="#">Add to comparison</a>
+              </div>
+
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="scholarships.html">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/SC_Logo.svg"
+               alt="The Straits Times Scholar&rsquo;s Choice" width="576" height="280" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

@@ -16,6 +16,9 @@
    09. providerRail()     — shuffles the featured providers
    10. articleTabs()      — the story / the work / #AMA panels
    11. contactForm()      — contact-us.html validation (sends nothing yet)
+   12. authModal()        — Login / Register dialog (Google + Facebook)
+   13. shareLinks()       — fills [data-share] hrefs; wires copy-link buttons
+   14. scholarshipListing() — scholarships.html grid, filters, lazy load
    ========================================================================== */
 
 (function () {
@@ -710,11 +713,23 @@
       sync(focus);
     }
 
+    /* A tab the reader picks is written to the URL as its panel's anchor
+       (#requirements, #the-work…) so the link can be shared or bookmarked.
+       replaceState rather than location.hash: no jump to the panel, and no
+       history entry per click. */
+    function pickTab(i, focus) {
+      select(i, focus);
+      var id = tabs[i].getAttribute('aria-controls');
+      if (window.history && history.replaceState && window.location.hash !== '#' + id) {
+        history.replaceState(null, '', '#' + id);
+      }
+    }
+
     allTabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
         var i = tabs.indexOf(tab);
         if (i === -1) return;
-        select(i, false);
+        pickTab(i, false);
         /* Keep the panel in view: switching from a long panel to a short one
            can otherwise leave the reader scrolled past the whole column. */
         var top = list.getBoundingClientRect().top + window.scrollY - 100;
@@ -734,7 +749,7 @@
       else if (e.key === 'End') next = tabs.length - 1;
       if (next === null) return;
       e.preventDefault();
-      select(next, true);
+      pickTab(next, true);
     });
 
     /* A link to #the-work should open that tab rather than land on a hidden
@@ -762,6 +777,747 @@
   }
 
   /* ------------------------------------------------------------------------
+     11 · CONTACT FORM  (contact-us.html only)
+     Validates the four required fields on blur and on submit. A field is
+     re-checked as you type only once it has been flagged, so the first pass
+     through the form is never interrupted. Nothing is sent yet — see the
+     marked block below.
+     ------------------------------------------------------------------------ */
+  function contactForm() {
+    var form = document.getElementById('contact-form');
+    var success = document.getElementById('contact-success');
+    if (!form) return;
+
+    var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var fields = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+
+    function valid(input) {
+      var value = input.value.trim();
+      if (!value) return false;
+      if (input.type === 'email') return EMAIL.test(value);
+      return true;
+    }
+
+    function check(input) {
+      var ok = valid(input);
+      var wrap = input.closest('.sc-field');
+      if (wrap) wrap.classList.toggle('is-invalid', !ok);
+      input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      return ok;
+    }
+
+    fields.forEach(function (input) {
+      input.addEventListener('blur', function () { check(input); });
+      input.addEventListener('input', function () {
+        if (input.getAttribute('aria-invalid') === 'true') check(input);
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstBad = null;
+      fields.forEach(function (input) {
+        if (!check(input) && !firstBad) firstBad = input;
+      });
+      if (firstBad) { firstBad.focus(); return; }
+
+      /* ---- REPLACE: send the form to a real endpoint here, then show the
+              confirmation only once the server has accepted it. ---- */
+      form.hidden = true;
+      if (success) {
+        success.classList.add('is-visible');
+        success.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     12 · AUTH MODAL
+     The header's single Login / Register button opens a small dialog with
+     the two social sign-in options. One flow covers both cases: the provider
+     returns an existing account or creates a new one. Nothing is wired to a
+     real OAuth client yet — replace signIn() with your Google / Facebook SDK
+     calls (or redirects to your auth endpoints).
+     ------------------------------------------------------------------------ */
+  function authModal() {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-auth-open]'));
+    if (!triggers.length) return;
+
+    var ICON_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var ICON_GOOGLE = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.46a5.52 5.52 0 0 1-2.4 3.62v3h3.88c2.27-2.09 3.58-5.17 3.58-8.81z"/>' +
+      '<path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.94-2.9l-3.88-3.01c-1.07.72-2.45 1.15-4.06 1.15-3.13 0-5.78-2.11-6.72-4.95H1.27v3.1A12 12 0 0 0 12 24z"/>' +
+      '<path fill="#FBBC05" d="M5.28 14.29a7.2 7.2 0 0 1 0-4.58V6.6H1.27a12 12 0 0 0 0 10.8l4.01-3.11z"/>' +
+      '<path fill="#EA4335" d="M12 4.77c1.76 0 3.34.61 4.59 1.8l3.44-3.44A11.5 11.5 0 0 0 12 0 12 12 0 0 0 1.27 6.6l4.01 3.11C6.22 6.88 8.87 4.77 12 4.77z"/>' +
+    '</svg>';
+    var ICON_FACEBOOK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>';
+
+    var modal = document.createElement('div');
+    modal.className = 'auth-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'auth-modal-title');
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="auth-modal__panel">' +
+        '<button type="button" class="auth-modal__close" aria-label="Close">' + ICON_CLOSE + '</button>' +
+        '<h2 id="auth-modal-title" class="auth-modal__title">Login or Register</h2>' +
+        '<p class="auth-modal__lede">Continue with your Google or Facebook account.</p>' +
+        '<div class="auth-modal__providers">' +
+          '<button type="button" class="auth-btn auth-btn--google" data-auth-provider="google">' + ICON_GOOGLE + '<span>Continue with Google</span></button>' +
+          '<button type="button" class="auth-btn auth-btn--facebook" data-auth-provider="facebook">' + ICON_FACEBOOK + '<span>Continue with Facebook</span></button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    var panel = modal.querySelector('.auth-modal__panel');
+    var btnClose = modal.querySelector('.auth-modal__close');
+    var lastFocused = null;
+    var isOpen = false;
+
+    function open() {
+      lastFocused = document.activeElement;
+      isOpen = true;
+      modal.hidden = false;
+      /* Next frame, so the opacity transition has a starting value. */
+      requestAnimationFrame(function () {
+        if (isOpen) modal.classList.add('is-open');
+      });
+      document.body.classList.add('is-modal-open');
+      modal.querySelector('.auth-btn').focus();
+    }
+
+    function close() {
+      isOpen = false;
+      modal.classList.remove('is-open');
+      document.body.classList.remove('is-modal-open');
+      window.setTimeout(function () { if (!isOpen) modal.hidden = true; }, prefersReducedMotion ? 0 : 260);
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    /* Placeholder: swap for the real Google / Facebook sign-in. */
+    function signIn(provider) {
+      window.console && console.info('[auth] sign in with ' + provider + ' — not wired up yet');
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        open();
+      });
+    });
+
+    btnClose.addEventListener('click', close);
+    modal.querySelectorAll('[data-auth-provider]').forEach(function (btn) {
+      btn.addEventListener('click', function () { signIn(btn.getAttribute('data-auth-provider')); });
+    });
+
+    /* Click the backdrop (but not the panel) to dismiss. */
+    modal.addEventListener('click', function (e) {
+      if (!panel.contains(e.target)) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      /* Keep focus inside the dialog while it is open. */
+      var focusable = modal.querySelectorAll('button');
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     13. SHARE LINKS
+     Each [data-share] link gets its network's share URL, built from the
+     current page URL and <title>. With JS off they stay "#".
+
+     Instagram has no web share URL, so it and Copy link both put the page
+     URL on the clipboard and flash a "Copied" tooltip (css section 14). On
+     phones with a native share sheet, Instagram opens that sheet instead.
+     ------------------------------------------------------------------------ */
+  function shareLinks() {
+    var links = document.querySelectorAll('[data-share]');
+    if (!links.length) return;
+
+    /* Built on demand, not once at load: the tabs rewrite the URL's anchor,
+       and a share should carry the tab the reader is looking at. */
+    function shareUrl(type) {
+      var url = encodeURIComponent(window.location.href);
+      var title = encodeURIComponent(document.title);
+      switch (type) {
+        case 'facebook': return 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+        case 'whatsapp': return 'https://wa.me/?text=' + title + '%20' + url;
+        case 'telegram': return 'https://t.me/share/url?url=' + url + '&text=' + title;
+        case 'linkedin': return 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+        case 'email':    return 'mailto:?subject=' + title + '&body=' + url;
+      }
+      return null;
+    }
+
+    /* Screen readers hear the confirmation; the tooltip is visual only. */
+    var live = document.createElement('span');
+    live.className = 'sc-visually-hidden';
+    live.setAttribute('aria-live', 'polite');
+    document.body.appendChild(live);
+
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      /* Fallback for plain-http previews, where the Clipboard API is absent */
+      return new Promise(function (resolve, reject) {
+        var field = document.createElement('textarea');
+        field.value = text;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+        document.body.removeChild(field);
+        if (ok) resolve(); else reject();
+      });
+    }
+
+    function flashCopied(btn) {
+      btn.setAttribute('data-tooltip', 'Copied');
+      btn.classList.add('is-copied');
+      live.textContent = 'Link copied';
+      clearTimeout(btn._copiedTimer);
+      btn._copiedTimer = setTimeout(function () {
+        btn.classList.remove('is-copied');
+        live.textContent = '';
+      }, 2000);
+    }
+
+    Array.prototype.forEach.call(links, function (link) {
+      var type = link.getAttribute('data-share');
+      if (shareUrl(type)) {
+        link.setAttribute('href', shareUrl(type));
+        /* Refreshed on press so the href is current before the browser follows it */
+        var refresh = function () { link.setAttribute('href', shareUrl(type)); };
+        link.addEventListener('pointerdown', refresh);
+        link.addEventListener('click', refresh);
+        return;
+      }
+      if (type !== 'copy' && type !== 'instagram') return;
+
+      link.setAttribute('role', 'button');
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (type === 'instagram' && navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+          navigator.share({ title: document.title, url: window.location.href }).catch(function () {});
+          return;
+        }
+        copyText(window.location.href).then(function () { flashCopied(link); }, function () {});
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     14 · SCHOLARSHIP LISTING
+     scholarships.html. Renders .scholarship-card markup from the JSON in
+     #scholarship-data, PAGE_SIZE at a time, and loads the next page when
+     #listing-sentinel scrolls into view. Filters apply as soon as they
+     change and are mirrored to the query string, so any view can be shared
+     and the homepage search can land here with ?q=…&level=… set.
+
+     The form controls are the only state: getState() reads them, readUrl()
+     writes into them. fetchPage() is the swap point for a real API — it
+     already returns { items, total } asynchronously.
+
+     Under 900px the aside is a drawer; its "Filter" handle toggles it.
+     ------------------------------------------------------------------------ */
+  function scholarshipListing() {
+    var root = document.getElementById('scholarship-listing');
+    var dataEl = document.getElementById('scholarship-data');
+    var form = document.getElementById('listing-filters-form');
+    if (!root || !dataEl || !form) return;
+
+    var data;
+    try { data = JSON.parse(dataEl.textContent); } catch (err) { return; }
+
+    var PAGE_SIZE = 12;
+    var LIST_FILTERS = ['provider', 'course', 'level', 'nationality', 'location'];
+    var drawerQuery = window.matchMedia('(max-width: 900px)');
+    var slice = Array.prototype.slice;
+
+    var providers = data.providers || {};
+    var all = data.scholarships || [];
+
+    var searchForm = document.getElementById('listing-search');
+    var query = document.getElementById('listing-query');
+    var results = document.getElementById('listing-results');
+    var grid = document.getElementById('listing-grid');
+    var countEl = document.getElementById('listing-count');
+    var statusEl = document.getElementById('listing-status');
+    var sentinel = document.getElementById('listing-sentinel');
+    var emptyEl = document.getElementById('listing-empty');
+    var chipList = document.getElementById('listing-selected-list');
+    var chipEmpty = document.getElementById('listing-selected-empty');
+    var aside = document.getElementById('listing-filters');
+    var handle = document.getElementById('listing-filters-handle');
+    var backdrop = document.getElementById('listing-filters-backdrop');
+    var sliders = slice.call(form.querySelectorAll('.step-slider__input'));
+    var multis = slice.call(form.querySelectorAll('.multi-select'));
+
+    var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>';
+    var TAGS = {
+      soon: '<span class="sc-tag sc-tag--lime">Closing soon</span>',
+      open: '<span class="sc-tag">Open</span>',
+      'new': '<span class="sc-tag sc-tag--accent">New</span>'
+    };
+
+    function esc(str) {
+      return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    // labels.course['data-ai'] → "Data Science & AI", read off the checkboxes
+    var labels = {};
+    slice.call(form.querySelectorAll('input[type="checkbox"]')).forEach(function (input) {
+      (labels[input.name] = labels[input.name] || {})[input.value] = input.parentNode.textContent.trim();
+    });
+
+    function bondText(s) {
+      if (s.bondText) return s.bondText;
+      return s.bond === 0 ? 'No bond' : s.bond + (s.bond === 1 ? ' year' : ' years');
+    }
+
+    // Everything free-text search can hit, built once per scholarship
+    all.forEach(function (s) {
+      var named = function (group, values) {
+        return (values || []).map(function (v) { return (labels[group] || {})[v] || v; });
+      };
+      s._text = [s.name, (providers[s.provider] || {}).name, s.value, s.level, s.study, bondText(s), s.keywords || '']
+        .concat(named('course', s.courses), named('level', s.levels), named('location', s.location))
+        .join(' ').toLowerCase();
+    });
+
+    /* --- State ------------------------------------------------------------ */
+    function checkedValues(name) {
+      return slice.call(form.querySelectorAll('input[name="' + name + '"]:checked'))
+        .map(function (input) { return input.value; });
+    }
+    function sliderValue(input) { return Number(input.dataset.values.split(',')[input.value]); }
+    function sliderIsSet(input) { return input.value !== input.defaultValue; }
+
+    function getState() {
+      var state = { q: query ? query.value.trim() : '' };
+      LIST_FILTERS.forEach(function (name) { state[name] = checkedValues(name); });
+      sliders.forEach(function (input) { state[input.name] = sliderValue(input); });
+      return state;
+    }
+
+    function overlaps(a, b) {
+      for (var i = 0; i < a.length; i++) if (b.indexOf(a[i]) > -1) return true;
+      return false;
+    }
+
+    // AND across filter groups, OR within one; every search word must hit
+    function matches(s, state) {
+      if (state.q) {
+        var words = state.q.toLowerCase().split(/\s+/);
+        for (var i = 0; i < words.length; i++) if (s._text.indexOf(words[i]) < 0) return false;
+      }
+      if (state.provider.length && state.provider.indexOf(s.provider) < 0) return false;
+      if (state.course.length && !overlaps(state.course, s.courses || [])) return false;
+      if (state.level.length && !overlaps(state.level, s.levels || [])) return false;
+      if (state.nationality.length && !overlaps(state.nationality, s.nationality || [])) return false;
+      if (state.location.length && !overlaps(state.location, s.location || [])) return false;
+      if (s.sponsorship < state.sponsorship) return false;
+      if (s.bond > state.bond) return false;
+      return true;
+    }
+
+    /* SWAP POINT — replace the body with a request to the search API, e.g.
+       fetch('/api/scholarships?' + params + '&offset=' + offset + '&limit=12')
+       resolving to { items: [...], total: n }. The delay on later pages
+       stands in for network time so the loader is visible in review. */
+    function fetchPage(state, offset) {
+      var matched = all.filter(function (s) { return matches(s, state); });
+      return new Promise(function (resolve) {
+        window.setTimeout(function () {
+          resolve({ items: matched.slice(offset, offset + PAGE_SIZE), total: matched.length });
+        }, offset && !prefersReducedMotion ? 450 : 0);
+      });
+    }
+
+    /* --- Cards ------------------------------------------------------------ */
+    function card(s, i) {
+      var p = providers[s.provider] || { name: s.provider, mono: '' };
+      var logo = p.logo
+        ? '<span class="scholarship-card__provider-logo"><img src="' + esc(p.logo) + '" alt="' + esc(p.name) + ' logo" loading="lazy" decoding="async"></span>'
+        : '<span class="scholarship-card__provider-logo scholarship-card__provider-logo--mono" role="img" aria-label="' + esc(p.name) + '">' + esc(p.mono) + '</span>';
+      var spec = function (label, value) {
+        return '<div><p class="scholarship-card__spec-label">' + label + '</p>' +
+               '<p class="scholarship-card__spec-value">' + esc(value) + '</p></div>';
+      };
+      return '<article class="scholarship-card" style="--i: ' + i + '">' +
+        '<div class="scholarship-card__head">' + logo + (TAGS[s.tag] || '') + '</div>' +
+        '<h3 class="scholarship-card__name">' + esc(s.name) + '</h3>' +
+        '<div class="scholarship-card__body"><div class="scholarship-card__specs">' +
+          spec('Value', s.value) + spec('Bond', bondText(s)) + spec('Level', s.level) + spec('Study', s.study) +
+        '</div></div>' +
+        '<div class="scholarship-card__foot">' +
+          '<p class="scholarship-card__deadline">' + esc(s.deadline) + '</p>' +
+          '<a class="sc-arrow-link scholarship-card__link" href="' + esc(s.url || 'scholarship-template.html') + '">Details' +
+            '<span class="sc-visually-hidden"> — ' + esc(s.name) + '</span>' + ICON_ARROW + '</a>' +
+        '</div>' +
+      '</article>';
+    }
+
+    /* --- Paging ----------------------------------------------------------- */
+    var state = getState();
+    var shown = 0;
+    var total = 0;
+    var loading = false;
+    var version = 0;
+
+    function plural(n) { return n === 1 ? ' scholarship' : ' scholarships'; }
+
+    function updateStatus() {
+      emptyEl.hidden = total > 0;
+      grid.hidden = total === 0;
+
+      countEl.innerHTML = total
+        ? 'Showing <strong>' + shown + '</strong> of <strong>' + total + '</strong>' + plural(total)
+        : 'No scholarships found';
+
+      if (loading && shown) {
+        statusEl.innerHTML = '<span class="listing-status__spinner" aria-hidden="true"></span>Loading more scholarships';
+      } else if (total > PAGE_SIZE && shown >= total) {
+        statusEl.textContent = 'You’ve seen all ' + total + plural(total);
+      } else {
+        statusEl.textContent = '';
+      }
+
+      slice.call(document.querySelectorAll('[data-filters-apply]')).forEach(function (btn) {
+        btn.textContent = total ? 'Show ' + total + plural(total) : 'No matches — adjust filters';
+      });
+    }
+
+    function append(items) {
+      grid.insertAdjacentHTML('beforeend', items.map(card).join(''));
+      shown += items.length;
+    }
+
+    // Filters changed: fetch page one, then swap the grid in one go
+    function refresh() {
+      var v = ++version;
+      loading = true;
+      fetchPage(state, 0).then(function (page) {
+        if (v !== version) return;
+        grid.innerHTML = '';
+        shown = 0;
+        total = page.total;
+        append(page.items);
+        loading = false;
+        updateStatus();
+        if (!aside.classList.contains('is-open')) scrollToResults();
+        checkSentinel();
+      });
+    }
+
+    function loadMore() {
+      if (loading || shown >= total) return;
+      var v = version;
+      loading = true;
+      updateStatus();
+      fetchPage(state, shown).then(function (page) {
+        if (v !== version) return;
+        append(page.items);
+        loading = false;
+        updateStatus();
+        checkSentinel();
+      });
+    }
+
+    // A tall screen can show the sentinel straight after a batch lands, which
+    // the observer will not report again — so check by hand.
+    function checkSentinel() {
+      if (sentinel.getBoundingClientRect().top < window.innerHeight + 300) loadMore();
+    }
+
+    // Only when the top of the results has scrolled away, so filtering from
+    // the top of the page never jumps
+    function scrollToResults() {
+      if (results.getBoundingClientRect().top < 0) {
+        results.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) loadMore();
+      }, { rootMargin: '0px 0px 300px 0px' }).observe(sentinel);
+    } else {
+      window.addEventListener('scroll', checkSentinel, { passive: true });
+    }
+
+    /* --- Selected filters ------------------------------------------------- */
+    function sliderChip(input) {
+      var v = sliderValue(input);
+      if (input.name === 'bond') return v === 0 ? 'No bond' : 'Bond up to ' + v + (v === 1 ? ' year' : ' years');
+      if (input.name === 'sponsorship') return v === 100 ? 'Fully sponsored' : 'At least ' + v + '% sponsored';
+      return input.dataset.labels.split('|')[input.value];
+    }
+
+    function renderChips() {
+      var chips = [];
+      if (state.q) chips.push({ name: 'q', value: '', text: '“' + state.q + '”' });
+      LIST_FILTERS.forEach(function (name) {
+        state[name].forEach(function (value) {
+          chips.push({ name: name, value: value, text: labels[name][value] });
+        });
+      });
+      sliders.forEach(function (input) {
+        if (sliderIsSet(input)) chips.push({ name: input.name, value: '', text: sliderChip(input) });
+      });
+
+      chipList.innerHTML = chips.map(function (c) {
+        return '<li><button class="listing-chip" type="button" data-chip-name="' + esc(c.name) + '" data-chip-value="' + esc(c.value) + '"' +
+               ' aria-label="Remove filter: ' + esc(c.text) + '"><span>' + esc(c.text) + '</span>' + ICON_X + '</button></li>';
+      }).join('');
+      chipEmpty.hidden = chips.length > 0;
+
+      slice.call(root.querySelectorAll('.listing-selected [data-filters-clear]')).forEach(function (btn) { btn.hidden = !chips.length; });
+      slice.call(root.querySelectorAll('[data-filters-count]')).forEach(function (el) { el.textContent = chips.length ? '(' + chips.length + ')' : ''; });
+      slice.call(root.querySelectorAll('[data-filters-badge]')).forEach(function (el) {
+        el.hidden = !chips.length;
+        el.textContent = chips.length;
+      });
+    }
+
+    chipList.addEventListener('click', function (e) {
+      var chip = e.target.closest('.listing-chip');
+      if (!chip) return;
+      var name = chip.getAttribute('data-chip-name');
+      var value = chip.getAttribute('data-chip-value');
+      if (name === 'q') {
+        query.value = '';
+      } else if (form.elements[name] && form.elements[name].type === 'range') {
+        form.elements[name].value = form.elements[name].defaultValue;
+        syncSlider(form.elements[name]);
+      } else {
+        var box = form.querySelector('input[name="' + name + '"][value="' + value + '"]');
+        if (box) box.checked = false;
+      }
+      update(0);
+      // The chip is gone; hand focus to the next one rather than to <body>
+      var next = chipList.querySelector('.listing-chip');
+      if (next) next.focus();
+    });
+
+    slice.call(root.querySelectorAll('[data-filters-clear]')).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        form.reset();
+        if (query) query.value = '';
+        sliders.forEach(syncSlider);
+        update(0);
+      });
+    });
+
+    /* --- Controls --------------------------------------------------------- */
+    function syncSlider(input) {
+      var index = Number(input.value);
+      var text = input.dataset.labels.split('|')[index];
+      input.style.setProperty('--p', index / Number(input.max));
+      input.setAttribute('aria-valuetext', text);
+      var out = document.getElementById(input.getAttribute('aria-describedby'));
+      if (out) out.textContent = text;
+      slice.call(input.parentNode.querySelectorAll('.step-slider__ticks li')).forEach(function (li, i) {
+        li.classList.toggle('is-current', i === index);
+      });
+    }
+
+    function syncMulti(ms) {
+      var values = slice.call(ms.querySelectorAll('input:checked')).map(function (input) {
+        return input.parentNode.textContent.trim();
+      });
+      ms.querySelector('.multi-select__value').textContent =
+        values.length === 0 ? ms.getAttribute('data-placeholder')
+        : values.length === 1 ? values[0]
+        : values.length + ' selected';
+      ms.classList.toggle('has-value', values.length > 0);
+    }
+
+    function setMulti(ms, open) {
+      var toggle = ms.querySelector('.multi-select__toggle');
+      var panel = ms.querySelector('.multi-select__panel');
+      var search = ms.querySelector('.multi-select__search');
+      if (open) multis.forEach(function (other) { if (other !== ms) setMulti(other, false); });
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (search) {
+        if (open && !window.matchMedia('(pointer: coarse)').matches) search.focus();
+        if (!open && search.value) { search.value = ''; filterOptions(ms, ''); }
+      }
+    }
+
+    function filterOptions(ms, term) {
+      term = term.trim().toLowerCase();
+      var any = false;
+      slice.call(ms.querySelectorAll('.multi-select__options li')).forEach(function (li) {
+        var hit = li.textContent.toLowerCase().indexOf(term) > -1;
+        li.hidden = !hit;
+        any = any || hit;
+      });
+      var none = ms.querySelector('.multi-select__none');
+      if (none) none.hidden = any;
+    }
+
+    multis.forEach(function (ms) {
+      var toggle = ms.querySelector('.multi-select__toggle');
+      var search = ms.querySelector('.multi-select__search');
+      toggle.addEventListener('click', function () {
+        setMulti(ms, toggle.getAttribute('aria-expanded') !== 'true');
+      });
+      if (search) {
+        search.addEventListener('input', function () { filterOptions(ms, search.value); });
+        // Enter in the search box ticks the only remaining option
+        search.addEventListener('keydown', function (e) {
+          if (e.key !== 'Enter') return;
+          e.preventDefault();
+          var visible = ms.querySelectorAll('.multi-select__options li:not([hidden]) input');
+          if (visible.length === 1) { visible[0].checked = !visible[0].checked; update(0); }
+        });
+      }
+      ms.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || toggle.getAttribute('aria-expanded') !== 'true') return;
+        e.stopPropagation();
+        setMulti(ms, false);
+        toggle.focus();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.multi-select')) return;
+      multis.forEach(function (ms) { setMulti(ms, false); });
+    });
+
+    /* --- Wiring ----------------------------------------------------------- */
+    var timer;
+    function update(delay) {
+      window.clearTimeout(timer);
+      multis.forEach(syncMulti);
+      timer = window.setTimeout(function () {
+        state = getState();
+        renderChips();
+        writeUrl();
+        refresh();
+      }, delay);
+    }
+
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    form.addEventListener('input', function (e) {
+      var t = e.target;
+      if (t.classList.contains('multi-select__search')) return;
+      if (t.type === 'range') { syncSlider(t); update(150); return; }
+      update(0);
+    });
+
+    if (searchForm && query) {
+      query.addEventListener('input', function () { update(250); });
+      searchForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        update(0);
+        if (window.matchMedia('(pointer: coarse)').matches) query.blur();
+      });
+    }
+
+    /* --- URL -------------------------------------------------------------- */
+    function writeUrl() {
+      var params = new URLSearchParams();
+      if (state.q) params.set('q', state.q);
+      LIST_FILTERS.forEach(function (name) {
+        if (state[name].length) params.set(name, state[name].join(','));
+      });
+      sliders.forEach(function (input) {
+        if (sliderIsSet(input)) params.set(input.name, sliderValue(input));
+      });
+      var qs = params.toString().replace(/%2C/g, ',');
+      history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+    }
+
+    // Accepts values (?level=ug) or labels (?level=Undergraduate — what the
+    // homepage search's study level <select> submits)
+    function readUrl() {
+      var params = new URLSearchParams(window.location.search);
+      if (query && params.has('q')) query.value = params.get('q');
+      LIST_FILTERS.forEach(function (name) {
+        var raw = params.get(name);
+        if (!raw) return;
+        raw.split(',').forEach(function (v) {
+          v = v.trim().toLowerCase();
+          slice.call(form.querySelectorAll('input[name="' + name + '"]')).forEach(function (input) {
+            if (input.value === v || labels[name][input.value].toLowerCase() === v) input.checked = true;
+          });
+        });
+      });
+      sliders.forEach(function (input) {
+        var index = input.dataset.values.split(',').indexOf(params.get(input.name));
+        if (index > -1) input.value = index;
+      });
+    }
+
+    /* --- Drawer (under 900px) --------------------------------------------- */
+    function drawerOpen() { return aside.classList.contains('is-open'); }
+
+    function setDrawer(open) {
+      if (open && !drawerQuery.matches) return;
+      aside.classList.toggle('is-open', open);
+      handle.setAttribute('aria-expanded', String(open));
+      handle.setAttribute('aria-label', open ? 'Close filters' : 'Open filters');
+      document.body.classList.toggle('is-filters-open', open);
+      if (open) {
+        backdrop.hidden = false;
+        requestAnimationFrame(function () { backdrop.classList.add('is-visible'); });
+        var close = aside.querySelector('.listing-filters__close');
+        window.setTimeout(function () { close.focus(); }, prefersReducedMotion ? 0 : 60);
+      } else {
+        backdrop.classList.remove('is-visible');
+        window.setTimeout(function () { if (!drawerOpen()) backdrop.hidden = true; }, prefersReducedMotion ? 0 : 260);
+      }
+    }
+
+    handle.addEventListener('click', function () { setDrawer(!drawerOpen()); });
+    backdrop.addEventListener('click', function () { setDrawer(false); });
+    slice.call(aside.querySelectorAll('[data-filters-close]')).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setDrawer(false);
+        if (btn.hasAttribute('data-filters-apply')) {
+          scrollToResults();
+          countEl.focus({ preventScroll: true });
+        } else {
+          handle.focus();
+        }
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawerOpen()) { setDrawer(false); handle.focus(); }
+    });
+    drawerQuery.addEventListener('change', function (e) { if (!e.matches) setDrawer(false); });
+
+    /* --- Boot ------------------------------------------------------------- */
+    readUrl();
+    sliders.forEach(syncSlider);
+    update(0);
+  }
+
+  /* ------------------------------------------------------------------------
      BOOT
      ------------------------------------------------------------------------ */
   function init() {
@@ -775,7 +1531,10 @@
     scholarshipCarousel();
     providerRail();
     articleTabs();
+    authModal();
     contactForm();
+    shareLinks();
+    scholarshipListing();
   }
 
   if (document.readyState === 'loading') {

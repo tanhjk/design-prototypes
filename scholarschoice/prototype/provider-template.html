@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- TEMPLATE: page title is "{Provider name} scholarships — Scholar's Choice" -->
+<title>DSTA scholarships — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Placeholder description. Replace with a 140–160 character summary of this provider and the scholarships it offers, written for search results.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  PROVIDER PAGE TEMPLATE — copy this file to build one page per provider.
+  Built on inner-page-template.html (same header, hero and footer chrome).
+
+  Every word of copy below is PLACEHOLDER, written around DSTA so the layout
+  reads realistically. Replace the lot, and confirm every figure.
+
+  STRUCTURE
+    #page-hero              Teal band. Breadcrumb, provider logo, provider
+                            name (H1), one-line standfirst, both CTAs.
+    #page-body              About the provider (description) + aside with key
+                            facts and the two CTAs again.
+    #provider-video         OPTIONAL — one featured 16:9 video. Delete the
+                            whole <section> when the provider has none.
+    #provider-scholarships  Every scholarship this provider offers, as the
+                            homepage .scholarship-card, in a wrapping grid.
+    #provider-stories       Scholars' Experience articles tied to those
+                            scholarships, as the homepage .story-card.
+    #provider-cta           Closing band: CTA to the provider + CTA to enquire.
+
+  TO ADAPT
+    1. <title>, <meta name="description">, the breadcrumb trail and the <h1>.
+    2. The provider logo (data-img-slot="provider-logo"), in the hero and on
+       every scholarship card.
+    3. The provider website URL — it appears twice; grep for
+       data-cta="provider" to find each one. Keep target="_blank" + rel.
+    4. Scholarship cards and story cards: add or remove whole <article> /
+       <a> blocks. Both grids re-flow on their own.
+    Provider-only styles live in css/main.css section 21.
+  ============================================================================
+-->
+</head>
+<body class="page-inner page-provider">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/SC_Logo.svg"
+           alt="The Straits Times Scholars&rsquo; Choice" width="576" height="280" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="scholarships.html">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <button class="sc-btn sc-btn--primary sc-btn--sm site-header__login" type="button"
+              data-auth-open aria-haspopup="dialog" aria-label="Login or register">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Sign In</span>
+      </button>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + provider logo, name, standfirst
+       ======================================================================== -->
+  <section id="page-hero" class="provider-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Scholarship providers</a></li>
+          <li aria-current="page">DSTA</li>
+        </ol>
+      </nav>
+
+      <div class="provider-hero__grid">
+
+        <div class="page-hero__head">
+          <!-- <p class="sc-eyebrow sc-eyebrow--on-dark">Scholarship provider</p> -->
+
+          <!-- Provider name -->
+          <h1 class="page-hero__title">Defence Science and Technology Agency</h1>
+
+          <p class="page-hero__standfirst">
+            Placeholder standfirst. One sentence on what this provider does and who its
+            scholarships are for, short enough to scan in a breath.
+          </p>
+        </div>
+
+        <!-- Provider logo — sits on a white tile so any mark reads on the teal band -->
+        <div class="provider-hero__logo">
+          <img data-img-slot="provider-logo" src="images/dsta-logo.png"
+               alt="Defence Science and Technology Agency logo" width="540" height="300" decoding="async">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · ABOUT — provider description + key facts aside
+       ======================================================================== -->
+  <section id="page-body" class="sc-section">
+    <div class="sc-container">
+      <div class="page-layout">
+
+        <div class="page-layout__main article-prose">
+
+          <h2 class="sc-h3">About DSTA</h2>
+
+          <!-- Provider description -->
+          <p class="article-prose__dropcap">
+            Placeholder description. Two or three paragraphs on who the provider is, what its
+            people actually work on, and what kind of student tends to thrive there. Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua.
+          </p>
+
+          <p>
+            Placeholder paragraph. Say what a scholar does after graduation, how postings work,
+            and what the bond means in practice. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+
+          <p>
+            Placeholder paragraph. Close on what the provider looks for in an applicant.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+          </p>
+
+        </div>
+
+        <aside class="page-layout__aside" aria-label="Provider at a glance">
+
+          <div class="page-aside-card">
+            <h2 class="page-aside-card__title">At a glance</h2>
+            <dl class="provider-facts">
+              <div>
+                <dt>Sector</dt>
+                <dd>Defence &amp; technology</dd>
+              </div>
+              <div>
+                <dt>Scholarships</dt>
+                <dd>3 open now</dd>
+              </div>
+              <div>
+                <dt>Study</dt>
+                <dd>Local or overseas</dd>
+              </div>
+              <div>
+                <dt>Bond</dt>
+                <dd>4 to 6 years</dd>
+              </div>
+            </dl>
+            <div class="provider-facts__actions">
+              <a class="sc-btn sc-btn--primary sc-btn--sm sc-btn--block" href="#" data-cta="provider" target="_blank" rel="noopener">
+                Visit DSTA&rsquo;s website
+                <span class="sc-visually-hidden">(opens in a new tab)</span>
+              </a>
+              <a class="sc-btn sc-btn--secondary sc-btn--sm sc-btn--block" href="contact-us.html" data-cta="enquire">Enquire with us</a>
+            </div>
+
+            <div class="provider-share">
+              <!-- Share — js/main.js shareLinks() fills each href from the page URL + title;
+                   Instagram and Copy link copy the URL and show a "Copied" tooltip. -->
+              <div class="article-share">
+                <span class="article-share__label">Share</span>
+                <a class="article-share__btn" href="#" data-share="instagram" aria-label="Share on Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a class="article-share__btn" href="#" data-share="whatsapp" target="_blank" rel="noopener" aria-label="Share on WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-1.6.1-3.6-1.3-5-2.7-1.4-1.4-2.8-3.4-2.7-5 0-.5.6-1.5 1.2-1.7.3-.1.7 0 .9.4l.8 1.5c.1.3.1.6-.1.8l-.4.5c-.2.2-.2.4-.1.6.3.6 1.6 1.9 2.2 2.2.2.1.4.1.6-.1l.5-.4c.2-.2.5-.2.8-.1l1.5.8c.4.2.5.6.4.9Z"/></svg>
+                </a>
+                <a class="article-share__btn" href="#" data-share="telegram" target="_blank" rel="noopener" aria-label="Share on Telegram">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.7 3.3 2.9 10.6c-.9.3-.9 1.5 0 1.8l4.3 1.4 1.6 5c.3.8 1.3 1 1.8.3l2.3-2.8 4.4 3.3c.7.5 1.7.1 1.9-.7l3.1-14.1c.2-.9-.7-1.6-1.6-1.2ZM9.5 14.1l-.3 3.3-1-3.1 8.2-5.5-6.9 5.3Z"/></svg>
+                </a>
+                <a class="article-share__btn" href="#" data-share="linkedin" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h3v12H3V9Zm6 0h2.9v1.7h.1c.4-.8 1.5-1.9 3.3-1.9 2.6 0 3.7 1.6 3.7 4.4V21h-3v-6.6c0-1.6-.6-2.5-1.9-2.5-1.1 0-1.8.7-2 1.4-.1.2-.1.6-.1.9V21H9V9Z"/></svg>
+                </a>
+                <a class="article-share__btn" href="#" data-share="email" aria-label="Share by email">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v.3l-10 6.3L2 5.8v-.3Zm0 2.6v10.4A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5V8.1l-9.5 6a1 1 0 0 1-1 0L2 8.1Z"/></svg>
+                </a>
+                <a class="article-share__btn" href="#" data-share="copy" aria-label="Copy link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 6.5 13 4.5a4 4 0 0 1 5.7 5.7l-2 2"/><path d="M13 17.5 11 19.5a4 4 0 0 1-5.7-5.7l2-2"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       03 · FEATURED VIDEO — OPTIONAL
+       One 16:9 video. Delete this whole <section> when the provider has none;
+       nothing else on the page depends on it. Reuses the article player
+       (.article-video__*), styles in css/main.css section 15.
+       ======================================================================== -->
+  <section id="provider-video" class="sc-section sc-section--tight">
+    <div class="sc-container sc-container--narrow">
+
+      <p class="sc-eyebrow sc-eyebrow--on-dark">Watch · 2:30</p>
+      <h2 class="sc-h3 sc-mt-4 provider-video__title">Placeholder video title</h2>
+
+      <div class="article-video__player sc-mt-6" data-video-id="provider-feature">
+        <div class="sc-frame sc-frame--16x9">
+          <img data-img-slot="provider-video-poster" src="images/dsta-banner-desktop.jpg"
+               alt="Video: placeholder video title" width="3552" height="1184" loading="lazy" decoding="async">
+        </div>
+        <button class="article-video__play" type="button" aria-label="Play video">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+
+      <p class="article-video__caption">Placeholder caption. Replace this block with the provider&rsquo;s video embed — the player wrapper keeps a 16:9 ratio at every width.</p>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       04 · SCHOLARSHIPS — every scholarship this provider offers
+       Same .scholarship-card as the homepage carousel, laid out as a wrapping
+       grid rather than a rail so the full list is visible at once.
+       ======================================================================== -->
+  <section id="provider-scholarships" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">Scholarships by DSTA</p>
+          <h2 class="sc-h2">What DSTA offers</h2>
+          <p class="sc-standfirst">Placeholder standfirst. Value, bond and study options laid out side by side so you can compare them honestly.</p>
+        </div>
+      </div>
+
+      <div class="sc-grid sc-grid--3 provider-scholarships__grid sc-reveal">
+
+        <article class="scholarship-card">
+          <div class="scholarship-card__head">
+            <span class="scholarship-card__provider-logo">
+              <img src="images/dsta-logo.png" alt="Defence Science & Technology Agency logo" loading="lazy" decoding="async">
+            </span>
+            <span class="sc-tag sc-tag--lime">Closing soon</span>
+          </div>
+          <h3 class="scholarship-card__name">DSTA Scholarship (Overseas)</h3>
+          <div class="scholarship-card__body">
+            <div class="scholarship-card__specs">
+              <div>
+                <p class="scholarship-card__spec-label">Value</p>
+                <p class="scholarship-card__spec-value">Full fees + allowance</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Bond</p>
+                <p class="scholarship-card__spec-value">6 years</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Level</p>
+                <p class="scholarship-card__spec-value">Undergrad → PhD</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Study</p>
+                <p class="scholarship-card__spec-value">Overseas or local</p>
+              </div>
+            </div>
+          </div>
+          <div class="scholarship-card__foot">
+            <p class="scholarship-card__deadline">Closes 30 Oct</p>
+            <a class="sc-arrow-link scholarship-card__link" href="scholarship-template.html">Details<span class="sc-visually-hidden"> — DSTA Scholarship (Overseas)</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="scholarship-card">
+          <div class="scholarship-card__head">
+            <span class="scholarship-card__provider-logo">
+              <img src="images/dsta-logo.png" alt="Defence Science & Technology Agency logo" loading="lazy" decoding="async">
+            </span>
+            <span class="sc-tag">Open</span>
+          </div>
+          <h3 class="scholarship-card__name">DSTA Scholarship (Local)</h3>
+          <div class="scholarship-card__body">
+            <div class="scholarship-card__specs">
+              <div>
+                <p class="scholarship-card__spec-label">Value</p>
+                <p class="scholarship-card__spec-value">Full fees + allowance</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Bond</p>
+                <p class="scholarship-card__spec-value">4 years</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Level</p>
+                <p class="scholarship-card__spec-value">Undergraduate</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Study</p>
+                <p class="scholarship-card__spec-value">Local universities</p>
+              </div>
+            </div>
+          </div>
+          <div class="scholarship-card__foot">
+            <p class="scholarship-card__deadline">Closes 14 Nov</p>
+            <a class="sc-arrow-link scholarship-card__link" href="scholarship-template.html">Details<span class="sc-visually-hidden"> — DSTA Scholarship (Local)</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="scholarship-card">
+          <div class="scholarship-card__head">
+            <span class="scholarship-card__provider-logo">
+              <img src="images/dsta-logo.png" alt="Defence Science & Technology Agency logo" loading="lazy" decoding="async">
+            </span>
+            <span class="sc-tag">Open</span>
+          </div>
+          <h3 class="scholarship-card__name">DSTA Polytechnic Scholarship</h3>
+          <div class="scholarship-card__body">
+            <div class="scholarship-card__specs">
+              <div>
+                <p class="scholarship-card__spec-label">Value</p>
+                <p class="scholarship-card__spec-value">Full fees + stipend</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Bond</p>
+                <p class="scholarship-card__spec-value">4 years</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Level</p>
+                <p class="scholarship-card__spec-value">Diploma → degree</p>
+              </div>
+              <div>
+                <p class="scholarship-card__spec-label">Study</p>
+                <p class="scholarship-card__spec-value">Local polytechnics</p>
+              </div>
+            </div>
+          </div>
+          <div class="scholarship-card__foot">
+            <p class="scholarship-card__deadline">Closes 12 Dec</p>
+            <a class="sc-arrow-link scholarship-card__link" href="scholarship-template.html">Details<span class="sc-visually-hidden"> — DSTA Polytechnic Scholarship</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       05 · STORIES — Scholars' Experience articles tied to this provider's
+       scholarships. Same compact .story-card as the homepage. The scholar
+       line reads "{Name} · {Provider}"; the meta line names the scholarship
+       the story is about.
+       ======================================================================== -->
+  <section id="provider-stories" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">Scholars&rsquo; Experience</p>
+          <h2 class="sc-h2">From DSTA scholars</h2>
+          <p class="sc-standfirst">Placeholder standfirst. What it was actually like, from people who hold these awards.</p>
+        </div>
+        <a class="sc-arrow-link" href="scholars-experience.html">
+          View all stories
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="story-list provider-stories__list sc-reveal">
+
+        <a class="story-card" href="scholars-experience.html">
+          <div class="sc-frame sc-frame--1x1">
+            <img data-img-slot="provider-story-1" src="https://picsum.photos/seed/provider-story-1/480/480"
+                 alt="Placeholder portrait — replace with the scholar&rsquo;s photo" width="480" height="480" loading="lazy">
+          </div>
+          <div>
+            <p class="story-card__scholar">Scholar name · DSTA</p>
+            <h3 class="story-card__title">Placeholder headline for a story about this provider&rsquo;s scholarship</h3>
+            <p class="sc-meta story-card__meta">DSTA Scholarship (Overseas)</p>
+          </div>
+        </a>
+
+        <a class="story-card" href="scholars-experience.html">
+          <div class="sc-frame sc-frame--1x1">
+            <img data-img-slot="provider-story-2" src="https://picsum.photos/seed/provider-story-2/480/480"
+                 alt="Placeholder portrait — replace with the scholar&rsquo;s photo" width="480" height="480" loading="lazy">
+          </div>
+          <div>
+            <p class="story-card__scholar">Scholar name · DSTA</p>
+            <h3 class="story-card__title">Placeholder headline, kept to two or three lines at desktop width</h3>
+            <p class="sc-meta story-card__meta">DSTA Scholarship (Local)</p>
+          </div>
+        </a>
+
+        <a class="story-card" href="scholars-experience.html">
+          <div class="sc-frame sc-frame--1x1">
+            <img data-img-slot="provider-story-3" src="https://picsum.photos/seed/provider-story-3/480/480"
+                 alt="Placeholder portrait — replace with the scholar&rsquo;s photo" width="480" height="480" loading="lazy">
+          </div>
+          <div>
+            <p class="story-card__scholar">Scholar name · DSTA</p>
+            <h3 class="story-card__title">Placeholder headline for a third story on the same provider</h3>
+            <p class="sc-meta story-card__meta">DSTA Polytechnic Scholarship</p>
+          </div>
+        </a>
+
+        <a class="story-card" href="scholars-experience.html">
+          <div class="sc-frame sc-frame--1x1">
+            <img data-img-slot="provider-story-4" src="https://picsum.photos/seed/provider-story-4/480/480"
+                 alt="Placeholder portrait — replace with the scholar&rsquo;s photo" width="480" height="480" loading="lazy">
+          </div>
+          <div>
+            <p class="story-card__scholar">Scholar name · DSTA</p>
+            <h3 class="story-card__title">Placeholder headline for a fourth story on the same provider</h3>
+            <p class="sc-meta story-card__meta">DSTA Scholarship (Overseas)</p>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       06 · CTA — to the provider, and to us
+       ======================================================================== -->
+  <section id="provider-cta" class="sc-section sc-section--tight">
+    <div class="sc-container">
+      <div class="provider-cta sc-reveal">
+
+        <div class="provider-cta__text">
+          <h2 class="sc-h2">Ready to apply?</h2>
+          <p class="sc-standfirst sc-standfirst--on-dark">
+            Placeholder copy. Apply directly with DSTA, or ask us anything about these
+            scholarships first — we&rsquo;ll point you to the right answer.
+          </p>
+        </div>
+
+        <div class="provider-cta__actions">
+          <a class="sc-btn" href="#" data-cta="provider" target="_blank" rel="noopener">
+            Visit DSTA&rsquo;s website
+            <span class="sc-visually-hidden">(opens in a new tab)</span>
+          </a>
+          <a class="sc-btn sc-btn--ghost-light" href="contact-us.html" data-cta="enquire">Enquire with us</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="scholarships.html">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/SC_Logo.svg"
+               alt="The Straits Times Scholar&rsquo;s Choice" width="576" height="280" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

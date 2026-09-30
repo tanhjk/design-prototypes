@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Find a Scholarship — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Search and filter every scholarship on Scholar's Choice by provider, course, study level, nationality, sponsorship, bond and study location.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  SCHOLARSHIP LISTING — built on the inner page template.
+
+  STRUCTURE
+    #page-hero     Teal band (+.listing-hero). Breadcrumb, then a free-text
+                   search in place of the page title (the <h1> is visually
+                   hidden). The form is the homepage's .search-form.
+    #listing-body  Full-width .listing-layout: card grid on the left, filter
+                   sidebar on the right. Styles: css/main.css section 23.
+                   Behaviour: scholarshipListing() in js/main.js.
+
+  HOW IT WORKS
+    Cards are the homepage's .scholarship-card, rendered from the JSON in
+    #scholarship-data 12 at a time; scrolling to the foot of the grid loads
+    the next 12. Every filter applies as soon as it changes and is written
+    to the URL (?q=…&provider=psc,dsta&bond=4), so a filtered view can be
+    shared or bookmarked — and the homepage search can land here with
+    ?q=…&level=… already set.
+
+    Columns: 4 above 1440px, 3 from 1025px to 1440px, 2 on tablet, 1 under 768px.
+    Under 900px the sidebar becomes a drawer behind a "Filter" handle.
+  ============================================================================
+-->
+</head>
+<body class="page-inner page-listing">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/SC_Logo.svg"
+           alt="The Straits Times Scholars&rsquo; Choice" width="576" height="280" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link is-active" href="scholarships.html" aria-current="page">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <button class="sc-btn sc-btn--primary sc-btn--sm site-header__login" type="button"
+              data-auth-open aria-haspopup="dialog" aria-label="Login or register">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Sign In</span>
+      </button>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + free-text search
+       The search box stands in for the page title. The <h1> is kept for
+       screen readers and search engines, visually hidden.
+       ======================================================================== -->
+  <section id="page-hero" class="listing-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">Find a Scholarship</li>
+        </ol>
+      </nav>
+
+      <h1 class="sc-visually-hidden">Find a scholarship</h1>
+
+      <!-- Same control strip as the homepage #search-form, minus the study
+           level select — study level lives in the filters below. -->
+      <form class="search-form listing-hero__search" id="listing-search" action="scholarships.html" method="get" role="search">
+        <div class="search-form__row search-form__row--query">
+
+          <div class="sc-field">
+            <label class="sc-field__label" for="listing-query">What are you looking for?</label>
+            <div class="search-form__query-wrap">
+              <svg class="search-form__query-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+              </svg>
+              <input class="sc-input" type="search" id="listing-query" name="q" autocomplete="off"
+                     placeholder="Try &ldquo;biomedical engineering&rdquo;, &ldquo;no bond&rdquo;, or a provider name">
+            </div>
+          </div>
+
+          <button class="sc-btn sc-btn--dark search-form__submit" type="submit">
+            Search
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+          </button>
+
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · LISTING — card grid + filter sidebar
+       Full width. Cards are rendered by scholarshipListing() in js/main.js
+       from the #scholarship-data block at the foot of this section, 12 at a
+       time; reaching #listing-sentinel loads the next 12.
+       Under 900px the aside becomes an off-canvas drawer with a "Filter"
+       handle on the right edge.
+       ======================================================================== -->
+  <section id="listing-body">
+    <div class="sc-container sc-container--full">
+      <div class="listing-layout" id="scholarship-listing">
+
+        <div class="listing-results" id="listing-results">
+          <h2 class="sc-visually-hidden">Scholarships</h2>
+
+          <div class="listing-results__bar">
+            <p class="listing-count" id="listing-count" aria-live="polite" tabindex="-1">Loading scholarships&hellip;</p>
+          </div>
+
+          <div class="listing-grid" id="listing-grid"></div>
+
+          <div class="listing-empty" id="listing-empty" hidden>
+            <p class="listing-empty__title">No scholarships match</p>
+            <p class="listing-empty__text">Try removing a filter or two, or search for something broader.</p>
+            <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" data-filters-clear>Clear all filters</button>
+          </div>
+
+          <p class="listing-status" id="listing-status" role="status"></p>
+          <div class="listing-sentinel" id="listing-sentinel" aria-hidden="true"></div>
+        </div>
+
+        <aside class="listing-filters" id="listing-filters" aria-label="Filter scholarships">
+
+          <!-- Mobile/tablet only: the drawer's pull tab. Hidden above 900px. -->
+          <button class="listing-filters__handle" id="listing-filters-handle" type="button"
+                  aria-controls="listing-filters-panel" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            <span>Filter</span>
+            <span class="listing-filters__badge" data-filters-badge hidden></span>
+          </button>
+
+          <div class="listing-filters__panel" id="listing-filters-panel">
+
+            <div class="listing-filters__head">
+              <h2 class="listing-filters__title">Filter scholarships</h2>
+              <button class="listing-filters__close" type="button" data-filters-close aria-label="Close filters">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+
+            <!-- Selected filters — rebuilt by JS whenever a filter changes -->
+            <div class="listing-selected">
+              <div class="listing-selected__bar">
+                <h3 class="listing-selected__title">Selected <span data-filters-count></span></h3>
+                <button class="listing-selected__clear" type="button" data-filters-clear hidden>Clear all</button>
+              </div>
+              <ul class="listing-selected__list" id="listing-selected-list"></ul>
+              <p class="listing-selected__empty" id="listing-selected-empty">No filters applied &mdash; showing every scholarship.</p>
+            </div>
+
+            <form class="listing-filters__form" id="listing-filters-form" action="#">
+
+              <!-- Providers — multi-select dropdown -->
+              <div class="filter-group" role="group" aria-labelledby="fg-provider">
+                <h3 class="filter-group__title" id="fg-provider">Providers</h3>
+                <div class="multi-select" data-placeholder="Any provider">
+                  <button class="multi-select__toggle" type="button" aria-expanded="false"
+                          aria-controls="ms-provider" aria-describedby="fg-provider">
+                    <span class="multi-select__value">Any provider</span>
+                  </button>
+                  <div class="multi-select__panel" id="ms-provider" hidden>
+                    <input class="sc-input multi-select__search" type="search" placeholder="Search providers" aria-label="Search providers">
+                    <ul class="multi-select__options">
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="aic"><span>Agency for Integrated Care</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="astar"><span>A*STAR</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="dsta"><span>Defence Science &amp; Technology Agency</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="govtech"><span>GovTech</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="ica"><span>Immigration &amp; Checkpoints Authority</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="imda"><span>Infocomm Media Development Authority</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="lta"><span>Land Transport Authority</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="mas"><span>Monetary Authority of Singapore</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="moe"><span>Ministry of Education</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="mha"><span>Ministry of Home Affairs</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="nparks"><span>National Parks Board</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="ntu"><span>Nanyang Technological University</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="nus"><span>National University of Singapore</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="psc"><span>Public Service Commission</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="scdf"><span>Singapore Civil Defence Force</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="sgis"><span>Singapore-Industry Scholarship</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="smf"><span>Singapore Maritime Foundation</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="smu"><span>Singapore Management University</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="spf"><span>Singapore Police Force</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="provider" value="tf"><span>Temasek Foundation</span></label></li>
+                    </ul>
+                    <p class="multi-select__none" hidden>No match.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Course — multi-select dropdown -->
+              <div class="filter-group" role="group" aria-labelledby="fg-course">
+                <h3 class="filter-group__title" id="fg-course">Course</h3>
+                <div class="multi-select" data-placeholder="Any course">
+                  <button class="multi-select__toggle" type="button" aria-expanded="false"
+                          aria-controls="ms-course" aria-describedby="fg-course">
+                    <span class="multi-select__value">Any course</span>
+                  </button>
+                  <div class="multi-select__panel" id="ms-course" hidden>
+                    <input class="sc-input multi-select__search" type="search" placeholder="Search courses" aria-label="Search courses">
+                    <ul class="multi-select__options">
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="architecture"><span>Architecture &amp; Urban Planning</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="arts"><span>Arts &amp; Music</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="business"><span>Business &amp; Accountancy</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="computing"><span>Computer Science &amp; IT</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="data-ai"><span>Data Science &amp; AI</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="design"><span>Design &amp; Media</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="economics"><span>Economics</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="education"><span>Education</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="engineering"><span>Engineering</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="environment"><span>Environmental Studies</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="finance"><span>Finance</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="hospitality"><span>Hospitality &amp; Tourism</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="humanities"><span>Humanities</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="law"><span>Law</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="life-sci"><span>Life Sciences</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="maritime"><span>Maritime Studies</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="math"><span>Mathematics</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="medicine"><span>Medicine</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="nursing"><span>Nursing &amp; Allied Health</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="pharmacy"><span>Pharmacy</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="physical-sci"><span>Physical Sciences</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="psychology"><span>Psychology</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="public-policy"><span>Public Policy</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="course" value="social-sci"><span>Social Sciences</span></label></li>
+                    </ul>
+                    <p class="multi-select__none" hidden>No match.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nationality — checkboxes -->
+              <div class="filter-group" role="group" aria-labelledby="fg-nationality">
+                <h3 class="filter-group__title" id="fg-nationality">Nationality</h3>
+                <ul class="filter-group__checks">
+                  <li><label class="sc-check"><input type="checkbox" name="nationality" value="sc"><span>Singapore Citizen</span></label></li>
+                  <li><label class="sc-check"><input type="checkbox" name="nationality" value="pr"><span>Singapore PR</span></label></li>
+                  <li><label class="sc-check"><input type="checkbox" name="nationality" value="others"><span>Others</span></label></li>
+                </ul>
+              </div>
+
+              <!-- Study level — multi-select dropdown, same levels as the homepage search -->
+              <div class="filter-group" role="group" aria-labelledby="fg-level">
+                <h3 class="filter-group__title" id="fg-level">Study level</h3>
+                <div class="multi-select" data-placeholder="Any level">
+                  <button class="multi-select__toggle" type="button" aria-expanded="false"
+                          aria-controls="ms-level" aria-describedby="fg-level">
+                    <span class="multi-select__value">Any level</span>
+                  </button>
+                  <div class="multi-select__panel" id="ms-level" hidden>
+                    <ul class="multi-select__options">
+                      <li><label class="sc-check"><input type="checkbox" name="level" value="pre-u"><span>Pre-university / Polytechnic</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="level" value="ug"><span>Undergraduate</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="level" value="masters"><span>Postgraduate (Masters)</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="level" value="phd"><span>Postgraduate (PhD)</span></label></li>
+                      <li><label class="sc-check"><input type="checkbox" name="level" value="mid"><span>Mid-career / Professional</span></label></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sponsorship — step slider (minimum coverage) -->
+              <div class="filter-group" role="group" aria-labelledby="fg-sponsorship">
+                <h3 class="filter-group__title" id="fg-sponsorship">Sponsorship</h3>
+                <div class="step-slider step-slider--min">
+                  <p class="step-slider__value" id="sponsorship-value">Any coverage</p>
+                  <input class="step-slider__input" type="range" name="sponsorship" min="0" max="3" step="1" value="0"
+                         data-values="0,25,50,100" data-labels="Any coverage|At least 25% covered|At least 50% covered|Fully sponsored (100%)"
+                         aria-labelledby="fg-sponsorship" aria-describedby="sponsorship-value">
+                  <ol class="step-slider__ticks" aria-hidden="true" style="--max: 3">
+                    <li style="--i: 0">Any</li>
+                    <li style="--i: 1">25%</li>
+                    <li style="--i: 2">50%</li>
+                    <li style="--i: 3">100%</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Bond — step slider (maximum years) -->
+              <div class="filter-group" role="group" aria-labelledby="fg-bond">
+                <h3 class="filter-group__title" id="fg-bond">Bond</h3>
+                <div class="step-slider">
+                  <p class="step-slider__value" id="bond-value">Any bond length</p>
+                  <input class="step-slider__input" type="range" name="bond" min="0" max="6" step="1" value="6"
+                         data-values="0,1,2,3,4,5,6" data-labels="No bond|Up to 1 year|Up to 2 years|Up to 3 years|Up to 4 years|Up to 5 years|Any bond length"
+                         aria-labelledby="fg-bond" aria-describedby="bond-value">
+                  <ol class="step-slider__ticks" aria-hidden="true" style="--max: 6">
+                    <li style="--i: 0">0</li>
+                    <li style="--i: 1">1</li>
+                    <li style="--i: 2">2</li>
+                    <li style="--i: 3">3</li>
+                    <li style="--i: 4">4</li>
+                    <li style="--i: 5">5</li>
+                    <li style="--i: 6">6 yrs</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Study location — checkboxes -->
+              <div class="filter-group" role="group" aria-labelledby="fg-location">
+                <h3 class="filter-group__title" id="fg-location">Study location</h3>
+                <ul class="filter-group__checks">
+                  <li><label class="sc-check"><input type="checkbox" name="location" value="local"><span>Local</span></label></li>
+                  <li><label class="sc-check"><input type="checkbox" name="location" value="overseas"><span>Overseas</span></label></li>
+                </ul>
+              </div>
+
+            </form>
+
+            <!-- Drawer only: closes the drawer onto the results -->
+            <div class="listing-filters__foot">
+              <button class="sc-btn sc-btn--primary sc-btn--block" type="button" data-filters-close data-filters-apply>Show results</button>
+            </div>
+
+          </div>
+        </aside>
+
+        <div class="listing-filters__backdrop" id="listing-filters-backdrop" hidden></div>
+
+      </div>
+    </div>
+
+    <!--
+      PLACEHOLDER DATA — every scholarship below is dummy content for layout
+      review; values, bonds and deadlines are unverified. Replace this block
+      with an API call: fetchPage() in scholarshipListing() (js/main.js) is
+      the one place that reads it.
+
+      Filter keys must match the checkbox / range values above:
+        levels       pre-u | ug | masters | phd | mid
+        nationality  sc | pr | others
+        location     local | overseas
+        sponsorship  25 | 50 | 100          (percentage of costs covered)
+        bond         0–6                    (years; the longest term offered)
+        tag          soon | open | new
+        keywords     optional extra words for free-text search
+    -->
+    <script type="application/json" id="scholarship-data">
+{
+  "providers": {
+    "aic":     { "name": "Agency for Integrated Care", "logo": "images/aic-logo.png" },
+    "astar":   { "name": "A*STAR", "mono": "A*" },
+    "dsta":    { "name": "Defence Science & Technology Agency", "logo": "images/dsta-logo.png" },
+    "govtech": { "name": "GovTech", "mono": "GT" },
+    "ica":     { "name": "Immigration & Checkpoints Authority", "mono": "ICA" },
+    "imda":    { "name": "Infocomm Media Development Authority", "mono": "IMDA" },
+    "lta":     { "name": "Land Transport Authority", "mono": "LTA" },
+    "mas":     { "name": "Monetary Authority of Singapore", "mono": "MAS" },
+    "moe":     { "name": "Ministry of Education", "mono": "MOE" },
+    "mha":     { "name": "Ministry of Home Affairs", "logo": "images/mha-logo.png" },
+    "nparks":  { "name": "National Parks Board", "logo": "images/npark-logo.png" },
+    "ntu":     { "name": "Nanyang Technological University", "mono": "NTU" },
+    "nus":     { "name": "National University of Singapore", "mono": "NUS" },
+    "psc":     { "name": "Public Service Commission", "logo": "images/psc-logo.png" },
+    "scdf":    { "name": "Singapore Civil Defence Force", "mono": "SCDF" },
+    "sgis":    { "name": "Singapore-Industry Scholarship", "logo": "images/sgis-logo.png" },
+    "smf":     { "name": "Singapore Maritime Foundation", "logo": "images/smf-logo.png" },
+    "smu":     { "name": "Singapore Management University", "logo": "images/smu-logo.png" },
+    "spf":     { "name": "Singapore Police Force", "mono": "SPF" },
+    "tf":      { "name": "Temasek Foundation", "mono": "TF" }
+  },
+  "scholarships": [
+    { "name": "DSTA Scholarship (Overseas)", "provider": "dsta", "tag": "soon", "value": "Full fees + allowance", "bond": 6, "level": "Undergrad → PhD", "study": "Overseas or local", "deadline": "Closes 30 Oct",
+      "levels": ["ug", "phd"], "courses": ["engineering", "computing", "data-ai", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "PSC Scholarship (Overseas Merit)", "provider": "psc", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "UK, US, EU, Asia", "deadline": "Closes 14 Nov",
+      "levels": ["ug"], "courses": ["economics", "law", "public-policy", "social-sci", "humanities", "engineering"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "Home Affairs Uniformed Scholarship (Local)", "provider": "mha", "tag": "open", "value": "Full fees + $6k grant", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 21 Nov",
+      "levels": ["ug"], "courses": ["social-sci", "psychology", "law", "computing", "public-policy"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
+    { "name": "Healthcare Merit Scholarship", "provider": "aic", "keywords": "biomedical healthcare", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 05 Dec",
+      "levels": ["ug"], "courses": ["medicine", "nursing", "life-sci", "psychology"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
+    { "name": "NParks Undergraduate Scholarship", "provider": "nparks", "tag": "open", "value": "Full fees + laptop", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 12 Dec",
+      "levels": ["ug"], "courses": ["environment", "life-sci", "architecture"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "SMU Global Impact Scholarship", "provider": "smu", "tag": "soon", "value": "Full fees + stipend", "bond": 0, "level": "Undergraduate", "study": "SMU, with exchange", "deadline": "Closes 28 Nov",
+      "levels": ["ug"], "courses": ["business", "economics", "law", "computing", "social-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "Singapore-Industry Scholarship", "provider": "sgis", "tag": "open", "value": "Full fees + allowance", "bond": 6, "bondText": "4 to 6 years", "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 19 Dec",
+      "levels": ["ug"], "courses": ["engineering", "computing", "data-ai", "business", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "MaritimeONE Scholarship", "provider": "smf", "tag": "open", "value": "Up to $20k a year", "bond": 3, "bondText": "2 to 3 years", "level": "Diploma → degree", "study": "Local or overseas", "deadline": "Closes 31 Jan",
+      "levels": ["pre-u", "ug"], "courses": ["maritime", "engineering", "business"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
+    { "name": "PSC Scholarship (Public Administration)", "provider": "psc", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "UK, US, EU, Asia", "deadline": "Closes 14 Nov",
+      "levels": ["ug"], "courses": ["public-policy", "economics", "social-sci", "humanities"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "A*STAR National Science Scholarship", "provider": "astar", "keywords": "biomedical research", "tag": "open", "value": "Full fees + stipend", "bond": 6, "level": "Undergrad → PhD", "study": "Overseas", "deadline": "Closes 15 Jan",
+      "levels": ["ug", "phd"], "courses": ["life-sci", "physical-sci", "engineering", "math", "data-ai"], "nationality": ["sc", "pr"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "A*STAR Graduate Scholarship", "provider": "astar", "keywords": "biomedical research", "tag": "open", "value": "Full fees + $3.2k a month", "bond": 4, "level": "PhD", "study": "Local universities", "deadline": "Closes 31 Jan",
+      "levels": ["phd"], "courses": ["life-sci", "physical-sci", "engineering", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "MOE Teaching Scholarship", "provider": "moe", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 31 Oct",
+      "levels": ["ug"], "courses": ["education", "humanities", "math", "physical-sci", "life-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "MOE Teaching Award (Postgraduate)", "provider": "moe", "tag": "open", "value": "Fees + salary", "bond": 3, "level": "Masters", "study": "Local (NIE)", "deadline": "Closes 30 Nov",
+      "levels": ["masters", "mid"], "courses": ["education"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
+    { "name": "NUS Global Merit Scholarship", "provider": "nus", "keywords": "biomedical", "tag": "open", "value": "Full fees + $6k a year", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
+      "levels": ["ug"], "courses": ["engineering", "computing", "business", "humanities", "law", "medicine"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "NUS Merit Scholarship", "provider": "nus", "tag": "open", "value": "Tuition fees only", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
+      "levels": ["ug"], "courses": ["engineering", "computing", "business", "humanities", "social-sci", "physical-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 50 },
+    { "name": "Nanyang Scholarship", "provider": "ntu", "tag": "open", "value": "Full fees + $6.5k a year", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
+      "levels": ["ug"], "courses": ["engineering", "computing", "business", "design", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "CN Yang Scholarship", "provider": "ntu", "tag": "new", "value": "Full fees + research stipend", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
+      "levels": ["ug"], "courses": ["physical-sci", "engineering", "math", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "GovTech Scholarship", "provider": "govtech", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 10 Nov",
+      "levels": ["ug"], "courses": ["computing", "data-ai", "design"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "MAS Undergraduate Scholarship", "provider": "mas", "tag": "open", "value": "Full fees + allowance", "bond": 5, "level": "Undergraduate", "study": "UK, US or local", "deadline": "Closes 31 Dec",
+      "levels": ["ug"], "courses": ["economics", "finance", "math", "data-ai"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "MAS Postgraduate Scholarship", "provider": "mas", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Masters", "study": "Overseas", "deadline": "Closes 28 Feb",
+      "levels": ["masters", "mid"], "courses": ["economics", "finance", "public-policy"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "LTA Undergraduate Scholarship", "provider": "lta", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 15 Dec",
+      "levels": ["ug"], "courses": ["engineering", "architecture", "data-ai"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
+    { "name": "LTA Diploma Scholarship", "provider": "lta", "tag": "open", "value": "Fees + $3k grant", "bond": 2, "level": "Polytechnic", "study": "Local polytechnics", "deadline": "Closes 30 Nov",
+      "levels": ["pre-u"], "courses": ["engineering"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
+    { "name": "IMDA Digital Leaders Scholarship", "provider": "imda", "tag": "open", "value": "Up to $15k a year", "bond": 2, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 31 Jan",
+      "levels": ["ug"], "courses": ["computing", "design", "data-ai"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
+    { "name": "IMDA Media Talent Award", "provider": "imda", "tag": "new", "value": "Up to $10k a year", "bond": 1, "level": "Diploma → degree", "study": "Local or overseas", "deadline": "Closes 28 Feb",
+      "levels": ["pre-u", "ug"], "courses": ["design", "arts"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 25 },
+    { "name": "Temasek Foundation Leaders Scholarship", "provider": "tf", "tag": "open", "value": "Full fees + stipend", "bond": 0, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 15 Jan",
+      "levels": ["ug"], "courses": ["social-sci", "public-policy", "business", "humanities"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "Temasek Foundation Community Award", "provider": "tf", "tag": "open", "value": "$5k a year", "bond": 0, "level": "Pre-U / Polytechnic", "study": "Local", "deadline": "Closes 31 Mar",
+      "levels": ["pre-u"], "courses": ["humanities", "business", "engineering"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 },
+    { "name": "SPF Overseas Scholarship", "provider": "spf", "tag": "soon", "value": "Full fees + salary", "bond": 6, "level": "Undergraduate", "study": "Overseas", "deadline": "Closes 07 Nov",
+      "levels": ["ug"], "courses": ["law", "psychology", "social-sci", "computing"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "SPF Local Scholarship", "provider": "spf", "tag": "soon", "value": "Full fees + salary", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 07 Nov",
+      "levels": ["ug"], "courses": ["law", "psychology", "social-sci", "computing"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
+    { "name": "SCDF Undergraduate Scholarship", "provider": "scdf", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 30 Nov",
+      "levels": ["ug"], "courses": ["engineering", "life-sci", "psychology"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "ICA Scholarship", "provider": "ica", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 21 Nov",
+      "levels": ["ug"], "courses": ["computing", "data-ai", "social-sci", "law"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
+    { "name": "DSTA Scholarship (Local)", "provider": "dsta", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 30 Oct",
+      "levels": ["ug"], "courses": ["engineering", "computing", "data-ai"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
+    { "name": "DSTA Postgraduate Scholarship", "provider": "dsta", "tag": "open", "value": "Fees + salary", "bond": 3, "level": "Masters → PhD", "study": "Local or overseas", "deadline": "Closes 31 Jan",
+      "levels": ["masters", "phd", "mid"], "courses": ["engineering", "computing", "data-ai", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
+    { "name": "PSC Postgraduate Scholarship (Mid-Career)", "provider": "psc", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Masters", "study": "Overseas", "deadline": "Closes 28 Feb",
+      "levels": ["masters", "mid"], "courses": ["public-policy", "economics", "law"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "AIC Nursing Sponsorship", "provider": "aic", "tag": "open", "value": "Fees + $500 a month", "bond": 3, "level": "Diploma", "study": "Local polytechnics", "deadline": "Closes 15 Dec",
+      "levels": ["pre-u"], "courses": ["nursing"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
+    { "name": "Allied Health Postgraduate Award", "provider": "aic", "tag": "new", "value": "Fees + salary", "bond": 3, "level": "Masters", "study": "Local or overseas", "deadline": "Closes 31 Mar",
+      "levels": ["masters", "mid"], "courses": ["nursing", "psychology", "life-sci"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
+    { "name": "Home Affairs Uniformed Scholarship (Overseas)", "provider": "mha", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "Overseas", "deadline": "Closes 21 Nov",
+      "levels": ["ug"], "courses": ["social-sci", "psychology", "law", "public-policy", "computing"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
+    { "name": "NParks Diploma Scholarship", "provider": "nparks", "tag": "open", "value": "Fees + $2k grant", "bond": 2, "level": "Polytechnic", "study": "Local polytechnics", "deadline": "Closes 31 Jan",
+      "levels": ["pre-u"], "courses": ["environment", "life-sci"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
+    { "name": "SMU Merit Scholarship", "provider": "smu", "tag": "open", "value": "50% of tuition", "bond": 0, "level": "Undergraduate", "study": "SMU", "deadline": "Closes 19 Mar",
+      "levels": ["ug"], "courses": ["business", "law", "economics", "social-sci", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 50 },
+    { "name": "SMU Postgraduate Research Scholarship", "provider": "smu", "tag": "new", "value": "Fees + $2.5k a month", "bond": 0, "level": "PhD", "study": "SMU", "deadline": "Closes 31 Mar",
+      "levels": ["phd"], "courses": ["economics", "business", "finance", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "Maritime Leaders Postgraduate Award", "provider": "smf", "tag": "open", "value": "Up to $30k", "bond": 2, "level": "Masters", "study": "Local or overseas", "deadline": "Closes 31 Mar",
+      "levels": ["masters", "mid"], "courses": ["maritime", "business", "law"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
+    { "name": "NTU Engineering Talent Award", "provider": "ntu", "tag": "open", "value": "25% of tuition + $2k", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
+      "levels": ["ug"], "courses": ["engineering"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 },
+    { "name": "NUS Medicine Scholarship", "provider": "nus", "tag": "open", "value": "Full fees + $6k a year", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
+      "levels": ["ug"], "courses": ["medicine"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
+    { "name": "MOE Pre-University Scholarship", "provider": "moe", "tag": "open", "value": "School fees + $2.4k a year", "bond": 0, "level": "Pre-university", "study": "Local", "deadline": "Closes 28 Feb",
+      "levels": ["pre-u"], "courses": ["humanities", "math", "physical-sci", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 }
+  ]
+}
+    </script>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="scholarships.html">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/SC_Logo.svg"
+               alt="The Straits Times Scholar&rsquo;s Choice" width="576" height="280" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

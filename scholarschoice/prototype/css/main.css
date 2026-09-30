@@ -22,6 +22,9 @@
    18. Inner page template (page hero + page body)
    19. Forms — contact form
    20. Utilities, motion & print
+   21. Provider page
+   22. Scholarship page
+   23. Scholarship listing
    ========================================================================== */
 
 
@@ -335,6 +338,8 @@ button { cursor: pointer; }
   padding-inline: var(--sc-gutter);
 }
 .sc-container--narrow { max-width: var(--sc-container-narrow); }
+/* Edge to edge, gutter only — the scholarship listing runs the full viewport */
+.sc-container--full { max-width: none; }
 
 .sc-section { padding-block: var(--sc-section-y); }
 .sc-section--tight { padding-block: clamp(2rem, 4vw, 3.5rem); }
@@ -733,8 +738,116 @@ button { cursor: pointer; }
 
 /* Phones: keep the bar to logo + search + login icon + menu. */
 @media (max-width: 600px) {
-  .site-header__register { display: none; }
   .site-header__actions { gap: var(--sc-space-2); }
+}
+
+/* --- Login / Register modal (social sign-in only) ---------------------- */
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sc-z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--sc-space-4);
+  background: rgba(8, 17, 15, 0.72);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--sc-dur) var(--sc-ease),
+              visibility 0s linear var(--sc-dur);
+}
+.auth-modal[hidden] { display: none; }
+.auth-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.auth-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: var(--sc-space-7) var(--sc-space-6) var(--sc-space-6);
+  background: var(--sc-paper);
+  border-radius: var(--sc-radius-lg);
+  box-shadow: var(--sc-shadow-lg);
+  text-align: center;
+  transform: translateY(12px);
+  transition: transform var(--sc-dur) var(--sc-ease);
+}
+.auth-modal.is-open .auth-modal__panel { transform: translateY(0); }
+
+.auth-modal__close {
+  position: absolute;
+  top: var(--sc-space-3);
+  right: var(--sc-space-3);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--sc-ink-60);
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease),
+              color var(--sc-dur-fast) var(--sc-ease);
+}
+.auth-modal__close:hover { background: var(--sc-paper-sunk); color: var(--sc-ink); }
+.auth-modal__close svg { width: 20px; height: 20px; }
+
+.auth-modal__title {
+  margin: 0 0 var(--sc-space-2);
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-step-4);
+  font-weight: 400;
+  letter-spacing: var(--sc-display-tracking);
+  line-height: 1;
+  color: var(--sc-ink);
+}
+.auth-modal__lede {
+  margin: 0 0 var(--sc-space-6);
+  font-size: var(--sc-step-0);
+  color: var(--sc-text-muted);
+}
+
+.auth-modal__providers {
+  display: grid;
+  gap: var(--sc-space-3);
+}
+
+/* Provider buttons follow each brand's sign-in guidelines rather than the
+   site's lime/teal button family. */
+.auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sc-space-3);
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--sc-radius-pill);
+  font-family: var(--sc-font-body);
+  font-size: var(--sc-step-0);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--sc-dur-fast) var(--sc-ease),
+              box-shadow var(--sc-dur-fast) var(--sc-ease),
+              background-color var(--sc-dur-fast) var(--sc-ease);
+}
+.auth-btn:hover { transform: translateY(-2px); box-shadow: var(--sc-shadow); }
+.auth-btn:active { transform: translateY(0); }
+.auth-btn svg { width: 20px; height: 20px; flex: none; }
+
+.auth-btn--google { background: var(--sc-white); color: #1F1F1F; border-color: #747775; }
+.auth-btn--google:hover { background: #F8F9FA; }
+.auth-btn--facebook { background: #1877F2; color: var(--sc-white); border-color: #1877F2; }
+.auth-btn--facebook:hover { background: #166FE5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-modal,
+  .auth-modal__panel { transition: none; }
 }
 
 
@@ -1003,7 +1116,6 @@ button { cursor: pointer; }
   grid-template-columns: clamp(110px, 13vw, 245px) minmax(0, 1fr);
   align-items: center;
   gap: clamp(1rem, 3vw, 3rem);
-  min-height: clamp(230px, 26vw, 360px);
   padding-right: var(--sc-gutter);
   /* Alternating tints; the last row lands on teal so it reads distinctly
      against the warm-paper #providers section above it. */
@@ -1066,13 +1178,13 @@ button { cursor: pointer; }
    directly under the title on mobile, without moving in the DOM. */
 .pathway-row__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(150px, 22vw, 330px);
+  grid-template-columns: minmax(0, 1fr) clamp(105px, 15.4vw, 231px);
   align-items: center;
   column-gap: clamp(1rem, 3vw, 3rem);
   /* Title, copy and link read as one block, so they sit close together —
      the breathing room belongs between rows, not inside one. */
   row-gap: 0;
-  padding-block: var(--sc-space-6);
+  padding-block: var(--sc-space-5);
 }
 .pathway-row__title { grid-column: 1; grid-row: 1; }
 .pathway-row__text  { grid-column: 1; grid-row: 2; }
@@ -1120,7 +1232,7 @@ button { cursor: pointer; }
   justify-self: end;
   align-self: center;
   width: 100%;
-  max-width: 300px;
+  max-width: 210px;
 }
 .pathway-row__art img { display: block; width: 100%; height: auto; }
 .pathway-row__art svg { display: block; width: 100%; height: auto; }
@@ -1145,7 +1257,6 @@ button { cursor: pointer; }
 @media (max-width: 767px) {
   .pathway-row {
     grid-template-columns: clamp(72px, 16vw, 110px) minmax(0, 1fr);
-    min-height: 0;
     gap: var(--sc-space-5);
   }
   .pathway-row__index { font-size: clamp(1.75rem, 6vw, 2.75rem); }
@@ -1168,7 +1279,7 @@ button { cursor: pointer; }
   /* Single column: title, then the illustration, then the copy */
   .pathway-row__body {
     grid-template-columns: minmax(0, 1fr);
-    padding-block: var(--sc-space-6) var(--sc-space-7);
+    padding-block: var(--sc-space-5);
   }
   .pathway-row__title,
   .pathway-row__art,
@@ -1180,7 +1291,7 @@ button { cursor: pointer; }
   .pathway-row__art {
     order: 2;
     justify-self: start;
-    max-width: min(220px, 60%);
+    max-width: min(154px, 42%);
     margin-block: var(--sc-space-3);
   }
   .pathway-row__text  { order: 3; }
@@ -1332,6 +1443,12 @@ button { cursor: pointer; }
               box-shadow var(--sc-dur) var(--sc-ease);
 }
 .scholarship-card:hover { transform: translateY(-5px); box-shadow: var(--sc-shadow); }
+/* The whole card is the link: the "Details" link's ::after stretches over the
+   card, so there is one link per card for keyboards and screen readers. */
+.scholarship-card { position: relative; cursor: pointer; }
+.scholarship-card__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.scholarship-card:focus-within { box-shadow: 0 0 0 3px var(--sc-teal-600); }
+.scholarship-card__link:focus-visible { outline: none; }
 
 .scholarship-card__head {
   display: flex;
@@ -1463,7 +1580,7 @@ button { cursor: pointer; }
   transition: color var(--sc-dur-fast) var(--sc-ease);
 }
 .story-lead:hover .story-lead__title { color: var(--sc-teal-600); }
-.story-lead__standfirst { margin-block: var(--sc-space-4); }
+.story-lead__standfirst { margin-block: var(--sc-space-4); font-size: var(--sc-step-1); line-height: 1.6; }
 .story-lead__byline { display: flex; flex-wrap: wrap; gap: var(--sc-space-3); align-items: center; }
 .story-lead__byline .sc-meta::after { content: ""; }
 
@@ -1839,7 +1956,7 @@ body.is-modal-open { overflow: hidden; }
 .site-footer__brand { flex: 0 1 auto; max-width: 38ch; align-self: flex-end; }
 
 /* The Scholar’s Choice lockup is dark artwork on transparent, so on the teal
-   footer it needs a white plate. It is a wide mark (566 x 279), so it is sized
+   footer it needs a white plate. It is a wide mark (576 x 280), so it is sized
    on width rather than height. */
 .site-logo--footer {
   padding: var(--sc-space-3);
@@ -2180,7 +2297,33 @@ body.is-modal-open { overflow: hidden; }
               border-color var(--sc-dur-fast) var(--sc-ease);
 }
 .article-share__btn:hover { background: var(--sc-lime); border-color: var(--sc-lime); }
+.article-share__btn:focus-visible { outline: 2px solid var(--sc-teal-600); outline-offset: 2px; }
 .article-share__btn svg { width: 16px; height: 16px; }
+
+/* "Copied" tooltip — JS sets data-tooltip and adds .is-copied for ~2s after
+   Instagram or Copy link puts the page URL on the clipboard. */
+.article-share__btn { position: relative; }
+.article-share__btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  padding: 0.3rem 0.6rem;
+  background: var(--sc-ink);
+  color: var(--sc-white);
+  border-radius: var(--sc-radius-sm);
+  font-size: var(--sc-step--3);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity var(--sc-dur-fast) var(--sc-ease),
+              transform var(--sc-dur-fast) var(--sc-ease);
+}
+.article-share__btn.is-copied { background: var(--sc-lime); border-color: var(--sc-lime); }
+.article-share__btn.is-copied::after { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 1024px) {
   /* Single column stack. */
@@ -3019,4 +3162,850 @@ body.is-modal-open { overflow: hidden; }
   #scholarship-search, #reading-progress, .article-share { display: none !important; }
   body { background: #fff; color: #000; }
   .article-body__layout { grid-template-columns: 1fr; }
+}
+
+
+/* ==========================================================================
+   21. PROVIDER PAGE  (provider-template.html)
+   Built on section 18's #page-hero / #page-body. Cards are the homepage's
+   own .scholarship-card (section 10) and .story-card (section 11); the
+   optional video reuses the article player (section 15).
+   ========================================================================== */
+
+/* --- Hero: title block left, logo tile right -------------------------- */
+.provider-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sc-space-6) clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+/* White tile so any provider mark, dark or colour, reads on the teal band */
+.provider-hero__logo {
+  display: grid;
+  place-items: center;
+  width: clamp(200px, 24vw, 300px);
+  aspect-ratio: 16 / 10;
+  padding: var(--sc-space-5);
+  background: var(--sc-white);
+  border-radius: var(--sc-radius-lg);
+  box-shadow: var(--sc-shadow);
+}
+.provider-hero__logo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 860px) {
+  .provider-hero__grid { grid-template-columns: 1fr; }
+  /* Logo leads on small screens so the provider is identified first */
+  .provider-hero__logo { order: -1; width: 180px; padding: var(--sc-space-4); }
+}
+
+/* --- About aside: key facts ------------------------------------------ */
+.provider-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sc-space-4);
+  margin-top: var(--sc-space-5);
+  padding-top: var(--sc-space-5);
+  border-top: var(--sc-border);
+}
+.provider-facts dt {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sc-ink-60);
+}
+.provider-facts dd {
+  margin: 0.2rem 0 0;
+  font-size: var(--sc-step-0);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--sc-ink);
+}
+.provider-facts__actions {
+  display: grid;
+  gap: var(--sc-space-3);
+  margin-top: var(--sc-space-6);
+}
+
+/* --- Optional featured video ----------------------------------------- */
+#provider-video { background: var(--sc-ink); color: var(--sc-text-on-dark); }
+.provider-video__title { color: var(--sc-white); }
+
+/* --- Scholarships ----------------------------------------------------- */
+#provider-scholarships { background: var(--sc-paper-warm); }
+.provider-scholarships__grid { gap: var(--sc-space-4); align-items: stretch; }
+
+/* --- Stories: the homepage list, in two columns ---------------------- */
+#provider-stories { background: var(--sc-paper); }
+.provider-stories__list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 3vw, 3rem);
+}
+/* Both cards on the last row drop the divider, not just the very last one */
+.provider-stories__list > .story-card:nth-child(odd):nth-last-child(2) {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+@media (max-width: 900px) {
+  .provider-stories__list { grid-template-columns: 1fr; }
+  .provider-stories__list > .story-card:nth-child(odd):nth-last-child(2) {
+    border-bottom: 1px solid var(--sc-line);
+    padding-bottom: var(--sc-space-5);
+  }
+}
+
+/* --- Closing CTA band ------------------------------------------------- */
+#provider-cta { background: var(--sc-paper); padding-top: 0; }
+.provider-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-space-6);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  background: var(--sc-teal-600);
+  color: var(--sc-text-on-dark);
+  border-radius: var(--sc-radius-lg);
+}
+.provider-cta__text { flex: 1 1 36ch; }
+.provider-cta__text .sc-h2 { color: var(--sc-white); }
+.provider-cta__text .sc-standfirst { margin-top: var(--sc-space-3); }
+.provider-cta__actions { display: flex; flex-wrap: wrap; gap: var(--sc-space-3); }
+@media (max-width: 520px) {
+  .provider-cta__actions .sc-btn { flex: 1 1 100%; }
+}
+
+/* --- Share widget (inside the "At a glance" card) -------------------- */
+/* The buttons are the article's .article-share (section 14). The card is
+   narrower than the byline bar, so the label takes its own line. */
+.provider-share {
+  margin-top: var(--sc-space-6);
+  padding-top: var(--sc-space-5);
+  border-top: var(--sc-border);
+}
+/* Six 38px buttons only just fit the card, so they spread across the row on
+   a tight minimum gap rather than the byline's wider one. */
+.provider-share .article-share {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sc-space-3) var(--sc-space-1);
+}
+.provider-share .article-share__label { flex-basis: 100%; margin-right: 0; }
+
+
+/* ==========================================================================
+   22. SCHOLARSHIP PAGE  (scholarship-template.html)
+   Built on section 18's #page-hero / #page-body. The share buttons are the
+   article's .article-share (section 14), the tabs are the article's
+   .article-tabs / .article-part (section 16) and the aside is the article's
+   .sidebar-card (section 17) — only what is new lives here.
+   ========================================================================== */
+
+/* --- Provider + share bar, cut like the article byline bar ------------ */
+#scholarship-bar {
+  background: var(--sc-paper);
+  border-bottom: 1px solid var(--sc-line);
+}
+.scholarship-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-space-4);
+  padding-block: var(--sc-space-4);
+}
+
+.scholarship-provider {
+  display: flex;
+  align-items: center;
+  gap: var(--sc-space-3);
+  min-width: 0;
+}
+/* White tile so any provider mark reads the same on every page */
+.scholarship-provider__logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 88px;
+  height: 52px;
+  padding: var(--sc-space-2);
+  background: var(--sc-white);
+  border: var(--sc-border);
+  border-radius: var(--sc-radius);
+}
+.scholarship-provider__logo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.scholarship-provider__label {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sc-ink-60);
+}
+.scholarship-provider__name {
+  display: block;
+  font-size: var(--sc-step-0);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--sc-ink);
+  transition: color var(--sc-dur-fast) var(--sc-ease);
+}
+.scholarship-provider:hover .scholarship-provider__name { color: var(--sc-teal-600); }
+.scholarship-provider:focus-visible { outline: 2px solid var(--sc-teal-600); outline-offset: 4px; border-radius: var(--sc-radius); }
+
+/* --- Tabs ---------------------------------------------------------------
+   The tablist already spaces itself from the panel, so the panel drops the
+   stacking margin .page-layout__main gives every child. */
+.page-scholarship .article-body__main.is-tabbed > .article-part { margin-top: 0; }
+.article-part > .article-prose + *,
+.article-part > * + .article-prose { margin-top: var(--sc-space-6); }
+
+/* --- Requirements: selection steps ------------------------------------ */
+.scholarship-steps__title {
+  margin-top: var(--sc-space-7);
+  font-size: var(--sc-step-2);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.scholarship-steps {
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sc-space-4);
+  margin-top: var(--sc-space-4);
+}
+.scholarship-steps__item {
+  counter-increment: step;
+  display: grid;
+  align-content: start;
+  gap: var(--sc-space-2);
+  padding: var(--sc-space-5);
+  background: var(--sc-paper-warm);
+  border-top: 3px solid var(--sc-lime-dark);
+  border-radius: 0 0 var(--sc-radius) var(--sc-radius);
+}
+.scholarship-steps__item::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-step-3);
+  line-height: 1;
+  color: var(--sc-lime-dark);
+}
+.scholarship-steps__step { font-size: var(--sc-step-0); font-weight: 700; }
+.scholarship-steps__detail { font-size: var(--sc-step--1); line-height: 1.55; color: var(--sc-ink-80); }
+
+/* --- Value: the rates footnote under the lists ----------------------- */
+.article-prose p.scholarship-footnote {
+  font-size: var(--sc-step--1);
+  line-height: 1.55;
+  color: var(--sc-ink-60);
+}
+
+
+/* ==========================================================================
+   23. SCHOLARSHIP LISTING  (scholarships.html)
+   Built on section 18's #page-hero. The search box is the homepage's
+   .search-form (section 08) and the cards are the homepage's
+   .scholarship-card (section 10), unchanged — only what is new lives here.
+
+   #page-hero.listing-hero   breadcrumb + free-text search
+   #listing-body             .listing-layout — card grid + filter sidebar;
+                             the sidebar becomes a drawer under 900px
+   ========================================================================== */
+
+/* --- Hero: search in place of the title -------------------------------- */
+.listing-hero__search { margin-top: var(--sc-space-5); }
+
+/* Query + submit only; study level moved into the filters */
+.search-form__row--query {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+@media (max-width: 520px) {
+  .search-form__row--query { grid-template-columns: 1fr; }
+}
+
+/* --- Layout -------------------------------------------------------------- */
+#listing-body {
+  background: var(--sc-bg);
+  padding-block: clamp(1.75rem, 3.5vw, 3rem) var(--sc-section-y);
+}
+
+.listing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: clamp(1.5rem, 2.5vw, 2.5rem);
+  align-items: start;
+}
+
+.listing-results__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sc-space-3);
+  padding-bottom: var(--sc-space-4);
+  margin-bottom: var(--sc-space-5);
+  border-bottom: 1px solid var(--sc-line);
+}
+.listing-count {
+  font-size: var(--sc-step--1);
+  font-weight: 600;
+  color: var(--sc-ink-60);
+}
+.listing-count strong { color: var(--sc-ink); font-weight: 800; }
+
+/* 4 / 3 / 2 / 1 per row. 12 cards a load divides evenly into all four. */
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sc-space-5);
+}
+@media (max-width: 1440px) { .listing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1024px) { .listing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sc-space-4); } }
+@media (max-width: 767px)  { .listing-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Each batch fades in. `backwards` only, so the card's own hover lift still
+   works once the animation has run. --i staggers cards within a batch. */
+.listing-grid > .scholarship-card {
+  animation: listing-card-in var(--sc-dur-slow) var(--sc-ease) backwards;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+@keyframes listing-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+/* At four or three to a row a card can drop under 280px, too narrow for the
+   homepage's two-column specs ("Undergraduate" alone needs ~115px). Cards
+   query their own width, so the same rule covers every column count. */
+.listing-grid > .scholarship-card { container-type: inline-size; }
+@container (max-width: 280px) {
+  .scholarship-card__head,
+  .scholarship-card__body,
+  .scholarship-card__foot { padding-inline: var(--sc-space-4); }
+  .scholarship-card__name { padding-inline: var(--sc-space-4); }
+  .scholarship-card__specs { grid-template-columns: minmax(0, 1fr); gap: var(--sc-space-2); }
+  .scholarship-card__deadline,
+  .scholarship-card__link { white-space: nowrap; }
+}
+
+/* Providers without a logo file get a lettered tile the same height as one */
+.scholarship-card__provider-logo--mono {
+  display: grid;
+  place-items: center;
+  min-width: 58px;
+  height: 58px;
+  padding: 0 var(--sc-space-3);
+  background: var(--sc-teal-600);
+  border-color: var(--sc-teal-600);
+  color: var(--sc-lime);
+  font-family: var(--sc-font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* --- Loader, end-of-list and empty state ------------------------------- */
+.listing-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sc-space-3);
+  min-height: 1.5rem;
+  margin-top: var(--sc-space-7);
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-ink-60);
+}
+.listing-status:empty { margin-top: 0; }
+.listing-status__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--sc-line-strong);
+  border-top-color: var(--sc-teal-600);
+  border-radius: 50%;
+  animation: listing-spin 0.8s linear infinite;
+}
+@keyframes listing-spin { to { transform: rotate(360deg); } }
+
+/* The observer's target — one pixel, just past the last card */
+.listing-sentinel { height: 1px; }
+
+.listing-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--sc-space-3);
+  padding: var(--sc-space-8) var(--sc-space-5);
+  background: var(--sc-paper-warm);
+  border: 1px dashed var(--sc-line-strong);
+  border-radius: var(--sc-radius-lg);
+  text-align: center;
+}
+.listing-empty__title {
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-step-4);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--sc-display-tracking);
+}
+.listing-empty__text { color: var(--sc-ink-80); max-width: 40ch; }
+/* Both set their own display, which would otherwise beat the [hidden] the JS toggles */
+.listing-grid[hidden],
+.listing-empty[hidden] { display: none; }
+.listing-empty .sc-btn { margin-top: var(--sc-space-2); }
+
+/* --- Filter sidebar ------------------------------------------------------
+   Sticky, and scrolls inside itself once it is taller than the viewport,
+   so the last filter is always reachable. Card scheme is the article's
+   .sidebar-card: lime rule, deep-teal head with a lime label. */
+.listing-filters {
+  position: sticky;
+  top: calc(var(--sc-header-h) + var(--sc-space-5));
+}
+.listing-filters__panel {
+  max-height: calc(100vh - var(--sc-header-h) - 2 * var(--sc-space-5));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--sc-white);
+  border: 1px solid var(--sc-lime-500);
+  border-radius: var(--sc-radius-lg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--sc-line-strong) transparent;
+}
+
+.listing-filters__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-space-3);
+  padding: var(--sc-space-4) var(--sc-space-5);
+  background: var(--sc-lime-dark);
+}
+.listing-filters__title {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sc-lime);
+}
+.listing-filters__close {
+  display: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: -6px -8px -6px 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--sc-lime);
+  cursor: pointer;
+}
+.listing-filters__close svg { width: 18px; height: 18px; }
+.listing-filters__close:hover { background: rgba(200, 240, 74, 0.14); }
+
+/* Selected filters */
+.listing-selected {
+  padding: var(--sc-space-4) var(--sc-space-5);
+  background: var(--sc-paper);
+  border-bottom: 1px solid var(--sc-line);
+}
+.listing-selected__bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sc-space-3);
+}
+.listing-selected__title,
+.filter-group__title {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-ink);
+}
+.listing-selected__clear {
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.listing-selected__clear:hover { color: var(--sc-accent-600); }
+.listing-selected__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sc-space-2);
+  margin-top: var(--sc-space-3);
+}
+.listing-selected__list:empty { display: none; }
+.listing-selected__empty {
+  margin-top: var(--sc-space-2);
+  font-size: var(--sc-step--1);
+  color: var(--sc-ink-60);
+}
+
+.listing-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  max-width: 100%;
+  padding: 0.3rem 0.5rem 0.3rem 0.75rem;
+  background: var(--sc-lime-100);
+  border: 1px solid var(--sc-lime-500);
+  border-radius: var(--sc-radius-pill);
+  font-size: var(--sc-step--1);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--sc-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease);
+}
+.listing-chip:hover { background: var(--sc-lime); }
+.listing-chip svg { flex: none; width: 14px; height: 14px; }
+
+/* Filter groups */
+.filter-group {
+  padding: var(--sc-space-5);
+  border-bottom: 1px solid var(--sc-line);
+}
+.filter-group:last-child { border-bottom: 0; }
+.filter-group__title { margin-bottom: var(--sc-space-3); }
+.filter-group__checks { display: grid; gap: var(--sc-space-1); margin-inline: -0.5rem; }
+
+/* Checkbox row — shared by the checkbox groups and the dropdown options */
+.sc-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sc-space-3);
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--sc-radius-sm);
+  font-size: var(--sc-step-0);
+  line-height: 1.4;
+  color: var(--sc-ink-80);
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease);
+}
+.sc-check:hover { background: var(--sc-paper-warm); }
+.sc-check input {
+  flex: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  background: var(--sc-white) center / 14px no-repeat;
+  border: 2px solid var(--sc-line-strong);
+  border-radius: var(--sc-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease),
+              border-color var(--sc-dur-fast) var(--sc-ease);
+}
+.sc-check input:checked {
+  background-color: var(--sc-teal-600);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C8F04A' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+  border-color: var(--sc-teal-600);
+}
+.sc-check input:focus-visible { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+.sc-check input:checked + span { color: var(--sc-ink); font-weight: 600; }
+
+/* Multi-select dropdown. The panel opens in flow rather than floating, so it
+   is never clipped by the scrolling sidebar or the drawer. */
+.multi-select__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-space-3);
+  width: 100%;
+  min-height: 48px;
+  padding: 0.6rem 1rem;
+  background: var(--sc-white);
+  border: 1px solid var(--sc-line-strong);
+  border-radius: var(--sc-radius);
+  font-size: var(--sc-step-0);
+  color: var(--sc-ink-60);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--sc-dur-fast) var(--sc-ease),
+              box-shadow var(--sc-dur-fast) var(--sc-ease);
+}
+.multi-select__toggle::after {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230F1F1C'%3E%3Cpath d='M8 11.5 2.5 6h11z'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--sc-dur-fast) var(--sc-ease);
+}
+.multi-select__toggle[aria-expanded="true"]::after { transform: rotate(180deg); }
+.multi-select__toggle:hover { border-color: var(--sc-ink-60); }
+.multi-select__toggle:focus-visible,
+.multi-select__toggle[aria-expanded="true"] {
+  outline: none;
+  border-color: var(--sc-teal-600);
+  box-shadow: 0 0 0 3px rgba(14, 92, 84, 0.16);
+}
+.multi-select.has-value .multi-select__toggle { color: var(--sc-ink); font-weight: 600; }
+.multi-select__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.multi-select__panel {
+  margin-top: var(--sc-space-2);
+  padding: var(--sc-space-2);
+  background: var(--sc-white);
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius);
+  box-shadow: var(--sc-shadow);
+}
+.multi-select__search.sc-input {
+  min-height: 40px;
+  margin-bottom: var(--sc-space-2);
+  padding: 0.45rem 0.75rem;
+  font-size: var(--sc-step--1);
+}
+.multi-select__options {
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sc-line-strong) transparent;
+}
+.multi-select__options .sc-check { font-size: var(--sc-step--1); }
+.multi-select__none {
+  padding: var(--sc-space-2) 0.5rem;
+  font-size: var(--sc-step--1);
+  color: var(--sc-ink-60);
+}
+
+/* Step slider — a native range input, restyled. JS keeps --p (0–1) in sync
+   with the value so the filled part of the track follows the thumb. */
+.step-slider {
+  --thumb: 22px;
+  --track: 6px;
+  --fill: var(--sc-teal-600);
+  --rest: var(--sc-line);
+}
+.step-slider__value {
+  margin-bottom: var(--sc-space-2);
+  font-size: var(--sc-step-0);
+  font-weight: 700;
+  color: var(--sc-teal-600);
+}
+.step-slider__input {
+  --stop: calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--p, 0));
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: var(--thumb);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+/* Bond fills 0 → thumb (the terms you'd accept); sponsorship, a minimum,
+   fills thumb → 100%. */
+.step-slider__input::-webkit-slider-runnable-track {
+  height: var(--track);
+  border-radius: var(--sc-radius-pill);
+  background: linear-gradient(to right, var(--fill) var(--stop), var(--rest) var(--stop));
+}
+.step-slider--min .step-slider__input::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--rest) var(--stop), var(--fill) var(--stop));
+}
+.step-slider__input::-moz-range-track {
+  height: var(--track);
+  border-radius: var(--sc-radius-pill);
+  background: linear-gradient(to right, var(--fill) var(--stop), var(--rest) var(--stop));
+}
+.step-slider--min .step-slider__input::-moz-range-track {
+  background: linear-gradient(to right, var(--rest) var(--stop), var(--fill) var(--stop));
+}
+.step-slider__input::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: calc((var(--track) - var(--thumb)) / 2);
+  background: var(--sc-lime);
+  border: 3px solid var(--sc-teal-600);
+  border-radius: 50%;
+  box-shadow: var(--sc-shadow-sm);
+  transition: transform var(--sc-dur-fast) var(--sc-ease);
+}
+.step-slider__input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  background: var(--sc-lime);
+  border: 3px solid var(--sc-teal-600);
+  border-radius: 50%;
+  box-shadow: var(--sc-shadow-sm);
+}
+.step-slider__input:hover::-webkit-slider-thumb { transform: scale(1.1); }
+.step-slider__input:focus { outline: none; }
+.step-slider__input:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+.step-slider__input:focus-visible::-moz-range-thumb { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+
+/* Tick labels sit under each stop's thumb centre */
+.step-slider__ticks {
+  position: relative;
+  height: 1.4rem;
+  margin-top: var(--sc-space-2);
+  font-size: var(--sc-step--2);
+  font-weight: 600;
+  color: var(--sc-ink-60);
+}
+.step-slider__ticks li {
+  position: absolute;
+  top: 0;
+  left: calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--i) / var(--max));
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.step-slider__ticks li:first-child { transform: translateX(calc(var(--thumb) / -2)); }
+.step-slider__ticks li:last-child  { transform: translateX(calc(-100% + var(--thumb) / 2)); }
+.step-slider__ticks li.is-current { color: var(--sc-ink); font-weight: 800; }
+
+/* Drawer-only chrome, hidden on desktop */
+.listing-filters__handle,
+.listing-filters__foot { display: none; }
+.listing-filters__backdrop { display: none; }
+
+/* --- Drawer (under 900px) ----------------------------------------------
+   The aside slides in from the right. Its handle hangs off the aside's left
+   edge, so it is the one thing left on screen when the drawer is shut. */
+@media (max-width: 900px) {
+  .listing-layout { grid-template-columns: minmax(0, 1fr); }
+
+  .listing-filters {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--sc-z-sticky);
+    width: min(380px, 88vw);
+    transform: translateX(100%);
+    transition: transform var(--sc-dur) var(--sc-ease);
+  }
+  .listing-filters.is-open {
+    z-index: var(--sc-z-drawer);
+    transform: translateX(0);
+  }
+
+  .listing-filters__panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--sc-shadow-lg);
+    visibility: hidden;
+    transition: visibility var(--sc-dur) var(--sc-ease);
+  }
+  .listing-filters.is-open .listing-filters__panel { visibility: visible; }
+  .listing-filters__form { flex: 1 0 auto; }
+
+  .listing-filters__head { padding-top: max(var(--sc-space-4), env(safe-area-inset-top)); }
+  .listing-filters__close { display: grid; }
+
+  /* Vertical pull tab. writing-mode sets the text on its side; the extra
+     half-turn makes it read bottom-to-top, the usual way for a side tab. */
+  .listing-filters__handle {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--sc-space-2);
+    padding: var(--sc-space-4) 0.6rem;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    background: var(--sc-teal-600);
+    border: 0;
+    border-radius: 0 var(--sc-radius) var(--sc-radius) 0;
+    box-shadow: var(--sc-shadow);
+    color: var(--sc-lime);
+    font-size: var(--sc-step--2);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+  .listing-filters__handle svg { width: 16px; height: 16px; transform: rotate(180deg); }
+  .listing-filters__handle:focus-visible { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+  .listing-filters__badge {
+    display: grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    writing-mode: horizontal-tb;
+    transform: rotate(180deg);
+    background: var(--sc-lime);
+    border-radius: var(--sc-radius-pill);
+    color: var(--sc-ink);
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+  }
+  .listing-filters__badge[hidden] { display: none; }
+
+  .listing-filters__foot {
+    position: sticky;
+    bottom: 0;
+    display: block;
+    padding: var(--sc-space-4) var(--sc-space-5) max(var(--sc-space-4), env(safe-area-inset-bottom));
+    background: var(--sc-white);
+    border-top: 1px solid var(--sc-line);
+  }
+
+  .listing-filters__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--sc-z-drawer) - 1);
+    display: block;
+    background: rgba(15, 31, 28, 0.5);
+    opacity: 0;
+    transition: opacity var(--sc-dur) var(--sc-ease);
+  }
+  .listing-filters__backdrop[hidden] { display: none; }
+  .listing-filters__backdrop.is-visible { opacity: 1; }
+
+  body.is-filters-open { overflow: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listing-grid > .scholarship-card { animation: none; }
+  .listing-status__spinner { animation-duration: 2.4s; }
+  .listing-filters,
+  .listing-filters__backdrop { transition: none; }
+}
+
+@media print {
+  .listing-filters,
+  .listing-filters__backdrop,
+  .listing-status,
+  .listing-hero__search { display: none !important; }
+  .listing-layout { grid-template-columns: 1fr; }
 }
