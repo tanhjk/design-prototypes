@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Search results — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Search every scholarship, provider, scholar story and guide on Scholar&rsquo;s Choice.">
+<meta name="robots" content="noindex, follow">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  SEARCH RESULTS — built on the inner page template.
+
+  The header search overlay (searchOverlay() in js/main.js) submits here as
+  search-results.html?q=… . searchResults() reads q, matches it against the
+  #search-index JSON at the bottom of <main> and renders one row per hit
+  into #search-list. Layout follows scholarschoice.com.sg/?s= : thumbnail,
+  category, title, excerpt, "Read more".
+
+  STRUCTURE
+    #page-hero.search-hero   breadcrumb, "You searched for" + the query as
+                             the <h1>, and a box to search again
+    #page-body.search-body   result count, the list, and an empty state
+    Styles live in css/main.css section 24.
+
+  TO WIRE UP
+    Replace #search-index with results from the CMS / search API — keep the
+    same fields, or render the <li class="search-result"> rows server-side
+    and drop the JSON.
+  ============================================================================
+-->
+</head>
+<body class="page-inner">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/SC_Logo.svg"
+           alt="The Straits Times Scholars&rsquo; Choice" width="576" height="280" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="scholarships.html">Find a Scholarship</a></li>
+        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <button class="sc-btn sc-btn--primary sc-btn--sm site-header__login" type="button"
+              data-auth-open aria-haspopup="dialog" aria-label="Login or register">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Sign In</span>
+      </button>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb + the query the user searched for
+       The <h1> is filled from ?q= by searchResults() in js/main.js. The
+       refine form posts back to this page so a new search keeps its place.
+       ======================================================================== -->
+  <section id="page-hero" class="search-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">Search results</li>
+        </ol>
+      </nav>
+
+      <div class="page-hero__head">
+        <p class="sc-eyebrow sc-eyebrow--on-dark">You searched for</p>
+        <h1 class="page-hero__title" id="search-title">Search</h1>
+      </div>
+
+      <form class="search-hero__form" id="search-refine" action="search-results.html" method="get" role="search">
+        <label class="sc-visually-hidden" for="search-refine-query">Search again</label>
+        <div class="search-form__query-wrap">
+          <svg class="search-form__query-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+          </svg>
+          <input class="sc-input" type="search" id="search-refine-query" name="q" autocomplete="off"
+                 placeholder="Search scholarships, providers, stories&hellip;">
+        </div>
+        <button class="sc-btn sc-btn--primary search-form__submit" type="submit">Search</button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · RESULTS — one list, thumbnail + category + title + excerpt +
+       "Read more", following scholarschoice.com.sg/?s= . Rows are rendered
+       from #search-index below; nothing in #search-list is hand-written.
+       ======================================================================== -->
+  <section id="page-body" class="sc-section search-body">
+    <div class="sc-container">
+      <div class="search-results">
+
+        <p class="search-results__count" id="search-count" aria-live="polite" tabindex="-1">Searching&hellip;</p>
+
+        <ol class="search-list" id="search-list"></ol>
+
+        <div class="listing-empty" id="search-empty" hidden>
+          <p class="listing-empty__title" id="search-empty-title">Nothing found</p>
+          <p class="listing-empty__text" id="search-empty-text">Check the spelling, try fewer words, or search for a provider name.</p>
+          <a class="sc-btn sc-btn--secondary sc-btn--sm" href="scholarships.html">Browse all scholarships</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!--
+      SEARCH INDEX — placeholder content until search is backed by the CMS.
+      One object per searchable page:
+        type      category label: "Scholarships", "Experiences", "Resources", "Providers"
+        title     result title
+        excerpt   one or two sentences shown under the title
+        url       link target (placeholder: points at the matching local template)
+        image     thumbnail; data-img-slot is "search-<index>"
+        logo      true when image is a provider logo (shown contained, not cropped)
+        keywords  optional extra words that match but are not shown
+      Matching is case-insensitive and needs every word of the query to appear
+      in title, excerpt, type or keywords. Title matches rank first.
+    -->
+    <script type="application/json" id="search-index">
+    [
+      { "type": "Resources", "title": "Tech and AI scholarships in Singapore 2026: What they cover, who can apply and bond terms",
+        "excerpt": "Interested in a future in tech or AI? Explore Singapore scholarships across defence, infrastructure, sustainability and universities – and see what each offers",
+        "url": "#", "image": "https://picsum.photos/seed/search-tech-ai/300/300", "keywords": "DSTA GovTech CSA IMDA artificial intelligence" },
+      { "type": "Experiences", "title": "From Silicon Valley Apple dream job to S’pore defence: One engineer’s unexpected choice",
+        "excerpt": "He had an Apple offer in hand. Instead, the PSC scholar chose to return home for a bigger mission",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-apple/300/300", "keywords": "PSC DSTA engineering UC Berkeley" },
+      { "type": "Experiences", "title": "From studying her friends’ brain waves to a future in building defence systems for the SAF",
+        "excerpt": "Fascinated by how minds work, this DSTA scholar now engineers military technology that applies neuroscience insights",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-brainwaves/300/300", "keywords": "neuroscience defence" },
+      { "type": "Experiences", "title": "How this defence scholar masters space tech while embracing campus life",
+        "excerpt": "He is sharpening his skills for a career in national security while embracing campus experiences",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-space/300/300", "keywords": "DSTA aerospace" },
+      { "type": "Experiences", "title": "See faster, strike faster: Meet computer scientist advancing S’pore’s military tech",
+        "excerpt": "This DSTA scholar is tapping deep learning to boost defence capabilities",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-deeplearning/300/300", "keywords": "computer science AI" },
+      { "type": "Experiences", "title": "Deploying effective comms out in the field: How her work gives the military a boost",
+        "excerpt": "This DSTA Scholarship holder develops ways to improve connectivity among various units for better decision-making",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-comms/300/300", "keywords": "engineering communications" },
+      { "type": "Experiences", "title": "Using her problem-solving skills to create cutting-edge defence technology",
+        "excerpt": "DSTA scholar Jamie Kan is part of the team safeguarding Singapore’s maritime borders, developing sonar systems",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-sonar/300/300", "keywords": "maritime sonar" },
+      { "type": "Scholarships", "title": "DSTA Polytechnic Scholarship",
+        "excerpt": "Unlock your future in defence tech. With the DSTA Polytechnic Scholarships, you can look forward to pursuing your passion in engineering and digital transformation.",
+        "url": "scholarship-template.html", "image": "images/dsta-logo.png", "logo": true, "keywords": "Defence Science and Technology Agency diploma" },
+      { "type": "Scholarships", "title": "DSTA Undergraduate Scholarship",
+        "excerpt": "Full sponsorship to read engineering or computing at a local or overseas university, with a career building Singapore’s defence technology.",
+        "url": "scholarship-template.html", "image": "images/dsta-logo.png", "logo": true, "keywords": "Defence Science and Technology Agency engineering computing" },
+      { "type": "Providers", "title": "Defence Science and Technology Agency (DSTA)",
+        "excerpt": "Scholarships for engineers and computer scientists who want to design, build and keep the SAF’s systems ahead.",
+        "url": "provider-template.html", "image": "images/dsta-logo.png", "logo": true, "keywords": "DSTA defence" },
+      { "type": "Scholarships", "title": "Public Service Commission Scholarship",
+        "excerpt": "The flagship public-sector award: full fees and allowances at a top university, then a career across the Singapore public service.",
+        "url": "scholarship-template.html", "image": "images/psc-logo.png", "logo": true, "keywords": "PSC public service" },
+      { "type": "Providers", "title": "Public Service Commission (PSC)",
+        "excerpt": "Scholarships that open careers across ministries and statutory boards, from policy to operations.",
+        "url": "provider-template.html", "image": "images/psc-logo.png", "logo": true, "keywords": "PSC public service" },
+      { "type": "Scholarships", "title": "Home Team Scholarship",
+        "excerpt": "Study at a local or overseas university, then lead in one of the Home Team departments keeping Singapore safe.",
+        "url": "scholarship-template.html", "image": "images/mha-logo.png", "logo": true, "keywords": "MHA Ministry of Home Affairs SPF SCDF ICA police" },
+      { "type": "Providers", "title": "Ministry of Home Affairs (MHA)",
+        "excerpt": "Home Team scholarships across the police, civil defence, immigration and prisons.",
+        "url": "provider-template.html", "image": "images/mha-logo.png", "logo": true, "keywords": "MHA Home Team SPF SCDF ICA" },
+      { "type": "Scholarships", "title": "NParks Undergraduate Scholarship",
+        "excerpt": "For students who want to shape Singapore’s City in Nature – from conservation science to urban greenery and landscape design.",
+        "url": "scholarship-template.html", "image": "images/npark-logo.png", "logo": true, "keywords": "National Parks Board environment biology sustainability" },
+      { "type": "Scholarships", "title": "SMU Merit Scholarship",
+        "excerpt": "Recognises outstanding students admitted to Singapore Management University, with no bond attached.",
+        "url": "scholarship-template.html", "image": "images/smu-logo.png", "logo": true, "keywords": "Singapore Management University no bond business law" },
+      { "type": "Experiences", "title": "Why this police scholar traded a law firm offer for the front line",
+        "excerpt": "A Home Team scholar on leading officers on the ground and what she learnt in her first year in command",
+        "url": "scholars-experience.html", "image": "https://picsum.photos/seed/search-police/300/300", "keywords": "SPF MHA Home Team law" },
+      { "type": "Resources", "title": "Bonded vs bond-free scholarships: How to decide what is right for you",
+        "excerpt": "What a bond really means for your first years of work, and the questions to ask before you sign",
+        "url": "#", "image": "https://picsum.photos/seed/search-bond/300/300", "keywords": "bond no bond guide tips" },
+      { "type": "Resources", "title": "Scholarship interviews: 10 questions you are likely to be asked",
+        "excerpt": "Panels want to know why you, why them and why now. Here is how scholars prepared for the questions that came up most",
+        "url": "#", "image": "https://picsum.photos/seed/search-interview/300/300", "keywords": "interview guide tips application" },
+      { "type": "Resources", "title": "Scholarship application deadlines for 2027: A month-by-month calendar",
+        "excerpt": "Most applications open after A-level and diploma results. Keep track of when each provider opens and closes",
+        "url": "#", "image": "https://picsum.photos/seed/search-deadlines/300/300", "keywords": "deadline calendar apply PSC DSTA MHA MOE" }
+    ]
+    </script>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="scholarships.html">Find a Scholarship</a></li>
+            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="#">Guides &amp; Tips</a></li>
+            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/SC_Logo.svg"
+               alt="The Straits Times Scholar&rsquo;s Choice" width="576" height="280" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

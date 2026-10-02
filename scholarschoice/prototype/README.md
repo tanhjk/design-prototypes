@@ -10,8 +10,9 @@ contact-us.html             Contact us, built on the inner page template
 provider-template.html      Provider page template — copy per scholarship provider
 scholarship-template.html   Scholarship detail template — copy per scholarship
 scholarships.html           Scholarship listing — search, filters, lazy-loaded card grid
+search-results.html         Site-wide search results — opened from the header search overlay
 css/main.css                Whole design system + all page styles
-js/main.js                  Nav, carousel, reveal, reading progress, contact form, listing
+js/main.js                  Nav, carousel, reveal, reading progress, contact form, listing, search
 ```
 
 All four pages share an identical `#site-header` and `#site-footer` block, marked in the HTML as `partials/header` and `partials/footer` — extract those two first when moving to a templating layer.

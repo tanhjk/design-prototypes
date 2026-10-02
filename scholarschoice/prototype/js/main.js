@@ -14,11 +14,14 @@
    07. videoModal()       — full-screen video carousel
    08. scholarshipCarousel() — paged rail of featured scholarships
    09. providerRail()     — shuffles the featured providers
+   09b. storyList()       — shuffles the homepage stories, lead included
    10. articleTabs()      — the story / the work / #AMA panels
    11. contactForm()      — contact-us.html validation (sends nothing yet)
    12. authModal()        — Login / Register dialog (Google + Facebook)
+   12b. searchOverlay()   — full-screen site search from the header button
    13. shareLinks()       — fills [data-share] hrefs; wires copy-link buttons
    14. scholarshipListing() — scholarships.html grid, filters, lazy load
+   15. searchResults()    — search-results.html list, from ?q=
    ========================================================================== */
 
 (function () {
@@ -336,6 +339,7 @@
         '<button type="button" class="video-modal__nav video-modal__nav--prev" aria-label="Previous video">' + ICON_PREV + '</button>' +
         '<div class="video-modal__player">' +
           '<video class="video-modal__video" playsinline controls preload="metadata"></video>' +
+          '<img class="video-modal__video" alt="" hidden>' +
           '<div class="video-modal__caption">' +
             '<p class="video-modal__eyebrow" data-modal-eyebrow></p>' +
             '<h2 class="video-modal__title" data-modal-title></h2>' +
@@ -347,7 +351,8 @@
       '</div>';
     document.body.appendChild(modal);
 
-    var video = modal.querySelector('.video-modal__video');
+    var video = modal.querySelector('video.video-modal__video');
+    var still = modal.querySelector('img.video-modal__video');
     var elCount = modal.querySelector('[data-modal-count]');
     var elEyebrow = modal.querySelector('[data-modal-eyebrow]');
     var elTitle = modal.querySelector('[data-modal-title]');
@@ -379,9 +384,21 @@
       var item = items[current];
 
       video.pause();
-      video.poster = item.poster;
-      video.src = item.src;
-      video.load();
+      /* A reel with no data-video-src is a still: show its image full-size
+         in place of the player. */
+      var isStill = !item.src;
+      video.hidden = isStill;
+      still.hidden = !isStill;
+      if (isStill) {
+        video.removeAttribute('src');
+        video.load();
+        still.src = item.poster;
+        btnUnmute.hidden = true;
+      } else {
+        video.poster = item.poster;
+        video.src = item.src;
+        video.load();
+      }
 
       elCount.textContent = (current + 1) + ' / ' + items.length;
       elEyebrow.textContent = item.eyebrow;
@@ -395,6 +412,7 @@
       /* Autoplay with sound where the browser allows it; fall back to muted,
          which every browser permits, rather than leaving a frozen poster. The
          pill in the bar then offers the sound back in one tap. */
+      if (isStill) return;
       video.muted = false;
       var attempt = video.play();
       if (attempt && typeof attempt.catch === 'function') {
@@ -640,6 +658,106 @@
     if (!rail) return;
     shuffleRail(rail);
     rail.scrollLeft = 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     09b · STORY LIST  (homepage)
+     All five stories are dealt afresh, the lead slot included. The lead and
+     the cards have different markup, so rather than moving nodes this reads
+     each story into a plain record, shuffles the records, and writes them
+     back into the existing slots. Each story carries the fields the other
+     layout needs as data-* attributes.
+     ------------------------------------------------------------------------ */
+  function storyList() {
+    var lead = document.querySelector('#stories .story-lead');
+    var cards = document.querySelectorAll('#stories .story-list .story-card');
+    if (!lead || !cards.length) return;
+
+    function readImg(img) {
+      return {
+        src: img.getAttribute('src'),
+        alt: img.getAttribute('alt'),
+        width: img.getAttribute('width'),
+        height: img.getAttribute('height'),
+        style: img.getAttribute('style')
+      };
+    }
+    function writeImg(img, d) {
+      ['src', 'alt', 'width', 'height', 'style'].forEach(function (k) {
+        if (d[k]) img.setAttribute(k, d[k]);
+        else img.removeAttribute(k);
+      });
+    }
+
+    var byline = lead.querySelector('.story-lead__byline');
+    var stories = [{
+      href: lead.getAttribute('href'),
+      img: readImg(lead.querySelector('img')),
+      title: lead.querySelector('.story-lead__title').innerHTML,
+      standfirst: lead.querySelector('.story-lead__standfirst').innerHTML,
+      tags: Array.prototype.map.call(lead.querySelectorAll('.story-lead__tags li'),
+        function (li) { return li.textContent; }),
+      byline: byline ? byline.innerHTML : '',
+      scholar: lead.getAttribute('data-scholar'),
+      meta: lead.getAttribute('data-meta')
+    }];
+    Array.prototype.forEach.call(cards, function (card) {
+      stories.push({
+        href: card.getAttribute('href'),
+        img: readImg(card.querySelector('img')),
+        title: card.querySelector('.story-card__title').innerHTML,
+        standfirst: card.getAttribute('data-standfirst') || '',
+        tags: (card.getAttribute('data-tags') || '').split('|').filter(Boolean),
+        byline: card.getAttribute('data-byline') || '',
+        scholar: card.querySelector('.story-card__scholar').textContent,
+        meta: card.querySelector('.story-card__meta').textContent
+      });
+    });
+
+    for (var i = stories.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = stories[i];
+      stories[i] = stories[j];
+      stories[j] = tmp;
+    }
+
+    /* Lead: first tag is the provider, drawn in lime like the original. */
+    var top = stories[0];
+    lead.setAttribute('href', top.href);
+    lead.setAttribute('data-scholar', top.scholar);
+    lead.setAttribute('data-meta', top.meta);
+    writeImg(lead.querySelector('img'), top.img);
+    lead.querySelector('.story-lead__title').innerHTML = top.title;
+    var standfirst = lead.querySelector('.story-lead__standfirst');
+    standfirst.innerHTML = top.standfirst;
+    standfirst.style.display = top.standfirst ? '' : 'none';
+    var tagList = lead.querySelector('.story-lead__tags');
+    tagList.innerHTML = '';
+    top.tags.forEach(function (tag, n) {
+      var li = document.createElement('li');
+      li.className = n === 0 ? 'sc-tag sc-tag--lime' : 'sc-tag';
+      li.textContent = tag;
+      tagList.appendChild(li);
+    });
+    if (byline) {
+      byline.innerHTML = top.byline;
+      byline.style.display = top.byline ? '' : 'none';
+    }
+
+    /* Cards: the rest, in their shuffled order. Each card keeps the lead's
+       extra fields as data-* so a later reshuffle still has them. */
+    Array.prototype.forEach.call(cards, function (card, n) {
+      var d = stories[n + 1];
+      card.setAttribute('href', d.href);
+      card.setAttribute('data-tags', d.tags.join('|'));
+      card.setAttribute('data-standfirst', d.standfirst);
+      if (d.byline) card.setAttribute('data-byline', d.byline);
+      else card.removeAttribute('data-byline');
+      writeImg(card.querySelector('img'), d.img);
+      card.querySelector('.story-card__scholar').textContent = d.scholar;
+      card.querySelector('.story-card__title').innerHTML = d.title;
+      card.querySelector('.story-card__meta').textContent = d.meta;
+    });
   }
 
   /* ------------------------------------------------------------------------
@@ -923,6 +1041,108 @@
       if (e.key !== 'Tab') return;
       /* Keep focus inside the dialog while it is open. */
       var focusable = modal.querySelectorAll('button');
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     12b · SITE SEARCH OVERLAY
+     The header search button opens a full-screen frosted overlay with one
+     query field. It submits a GET to SEARCH_ACTION with ?q=, which
+     searchResults() (15) reads and renders.
+     ------------------------------------------------------------------------ */
+  function searchOverlay() {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.site-header__search-btn'));
+    if (!triggers.length) return;
+
+    var SEARCH_ACTION = 'search-results.html';
+    var ICON_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var ICON_SEARCH = '<svg class="search-form__query-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg>';
+
+    var overlay = document.createElement('div');
+    overlay.className = 'search-overlay';
+    overlay.id = 'search-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Search the site');
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<button type="button" class="search-overlay__close" aria-label="Close search">' + ICON_CLOSE + '</button>' +
+      '<form class="search-overlay__form" action="' + SEARCH_ACTION + '" method="get" role="search">' +
+        '<label class="sc-visually-hidden" for="search-overlay-query">Search Scholar’s Choice</label>' +
+        '<div class="search-form__query-wrap">' +
+          ICON_SEARCH +
+          '<input class="sc-input" type="search" id="search-overlay-query" name="q" autocomplete="off" ' +
+                 'placeholder="Search scholarships, providers, stories…" required>' +
+        '</div>' +
+        '<button class="sc-btn sc-btn--primary search-overlay__submit" type="submit">Search</button>' +
+      '</form>';
+    document.body.appendChild(overlay);
+
+    var form = overlay.querySelector('form');
+    var input = overlay.querySelector('input');
+    var btnClose = overlay.querySelector('.search-overlay__close');
+    var lastFocused = null;
+    var isOpen = false;
+
+    function open() {
+      lastFocused = document.activeElement;
+      isOpen = true;
+      overlay.hidden = false;
+      requestAnimationFrame(function () {
+        if (isOpen) overlay.classList.add('is-open');
+      });
+      document.body.classList.add('is-modal-open');
+      triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'true'); });
+      input.focus();
+    }
+
+    function close() {
+      isOpen = false;
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('is-modal-open');
+      triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+      window.setTimeout(function () { if (!isOpen) overlay.hidden = true; }, prefersReducedMotion ? 0 : 260);
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-controls', 'search-overlay');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        open();
+      });
+    });
+
+    btnClose.addEventListener('click', close);
+
+    /* Don't submit an empty or whitespace-only query. */
+    form.addEventListener('submit', function (e) {
+      input.value = input.value.trim();
+      if (!input.value) { e.preventDefault(); input.focus(); }
+    });
+
+    /* Click the frosted backdrop (but not the form) to dismiss. */
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (overlay.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      /* Keep focus inside the overlay: close → input → submit. */
+      var focusable = overlay.querySelectorAll('button, input');
       var first = focusable[0];
       var last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) {
@@ -1518,6 +1738,103 @@
   }
 
   /* ------------------------------------------------------------------------
+     15 · SEARCH RESULTS
+     search-results.html. Reads ?q=, matches it against the #search-index
+     JSON and renders one .search-result row per hit, matched words marked.
+     Every word of the query must appear somewhere in the entry; hits in the
+     title rank above hits elsewhere, then index order breaks ties.
+     ------------------------------------------------------------------------ */
+  function searchResults() {
+    var list = document.getElementById('search-list');
+    var dataEl = document.getElementById('search-index');
+    if (!list || !dataEl) return;
+
+    var titleEl = document.getElementById('search-title');
+    var countEl = document.getElementById('search-count');
+    var emptyEl = document.getElementById('search-empty');
+    var emptyTitle = document.getElementById('search-empty-title');
+    var emptyText = document.getElementById('search-empty-text');
+    var refine = document.getElementById('search-refine-query');
+    var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>';
+
+    var index = [];
+    try { index = JSON.parse(dataEl.textContent); } catch (err) { index = []; }
+
+    var query = (new URLSearchParams(window.location.search).get('q') || '').trim().replace(/\s+/g, ' ');
+    var terms = query ? query.toLowerCase().split(' ') : [];
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function escapeRegExp(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    /* Longest terms first so "dsta" wins over "ds" inside the same word. */
+    var markRe = terms.length
+      ? new RegExp('(' + terms.slice().sort(function (a, b) { return b.length - a.length; }).map(escapeRegExp).join('|') + ')', 'gi')
+      : null;
+    function highlight(str) {
+      var safe = escapeHtml(str);
+      return markRe ? safe.replace(markRe, '<mark>$1</mark>') : safe;
+    }
+
+    if (refine) refine.value = query;
+    if (titleEl) titleEl.textContent = query || 'Search';
+    if (query) document.title = '“' + query + '” — Search results — Scholar’s Choice';
+
+    function showEmpty(title, text) {
+      list.hidden = true;
+      emptyEl.hidden = false;
+      emptyTitle.textContent = title;
+      emptyText.textContent = text;
+    }
+
+    if (!terms.length) {
+      countEl.textContent = 'Type a word or two above to search the site.';
+      showEmpty('What are you looking for?', 'Search for a scholarship, a provider, a course or a scholar’s story.');
+      return;
+    }
+
+    var hits = [];
+    index.forEach(function (item, i) {
+      var title = (item.title || '').toLowerCase();
+      var rest = [item.excerpt, item.type, item.keywords].join(' ').toLowerCase();
+      var score = 0;
+      for (var t = 0; t < terms.length; t++) {
+        var inTitle = title.indexOf(terms[t]) !== -1;
+        if (!inTitle && rest.indexOf(terms[t]) === -1) return;
+        score += inTitle ? 3 : 1;
+      }
+      hits.push({ item: item, score: score, order: i });
+    });
+    hits.sort(function (a, b) { return b.score - a.score || a.order - b.order; });
+
+    var q = '<strong>“' + escapeHtml(query) + '”</strong>';
+    if (!hits.length) {
+      countEl.innerHTML = 'No results for ' + q;
+      showEmpty('Nothing found', 'Check the spelling, try fewer words, or search for a provider name.');
+      return;
+    }
+    countEl.innerHTML = '<strong>' + hits.length + '</strong> result' + (hits.length === 1 ? '' : 's') + ' for ' + q;
+
+    list.innerHTML = hits.map(function (hit, n) {
+      var item = hit.item;
+      return '<li class="search-result" style="--i:' + Math.min(n, 12) + '">' +
+        '<div class="search-result__thumb' + (item.logo ? ' search-result__thumb--logo' : '') + '">' +
+          '<img data-img-slot="search-' + hit.order + '" src="' + escapeHtml(item.image || '') + '" alt="" width="300" height="300" loading="lazy" decoding="async">' +
+        '</div>' +
+        '<div class="search-result__body">' +
+          '<span class="sc-tag">' + escapeHtml(item.type || '') + '</span>' +
+          '<h2 class="search-result__title"><a class="search-result__link" href="' + escapeHtml(item.url || '#') + '">' + highlight(item.title || '') + '</a></h2>' +
+          (item.excerpt ? '<p class="search-result__excerpt">' + highlight(item.excerpt) + '</p>' : '') +
+          '<span class="search-result__more" aria-hidden="true">Read more' + ICON_ARROW + '</span>' +
+        '</div>' +
+      '</li>';
+    }).join('');
+  }
+
+  /* ------------------------------------------------------------------------
      BOOT
      ------------------------------------------------------------------------ */
   function init() {
@@ -1530,11 +1847,14 @@
     videoModal();
     scholarshipCarousel();
     providerRail();
+    storyList();
     articleTabs();
     authModal();
+    searchOverlay();
     contactForm();
     shareLinks();
     scholarshipListing();
+    searchResults();
   }
 
   if (document.readyState === 'loading') {

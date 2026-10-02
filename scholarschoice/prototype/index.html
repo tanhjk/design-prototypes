@@ -347,7 +347,7 @@
               </select>
             </div>
 
-            <button class="sc-btn sc-btn--dark search-form__submit" type="submit">
+            <button class="sc-btn sc-btn--primary search-form__submit" type="submit">
               Search
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
             </button>
@@ -749,13 +749,13 @@
       <div class="sc-rail video-rail sc-reveal">
 
         <a class="video-reel" href="#" data-video-id="reel-1"
-           data-video-src="https://download.samplelib.com/mp4/sample-10s.mp4">
+           data-video-src="videos/astar.mp4">
           <div class="sc-frame sc-frame--9x16">
-            <img data-img-slot="video-1" src="https://picsum.photos/seed/screel1/540/960"
+            <img data-img-slot="video-1" src="videos/astar.jpg"
                  alt="" width="540" height="960" loading="lazy">
           </div>
           <span class="video-reel__scrim" aria-hidden="true"></span>
-          <span class="video-reel__duration">0:58</span>
+          <span class="video-reel__duration">0:10</span>
           <span class="video-reel__play" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </span>
@@ -767,13 +767,12 @@
         </a>
 
         <a class="video-reel" href="#" data-video-id="reel-2"
-           data-video-src="https://download.samplelib.com/mp4/sample-15s.mp4">
+           data-video-src="">
           <div class="sc-frame sc-frame--9x16">
-            <img data-img-slot="video-2" src="https://picsum.photos/seed/screel2/540/960"
+            <img data-img-slot="video-2" src="videos/psc.jpeg"
                  alt="" width="540" height="960" loading="lazy">
           </div>
           <span class="video-reel__scrim" aria-hidden="true"></span>
-          <span class="video-reel__duration">1:12</span>
           <span class="video-reel__play" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </span>
@@ -785,13 +784,13 @@
         </a>
 
         <a class="video-reel" href="#" data-video-id="reel-3"
-           data-video-src="https://download.samplelib.com/mp4/sample-5s.mp4">
+           data-video-src="videos/moe.mp4">
           <div class="sc-frame sc-frame--9x16">
-            <img data-img-slot="video-3" src="https://picsum.photos/seed/screel3/540/960"
+            <img data-img-slot="video-3" src="videos/moe.jpg"
                  alt="" width="540" height="960" loading="lazy">
           </div>
           <span class="video-reel__scrim" aria-hidden="true"></span>
-          <span class="video-reel__duration">0:44</span>
+          <span class="video-reel__duration">0:10</span>
           <span class="video-reel__play" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </span>
@@ -803,13 +802,13 @@
         </a>
 
         <a class="video-reel" href="#" data-video-id="reel-4"
-           data-video-src="https://download.samplelib.com/mp4/sample-20s.mp4">
+           data-video-src="videos/dsta.mp4">
           <div class="sc-frame sc-frame--9x16">
-            <img data-img-slot="video-4" src="https://picsum.photos/seed/screel4/540/960"
+            <img data-img-slot="video-4" src="videos/dsta.jpg"
                  alt="" width="540" height="960" loading="lazy">
           </div>
           <span class="video-reel__scrim" aria-hidden="true"></span>
-          <span class="video-reel__duration">1:05</span>
+          <span class="video-reel__duration">0:10</span>
           <span class="video-reel__play" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </span>
@@ -821,13 +820,12 @@
         </a>
 
         <a class="video-reel" href="#" data-video-id="reel-5"
-           data-video-src="https://download.samplelib.com/mp4/sample-30s.mp4">
+           data-video-src="">
           <div class="sc-frame sc-frame--9x16">
-            <img data-img-slot="video-5" src="https://picsum.photos/seed/screel5/540/960"
+            <img data-img-slot="video-5" src="videos/temasek.jpeg"
                  alt="" width="540" height="960" loading="lazy">
           </div>
           <span class="video-reel__scrim" aria-hidden="true"></span>
-          <span class="video-reel__duration">0:51</span>
           <span class="video-reel__play" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </span>
@@ -863,8 +861,12 @@
 
       <div class="stories__layout sc-reveal">
 
-        <!-- Lead story -->
-        <a class="story-lead" href="scholars-experience.html">
+        <!-- Lead story. On load main.js picks one of the five stories for this
+             slot at random, so every story carries what the lead needs:
+             data-scholar / data-meta here, data-tags / data-standfirst on the
+             cards. Draft standfirsts on the cards are placeholder copy. -->
+        <a class="story-lead" href="scholars-experience.html"
+           data-scholar="Vera · PSC" data-meta="Social policy">
           <div class="sc-frame sc-frame--16x9">
             <img data-img-slot="story-lead" src="images/vera.jpg"
                  alt="Vera at Marina Bay, with the financial district behind her" width="2560" height="1707" loading="lazy">
@@ -886,7 +888,9 @@
         <!-- Secondary stories -->
         <div class="story-list">
 
-          <a class="story-card" href="scholars-experience.html">
+          <a class="story-card" href="scholars-experience.html"
+             data-tags="MAS|Financial regulation|Public service"
+             data-standfirst="An MAS scholar on the quiet, careful work of keeping Singapore&rsquo;s financial sector safe &mdash; and why trust is the thing that has to be built first.">
             <div class="sc-frame sc-frame--1x1">
               <img data-img-slot="story-1" src="images/elliot.jpg"
                    alt="Portrait of Elliot at the payments gallery" width="1536" height="1024" loading="lazy">
@@ -898,7 +902,9 @@
             </div>
           </a>
 
-          <a class="story-card" href="scholars-experience.html">
+          <a class="story-card" href="scholars-experience.html"
+             data-tags="ICA|Home affairs|Uniformed service"
+             data-standfirst="Border clearance is changing faster than ever. An ICA scholar explains how he is helping the people behind it keep up.">
             <div class="sc-frame sc-frame--1x1">
               <img data-img-slot="story-2" src="images/qi-hua.jpg"
                    alt="Portrait of Qi Hua in ICA uniform" width="1536" height="1024" loading="lazy" style="object-position: 35% center;">
@@ -910,7 +916,9 @@
             </div>
           </a>
 
-          <a class="story-card" href="scholars-experience.html">
+          <a class="story-card" href="scholars-experience.html"
+             data-tags="SPF|Home affairs|Uniformed service"
+             data-standfirst="In VIP protection, a good day is one where nothing happens. An SPF scholar takes us inside the planning that makes sure of it.">
             <div class="sc-frame sc-frame--1x1">
               <img data-img-slot="story-3" src="images/jun-hao.jpg"
                    alt="Portrait of Jun Hao at the firing range" width="1536" height="1024" loading="lazy" style="object-position: 72% center;">
@@ -922,7 +930,9 @@
             </div>
           </a>
 
-          <a class="story-card" href="scholars-experience.html">
+          <a class="story-card" href="scholars-experience.html"
+             data-tags="A*STAR|Research|Science"
+             data-standfirst="An A*STAR scientist on pairing proteins like a matchmaker &mdash; and how the right match could open new ways to treat disease.">
             <div class="sc-frame sc-frame--1x1">
               <img data-img-slot="story-4" src="images/liu-shuang.jpg"
                    alt="Portrait of Liu Shuang in the laboratory" width="1536" height="1024" loading="lazy">
@@ -943,7 +953,8 @@
   <!-- ========================================================================
        06 · PATHWAYS — how to find a suitable scholarship
        ======================================================================== -->
-  <section id="pathways" class="pathways">
+  <section id="pathways" class="sc-section sc-section--tight pathways">
+    <div class="sc-container">
     <div class="pathways__head sc-reveal">
       <p class="sc-eyebrow">Where to start</p>
       <h2 class="sc-h2 pathways__title">Two ways in</h2>
@@ -1013,6 +1024,7 @@
         </li>
         -->
     </ol>
+    </div>
   </section>
 
 

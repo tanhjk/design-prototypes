@@ -87,7 +87,7 @@
   --sc-text-muted:      var(--sc-ink-60);
   --sc-text-on-dark:    #EAF3F0;
   --sc-text-on-dark-muted: rgba(234, 243, 240, 0.68);
-  --sc-focus:           var(--sc-accent);
+  --sc-focus:           var(--sc-teal-600);
 
   /* --- Typography ------------------------------------------------------- */
   --sc-font-display:    "Bebas Neue", "Oswald", "Arial Narrow", sans-serif;
@@ -206,6 +206,8 @@ button { cursor: pointer; }
   outline-offset: 2px;
   border-radius: var(--sc-radius-sm);
 }
+/* Teal disappears on the dark grounds, so the ring switches to lime there. */
+.sc-section--dark, .sc-section--darkest, #page-hero, #site-footer { --sc-focus: var(--sc-lime); }
 
 ::selection {
   background: var(--sc-lime);
@@ -293,12 +295,12 @@ button { cursor: pointer; }
 
 .sc-lead { font-size: var(--sc-step-1); line-height: 1.6; }
 
-/* Section header block — reused by every homepage section */
+/* Section header block — reused by every homepage section. Any "View all"
+   link stacks under the heading text rather than sitting off to the right. */
 .sc-section-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--sc-space-5);
   margin-bottom: var(--sc-space-7);
 }
@@ -321,10 +323,12 @@ button { cursor: pointer; }
               border-color var(--sc-dur-fast) var(--sc-ease);
 }
 .sc-arrow-link svg { width: 1em; height: 1em; transition: transform var(--sc-dur) var(--sc-ease); }
-.sc-arrow-link:hover { color: var(--sc-accent); border-bottom-color: var(--sc-accent); }
+/* Links keep their colour on hover; the underline is the only change. Light
+   grounds use lime-600, as base lime is too faint there; dark grounds keep lime. */
+.sc-arrow-link:hover { border-bottom-color: var(--sc-lime-600); }
 .sc-arrow-link:hover svg { transform: translateX(4px); }
 .sc-arrow-link--on-dark { color: var(--sc-lime); }
-.sc-arrow-link--on-dark:hover { color: var(--sc-lime); border-bottom-color: var(--sc-lime); }
+.sc-arrow-link--on-dark:hover { border-bottom-color: var(--sc-lime); }
 
 
 /* ==========================================================================
@@ -448,14 +452,13 @@ button { cursor: pointer; }
 .sc-btn:hover { transform: translateY(-2px); box-shadow: var(--sc-shadow); }
 .sc-btn:active { transform: translateY(0); }
 
-/* Primary: solid teal, lime on hover. Secondary: the same shape drawn as an
-   outline, landing on the same lime hover so the pair reads as one family. */
-.sc-btn--primary  { --btn-bg: var(--sc-teal-600); --btn-fg: var(--sc-white); --btn-bd: var(--sc-teal-600); }
-.sc-btn--primary:hover { --btn-bg: var(--sc-lime); --btn-fg: var(--sc-ink); --btn-bd: var(--sc-lime); }
+/* Primary: solid lime with an ink label, teal on hover. Secondary: a teal
+   outline that fills lime on hover. */
+.sc-btn--primary  { --btn-bg: var(--sc-lime-500); --btn-fg: var(--sc-ink); --btn-bd: var(--sc-lime-500); }
+.sc-btn--primary:hover { --btn-bg: var(--sc-teal-600); --btn-fg: var(--sc-white); --btn-bd: var(--sc-teal-600); }
 .sc-btn--secondary { --btn-bg: transparent; --btn-fg: var(--sc-teal-600); --btn-bd: var(--sc-teal-600); }
 .sc-btn--secondary:hover { --btn-bg: var(--sc-lime); --btn-fg: var(--sc-ink); --btn-bd: var(--sc-lime); }
 .sc-btn--dark     { --btn-bg: var(--sc-teal-600); --btn-fg: var(--sc-white); --btn-bd: var(--sc-teal-600); }
-.sc-btn--accent   { --btn-bg: var(--sc-accent);   --btn-fg: var(--sc-white); --btn-bd: var(--sc-accent); }
 .sc-btn--ghost    { --btn-bg: transparent;        --btn-fg: var(--sc-teal-600); --btn-bd: var(--sc-teal-600); }
 .sc-btn--ghost:hover { --btn-bg: var(--sc-lime); --btn-fg: var(--sc-ink); }
 .sc-btn--ghost-light { --btn-bg: transparent; --btn-fg: var(--sc-lime); --btn-bd: var(--sc-lime); }
@@ -619,12 +622,11 @@ button { cursor: pointer; }
   bottom: 0;
   width: 100%;
   height: 3px;
-  background: var(--sc-lime);
+  background: var(--sc-lime-600);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--sc-dur) var(--sc-ease);
 }
-.site-nav__link:hover { color: var(--sc-ink); }
 .site-nav__link:hover::after { transform: scaleX(1); }
 .site-nav__link.is-active { color: var(--sc-ink); font-weight: 700; }
 .site-nav__link.is-active::after { transform: scaleX(1); }
@@ -637,7 +639,7 @@ button { cursor: pointer; }
 
 .site-header__login-icon { width: 18px; height: 18px; flex: none; }
 
-/* Same secondary treatment as Login, drawn as a circle. */
+/* Secondary outline treatment, drawn as a circle. */
 .site-header__search-btn {
   display: grid;
   place-items: center;
@@ -730,8 +732,13 @@ button { cursor: pointer; }
     font-weight: 500;
     color: var(--sc-text-on-dark);
   }
-  .site-nav__link.is-active,
-  .site-nav__link:hover { color: var(--sc-lime); }
+  .site-nav__link.is-active { color: var(--sc-lime); }
+  .site-nav__link:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--sc-lime);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
   .site-nav__link::after { display: none; }
   .site-nav__drawer-cta { margin-top: var(--sc-space-6); }
 }
@@ -848,6 +855,86 @@ button { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   .auth-modal,
   .auth-modal__panel { transition: none; }
+}
+
+/* --- Site search overlay (header search button) ------------------------ */
+/* Full-screen frosted layer: a light translucent paper wash that blurs the
+   page underneath, with a single query field + submit centred in it. */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sc-z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--sc-space-9) var(--sc-gutter);
+  background: rgba(252, 250, 246, 0.72);   /* --sc-paper, translucent */
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--sc-dur) var(--sc-ease),
+              visibility 0s linear var(--sc-dur);
+}
+.search-overlay[hidden] { display: none; }
+.search-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Close sits well clear of the screen edge, not tucked into the corner. */
+.search-overlay__close {
+  position: absolute;
+  top: clamp(1.25rem, 4vw, 2.5rem);
+  right: clamp(1.25rem, 4vw, 2.5rem);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: 2px solid var(--sc-ink);
+  border-radius: 50%;
+  color: var(--sc-ink);
+  cursor: pointer;
+  transition: transform var(--sc-dur-fast) var(--sc-ease),
+              background-color var(--sc-dur-fast) var(--sc-ease),
+              border-color var(--sc-dur-fast) var(--sc-ease);
+}
+.search-overlay__close:hover {
+  background: var(--sc-lime);
+  border-color: var(--sc-lime);
+  transform: rotate(90deg);
+}
+.search-overlay__close svg { width: 22px; height: 22px; }
+
+.search-overlay__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sc-space-3);
+  width: 100%;
+  max-width: 760px;
+  transform: translateY(12px);
+  transition: transform var(--sc-dur) var(--sc-ease);
+}
+.search-overlay.is-open .search-overlay__form { transform: translateY(0); }
+
+/* Reuses .search-form__query-wrap for the icon + tall 2px-ink field. */
+.search-overlay__form .sc-input { box-shadow: var(--sc-shadow); }
+.search-overlay__form .sc-input:focus {
+  border-color: var(--sc-teal-600);
+  box-shadow: 0 0 0 3px rgba(14, 92, 84, 0.16), var(--sc-shadow);
+}
+.search-overlay__form .sc-input::-webkit-search-cancel-button { display: none; }
+.search-overlay__submit { min-height: 60px; }
+
+@media (max-width: 520px) {
+  .search-overlay__form { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-overlay,
+  .search-overlay__form,
+  .search-overlay__close { transition: none; }
 }
 
 
@@ -1014,18 +1101,6 @@ button { cursor: pointer; }
   box-shadow: var(--sc-shadow-lg);
   overflow: hidden;
 }
-.search-panel::before {
-  content: "";
-  position: absolute;
-  top: -20%;
-  right: -6%;
-  width: 34vw;
-  height: 34vw;
-  max-width: 460px;
-  max-height: 460px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent 68%);
-  pointer-events: none;
-}
 
 .search-section__head {
   position: relative;
@@ -1088,21 +1163,17 @@ button { cursor: pointer; }
 
 #pathways {
   background: var(--sc-paper);
-  padding-block: calc(var(--sc-section-y) + clamp(1.75rem, 5vw, 4.5rem)) 0;
+  /* No bottom padding: #providers below is the same paper colour, so any
+     space here would just stack onto its top padding. */
+  padding-bottom: 0;
   overflow: hidden;
 }
 
-/* The head is full-bleed like the rows: gutter padding only, no container. */
-.pathways__head {
-  padding-inline: var(--sc-gutter);
-  margin-bottom: var(--sc-space-7);
-}
+.pathways__head { margin-bottom: var(--sc-space-7); }
 .pathways__head .sc-eyebrow { margin-bottom: var(--sc-space-3); }
 .pathways__head .sc-standfirst { margin-top: var(--sc-space-4); }
-/* Bumped a step now that the head has the full width to fill */
-.pathways__title { font-size: var(--sc-step-6); }
 
-/* Rows are full-bleed too: the index panel can touch the viewport edge. */
+/* Rows sit inside the shared container, like every other section. */
 .pathways__list {
   list-style: none;
   margin: 0;
@@ -1117,14 +1188,20 @@ button { cursor: pointer; }
   align-items: center;
   gap: clamp(1rem, 3vw, 3rem);
   padding-right: var(--sc-gutter);
-  /* Alternating tints; the last row lands on teal so it reads distinctly
-     against the warm-paper #providers section above it. */
-  background: var(--sc-teal-50);
+  /* Alternating tints. The content stays in the container, but the tint
+     bleeds to the viewport edges: a spread shadow paints it sideways and the
+     clip-path stops it spilling onto the rows above and below. The section's
+     overflow: hidden keeps it from adding a horizontal scrollbar. */
+  --row-bg: var(--sc-teal-50);
+  background: var(--row-bg);
+  box-shadow: 0 0 0 100vmax var(--row-bg);
+  clip-path: inset(0 -100vmax);
 }
-.pathway-row:nth-child(even) { background: var(--sc-paper-warm); }
+.pathway-row:nth-child(even) { --row-bg: var(--sc-paper-warm); }
 
-/* Hover fill, wiped in from the left. It sits behind the content, which the
-   z-index below lifts clear of it. */
+/* Hover fill, wiped in from the left. It covers the row box only, so it stays
+   within the container width rather than following the full-bleed tint. It
+   sits behind the content, which the z-index below lifts clear of it. */
 .pathway-row::before {
   content: "";
   position: absolute;
@@ -1304,7 +1381,12 @@ button { cursor: pointer; }
    ========================================================================== */
 
 #scholarships { background: var(--sc-paper-warm ); }
-#providers { background: var(--sc-paper); }
+#providers {
+  background: var(--sc-paper);
+  /* Match the visible gap at the bottom, which is the section padding plus
+     the rail's scrollbar room and the provider cards' own padding. */
+  padding-top: calc(var(--sc-section-y));
+}
 
 /* --- Provider logo tile ---------------------------------------------- */
 .provider-rail { grid-auto-columns: minmax(200px, 1fr); }
@@ -1447,6 +1529,14 @@ button { cursor: pointer; }
    card, so there is one link per card for keyboards and screen readers. */
 .scholarship-card { position: relative; cursor: pointer; }
 .scholarship-card__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+/* The whole card is the Details link, so hovering anywhere on it shows the
+   link's own hover state. */
+.scholarship-card:hover .scholarship-card__link,
+.scholarship-card:focus-within .scholarship-card__link { border-bottom-color: var(--sc-lime-600); }
+.scholarship-card--feature:hover .scholarship-card__link,
+.scholarship-card--feature:focus-within .scholarship-card__link { border-bottom-color: var(--sc-lime); }
+.scholarship-card:hover .scholarship-card__link svg,
+.scholarship-card:focus-within .scholarship-card__link svg { transform: translateX(4px); }
 .scholarship-card:focus-within { box-shadow: 0 0 0 3px var(--sc-teal-600); }
 .scholarship-card__link:focus-visible { outline: none; }
 
@@ -1525,6 +1615,9 @@ button { cursor: pointer; }
   background: var(--sc-paper);
   border-top: 1px solid var(--sc-line);
 }
+/* The link's underline space (2px padding + 2px border) sits below its text;
+   cancel it so the text, not the box, centres against the deadline. */
+.scholarship-card__foot .scholarship-card__link { margin-bottom: -4px; }
 .scholarship-card__deadline {
   font-size: var(--sc-step--2);
   font-weight: 700;
@@ -1546,7 +1639,6 @@ button { cursor: pointer; }
 }
 .scholarship-card--feature .scholarship-card__deadline { color: var(--sc-lime); }
 .scholarship-card--feature .sc-arrow-link { color: var(--sc-lime); }
-.scholarship-card--feature .sc-arrow-link:hover { border-bottom-color: var(--sc-lime); }
 
 
 /* ==========================================================================
@@ -2037,9 +2129,13 @@ body.is-modal-open { overflow: hidden; }
 .site-footer__list a {
   font-size: var(--sc-step-0);
   color: var(--sc-teal-200);
-  transition: color var(--sc-dur-fast) var(--sc-ease);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--sc-dur-fast) var(--sc-ease);
 }
-.site-footer__list a:hover { color: var(--sc-lime); }
+.site-footer__list a:hover { text-decoration-color: var(--sc-lime); }
 
 .site-footer__legal {
   display: flex;
@@ -2053,7 +2149,14 @@ body.is-modal-open { overflow: hidden; }
   color: var(--sc-teal-200);
 }
 .site-footer__legal-links { display: flex; flex-wrap: wrap; gap: var(--sc-space-4); }
-.site-footer__legal-links a:hover { color: var(--sc-lime); }
+.site-footer__legal-links a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--sc-dur-fast) var(--sc-ease);
+}
+.site-footer__legal-links a:hover { text-decoration-color: var(--sc-lime); }
 
 @media (max-width: 1024px) {
   /* Stacked: brand returns above the link columns. */
@@ -2096,7 +2199,14 @@ body.is-modal-open { overflow: hidden; }
   color: var(--sc-text-on-dark-muted);
 }
 .sc-breadcrumb li:not(:last-child)::after { content: "/"; margin-left: 0.5rem; opacity: 0.5; }
-.sc-breadcrumb a:hover { color: var(--sc-lime); }
+.sc-breadcrumb a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--sc-dur-fast) var(--sc-ease);
+}
+.sc-breadcrumb a:hover { text-decoration-color: var(--sc-lime); }
 .sc-breadcrumb [aria-current="page"] { color: var(--sc-lime); }
 
 #article-hero {
@@ -2527,7 +2637,7 @@ body.is-modal-open { overflow: hidden; }
 .article-body__main.is-tabbed .article-part__label { display: none; }
 .article-body__main.is-tabbed .article-part + .article-part { margin-top: 0; }
 .article-part[hidden] { display: none; }
-.article-part:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 6px; }
+.article-part:focus-visible { outline: 2px solid var(--sc-focus); outline-offset: 6px; }
 
 .article-part__label {
   display: flex;
@@ -2570,9 +2680,11 @@ body.is-modal-open { overflow: hidden; }
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
-  text-decoration-color: var(--sc-lime);
+  text-decoration-color: var(--sc-lime-600);
+  transition: text-decoration-thickness var(--sc-dur-fast) var(--sc-ease);
 }
-.article-prose a:hover { color: var(--sc-accent); text-decoration-color: var(--sc-accent); }
+/* Already lime-underlined at rest, so hover thickens the line instead. */
+.article-prose a:hover { text-decoration-thickness: 4px; }
 
 .article-prose p.article-prose__dropcap::first-letter {
   float: left;
@@ -2985,9 +3097,10 @@ body.is-modal-open { overflow: hidden; }
   font-weight: 600;
   text-decoration: underline;
   text-decoration-color: var(--sc-line-strong);
+  text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
-.page-aside-card__list a:hover { color: var(--sc-accent); text-decoration-color: currentColor; }
+.page-aside-card__list a:hover { text-decoration-color: var(--sc-lime-600); }
 
 /* Captioned placeholder figure */
 .page-figure { margin-top: var(--sc-space-7); }
@@ -3650,12 +3763,14 @@ body.is-modal-open { overflow: hidden; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--sc-accent);
+  color: var(--sc-teal-600);
   text-decoration: underline;
+  text-decoration-color: var(--sc-line-strong);
+  text-decoration-thickness: 2px;
   text-underline-offset: 3px;
   cursor: pointer;
 }
-.listing-selected__clear:hover { color: var(--sc-accent-600); }
+.listing-selected__clear:hover { text-decoration-color: var(--sc-lime-600); }
 .listing-selected__list {
   display: flex;
   flex-wrap: wrap;
@@ -4008,4 +4123,167 @@ body.is-modal-open { overflow: hidden; }
   .listing-status,
   .listing-hero__search { display: none !important; }
   .listing-layout { grid-template-columns: 1fr; }
+}
+
+
+/* ==========================================================================
+   24. SEARCH RESULTS  (search-results.html)
+   Built on section 18's #page-hero / #page-body. The query box is the
+   homepage's .search-form__query-wrap (section 08); the empty state is the
+   listing's .listing-empty (section 23). Only what is new lives here.
+
+   #page-hero.search-hero   breadcrumb + "You searched for" + query as <h1>
+   #page-body.search-body   count + .search-list of .search-result rows
+   ========================================================================== */
+
+/* --- Hero ---------------------------------------------------------------- */
+.search-hero .page-hero__head { max-width: none; }
+.search-hero .page-hero__title {
+  font-size: var(--sc-step-6);
+  overflow-wrap: anywhere;
+}
+
+.search-hero__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sc-space-3);
+  max-width: 760px;
+  margin-top: var(--sc-space-6);
+}
+/* The ink border reads as a hole on teal; use the paper edge instead. */
+.search-hero__form .search-form__query-wrap .sc-input { border-color: var(--sc-white); }
+.search-hero__form .search-form__query-wrap .sc-input:focus {
+  border-color: var(--sc-lime);
+  box-shadow: 0 0 0 3px rgba(200, 240, 74, 0.35);
+}
+.search-hero__form .sc-input::-webkit-search-cancel-button { display: none; }
+@media (max-width: 520px) {
+  .search-hero__form { grid-template-columns: 1fr; }
+}
+
+/* --- Results list -------------------------------------------------------- */
+.search-body { padding-top: clamp(1.75rem, 3.5vw, 3rem); }
+
+.search-results { max-width: 880px; }
+
+.search-results__count {
+  padding-bottom: var(--sc-space-4);
+  border-bottom: 1px solid var(--sc-line);
+  font-size: var(--sc-step--1);
+  font-weight: 600;
+  color: var(--sc-ink-60);
+}
+.search-results__count:focus { outline: none; }
+.search-results__count strong { color: var(--sc-ink); font-weight: 800; }
+
+.search-list[hidden] { display: none; }
+
+/* One row: square thumb on the left, text on the right. The title link is
+   stretched over the whole row, so anywhere on it is a hit target. */
+.search-result {
+  position: relative;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: start;
+  padding-block: var(--sc-space-6);
+  border-bottom: 1px solid var(--sc-line);
+  animation: listing-card-in var(--sc-dur-slow) var(--sc-ease) backwards;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+
+.search-result__thumb {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--sc-radius);
+  background: var(--sc-paper-sunk);
+}
+.search-result__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--sc-dur-slow) var(--sc-ease);
+}
+/* Provider logos sit on white and are never cropped. */
+.search-result__thumb--logo {
+  display: grid;
+  place-items: center;
+  padding: var(--sc-space-4);
+  background: var(--sc-white);
+  border: var(--sc-border);
+}
+.search-result__thumb--logo img { object-fit: contain; }
+.search-result:hover .search-result__thumb:not(.search-result__thumb--logo) img { transform: scale(1.05); }
+
+.search-result__body { display: grid; gap: var(--sc-space-2); justify-items: start; }
+
+.search-result__title {
+  font-size: var(--sc-step-2);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--sc-ink);
+  text-wrap: pretty;
+}
+.search-result__link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--sc-dur-fast) var(--sc-ease);
+}
+.search-result__link::after { content: ""; position: absolute; inset: 0; }
+.search-result:hover .search-result__link { text-decoration-color: var(--sc-lime-600); }
+.search-result__link:focus-visible { outline: none; }
+.search-result:has(.search-result__link:focus-visible) {
+  outline: 3px solid var(--sc-focus);
+  outline-offset: 4px;
+  border-radius: var(--sc-radius);
+}
+
+.search-result__excerpt {
+  font-size: var(--sc-step-0);
+  line-height: 1.6;
+  color: var(--sc-ink-80);
+}
+
+.search-result__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  margin-top: var(--sc-space-1);
+  font-size: var(--sc-step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sc-teal-600);
+}
+.search-result__more svg { width: 14px; height: 14px; transition: transform var(--sc-dur-fast) var(--sc-ease); }
+.search-result:hover .search-result__more svg { transform: translateX(4px); }
+
+/* Matched words */
+.search-result mark {
+  background: var(--sc-lime-200);
+  color: inherit;
+  padding: 0 0.1em;
+  border-radius: 2px;
+}
+
+.search-results .listing-empty { margin-top: var(--sc-space-6); }
+
+@media (max-width: 600px) {
+  .search-result { grid-template-columns: 88px minmax(0, 1fr); padding-block: var(--sc-space-5); }
+  .search-result__thumb--logo { padding: var(--sc-space-2); }
+  .search-result__title { font-size: var(--sc-step-1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-result { animation: none; }
+  .search-result__thumb img,
+  .search-result__more svg { transition: none; }
+}
+
+@media print {
+  .search-hero__form { display: none !important; }
+  .search-result { break-inside: avoid; animation: none; }
 }
