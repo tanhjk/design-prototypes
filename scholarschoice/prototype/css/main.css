@@ -25,6 +25,11 @@
    21. Provider page
    22. Scholarship page
    23. Scholarship listing
+   24. Search results
+   25. Compare
+   26. Scholars' Experience listing
+   27. Guides & Tips listing
+   28. Guide article
    ========================================================================== */
 
 
@@ -415,6 +420,7 @@ button { cursor: pointer; }
 }
 .sc-frame--16x9  { aspect-ratio: 16 / 9; }
 .sc-frame--4x3   { aspect-ratio: 4 / 3; }
+.sc-frame--3x2   { aspect-ratio: 3 / 2; }
 .sc-frame--1x1   { aspect-ratio: 1 / 1; }
 .sc-frame--3x4   { aspect-ratio: 3 / 4; }
 .sc-frame--9x16  { aspect-ratio: 9 / 16; }
@@ -1711,6 +1717,7 @@ button { cursor: pointer; }
 /* Card variant used in "related stories" — image on top */
 .story-card--stacked {
   grid-template-columns: 1fr;
+  align-content: start; /* a taller neighbour must not spread this card's rows */
   gap: var(--sc-space-4);
   padding-bottom: 0;
   border-bottom: 0;
@@ -2703,6 +2710,74 @@ body.is-modal-open { overflow: hidden; }
   margin-top: var(--sc-space-6);
 }
 
+.article-prose h4 {
+  font-family: var(--sc-font-body);
+  font-size: var(--sc-step-1);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--sc-ink);
+  margin-top: var(--sc-space-6);
+}
+
+/* Small run-in label for a point inside a section — sits tight on its text */
+.article-prose h5 {
+  font-family: var(--sc-font-body);
+  font-size: var(--sc-step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-teal-600);
+}
+.article-prose h5 + p { margin-top: var(--sc-space-2); }
+
+/* Headings own the space above them; the text under them follows closely */
+.article-prose h3 + *,
+.article-prose h4 + * { margin-top: var(--sc-space-3); }
+
+/* Tables — the wrapper scrolls sideways on narrow screens */
+.article-table {
+  overflow-x: auto;
+  border: var(--sc-border);
+  border-radius: var(--sc-radius);
+  background: var(--sc-white);
+}
+.article-table:focus-visible { outline: 3px solid var(--sc-focus); outline-offset: 2px; }
+.article-table table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: var(--sc-step-0);
+  line-height: 1.5;
+  text-align: left;
+}
+.article-table caption {
+  padding: var(--sc-space-3) var(--sc-space-4);
+  font-size: var(--sc-step--1);
+  font-weight: 600;
+  color: var(--sc-text-muted);
+  text-align: left;
+  caption-side: bottom;
+  border-top: var(--sc-border);
+}
+.article-table th,
+.article-table td {
+  padding: var(--sc-space-3) var(--sc-space-4);
+  vertical-align: top;
+  border-top: var(--sc-border);
+}
+.article-table thead th {
+  border-top: 0;
+  background: var(--sc-teal-600);
+  color: var(--sc-white);
+  font-size: var(--sc-step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.article-table tbody th { font-weight: 700; color: var(--sc-ink); white-space: nowrap; }
+.article-table tbody td { color: var(--sc-ink-80); }
+.article-table tbody tr:nth-child(even) { background: var(--sc-paper); }
+
 .article-prose ul { display: grid; gap: var(--sc-space-3); max-width: 64ch; }
 .article-prose ul li {
   position: relative;
@@ -3058,6 +3133,10 @@ body.is-modal-open { overflow: hidden; }
 /* Drop the aside to build a single-column inner page */
 .page-layout--single { grid-template-columns: minmax(0, 1fr); max-width: 72ch; }
 
+/* Let the columns shrink below their content, so a wide table scrolls in
+   its own wrapper instead of pushing the column past the viewport. */
+.page-layout > * { min-width: 0; }
+
 .page-layout__main > * + * { margin-top: var(--sc-space-6); }
 
 .page-layout__aside {
@@ -3109,6 +3188,13 @@ body.is-modal-open { overflow: hidden; }
   font-size: var(--sc-step-0);
   line-height: 1.5;
   color: var(--sc-ink-60);
+}
+.page-figure__credit {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
 @media (max-width: 1024px) {
@@ -4286,4 +4372,755 @@ body.is-modal-open { overflow: hidden; }
 @media print {
   .search-hero__form { display: none !important; }
   .search-result { break-inside: avoid; animation: none; }
+}
+
+
+/* ==========================================================================
+   25. COMPARE  (comparison.html)
+   Built on section 18's #page-hero. The dropdowns are the listing's
+   .multi-select (section 23) with radio options (.multi-select--single);
+   the empty state is the listing's .listing-empty. Only what is new lives
+   here. Markup below the hero is rendered by scholarshipCompare().
+
+   #page-hero.compare-hero  title + .compare-picker (provider, scholarship, button)
+   #compare-body            .compare-empty, or .compare-table:
+                              __head      sticky bar, one .compare-col per scholarship
+                              __scroller  > .compare-grid, the table itself
+   ========================================================================== */
+
+/* --- Hero + picker -------------------------------------------------------
+   The dropdown panels float over the section below, so the hero clips its
+   lime wash sideways only, and its content sits above the sticky head bar. */
+#page-hero.compare-hero { overflow: visible; overflow-x: clip; }
+#page-hero.compare-hero > .sc-container { z-index: calc(var(--sc-z-sticky) + 1); }
+.compare-hero .page-hero__head { max-width: none; }
+
+.compare-picker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: var(--sc-space-3) var(--sc-space-4);
+  align-items: end;
+  max-width: 1040px;
+  margin-top: var(--sc-space-6);
+}
+.compare-picker__field { display: grid; gap: 0.4rem; min-width: 0; }
+.compare-picker__label {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-text-on-dark-muted);
+  cursor: pointer;
+}
+.compare-picker .multi-select { position: relative; }
+.compare-picker .multi-select__toggle { min-height: 52px; border-color: var(--sc-white); }
+.compare-picker .multi-select__toggle:focus-visible,
+.compare-picker .multi-select__toggle[aria-expanded="true"] {
+  border-color: var(--sc-lime);
+  box-shadow: 0 0 0 3px rgba(200, 240, 74, 0.35);
+}
+.compare-picker .multi-select__panel {
+  --sc-focus: var(--sc-teal-600);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  color: var(--sc-ink);
+  box-shadow: var(--sc-shadow-lg);
+}
+.compare-picker .multi-select__options { max-height: 300px; }
+
+.compare-picker__submit { min-height: 52px; }
+.compare-picker__submit:disabled,
+.compare-picker__submit:disabled:hover {
+  --btn-bg: var(--sc-lime-500);
+  --btn-fg: var(--sc-ink);
+  --btn-bd: var(--sc-lime-500);
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.compare-picker__hint {
+  grid-column: 1 / -1;
+  font-size: var(--sc-step--1);
+  color: var(--sc-text-on-dark-muted);
+}
+
+@media (max-width: 900px) {
+  .compare-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .compare-picker__actions { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .compare-picker { grid-template-columns: minmax(0, 1fr); }
+  .compare-picker__submit { width: 100%; }
+}
+
+/* Single-select options: no box, a teal tick on the chosen row */
+.multi-select--single .sc-check { align-items: center; }
+.multi-select--single .sc-check input,
+.multi-select--single .sc-check input:checked {
+  background-color: transparent;
+  border-color: transparent;
+}
+.multi-select--single .sc-check input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E5C54' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+.multi-select--single .sc-check:has(input:checked) { background: var(--sc-teal-50); }
+.multi-select--single .sc-check input:focus-visible { outline: none; }
+.multi-select--single .sc-check:has(input:focus-visible) { outline: 2px solid var(--sc-focus); outline-offset: -2px; }
+.multi-select--single .sc-check:has(input:disabled),
+.multi-select--single .sc-check input:disabled { cursor: not-allowed; }
+.multi-select--single .sc-check:has(input:disabled):hover { background: none; }
+.multi-select--single .sc-check:has(input:disabled) > span { color: var(--sc-ink-60); }
+
+.compare-option__added {
+  margin-left: 0.5em;
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--sc-radius-pill);
+  background: var(--sc-teal-50);
+  color: var(--sc-teal-700);
+  font-size: var(--sc-step--2);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --- Empty state --------------------------------------------------------- */
+.compare-empty__icon { width: 56px; height: 56px; margin-bottom: var(--sc-space-2); color: var(--sc-teal-600); }
+.compare-empty[hidden],
+.compare-table[hidden] { display: none; }
+
+/* --- Table ---------------------------------------------------------------
+   The head bar and every row share one column grid — a label column, then
+   --cols scholarship columns of --col each — so they line up without being
+   one table. JS sets --compare-cols, and .is-scrollable once there are more
+   columns than the three that fit. Widths are in cqw, so they follow the
+   table's own width rather than the viewport's. */
+#compare-body { background: var(--sc-bg); }
+
+.compare-table {
+  --label-w: 200px;
+  --cols: var(--compare-cols, 3);
+  --col: minmax(0, 1fr);
+  position: relative;
+  container-type: inline-size;
+}
+
+.compare-table__head {
+  position: sticky;
+  top: var(--sc-header-h);
+  z-index: var(--sc-z-sticky);
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr);
+  background: var(--sc-paper);
+  border-bottom: 2px solid var(--sc-ink);
+}
+
+.compare-head__meta {
+  display: flex;
+  align-items: flex-end;
+  padding: var(--sc-space-4);
+  font-size: var(--sc-step--1);
+  font-weight: 600;
+  color: var(--sc-ink-60);
+}
+.compare-head__meta strong { color: var(--sc-ink); font-weight: 800; }
+
+.compare-head__cols {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--col));
+}
+
+.compare-col {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--sc-space-3);
+  min-width: 0;
+  padding: var(--sc-space-4) 3.5rem var(--sc-space-4) var(--sc-space-5);
+  border-left: 1px solid var(--sc-line);
+}
+.compare-col__logo img { max-height: 32px; max-width: 128px; }
+.compare-col__logo.scholarship-card__provider-logo--mono { min-width: 44px; height: 44px; font-size: 1.15rem; }
+.compare-col__name {
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-step-2);
+  line-height: 1;
+  letter-spacing: var(--sc-display-tracking);
+  text-transform: uppercase;
+  color: var(--sc-ink);
+  text-wrap: balance;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--sc-dur-fast) var(--sc-ease);
+}
+.compare-col__name:hover { text-decoration-color: var(--sc-lime-600); }
+
+/* The × on each column — removes that scholarship */
+.compare-col__remove {
+  position: absolute;
+  top: var(--sc-space-3);
+  right: var(--sc-space-3);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--sc-white);
+  border: 1px solid var(--sc-line-strong);
+  border-radius: 50%;
+  color: var(--sc-ink);
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease),
+              border-color var(--sc-dur-fast) var(--sc-ease),
+              color var(--sc-dur-fast) var(--sc-ease);
+}
+.compare-col__remove svg { width: 16px; height: 16px; }
+.compare-col__remove:hover {
+  background: var(--sc-accent-50);
+  border-color: var(--sc-accent);
+  color: var(--sc-accent-600);
+}
+.compare-col__remove:focus-visible { outline: 3px solid var(--sc-focus); outline-offset: 2px; }
+
+/* Free slot — opens the scholarship picker */
+.compare-col--slot { padding: var(--sc-space-3); }
+.compare-col__add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sc-space-2);
+  width: 100%;
+  height: 100%;
+  min-height: 92px;
+  padding: var(--sc-space-3);
+  background: transparent;
+  border: 2px dashed var(--sc-line-strong);
+  border-radius: var(--sc-radius);
+  color: var(--sc-teal-600);
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--sc-dur-fast) var(--sc-ease),
+              border-color var(--sc-dur-fast) var(--sc-ease);
+}
+.compare-col__add svg { width: 22px; height: 22px; }
+.compare-col__add:hover { background: var(--sc-teal-50); border-color: var(--sc-teal-600); }
+.compare-col__add:focus-visible { outline: 3px solid var(--sc-focus); outline-offset: 2px; }
+
+.compare-table__scroller { position: relative; } /* contains the visually hidden caption */
+.compare-grid { display: block; width: 100%; border-collapse: collapse; }
+.compare-grid tbody { display: block; }
+.compare-grid tbody tr {
+  display: grid;
+  grid-template-columns: var(--label-w) repeat(var(--cols), var(--col));
+  border-bottom: 1px solid var(--sc-line);
+}
+.compare-grid tbody tr:nth-child(even) { background: var(--sc-paper-warm); }
+.compare-grid th[scope="row"] {
+  padding: var(--sc-space-4);
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--sc-ink-60);
+}
+.compare-grid td {
+  min-width: 0;
+  padding: var(--sc-space-4) var(--sc-space-5);
+  border-left: 1px solid var(--sc-line);
+  font-size: var(--sc-step-0);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--sc-ink);
+  overflow-wrap: break-word;
+}
+
+.compare-list { display: grid; gap: 0.3rem; }
+.compare-list li { position: relative; padding-left: 1rem; }
+.compare-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sc-lime-600);
+}
+
+.compare-grid__cta td { padding-block: var(--sc-space-5); }
+.compare-ctas { display: grid; gap: var(--sc-space-2); }
+.compare-ctas .sc-btn { white-space: normal; text-align: center; }
+
+/* Four or five columns on desktop: three in view and a quarter of the next
+   peeking in, so it reads as scrollable. The label column stays pinned. */
+@media (min-width: 901px) {
+  .compare-table.is-scrollable { --col: calc((100cqw - var(--label-w)) / 3.25); }
+  .compare-table.is-scrollable .compare-table__head,
+  .compare-table.is-scrollable .compare-table__scroller {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  .compare-table.is-scrollable .compare-table__head {
+    grid-template-columns: var(--label-w) max-content;
+    scrollbar-width: none;
+  }
+  .compare-table.is-scrollable .compare-table__head::-webkit-scrollbar { display: none; }
+  .compare-table.is-scrollable .compare-head__meta,
+  .compare-table.is-scrollable .compare-grid th[scope="row"] {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--sc-paper);
+    box-shadow: 1px 0 0 var(--sc-line), 6px 0 10px -6px rgba(15, 31, 28, 0.18);
+  }
+  .compare-table.is-scrollable .compare-grid tbody tr:nth-child(even) th[scope="row"] { background: var(--sc-paper-warm); }
+  .compare-table.is-scrollable .compare-table__scroller {
+    scroll-snap-type: x proximity;
+    scroll-padding-left: var(--label-w);
+    scrollbar-width: thin;
+    scrollbar-color: var(--sc-line-strong) transparent;
+  }
+  .compare-table.is-scrollable .compare-grid { width: max-content; min-width: 100%; }
+  .compare-table.is-scrollable .compare-grid tbody tr:first-child td { scroll-snap-align: start; }
+}
+
+.compare-col.is-new,
+.compare-grid td.is-new { animation: listing-card-in var(--sc-dur-slow) var(--sc-ease) backwards; }
+
+/* --- Tablet & mobile -----------------------------------------------------
+   Row labels become bands above their values, columns take a fixed width
+   and the table scrolls sideways under a head bar that follows it. Only
+   one free slot shows (JS sets --compare-cols-sm to count + 1, max 5). On
+   tablet three columns fit with a quarter of the next one showing. */
+@media (max-width: 900px) {
+  .compare-table {
+    --cols: var(--compare-cols-sm, 3);
+    --col: max(200px, calc(100cqw / 3.25));
+  }
+
+  .compare-table__head {
+    grid-template-columns: minmax(0, 1fr);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .compare-table__head::-webkit-scrollbar { display: none; }
+  .compare-head__meta,
+  .compare-col__logo,
+  .compare-col--slot ~ .compare-col--slot { display: none; }
+  .compare-head__cols { grid-template-columns: repeat(var(--cols), var(--col)); width: max-content; }
+  .compare-col { padding: var(--sc-space-3) 2.75rem var(--sc-space-3) var(--sc-space-4); }
+  .compare-col:first-child { border-left: 0; }
+  .compare-col__name { font-size: var(--sc-step-0); hyphens: auto; overflow-wrap: break-word; }
+  /* A 32px circle on narrow columns, with the full 44px target around it */
+  .compare-col__remove { top: 8px; right: 8px; width: 32px; height: 32px; }
+  .compare-col__remove::before { content: ""; position: absolute; inset: -6px; }
+
+  .compare-table__scroller {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sc-line-strong) transparent;
+  }
+  .compare-grid { width: max-content; min-width: 100%; }
+  .compare-grid tbody tr { grid-template-columns: repeat(var(--cols), var(--col)); }
+  .compare-grid th[scope="row"] { grid-column: 1 / -1; padding: var(--sc-space-3) 0 0; }
+  /* The label stays in view while the row scrolls under it */
+  .compare-grid th[scope="row"] > span { position: sticky; left: var(--sc-space-4); }
+  .compare-grid td { padding: var(--sc-space-2) var(--sc-space-4) var(--sc-space-3); }
+  .compare-grid td:first-of-type { border-left: 0; }
+  .compare-grid tbody tr:first-child td { scroll-snap-align: start; }
+}
+
+/* Phones: two columns in view and the third peeking in, so the swipe reads */
+@media (max-width: 600px) {
+  .compare-table { --col: calc(100cqw * 0.46); }
+}
+
+/* Any touch screen gets a full-size × target */
+@media (pointer: coarse) {
+  .compare-col__remove::before { content: ""; position: absolute; inset: -6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-col.is-new,
+  .compare-grid td.is-new { animation: none; }
+}
+
+@media print {
+  .compare-picker,
+  .compare-picker__hint,
+  .compare-col__remove,
+  .compare-col--slot { display: none !important; }
+  .compare-table__head { position: static; }
+  .compare-table__head,
+  .compare-table__scroller { overflow: visible !important; }
+}
+
+
+/* ==========================================================================
+   26. SCHOLARS' EXPERIENCE LISTING  (scholars-experiences-list.html)
+   Built on section 18's #page-hero. The featured carousel reuses section
+   11's .stories__layout, .story-lead and .story-card type, recoloured for
+   the teal ground; behaviour is featureCarousel() in js/main.js.
+
+   #page-hero.experience-hero  breadcrumb + title + #feature-carousel
+   #ad-leaderboard             728 x 90 ad unit
+   #experience-list            .sc-grid--3 of .experience-card
+   ========================================================================== */
+
+.experience-hero { padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.experience-hero .page-hero__head { max-width: none; }
+
+/* --- Featured carousel ------------------------------------------------ */
+/* --feature-interval is set from INTERVAL in featureCarousel(); this is
+   only the fallback. The bar under the active tab runs on it, and the
+   slide changes when that animation ends. */
+.feature-carousel {
+  --feature-interval: 7000ms;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* All slides share one grid cell, so the stage is as tall as the tallest
+   slide and nothing below moves when they change. */
+.feature-carousel__stage { display: grid; }
+.feature-carousel__slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--sc-dur-slow) var(--sc-ease),
+              visibility 0s linear var(--sc-dur-slow);
+}
+.feature-carousel__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--sc-dur-slow) var(--sc-ease);
+}
+
+/* Lead story on teal */
+.experience-hero .story-lead__title { color: var(--sc-white); }
+.experience-hero .story-lead:hover .story-lead__title { color: var(--sc-lime); }
+.experience-hero .story-lead__standfirst { color: var(--sc-text-on-dark-muted); }
+
+/* --- Rail: count + pause, then the tablist ---------------------------- */
+.feature-carousel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-space-4);
+  padding-bottom: var(--sc-space-3);
+  margin-bottom: var(--sc-space-2);
+  border-bottom: 1px solid var(--sc-line-dark);
+}
+.feature-carousel__label {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-lime);
+}
+.feature-carousel__count {
+  margin-left: var(--sc-space-2);
+  color: var(--sc-text-on-dark-muted);
+  font-variant-numeric: tabular-nums;
+}
+.feature-carousel__toggle,
+.feature-carousel__tab {
+  background: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.feature-carousel__toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--sc-text-on-dark);
+  box-shadow: inset 0 0 0 1px var(--sc-line-dark);
+  transition: background-color var(--sc-dur-fast) var(--sc-ease),
+              color var(--sc-dur-fast) var(--sc-ease);
+}
+.feature-carousel__toggle:hover { background: var(--sc-lime); color: var(--sc-ink); }
+.feature-carousel__toggle svg { width: 16px; height: 16px; }
+.feature-carousel__icon-play,
+.feature-carousel.is-stopped .feature-carousel__icon-pause { display: none; }
+.feature-carousel.is-stopped .feature-carousel__icon-play { display: block; }
+
+.feature-carousel__tabs { display: grid; }
+
+.feature-carousel__tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--sc-space-4);
+  align-items: start;
+  width: 100%;
+  padding: var(--sc-space-4) var(--sc-space-3);
+  border-radius: var(--sc-radius);
+  text-align: left;
+  color: var(--sc-text-on-dark);
+  opacity: 0.72;
+  transition: opacity var(--sc-dur-fast) var(--sc-ease),
+              background-color var(--sc-dur-fast) var(--sc-ease);
+}
+.feature-carousel__tab:hover { opacity: 1; }
+.feature-carousel__tab.is-active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.06);
+}
+.feature-carousel__tab .sc-frame { border-radius: var(--sc-radius); }
+.feature-carousel__tab-text { display: block; }
+.feature-carousel__tab .story-card__scholar { display: block; color: var(--sc-lime); }
+.feature-carousel__tab .story-card__title {
+  display: block;
+  font-size: var(--sc-step-0);
+  color: var(--sc-white);
+}
+
+/* Time left on the current slide: a track along the tab's foot, filled
+   lime on the active tab. Paused whenever the carousel is. */
+.feature-carousel__progress {
+  position: absolute;
+  left: var(--sc-space-3);
+  right: var(--sc-space-3);
+  bottom: 0;
+  height: 3px;
+  border-radius: var(--sc-radius-pill);
+  background: var(--sc-line-dark);
+  overflow: hidden;
+}
+.feature-carousel__progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--sc-lime);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.feature-carousel__tab.is-active .feature-carousel__progress::after {
+  animation: feature-progress var(--feature-interval) linear forwards;
+}
+.feature-carousel.is-paused .feature-carousel__progress::after { animation-play-state: paused; }
+/* Stopped (pause button or reduced motion): the bar just marks the current tab */
+.feature-carousel.is-stopped .feature-carousel__tab.is-active .feature-carousel__progress::after {
+  animation: none;
+  transform: none;
+}
+
+@keyframes feature-progress { to { transform: scaleX(1); } }
+
+/* Tablet and phone: the lead goes full width and the list collapses to
+   five progress segments above it. Tab text stays for screen readers. */
+@media (max-width: 1024px) {
+  .feature-carousel__rail { order: -1; }
+  .feature-carousel__bar { border-bottom: 0; padding-bottom: 0; }
+  .feature-carousel__tabs {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: var(--sc-space-2);
+  }
+  .feature-carousel__tab {
+    display: block;
+    height: 28px;
+    padding: 0;
+    opacity: 1;
+  }
+  .feature-carousel__tab.is-active { background: none; }
+  .feature-carousel__tab .sc-frame { display: none; }
+  .feature-carousel__tab-text {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .feature-carousel__progress { left: 0; right: 0; bottom: 12px; height: 4px; }
+}
+
+/* --- Ad unit ---------------------------------------------------------- */
+.ad-slot {
+  background: var(--sc-paper-warm);
+  padding-block: var(--sc-space-5) var(--sc-space-6);
+  text-align: center;
+}
+.ad-slot__label {
+  margin-bottom: var(--sc-space-2);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sc-text-muted);
+}
+.ad-slot__link { display: inline-block; max-width: 100%; vertical-align: top; }
+.ad-slot__link img { display: block; width: 728px; max-width: 100%; height: auto; }
+
+/* --- Story grid ------------------------------------------------------- */
+#experience-list { background: var(--sc-paper); }
+
+.experience-grid > li { display: flex; }
+
+.experience-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--sc-white);
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius-lg);
+  overflow: hidden;
+  transition: transform var(--sc-dur) var(--sc-ease),
+              box-shadow var(--sc-dur) var(--sc-ease);
+}
+.experience-card:hover { transform: translateY(-4px); box-shadow: var(--sc-shadow-lg); }
+.experience-card:hover .sc-frame img { transform: scale(1.05); }
+
+.experience-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--sc-space-3);
+  padding: var(--sc-space-5);
+}
+.experience-card__title {
+  font-size: var(--sc-step-1);
+  font-weight: 700;
+  line-height: 1.26;
+  letter-spacing: -0.01em;
+  transition: color var(--sc-dur-fast) var(--sc-ease);
+}
+.experience-card:hover .experience-card__title { color: var(--sc-teal-600); }
+
+.experience-card__award {
+  display: flex;
+  gap: var(--sc-space-2);
+  align-items: flex-start;
+  font-size: var(--sc-step--1);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--sc-accent);
+}
+.experience-card__award-icon { flex: none; width: 1.15em; height: 1.15em; margin-top: 0.05em; }
+
+/* CTA sits at the foot of every card, however long the headline. Its
+   ::after stretches over the card, so the whole card is one link and one
+   tab stop. */
+.experience-card__cta { align-self: flex-start; margin-top: auto; padding-top: var(--sc-space-3); }
+.experience-card__cta::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.experience-card:hover .experience-card__cta,
+.experience-card:focus-within .experience-card__cta { border-bottom-color: var(--sc-lime-600); }
+.experience-card:hover .experience-card__cta svg,
+.experience-card:focus-within .experience-card__cta svg { transform: translateX(4px); }
+.experience-card:focus-within { box-shadow: 0 0 0 3px var(--sc-teal-600); }
+.experience-card__cta:focus-visible { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-carousel__slide,
+  .feature-carousel__slide.is-active { transition: none; }
+  .experience-card,
+  .experience-card:hover { transform: none; }
+}
+
+@media print {
+  .feature-carousel__rail,
+  .ad-slot { display: none !important; }
+  .feature-carousel__slide:not(.is-active) { display: none; }
+}
+
+
+/* ==========================================================================
+   27. GUIDES & TIPS LISTING  (guide-and-tips.html)
+   Hero is section 18's #page-hero; the ad unit is section 26's .ad-slot;
+   each row is section 24's .search-result and the loader is section 23's
+   .listing-status. Only what is new lives here: a wider 3:2 thumbnail for
+   article photos, and the published date where search shows its tag.
+   ========================================================================== */
+.guides-body { padding-top: clamp(1.25rem, 2.5vw, 2rem); }
+
+.guide-list .search-result { grid-template-columns: 240px minmax(0, 1fr); }
+.guide-list .search-result:first-child { padding-top: 0; }
+.guide-list .search-result__thumb { aspect-ratio: 3 / 2; }
+
+.guide-result__date {
+  font-size: var(--sc-step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sc-text-muted);
+}
+
+@media (max-width: 600px) {
+  .guide-list .search-result { grid-template-columns: 112px minmax(0, 1fr); }
+}
+
+
+/* ==========================================================================
+   28. GUIDE ARTICLE  (guide-article.html)
+   Hero is section 18's #page-hero; the byline and share buttons are section
+   14's; the body is section 16's .article-prose (which now carries H4, H5
+   and .article-table); related cards are section 11's .story-card--stacked
+   and the ad is section 26's .ad-slot. Only what is new lives here.
+   ========================================================================== */
+
+/* A headline runs far longer than a page name, so it gets a wider measure
+   and one step down the scale to stay within three or four lines. */
+.guide-hero .page-hero__head { max-width: 980px; }
+.guide-hero .page-hero__title { font-size: var(--sc-step-5); text-wrap: balance; }
+
+.guide-body { padding-top: clamp(2rem, 4vw, 3.5rem); }
+
+/* Feature image opens the column; the first paragraph sits a beat below it */
+.guide-feature.page-figure { margin-top: 0; }
+.article-prose > .guide-feature + * { margin-top: var(--sc-space-7); }
+
+/* Same paper as the body above, so a rule marks where the article ends */
+#related-guides { border-top: var(--sc-border); }
+
+/* --- Share this article -------------------------------------------------- */
+.share-panel {
+  display: grid;
+  justify-items: center;
+  gap: var(--sc-space-3);
+  max-width: 720px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 3rem) var(--sc-space-5);
+  background: var(--sc-white);
+  border: var(--sc-border);
+  border-radius: var(--sc-radius);
+  text-align: center;
+}
+.share-panel__text { color: var(--sc-ink-80); max-width: 44ch; text-wrap: balance; }
+
+.article-share--lg {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sc-space-3);
+  margin-top: var(--sc-space-3);
+}
+.article-share--lg .article-share__btn { width: 52px; height: 52px; }
+.article-share--lg .article-share__btn svg { width: 22px; height: 22px; }
+
+@media (max-width: 420px) {
+  .article-share--lg { gap: var(--sc-space-2); }
+  .article-share--lg .article-share__btn { width: 46px; height: 46px; }
+}
+
+@media print {
+  #related-guides, #article-share-end { display: none !important; }
 }

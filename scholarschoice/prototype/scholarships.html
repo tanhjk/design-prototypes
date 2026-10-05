@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Find a Scholarship — Scholar&rsquo;s Choice</title>
-<meta name="description" content="Search and filter every scholarship on Scholar's Choice by provider, course, study level, nationality, sponsorship, bond and study location.">
+<meta name="description" content="Search and filter every scholarship on Scholar's Choice by provider, course, study level, nationality, value, bond and study location.">
 
 <!-- ============================================================
      FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
@@ -30,8 +30,8 @@
                    Behaviour: scholarshipListing() in js/main.js.
 
   HOW IT WORKS
-    Cards are the homepage's .scholarship-card, rendered from the JSON in
-    #scholarship-data 12 at a time; scrolling to the foot of the grid loads
+    Cards are the homepage's .scholarship-card, rendered from js/scholarship-data.js
+    (window.SC_DATA) 12 at a time; scrolling to the foot of the grid loads
     the next 12. Every filter applies as soon as it changes and is written
     to the URL (?q=…&provider=psc,dsta&bond=4), so a filtered view can be
     shared or bookmarked — and the homepage search can land here with
@@ -60,9 +60,9 @@
     <nav id="site-nav" class="site-nav" aria-label="Primary">
       <ul class="site-nav__list">
         <li><a class="site-nav__link is-active" href="scholarships.html" aria-current="page">Find a Scholarship</a></li>
-        <li><a class="site-nav__link" href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
-        <li><a class="site-nav__link" href="#">Guides &amp; Tips</a></li>
-        <li><a class="site-nav__link" href="#">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="scholars-experiences-list.html">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="guide-and-tips.html">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="comparison.html">Compare Scholarships</a></li>
         <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
       </ul>
     
@@ -140,7 +140,7 @@
   <!-- ========================================================================
        02 · LISTING — card grid + filter sidebar
        Full width. Cards are rendered by scholarshipListing() in js/main.js
-       from the #scholarship-data block at the foot of this section, 12 at a
+       from js/scholarship-data.js (window.SC_DATA), 12 at a
        time; reaching #listing-sentinel loads the next 12.
        Under 900px the aside becomes an off-canvas drawer with a "Filter"
        handle on the right edge.
@@ -307,20 +307,20 @@
                 </div>
               </div>
 
-              <!-- Sponsorship — step slider (minimum coverage) -->
-              <div class="filter-group" role="group" aria-labelledby="fg-sponsorship">
-                <h3 class="filter-group__title" id="fg-sponsorship">Sponsorship</h3>
-                <div class="step-slider step-slider--min">
-                  <p class="step-slider__value" id="sponsorship-value">Any coverage</p>
-                  <input class="step-slider__input" type="range" name="sponsorship" min="0" max="3" step="1" value="0"
-                         data-values="0,25,50,100" data-labels="Any coverage|At least 25% covered|At least 50% covered|Fully sponsored (100%)"
-                         aria-labelledby="fg-sponsorship" aria-describedby="sponsorship-value">
-                  <ol class="step-slider__ticks" aria-hidden="true" style="--max: 3">
-                    <li style="--i: 0">Any</li>
-                    <li style="--i: 1">25%</li>
-                    <li style="--i: 2">50%</li>
-                    <li style="--i: 3">100%</li>
-                  </ol>
+              <!-- Value — multi-select dropdown; options are built in main.js
+                   from every distinct "value" in scholarship-data.js -->
+              <div class="filter-group" role="group" aria-labelledby="fg-value">
+                <h3 class="filter-group__title" id="fg-value">Value</h3>
+                <div class="multi-select" data-placeholder="Any value">
+                  <button class="multi-select__toggle" type="button" aria-expanded="false"
+                          aria-controls="ms-value" aria-describedby="fg-value">
+                    <span class="multi-select__value">Any value</span>
+                  </button>
+                  <div class="multi-select__panel" id="ms-value" hidden>
+                    <input class="sc-input multi-select__search" type="search" placeholder="Search values" aria-label="Search values">
+                    <ul class="multi-select__options"></ul>
+                    <p class="multi-select__none" hidden>No match.</p>
+                  </div>
                 </div>
               </div>
 
@@ -368,135 +368,6 @@
       </div>
     </div>
 
-    <!--
-      PLACEHOLDER DATA — every scholarship below is dummy content for layout
-      review; values, bonds and deadlines are unverified. Replace this block
-      with an API call: fetchPage() in scholarshipListing() (js/main.js) is
-      the one place that reads it.
-
-      Filter keys must match the checkbox / range values above:
-        levels       pre-u | ug | masters | phd | mid
-        nationality  sc | pr | others
-        location     local | overseas
-        sponsorship  25 | 50 | 100          (percentage of costs covered)
-        bond         0–6                    (years; the longest term offered)
-        tag          soon | open | new
-        keywords     optional extra words for free-text search
-    -->
-    <script type="application/json" id="scholarship-data">
-{
-  "providers": {
-    "aic":     { "name": "Agency for Integrated Care", "logo": "images/aic-logo.png" },
-    "astar":   { "name": "A*STAR", "mono": "A*" },
-    "dsta":    { "name": "Defence Science & Technology Agency", "logo": "images/dsta-logo.png" },
-    "govtech": { "name": "GovTech", "mono": "GT" },
-    "ica":     { "name": "Immigration & Checkpoints Authority", "mono": "ICA" },
-    "imda":    { "name": "Infocomm Media Development Authority", "mono": "IMDA" },
-    "lta":     { "name": "Land Transport Authority", "mono": "LTA" },
-    "mas":     { "name": "Monetary Authority of Singapore", "mono": "MAS" },
-    "moe":     { "name": "Ministry of Education", "mono": "MOE" },
-    "mha":     { "name": "Ministry of Home Affairs", "logo": "images/mha-logo.png" },
-    "nparks":  { "name": "National Parks Board", "logo": "images/npark-logo.png" },
-    "ntu":     { "name": "Nanyang Technological University", "mono": "NTU" },
-    "nus":     { "name": "National University of Singapore", "mono": "NUS" },
-    "psc":     { "name": "Public Service Commission", "logo": "images/psc-logo.png" },
-    "scdf":    { "name": "Singapore Civil Defence Force", "mono": "SCDF" },
-    "sgis":    { "name": "Singapore-Industry Scholarship", "logo": "images/sgis-logo.png" },
-    "smf":     { "name": "Singapore Maritime Foundation", "logo": "images/smf-logo.png" },
-    "smu":     { "name": "Singapore Management University", "logo": "images/smu-logo.png" },
-    "spf":     { "name": "Singapore Police Force", "mono": "SPF" },
-    "tf":      { "name": "Temasek Foundation", "mono": "TF" }
-  },
-  "scholarships": [
-    { "name": "DSTA Scholarship (Overseas)", "provider": "dsta", "tag": "soon", "value": "Full fees + allowance", "bond": 6, "level": "Undergrad → PhD", "study": "Overseas or local", "deadline": "Closes 30 Oct",
-      "levels": ["ug", "phd"], "courses": ["engineering", "computing", "data-ai", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "PSC Scholarship (Overseas Merit)", "provider": "psc", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "UK, US, EU, Asia", "deadline": "Closes 14 Nov",
-      "levels": ["ug"], "courses": ["economics", "law", "public-policy", "social-sci", "humanities", "engineering"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "Home Affairs Uniformed Scholarship (Local)", "provider": "mha", "tag": "open", "value": "Full fees + $6k grant", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 21 Nov",
-      "levels": ["ug"], "courses": ["social-sci", "psychology", "law", "computing", "public-policy"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
-    { "name": "Healthcare Merit Scholarship", "provider": "aic", "keywords": "biomedical healthcare", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 05 Dec",
-      "levels": ["ug"], "courses": ["medicine", "nursing", "life-sci", "psychology"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
-    { "name": "NParks Undergraduate Scholarship", "provider": "nparks", "tag": "open", "value": "Full fees + laptop", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 12 Dec",
-      "levels": ["ug"], "courses": ["environment", "life-sci", "architecture"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "SMU Global Impact Scholarship", "provider": "smu", "tag": "soon", "value": "Full fees + stipend", "bond": 0, "level": "Undergraduate", "study": "SMU, with exchange", "deadline": "Closes 28 Nov",
-      "levels": ["ug"], "courses": ["business", "economics", "law", "computing", "social-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "Singapore-Industry Scholarship", "provider": "sgis", "tag": "open", "value": "Full fees + allowance", "bond": 6, "bondText": "4 to 6 years", "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 19 Dec",
-      "levels": ["ug"], "courses": ["engineering", "computing", "data-ai", "business", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "MaritimeONE Scholarship", "provider": "smf", "tag": "open", "value": "Up to $20k a year", "bond": 3, "bondText": "2 to 3 years", "level": "Diploma → degree", "study": "Local or overseas", "deadline": "Closes 31 Jan",
-      "levels": ["pre-u", "ug"], "courses": ["maritime", "engineering", "business"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
-    { "name": "PSC Scholarship (Public Administration)", "provider": "psc", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "UK, US, EU, Asia", "deadline": "Closes 14 Nov",
-      "levels": ["ug"], "courses": ["public-policy", "economics", "social-sci", "humanities"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "A*STAR National Science Scholarship", "provider": "astar", "keywords": "biomedical research", "tag": "open", "value": "Full fees + stipend", "bond": 6, "level": "Undergrad → PhD", "study": "Overseas", "deadline": "Closes 15 Jan",
-      "levels": ["ug", "phd"], "courses": ["life-sci", "physical-sci", "engineering", "math", "data-ai"], "nationality": ["sc", "pr"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "A*STAR Graduate Scholarship", "provider": "astar", "keywords": "biomedical research", "tag": "open", "value": "Full fees + $3.2k a month", "bond": 4, "level": "PhD", "study": "Local universities", "deadline": "Closes 31 Jan",
-      "levels": ["phd"], "courses": ["life-sci", "physical-sci", "engineering", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "MOE Teaching Scholarship", "provider": "moe", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 31 Oct",
-      "levels": ["ug"], "courses": ["education", "humanities", "math", "physical-sci", "life-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "MOE Teaching Award (Postgraduate)", "provider": "moe", "tag": "open", "value": "Fees + salary", "bond": 3, "level": "Masters", "study": "Local (NIE)", "deadline": "Closes 30 Nov",
-      "levels": ["masters", "mid"], "courses": ["education"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
-    { "name": "NUS Global Merit Scholarship", "provider": "nus", "keywords": "biomedical", "tag": "open", "value": "Full fees + $6k a year", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
-      "levels": ["ug"], "courses": ["engineering", "computing", "business", "humanities", "law", "medicine"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "NUS Merit Scholarship", "provider": "nus", "tag": "open", "value": "Tuition fees only", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
-      "levels": ["ug"], "courses": ["engineering", "computing", "business", "humanities", "social-sci", "physical-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 50 },
-    { "name": "Nanyang Scholarship", "provider": "ntu", "tag": "open", "value": "Full fees + $6.5k a year", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
-      "levels": ["ug"], "courses": ["engineering", "computing", "business", "design", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "CN Yang Scholarship", "provider": "ntu", "tag": "new", "value": "Full fees + research stipend", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
-      "levels": ["ug"], "courses": ["physical-sci", "engineering", "math", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "GovTech Scholarship", "provider": "govtech", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 10 Nov",
-      "levels": ["ug"], "courses": ["computing", "data-ai", "design"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "MAS Undergraduate Scholarship", "provider": "mas", "tag": "open", "value": "Full fees + allowance", "bond": 5, "level": "Undergraduate", "study": "UK, US or local", "deadline": "Closes 31 Dec",
-      "levels": ["ug"], "courses": ["economics", "finance", "math", "data-ai"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "MAS Postgraduate Scholarship", "provider": "mas", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Masters", "study": "Overseas", "deadline": "Closes 28 Feb",
-      "levels": ["masters", "mid"], "courses": ["economics", "finance", "public-policy"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "LTA Undergraduate Scholarship", "provider": "lta", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 15 Dec",
-      "levels": ["ug"], "courses": ["engineering", "architecture", "data-ai"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 100 },
-    { "name": "LTA Diploma Scholarship", "provider": "lta", "tag": "open", "value": "Fees + $3k grant", "bond": 2, "level": "Polytechnic", "study": "Local polytechnics", "deadline": "Closes 30 Nov",
-      "levels": ["pre-u"], "courses": ["engineering"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
-    { "name": "IMDA Digital Leaders Scholarship", "provider": "imda", "tag": "open", "value": "Up to $15k a year", "bond": 2, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 31 Jan",
-      "levels": ["ug"], "courses": ["computing", "design", "data-ai"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
-    { "name": "IMDA Media Talent Award", "provider": "imda", "tag": "new", "value": "Up to $10k a year", "bond": 1, "level": "Diploma → degree", "study": "Local or overseas", "deadline": "Closes 28 Feb",
-      "levels": ["pre-u", "ug"], "courses": ["design", "arts"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 25 },
-    { "name": "Temasek Foundation Leaders Scholarship", "provider": "tf", "tag": "open", "value": "Full fees + stipend", "bond": 0, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 15 Jan",
-      "levels": ["ug"], "courses": ["social-sci", "public-policy", "business", "humanities"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "Temasek Foundation Community Award", "provider": "tf", "tag": "open", "value": "$5k a year", "bond": 0, "level": "Pre-U / Polytechnic", "study": "Local", "deadline": "Closes 31 Mar",
-      "levels": ["pre-u"], "courses": ["humanities", "business", "engineering"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 },
-    { "name": "SPF Overseas Scholarship", "provider": "spf", "tag": "soon", "value": "Full fees + salary", "bond": 6, "level": "Undergraduate", "study": "Overseas", "deadline": "Closes 07 Nov",
-      "levels": ["ug"], "courses": ["law", "psychology", "social-sci", "computing"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "SPF Local Scholarship", "provider": "spf", "tag": "soon", "value": "Full fees + salary", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 07 Nov",
-      "levels": ["ug"], "courses": ["law", "psychology", "social-sci", "computing"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
-    { "name": "SCDF Undergraduate Scholarship", "provider": "scdf", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Undergraduate", "study": "Local or overseas", "deadline": "Closes 30 Nov",
-      "levels": ["ug"], "courses": ["engineering", "life-sci", "psychology"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "ICA Scholarship", "provider": "ica", "tag": "open", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 21 Nov",
-      "levels": ["ug"], "courses": ["computing", "data-ai", "social-sci", "law"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
-    { "name": "DSTA Scholarship (Local)", "provider": "dsta", "tag": "soon", "value": "Full fees + allowance", "bond": 4, "level": "Undergraduate", "study": "Local universities", "deadline": "Closes 30 Oct",
-      "levels": ["ug"], "courses": ["engineering", "computing", "data-ai"], "nationality": ["sc"], "location": ["local"], "sponsorship": 100 },
-    { "name": "DSTA Postgraduate Scholarship", "provider": "dsta", "tag": "open", "value": "Fees + salary", "bond": 3, "level": "Masters → PhD", "study": "Local or overseas", "deadline": "Closes 31 Jan",
-      "levels": ["masters", "phd", "mid"], "courses": ["engineering", "computing", "data-ai", "physical-sci"], "nationality": ["sc"], "location": ["local", "overseas"], "sponsorship": 100 },
-    { "name": "PSC Postgraduate Scholarship (Mid-Career)", "provider": "psc", "tag": "open", "value": "Full fees + salary", "bond": 4, "level": "Masters", "study": "Overseas", "deadline": "Closes 28 Feb",
-      "levels": ["masters", "mid"], "courses": ["public-policy", "economics", "law"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "AIC Nursing Sponsorship", "provider": "aic", "tag": "open", "value": "Fees + $500 a month", "bond": 3, "level": "Diploma", "study": "Local polytechnics", "deadline": "Closes 15 Dec",
-      "levels": ["pre-u"], "courses": ["nursing"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
-    { "name": "Allied Health Postgraduate Award", "provider": "aic", "tag": "new", "value": "Fees + salary", "bond": 3, "level": "Masters", "study": "Local or overseas", "deadline": "Closes 31 Mar",
-      "levels": ["masters", "mid"], "courses": ["nursing", "psychology", "life-sci"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
-    { "name": "Home Affairs Uniformed Scholarship (Overseas)", "provider": "mha", "tag": "open", "value": "Full fees + living", "bond": 6, "level": "Undergraduate", "study": "Overseas", "deadline": "Closes 21 Nov",
-      "levels": ["ug"], "courses": ["social-sci", "psychology", "law", "public-policy", "computing"], "nationality": ["sc"], "location": ["overseas"], "sponsorship": 100 },
-    { "name": "NParks Diploma Scholarship", "provider": "nparks", "tag": "open", "value": "Fees + $2k grant", "bond": 2, "level": "Polytechnic", "study": "Local polytechnics", "deadline": "Closes 31 Jan",
-      "levels": ["pre-u"], "courses": ["environment", "life-sci"], "nationality": ["sc", "pr"], "location": ["local"], "sponsorship": 50 },
-    { "name": "SMU Merit Scholarship", "provider": "smu", "tag": "open", "value": "50% of tuition", "bond": 0, "level": "Undergraduate", "study": "SMU", "deadline": "Closes 19 Mar",
-      "levels": ["ug"], "courses": ["business", "law", "economics", "social-sci", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 50 },
-    { "name": "SMU Postgraduate Research Scholarship", "provider": "smu", "tag": "new", "value": "Fees + $2.5k a month", "bond": 0, "level": "PhD", "study": "SMU", "deadline": "Closes 31 Mar",
-      "levels": ["phd"], "courses": ["economics", "business", "finance", "computing"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "Maritime Leaders Postgraduate Award", "provider": "smf", "tag": "open", "value": "Up to $30k", "bond": 2, "level": "Masters", "study": "Local or overseas", "deadline": "Closes 31 Mar",
-      "levels": ["masters", "mid"], "courses": ["maritime", "business", "law"], "nationality": ["sc", "pr"], "location": ["local", "overseas"], "sponsorship": 50 },
-    { "name": "NTU Engineering Talent Award", "provider": "ntu", "tag": "open", "value": "25% of tuition + $2k", "bond": 0, "level": "Undergraduate", "study": "NTU", "deadline": "Closes 19 Mar",
-      "levels": ["ug"], "courses": ["engineering"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 },
-    { "name": "NUS Medicine Scholarship", "provider": "nus", "tag": "open", "value": "Full fees + $6k a year", "bond": 0, "level": "Undergraduate", "study": "NUS", "deadline": "Closes 15 Jan",
-      "levels": ["ug"], "courses": ["medicine"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 100 },
-    { "name": "MOE Pre-University Scholarship", "provider": "moe", "tag": "open", "value": "School fees + $2.4k a year", "bond": 0, "level": "Pre-university", "study": "Local", "deadline": "Closes 28 Feb",
-      "levels": ["pre-u"], "courses": ["humanities", "math", "physical-sci", "life-sci"], "nationality": ["sc", "pr", "others"], "location": ["local"], "sponsorship": 25 }
-  ]
-}
-    </script>
   </section>
 
 </main>
@@ -514,9 +385,9 @@
           <h3 class="site-footer__col-title">Explore</h3>
           <ul class="site-footer__list">
             <li><a href="scholarships.html">Find a Scholarship</a></li>
-            <li><a href="scholars-experience.html">Scholars&rsquo; Experience</a></li>
-            <li><a href="#">Guides &amp; Tips</a></li>
-            <li><a href="#">Compare Scholarships</a></li>
+            <li><a href="scholars-experiences-list.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="guide-and-tips.html">Guides &amp; Tips</a></li>
+            <li><a href="comparison.html">Compare Scholarships</a></li>
             <li><a href="#">Read the E-paper</a></li>
           </ul>
         </div>
@@ -556,6 +427,7 @@
   </div>
 </footer>
 
+<script src="js/scholarship-data.js" defer></script>
 <script src="js/main.js" defer></script>
 </body>
 </html>

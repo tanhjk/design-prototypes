@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Scholars&rsquo; Experience — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Real stories from Singapore scholarship holders — what the award covered, what the bond is really like, and what they wish they had known before signing.">
+
+<!-- ============================================================
+     FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&display=swap">
+
+<link rel="stylesheet" href="css/main.css">
+<meta name="theme-color" content="#0E5C54">
+
+<!--
+  ============================================================================
+  SCHOLARS' EXPERIENCE — listing page. Built on inner-page-template.html.
+
+  STRUCTURE
+    #page-hero (+.experience-hero)  Breadcrumb, H1, then #feature-carousel:
+                 the homepage #stories layout (lead + compact list) turned
+                 into an autoplaying carousel. The lead rotates through the
+                 five featured stories; the list on the right is the tablist
+                 that picks one and shows the time left on the current slide.
+                 Under 1025px the list collapses to five progress segments.
+                 Behaviour: featureCarousel() in js/main.js.
+    #ad-leaderboard  728 x 90 leaderboard ad unit.
+    #experience-list .sc-grid--3 of .experience-card — 3 / 2 / 1 per row.
+
+  Styles: css/main.css section 26. Featured slides and grid cards are
+  separate markup — a story can sit in both. Every story beyond the first
+  five is placeholder content.
+  ============================================================================
+-->
+</head>
+<body class="page-inner">
+
+<a class="sc-skip-link" href="#main">Skip to main content</a>
+
+<!-- ==========================================================================
+     SITE HEADER  (shared partial: partials/header)
+     ========================================================================== -->
+<header id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-logo" href="index.html" aria-label="Scholar's Choice home">
+      <img class="site-logo__img" src="images/SC_Logo.svg"
+           alt="The Straits Times Scholars&rsquo; Choice" width="576" height="280" decoding="async">
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="scholarships.html">Find a Scholarship</a></li>
+        <li><a class="site-nav__link is-active" href="scholars-experiences-list.html" aria-current="page">Scholars&rsquo; Experience</a></li>
+        <li><a class="site-nav__link" href="guide-and-tips.html">Guides &amp; Tips</a></li>
+        <li><a class="site-nav__link" href="comparison.html">Compare Scholarships</a></li>
+        <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
+      </ul>
+    
+    </nav>
+
+    <div class="site-header__actions">
+      <button class="site-header__search-btn" type="button" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </button>
+      <button class="sc-btn sc-btn--primary sc-btn--sm site-header__login" type="button"
+              data-auth-open aria-haspopup="dialog" aria-label="Login or register">
+        <svg class="site-header__login-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- images/user-not-login.svg, inlined so it inherits the button colour -->
+          <path fill="currentColor" d="M17.79 16.38C20.78 15.59 22.98 12.87 22.98 9.64002C22.98 5.79002 19.85 2.65002 15.99 2.65002C12.13 2.65002 8.99999 5.78002 8.99999 9.64002C8.99999 12.87 11.21 15.59 14.2 16.38C8.70999 17.24 4.48999 22 4.48999 27.73C4.48999 28.28 4.93999 28.73 5.48999 28.73C6.03999 28.73 6.48999 28.28 6.48999 27.73C6.48999 22.49 10.75 18.23 15.99 18.23C21.23 18.23 25.49 22.49 25.49 27.73C25.49 28.28 25.94 28.73 26.49 28.73C27.04 28.73 27.49 28.28 27.49 27.73C27.49 22 23.27 17.25 17.78 16.38H17.79ZM11.01 9.64002C11.01 6.89002 13.25 4.65002 16 4.65002C18.75 4.65002 20.99 6.89002 20.99 9.64002C20.99 12.39 18.75 14.63 16 14.63C13.25 14.63 11.01 12.39 11.01 9.64002Z"/>
+        </svg>
+        <span class="site-header__login-label">Sign In</span>
+      </button>
+      <button id="nav-toggle" class="site-nav__toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========================================================================
+       01 · PAGE HERO — breadcrumb, title and the featured-story carousel
+       Five slides, autoplaying. The list on the right is a tablist: each tab
+       selects its slide and its bar fills while that slide is on screen.
+       ======================================================================== -->
+  <section id="page-hero" class="experience-hero">
+    <div class="sc-container">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="sc-breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">Scholars&rsquo; Experience</li>
+        </ol>
+      </nav>
+
+      <div class="page-hero__head">
+        <h1 class="page-hero__title">Scholars&rsquo; Experience</h1>
+        <p class="page-hero__standfirst">
+          The real, no-fluff version from students who have actually won the award &mdash;
+          what it covered, what the bond is like, and what they wish they had known.
+        </p>
+      </div>
+
+      <div class="feature-carousel stories__layout" id="feature-carousel"
+           aria-roledescription="carousel" aria-label="Featured stories">
+
+        <div class="feature-carousel__stage" aria-live="off">
+        <div class="feature-carousel__slide is-active" id="feature-slide-1"
+             role="tabpanel" aria-labelledby="feature-tab-1">
+          <a class="story-lead" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="feature-1" src="images/vera.jpg"
+                   alt="Vera at Marina Bay, with the financial district behind her" width="2560" height="1707" loading="eager" fetchpriority="high" decoding="async">
+            </div>
+            <ul class="sc-tag-list story-lead__tags">
+              <li class="sc-tag sc-tag--lime">PSC</li>
+              <li class="sc-tag">Social policy</li>
+              <li class="sc-tag">Public service</li>
+            </ul>
+            <h2 class="story-lead__title">From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</h2>
+            <p class="sc-standfirst story-lead__standfirst">Vera started out knocking on doors in rental blocks as a student volunteer. A PSC scholarship later, she writes the policies that decide what help arrives at those doors &mdash; and what still falls through.</p>
+            <div class="story-lead__byline">
+                <span class="sc-meta sc-meta--on-dark">By Hazel Lim</span>
+                <span class="sc-meta sc-meta--on-dark" aria-hidden="true">·</span>
+                <span class="sc-meta sc-meta--on-dark">Includes video</span>
+            </div>
+          </a>
+        </div>
+        <div class="feature-carousel__slide" id="feature-slide-2"
+             role="tabpanel" aria-labelledby="feature-tab-2">
+          <a class="story-lead" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="feature-2" src="images/elliot.jpg"
+                   alt="Portrait of Elliot at the payments gallery" width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <ul class="sc-tag-list story-lead__tags">
+              <li class="sc-tag sc-tag--lime">MAS</li>
+              <li class="sc-tag">Financial regulation</li>
+              <li class="sc-tag">Public service</li>
+            </ul>
+            <h2 class="story-lead__title">He&rsquo;s helping to build a safe and trusted financial sector in Singapore</h2>
+            <p class="sc-standfirst story-lead__standfirst">An MAS scholar on the quiet, careful work of keeping Singapore&rsquo;s financial sector safe &mdash; and why trust is the thing that has to be built first.</p>
+          </a>
+        </div>
+        <div class="feature-carousel__slide" id="feature-slide-3"
+             role="tabpanel" aria-labelledby="feature-tab-3">
+          <a class="story-lead" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="feature-3" src="images/qi-hua.jpg"
+                   alt="Portrait of Qi Hua in ICA uniform" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 35% center;">
+            </div>
+            <ul class="sc-tag-list story-lead__tags">
+              <li class="sc-tag sc-tag--lime">ICA</li>
+              <li class="sc-tag">Home affairs</li>
+              <li class="sc-tag">Uniformed service</li>
+            </ul>
+            <h2 class="story-lead__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</h2>
+            <p class="sc-standfirst story-lead__standfirst">Border clearance is changing faster than ever. An ICA scholar explains how he is helping the people behind it keep up.</p>
+          </a>
+        </div>
+        <div class="feature-carousel__slide" id="feature-slide-4"
+             role="tabpanel" aria-labelledby="feature-tab-4">
+          <a class="story-lead" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="feature-4" src="images/jun-hao.jpg"
+                   alt="Portrait of Jun Hao at the firing range" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 72% center;">
+            </div>
+            <ul class="sc-tag-list story-lead__tags">
+              <li class="sc-tag sc-tag--lime">SPF</li>
+              <li class="sc-tag">Home affairs</li>
+              <li class="sc-tag">Uniformed service</li>
+            </ul>
+            <h2 class="story-lead__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</h2>
+            <p class="sc-standfirst story-lead__standfirst">In VIP protection, a good day is one where nothing happens. An SPF scholar takes us inside the planning that makes sure of it.</p>
+          </a>
+        </div>
+        <div class="feature-carousel__slide" id="feature-slide-5"
+             role="tabpanel" aria-labelledby="feature-tab-5">
+          <a class="story-lead" href="scholars-experience.html">
+            <div class="sc-frame sc-frame--16x9">
+              <img data-img-slot="feature-5" src="images/liu-shuang.jpg"
+                   alt="Portrait of Liu Shuang in the laboratory" width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <ul class="sc-tag-list story-lead__tags">
+              <li class="sc-tag sc-tag--lime">A*STAR</li>
+              <li class="sc-tag">Research</li>
+              <li class="sc-tag">Science</li>
+            </ul>
+            <h2 class="story-lead__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</h2>
+            <p class="sc-standfirst story-lead__standfirst">An A*STAR scientist on pairing proteins like a matchmaker &mdash; and how the right match could open new ways to treat disease.</p>
+          </a>
+        </div>
+        </div>
+
+        <div class="feature-carousel__rail">
+          <div class="feature-carousel__bar">
+            <p class="feature-carousel__label">Featured <span class="feature-carousel__count"><span data-feature-current>1</span> / 5</span></p>
+            <button class="feature-carousel__toggle" type="button" data-feature-toggle aria-label="Pause the carousel">
+              <svg class="feature-carousel__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+              <svg class="feature-carousel__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+            </button>
+          </div>
+          <div class="feature-carousel__tabs" role="tablist" aria-label="Choose a featured story">
+          <button class="feature-carousel__tab is-active" type="button" role="tab"
+                  id="feature-tab-1" aria-controls="feature-slide-1"
+                  aria-selected="true" tabindex="0">
+            <span class="sc-frame sc-frame--1x1">
+              <img src="images/vera.jpg" alt="" width="2560" height="1707" loading="lazy" decoding="async">
+            </span>
+            <span class="feature-carousel__tab-text">
+              <span class="story-card__scholar">Vera · PSC</span>
+              <span class="story-card__title">From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</span>
+            </span>
+            <span class="feature-carousel__progress" aria-hidden="true"></span>
+          </button>
+          <button class="feature-carousel__tab" type="button" role="tab"
+                  id="feature-tab-2" aria-controls="feature-slide-2"
+                  aria-selected="false" tabindex="-1">
+            <span class="sc-frame sc-frame--1x1">
+              <img src="images/elliot.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+            </span>
+            <span class="feature-carousel__tab-text">
+              <span class="story-card__scholar">Elliot · MAS</span>
+              <span class="story-card__title">He&rsquo;s helping to build a safe and trusted financial sector in Singapore</span>
+            </span>
+            <span class="feature-carousel__progress" aria-hidden="true"></span>
+          </button>
+          <button class="feature-carousel__tab" type="button" role="tab"
+                  id="feature-tab-3" aria-controls="feature-slide-3"
+                  aria-selected="false" tabindex="-1">
+            <span class="sc-frame sc-frame--1x1">
+              <img src="images/qi-hua.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 35% center;">
+            </span>
+            <span class="feature-carousel__tab-text">
+              <span class="story-card__scholar">Qi Hua · ICA</span>
+              <span class="story-card__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</span>
+            </span>
+            <span class="feature-carousel__progress" aria-hidden="true"></span>
+          </button>
+          <button class="feature-carousel__tab" type="button" role="tab"
+                  id="feature-tab-4" aria-controls="feature-slide-4"
+                  aria-selected="false" tabindex="-1">
+            <span class="sc-frame sc-frame--1x1">
+              <img src="images/jun-hao.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 72% center;">
+            </span>
+            <span class="feature-carousel__tab-text">
+              <span class="story-card__scholar">Jun Hao · SPF</span>
+              <span class="story-card__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</span>
+            </span>
+            <span class="feature-carousel__progress" aria-hidden="true"></span>
+          </button>
+          <button class="feature-carousel__tab" type="button" role="tab"
+                  id="feature-tab-5" aria-controls="feature-slide-5"
+                  aria-selected="false" tabindex="-1">
+            <span class="sc-frame sc-frame--1x1">
+              <img src="images/liu-shuang.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+            </span>
+            <span class="feature-carousel__tab-text">
+              <span class="story-card__scholar">Liu Shuang · A*STAR</span>
+              <span class="story-card__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</span>
+            </span>
+            <span class="feature-carousel__progress" aria-hidden="true"></span>
+          </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       02 · AD UNIT — 728 x 90 leaderboard
+       Scales down with the viewport below 760px. Swap in a 320 x 50 mobile
+       creative with a <picture> <source> when one exists.
+       ======================================================================== -->
+  <aside id="ad-leaderboard" class="ad-slot" aria-label="Advertisement">
+    <div class="sc-container">
+      <p class="ad-slot__label">Advertisement</p>
+      <a class="ad-slot__link" href="#" rel="sponsored noopener">
+        <img data-img-slot="ad-leaderboard" src="images/ica-leaderboard-728x90.jpg"
+             alt="ICA — Guardians of our borders. Safeguarding our borders, safeguarding our home."
+             width="728" height="90" loading="lazy" decoding="async">
+      </a>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       03 · ALL STORIES — card grid, 3 / 2 / 1 per row (.sc-grid--3)
+       Each card: photo, headline, the scholarship the student holds, and a
+       CTA. The CTA's hit area stretches over the whole card.
+       ======================================================================== -->
+  <section id="experience-list" class="sc-section">
+    <div class="sc-container">
+
+      <div class="sc-section-head sc-reveal">
+        <div class="sc-section-head__text">
+          <p class="sc-eyebrow">All stories</p>
+          <h2 class="sc-h2">Every scholar, in their own words</h2>
+        </div>
+      </div>
+
+      <ul class="sc-grid sc-grid--3 experience-grid sc-reveal" role="list">
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-1" src="images/vera.jpg"
+                   alt="Vera at Marina Bay, with the financial district behind her" width="2560" height="1707" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>PSC Scholarship (Public Administration)</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: From volunteering in rental flats to shaping social policies: How this PSC scholar found her path</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-2" src="images/elliot.jpg"
+                   alt="Portrait of Elliot at the payments gallery" width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">He&rsquo;s helping to build a safe and trusted financial sector in Singapore</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>MAS Undergraduate Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: He&rsquo;s helping to build a safe and trusted financial sector in Singapore</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-3" src="images/qi-hua.jpg"
+                   alt="Portrait of Qi Hua in ICA uniform" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 35% center;">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>ICA Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: Singapore&rsquo;s border clearance is evolving fast &ndash; he&rsquo;s helping to ensure ICA&rsquo;s workforce keeps pace</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-4" src="images/jun-hao.jpg"
+                   alt="Portrait of Jun Hao at the firing range" width="1536" height="1024" loading="lazy" decoding="async" style="object-position: 72% center;">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>SPF Overseas Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: He prepares for the worst so nothing happens: Inside the unseen world of VIP protection</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-5" src="images/liu-shuang.jpg"
+                   alt="Portrait of Liu Shuang in the laboratory" width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>A*STAR National Science Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: Meet the molecular &lsquo;matchmaker&rsquo;: Scientist finds new ways to treat diseases by pairing proteins</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <!-- PLACEHOLDER from here on: dummy headlines and stock images. -->
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-6" src="https://picsum.photos/seed/sc-exp-moe/1200/900"
+                   alt="Placeholder image — replace with the scholar&rsquo;s portrait." width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">Why this MOE scholar turned down a corporate offer to teach &mdash; and has no regrets</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>MOE Teaching Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: Why this MOE scholar turned down a corporate offer to teach &mdash; and has no regrets</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-7" src="https://picsum.photos/seed/sc-exp-dsta/1200/900"
+                   alt="Placeholder image — replace with the scholar&rsquo;s portrait." width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">Building systems you never get to talk about: A DSTA engineer on defence tech</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>DSTA Scholarship (Overseas)</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: Building systems you never get to talk about: A DSTA engineer on defence tech</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-8" src="https://picsum.photos/seed/sc-exp-nparks/1200/900"
+                   alt="Placeholder image — replace with the scholar&rsquo;s portrait." width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">A city in nature, one street at a time: Mapping urban biodiversity with NParks</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>NParks Undergraduate Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: A city in nature, one street at a time: Mapping urban biodiversity with NParks</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="experience-card">
+            <div class="sc-frame sc-frame--4x3">
+              <img data-img-slot="card-9" src="https://picsum.photos/seed/sc-exp-scdf/1200/900"
+                   alt="Placeholder image — replace with the scholar&rsquo;s portrait." width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="experience-card__body">
+              <h3 class="experience-card__title">Leading from the front line: What a first year on the ground taught this SCDF scholar</h3>
+              <p class="experience-card__award">
+                <svg class="experience-card__award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>
+                <span><span class="sc-visually-hidden">Scholarship: </span>SCDF Undergraduate Scholarship</span>
+              </p>
+              <a class="sc-arrow-link experience-card__cta" href="scholars-experience.html">
+                Read story<span class="sc-visually-hidden">: Leading from the front line: What a first year on the ground taught this SCDF scholar</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     SITE FOOTER  (shared partial: partials/footer)
+     ========================================================================== -->
+<footer id="site-footer">
+  <div class="sc-container">
+
+    <div class="site-footer__main">
+
+      <div class="site-footer__links">
+        <div>
+          <h3 class="site-footer__col-title">Explore</h3>
+          <ul class="site-footer__list">
+            <li><a href="scholarships.html">Find a Scholarship</a></li>
+            <li><a href="scholars-experiences-list.html">Scholars&rsquo; Experience</a></li>
+            <li><a href="guide-and-tips.html">Guides &amp; Tips</a></li>
+            <li><a href="comparison.html">Compare Scholarships</a></li>
+            <li><a href="#">Read the E-paper</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__col-title">About</h3>
+          <ul class="site-footer__list">
+            <li><a href="#">About Scholar&rsquo;s Choice</a></li>
+            <li><a href="contact-us.html">Contact the team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__brand">
+        <a class="site-logo site-logo--footer" href="index.html" aria-label="Scholar&rsquo;s Choice home">
+          <img class="site-logo__img" src="images/SC_Logo.svg"
+               alt="The Straits Times Scholar&rsquo;s Choice" width="576" height="280" loading="lazy" decoding="async">
+        </a>
+        <p class="site-footer__tagline">Every award in one place, and the honest version of what comes after you sign.</p>
+        <p class="site-footer__supported">
+          <span class="site-footer__supported-label">Supported by</span>
+          <img class="site-footer__supported-logo" src="images/st-logo-white.svg"
+               alt="The Straits Times" width="230" height="18" loading="lazy" decoding="async">
+        </p>
+      </div>
+
+    </div>
+
+    <div class="site-footer__legal">
+      <p>Copyright &copy; 2026 SPH Media Limited. Co. Regn. No. 202120748H. All rights reserved.</p>
+      <div class="site-footer__legal-links">
+        <a href="https://www.sph.com.sg/legal/sph_privacy">Privacy Policy</a>
+        <a href="https://www.sph.com.sg/legal/pdpa">Personal Data Protection Notice</a>
+        <a href="https://www.sph.com.sg/legal/website_tnc">Terms &amp; Conditions</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<!-- TEMPLATE: page title is "{Page name} — Scholar's Choice" -->
-<title>Inner page template — Scholar&rsquo;s Choice</title>
-<meta name="description" content="Placeholder description. Replace with a 140–160 character summary of the page, written for search results.">
+<title>Compare scholarships — Scholar&rsquo;s Choice</title>
+<meta name="description" content="Put up to five Singapore scholarships side by side — value, bond, study level, location, courses and deadlines in one table.">
 
 <!-- ============================================================
      FONTS — Bebas Neue (display) + DM Sans (body & standfirst)
@@ -20,30 +19,31 @@
 
 <!--
   ============================================================================
-  INNER PAGE TEMPLATE — copy this file to start any new standard page.
-
-  Every word of copy and every image below is PLACEHOLDER. Replace the lot.
+  COMPARE SCHOLARSHIPS — built on inner-page-template.html.
 
   STRUCTURE
-    #page-hero   Teal band. Breadcrumb (IA + navigation) and the page title
-                 that tells the user where they are. Optional eyebrow and
-                 standfirst. Styles live in css/main.css section 18.
-    #page-body   .page-layout — a main content column plus a sticky aside.
-                 Add .page-layout--single to drop the aside entirely.
+    #page-hero (+.compare-hero)  Breadcrumb, title, then .compare-picker:
+                   Provider and Scholarship single-select dropdowns (each with
+                   a search box) and a "Select to compare" button. Picking a
+                   provider narrows the scholarship list.
+    #compare-body  .compare-empty while nothing is selected; otherwise
+                   .compare-table — a sticky head bar with one column per
+                   scholarship (name + × remove), then a table of every
+                   comparable field, ending in Apply now / More details.
 
-  TO ADAPT
-    1. <title>, <meta name="description">, the <h1> and the breadcrumb trail.
-    2. Mark the matching primary nav item with class "is-active" and
-       aria-current="page" — this template ships with none set, because no
-       top-level nav item matches a generic inner page.
-    3. Swap the placeholder prose, figure and aside cards for real content.
-       Images carry data-img-slot attributes — grep for them to find each one.
+  HOW IT WORKS
+    Everything below the hero is rendered by scholarshipCompare() in
+    js/main.js from window.SC_DATA (js/scholarship-data.js). Up to five
+    scholarships. The selection is written to the URL (?ids=a,b) so a
+    comparison can be shared, and remembered in localStorage as a
+    convenience. ?add=<id> adds one scholarship to the remembered set —
+    that is what "Add to comparison" on a scholarship page links to.
+    Styles: css/main.css section 25.
 
-  NOTE ON THE BREADCRUMB
-    The trail mirrors the URL path, one <li> per level, Home first and the
-    current page last. The last item is plain text with aria-current="page",
-    never a link. Keep it to one line of labels; if a level has no page of
-    its own, still show it as text so the hierarchy stays readable.
+    Three columns fit the width. With four or five the table scrolls
+    sideways, a quarter of the next column peeking in and the row labels
+    pinned on the left; the head bar follows that scroll. Under 900px the
+    row labels become bands above their values.
   ============================================================================
 -->
 </head>
@@ -67,7 +67,7 @@
         <li><a class="site-nav__link" href="scholarships.html">Find a Scholarship</a></li>
         <li><a class="site-nav__link" href="scholars-experiences-list.html">Scholars&rsquo; Experience</a></li>
         <li><a class="site-nav__link" href="guide-and-tips.html">Guides &amp; Tips</a></li>
-        <li><a class="site-nav__link" href="comparison.html">Compare Scholarships</a></li>
+        <li><a class="site-nav__link is-active" href="comparison.html" aria-current="page">Compare Scholarships</a></li>
         <li><a class="site-nav__link" href="#">Read the E-paper</a></li>
       </ul>
     
@@ -99,121 +99,104 @@
 <main id="main">
 
   <!-- ========================================================================
-       01 · PAGE HERO — breadcrumb + page title
-       The breadcrumb gives the page its place in the IA and a way back up;
-       the H1 confirms to the user which page they have landed on.
+       01 · PAGE HERO — breadcrumb, title, scholarship picker
+       The two dropdowns are .multi-select--single: the listing's dropdown
+       with radio options. Their options are rendered by scholarshipCompare().
        ======================================================================== -->
-  <section id="page-hero">
+  <section id="page-hero" class="compare-hero">
     <div class="sc-container">
 
       <nav aria-label="Breadcrumb">
         <ol class="sc-breadcrumb">
           <li><a href="index.html">Home</a></li>
-          <li><a href="#">Section</a></li>
-          <li aria-current="page">Inner page template</li>
+          <li aria-current="page">Compare scholarships</li>
         </ol>
       </nav>
 
       <div class="page-hero__head">
-        <!-- Optional. Delete the eyebrow when the title carries the page alone. -->
-        <p class="sc-eyebrow sc-eyebrow--on-dark">Placeholder eyebrow</p>
-
-        <h1 class="page-hero__title">Inner page template</h1>
-
-        <!-- Optional. One or two sentences on what the page is for. -->
+        <h1 class="page-hero__title">Compare scholarships</h1>
         <p class="page-hero__standfirst">
-          Placeholder standfirst. One or two sentences telling the reader what this page
-          covers and why it is worth their time, kept short enough to scan in a breath.
+          Pick up to five scholarships to see them side by side.
         </p>
       </div>
+
+      <form class="compare-picker" id="compare-picker" novalidate>
+
+        <div class="compare-picker__field">
+          <label class="compare-picker__label" id="compare-provider-label" for="compare-provider-toggle">Provider</label>
+          <div class="multi-select multi-select--single" id="compare-provider" data-placeholder="All providers">
+            <button class="multi-select__toggle" id="compare-provider-toggle" type="button" aria-expanded="false"
+                    aria-controls="compare-provider-panel" aria-labelledby="compare-provider-label compare-provider-value">
+              <span class="multi-select__value" id="compare-provider-value">All providers</span>
+            </button>
+            <div class="multi-select__panel" id="compare-provider-panel" hidden>
+              <input class="sc-input multi-select__search" type="search" placeholder="Search providers" aria-label="Search providers" autocomplete="off">
+              <ul class="multi-select__options" role="radiogroup" aria-labelledby="compare-provider-label"></ul>
+              <p class="multi-select__none" hidden>No match.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-picker__field">
+          <label class="compare-picker__label" id="compare-scholarship-label" for="compare-scholarship-toggle">Scholarship</label>
+          <div class="multi-select multi-select--single" id="compare-scholarship" data-placeholder="Select a scholarship">
+            <button class="multi-select__toggle" id="compare-scholarship-toggle" type="button" aria-expanded="false"
+                    aria-controls="compare-scholarship-panel" aria-labelledby="compare-scholarship-label compare-scholarship-value">
+              <span class="multi-select__value" id="compare-scholarship-value">Select a scholarship</span>
+            </button>
+            <div class="multi-select__panel" id="compare-scholarship-panel" hidden>
+              <input class="sc-input multi-select__search" type="search" placeholder="Search scholarships" aria-label="Search scholarships" autocomplete="off">
+              <ul class="multi-select__options" role="radiogroup" aria-labelledby="compare-scholarship-label"></ul>
+              <p class="multi-select__none" hidden>No match.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-picker__actions">
+          <button class="sc-btn sc-btn--primary compare-picker__submit" id="compare-submit" type="submit"
+                  aria-describedby="compare-hint" disabled>Select to compare</button>
+        </div>
+
+        <p class="compare-picker__hint" id="compare-hint">Choose a scholarship to add it to the table.</p>
+      </form>
+
+      <!-- Announces adds and removals to screen readers -->
+      <p class="sc-visually-hidden" id="compare-status" role="status" aria-live="polite"></p>
 
     </div>
   </section>
 
   <!-- ========================================================================
-       02 · PAGE BODY — main column + optional aside
-       Add .page-layout--single to .page-layout and delete the <aside> for a
-       single-column page.
+       02 · COMPARISON — empty state, or the comparison table
        ======================================================================== -->
-  <section id="page-body" class="sc-section">
+  <section id="compare-body" class="sc-section">
     <div class="sc-container">
-      <div class="page-layout">
 
-        <div class="page-layout__main article-prose">
+      <h2 class="sc-visually-hidden">Your comparison</h2>
 
-          <p class="article-prose__dropcap">
-            Placeholder opening paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </p>
-
-          <p>
-            Placeholder body paragraph. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut
-            perspiciatis unde omnis iste natus error sit voluptatem.
-          </p>
-
-          <!-- Placeholder figure. .sc-frame holds the ratio so nothing shifts on load. -->
-          <figure class="page-figure">
-            <div class="sc-frame sc-frame--16x9">
-              <img data-img-slot="inner-page-figure"
-                   src="https://picsum.photos/seed/inner-page-figure/1280/720"
-                   alt="Placeholder image — replace with a real photograph and a real alt text."
-                   width="1280" height="720" loading="lazy" decoding="async">
-            </div>
-            <figcaption class="page-figure__caption">
-              Placeholder caption. Say what the image shows and credit the photographer.
-            </figcaption>
-          </figure>
-
-          <h2 class="sc-h3">Placeholder subheading</h2>
-
-          <p>
-            Placeholder body paragraph. Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-            aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-            sequi nesciunt.
-          </p>
-
-          <ul>
-            <li>Placeholder list item one, kept to a single line where possible.</li>
-            <li>Placeholder list item two, for a point that needs a clause more.</li>
-            <li>Placeholder list item three.</li>
-          </ul>
-
-          <p>
-            Placeholder closing paragraph. At vero eos et accusamus et iusto odio dignissimos
-            ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et
-            quas molestias excepturi sint occaecati cupiditate non provident.
-          </p>
-
-        </div>
-
-        <!-- OPTIONAL — delete this <aside> and add .page-layout--single above. -->
-        <aside class="page-layout__aside" aria-label="Related">
-
-          <div class="page-aside-card">
-            <h2 class="page-aside-card__title">Placeholder card</h2>
-            <p class="page-aside-card__body">
-              Placeholder supporting copy for a sidebar card — a summary, a deadline, a contact,
-              or anything that supports the main column without interrupting it.
-            </p>
-            <a class="sc-btn sc-btn--primary sc-btn--sm sc-mt-4" href="#">Placeholder CTA</a>
-          </div>
-
-          <div class="page-aside-card">
-            <h2 class="page-aside-card__title">Related links</h2>
-            <ul class="page-aside-card__list">
-              <li><a href="#">Placeholder related link one</a></li>
-              <li><a href="#">Placeholder related link two</a></li>
-              <li><a href="#">Placeholder related link three</a></li>
-            </ul>
-          </div>
-
-        </aside>
-
+      <div class="listing-empty compare-empty" id="compare-empty">
+        <svg class="compare-empty__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="5" y="9" width="15" height="30" rx="3"/><rect x="28" y="9" width="15" height="30" rx="3" stroke-dasharray="4 4"/>
+          <path d="M35.5 19v10M30.5 24h10"/>
+        </svg>
+        <p class="listing-empty__title">Nothing to compare yet</p>
+        <p class="listing-empty__text">
+          Look up the scholarships you&rsquo;re interested in above, then choose
+          <strong>Select to compare</strong> to see them side by side.
+        </p>
+        <a class="sc-btn sc-btn--secondary sc-btn--sm" href="scholarships.html">Browse all scholarships</a>
       </div>
+
+      <!-- Rendered by scholarshipCompare(). The head bar is sticky and sits
+           outside the sideways scroller, which would otherwise stop it
+           sticking; JS keeps the two scrolled together. -->
+      <div class="compare-table" id="compare-table" hidden>
+        <div class="compare-table__head" id="compare-head"></div>
+        <div class="compare-table__scroller" id="compare-scroller">
+          <table class="compare-grid" id="compare-grid"></table>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -274,6 +257,7 @@
   </div>
 </footer>
 
+<script src="js/scholarship-data.js" defer></script>
 <script src="js/main.js" defer></script>
 </body>
 </html>
