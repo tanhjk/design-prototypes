@@ -1958,6 +1958,9 @@ body.is-modal-open { overflow: hidden; }
   border-radius: var(--sc-radius-lg);
   outline: none;
 }
+/* The video and the still share this slot and the JS toggles [hidden] to swap
+   them; the reset's img/video display: block would otherwise keep both shown. */
+.video-modal__video[hidden] { display: none; }
 .video-modal__caption {
   max-width: 62ch;
   text-align: center;
