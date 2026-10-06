@@ -501,7 +501,7 @@ button { cursor: pointer; }
 /* Label above a field */
 .sc-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
 .sc-field__label {
-  font-size: var(--sc-step--2);
+  font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -935,6 +935,7 @@ button { cursor: pointer; }
 
 @media (max-width: 520px) {
   .search-overlay__form { grid-template-columns: 1fr; }
+  .sc-field__label { font-size: var(--sc-step--2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2723,6 +2724,15 @@ body.is-modal-open { overflow: hidden; }
   color: var(--sc-teal-600);
 }
 
+.article-prose h2 {
+  font-family: var(--sc-font-body);
+  font-size: var(--sc-step-3);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--sc-ink);
+  margin-top: var(--sc-space-7);
+}
+
 .article-prose h3 {
   font-family: var(--sc-font-body);
   font-size: var(--sc-step-2);
@@ -2752,6 +2762,7 @@ body.is-modal-open { overflow: hidden; }
 .article-prose h5 + p { margin-top: var(--sc-space-2); }
 
 /* Headings own the space above them; the text under them follows closely */
+.article-prose h2 + *,
 .article-prose h3 + *,
 .article-prose h4 + * { margin-top: var(--sc-space-3); }
 
