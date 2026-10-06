@@ -100,7 +100,7 @@
                         "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Fluid type scale (min → max between 380px and 1400px viewport) */
-  --sc-step--2:         0.8rem; /* site-wide floor — nothing renders smaller */
+  --sc-step--2:         1rem; /* site-wide floor — nothing renders smaller */
   --sc-step--1:         clamp(0.81rem, 0.79rem + 0.09vw, 0.875rem);
   --sc-step-0:          1rem; /* 16px floor — minimum size for body/description copy */
   --sc-step-1:          clamp(1.06rem, 1.01rem + 0.23vw, 1.19rem);
@@ -111,7 +111,7 @@
   --sc-step-6:          clamp(2.5rem, 1.6rem + 3.9vw, 4.63rem);
   --sc-step-7:          clamp(3rem, 1.5rem + 6.5vw, 6.5rem);
 
-  --sc-display-tracking: 0.05em;
+  --sc-display-tracking: 0.03em;
   --sc-eyebrow-tracking: 0.16em;
 
   /* --- Spacing ---------------------------------------------------------- */
@@ -1834,13 +1834,6 @@ button { cursor: pointer; }
   line-height: 0.98;
   letter-spacing: var(--sc-display-tracking);
 }
-.video-reel__stats {
-  display: flex;
-  gap: var(--sc-space-3);
-  margin-top: 0.5rem;
-  font-size: var(--sc-step--2);
-  color: rgba(255, 255, 255, 0.7);
-}
 
 
 
@@ -1981,13 +1974,8 @@ body.is-modal-open { overflow: hidden; }
   line-height: 1;
   letter-spacing: var(--sc-display-tracking);
 }
-.video-modal__stats {
-  display: flex;
-  justify-content: center;
-  gap: var(--sc-space-3);
-  margin-top: 0.5rem;
-  font-size: var(--sc-step--2);
-  color: rgba(234, 243, 240, 0.7);
+.video-modal__cta {
+  margin-top: var(--sc-space-3);
 }
 
 /* Thumbnail strip — jump straight to any reel */
@@ -2262,7 +2250,7 @@ body.is-modal-open { overflow: hidden; }
 .article-hero__eyebrow { margin-bottom: var(--sc-space-4); }
 .article-hero__name {
   font-family: var(--sc-font-body);
-  font-size: 46px;
+  font-size: 42px;
   line-height: 1.1;
   letter-spacing: var(--sc-display-tracking);
   color: var(--sc-white);
@@ -3664,7 +3652,7 @@ body.is-modal-open { overflow: hidden; }
   border-bottom: 1px solid var(--sc-line);
 }
 .listing-count {
-  font-size: var(--sc-step--1);
+  font-size: var(--sc-step--2);
   font-weight: 600;
   color: var(--sc-ink-60);
 }
@@ -5082,9 +5070,19 @@ body.is-modal-open { overflow: hidden; }
    ========================================================================== */
 
 /* A headline runs far longer than a page name, so it gets a wider measure
-   and one step down the scale to stay within three or four lines. */
+   and is set like the Scholars' Experience headline (.article-hero__name):
+   DM Sans, sentence case, 46px stepping down to 28px on phones. */
 .guide-hero .page-hero__head { max-width: 980px; }
-.guide-hero .page-hero__title { font-size: var(--sc-step-5); text-wrap: balance; }
+.guide-hero .page-hero__title {
+  font-family: var(--sc-font-body);
+  font-size: 42px;
+  line-height: 1.1;
+  text-transform: none;
+  text-wrap: balance;
+}
+@media (max-width: 600px) {
+  .guide-hero .page-hero__title { font-size: 28px; }
+}
 
 .guide-body { padding-top: clamp(2rem, 4vw, 3.5rem); }
 

@@ -292,7 +292,8 @@
      a carousel: arrows, keyboard, swipe and a thumbnail strip move between
      reels without closing. Each reel carries its file in data-video-src —
      swap those for your real assets (or point them at an embed and replace
-     showReel() below).
+     showReel() below). The modal's CTA links to data-article-href, falling
+     back to the scholar-experience article page.
      ------------------------------------------------------------------------ */
   function videoModal() {
     var reels = Array.prototype.slice.call(
@@ -307,14 +308,13 @@
         return el ? el.textContent.trim() : '';
       }
       var poster = reel.querySelector('img');
-      var stats = reel.querySelector('.video-reel__stats');
       return {
         id: reel.getAttribute('data-video-id'),
         src: reel.getAttribute('data-video-src') || '',
         poster: poster ? poster.getAttribute('src') : '',
         eyebrow: text('.video-reel__eyebrow'),
         title: text('.video-reel__title'),
-        stats: stats ? stats.innerHTML : ''
+        href: reel.getAttribute('data-article-href') || 'scholars-experience.html'
       };
     });
 
@@ -345,7 +345,7 @@
           '<div class="video-modal__caption">' +
             '<p class="video-modal__eyebrow" data-modal-eyebrow></p>' +
             '<h2 class="video-modal__title" data-modal-title></h2>' +
-            '<p class="video-modal__stats" data-modal-stats></p>' +
+            '<a class="sc-btn sc-btn--primary sc-btn--sm video-modal__cta" data-modal-cta href="#">Read the full story</a>' +
           '</div>' +
           '<div class="video-modal__dots" data-modal-dots></div>' +
         '</div>' +
@@ -358,7 +358,7 @@
     var elCount = modal.querySelector('[data-modal-count]');
     var elEyebrow = modal.querySelector('[data-modal-eyebrow]');
     var elTitle = modal.querySelector('[data-modal-title]');
-    var elStats = modal.querySelector('[data-modal-stats]');
+    var elCta = modal.querySelector('[data-modal-cta]');
     var elDots = modal.querySelector('[data-modal-dots]');
     var btnClose = modal.querySelector('.video-modal__close');
     var btnUnmute = modal.querySelector('.video-modal__unmute');
@@ -405,7 +405,7 @@
       elCount.textContent = (current + 1) + ' / ' + items.length;
       elEyebrow.textContent = item.eyebrow;
       elTitle.textContent = item.title;
-      elStats.innerHTML = item.stats;
+      elCta.href = item.href;
       dots.forEach(function (dot, i) {
         dot.classList.toggle('is-current', i === current);
         dot.setAttribute('aria-current', i === current ? 'true' : 'false');
