@@ -1919,6 +1919,10 @@ body.is-modal-open { overflow: hidden; }
   padding: 0 var(--sc-space-5) var(--sc-space-5);
   min-height: 0;
 }
+/* Pin the player to the middle track explicitly: a single-video modal hides
+   the prev/next arrows, and without this the player — now the grid's only
+   item — auto-places into column 1 instead of staying centered. */
+.video-modal__player { grid-column: 2; }
 
 .video-modal__nav {
   display: grid;
@@ -1936,6 +1940,9 @@ body.is-modal-open { overflow: hidden; }
 .video-modal__nav:hover { background: var(--sc-lime); color: var(--sc-ink); }
 .video-modal__nav:active { transform: scale(0.94); }
 .video-modal__nav svg { width: 24px; height: 24px; }
+/* A class rule sharing [hidden]'s specificity would otherwise win the
+   cascade and keep these visible — a single-video feature hides them. */
+.video-modal__nav[hidden] { display: none; }
 
 .video-modal__player {
   display: flex;
@@ -1977,6 +1984,9 @@ body.is-modal-open { overflow: hidden; }
 .video-modal__cta {
   margin-top: var(--sc-space-3);
 }
+/* .sc-btn's own display rule shares [hidden]'s specificity and would
+   otherwise win the cascade and keep this visible. */
+.video-modal__cta[hidden] { display: none; }
 
 /* Thumbnail strip — jump straight to any reel */
 .video-modal__dots {
@@ -1985,6 +1995,9 @@ body.is-modal-open { overflow: hidden; }
   flex-wrap: wrap;
   gap: var(--sc-space-2);
 }
+/* Must come after the rule above: same specificity as [hidden], so source
+   order is what lets this win the cascade. */
+.video-modal__dots[hidden] { display: none; }
 .video-modal__dot {
   width: 34px;
   height: 48px;

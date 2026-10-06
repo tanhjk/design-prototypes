@@ -381,6 +381,16 @@
     });
     var dots = Array.prototype.slice.call(elDots.children);
 
+    /* A single-video feature (e.g. the article page's one embed) has nothing
+       to count, jump between or read on from — hide that chrome rather than
+       show a meaningless "1 / 1" and a one-thumbnail strip. */
+    var isSolo = items.length <= 1;
+    elCount.hidden = isSolo;
+    elDots.hidden = isSolo;
+    elCta.hidden = isSolo;
+    btnPrev.hidden = isSolo;
+    btnNext.hidden = isSolo;
+
     function showReel(index) {
       current = (index + items.length) % items.length;
       var item = items[current];
