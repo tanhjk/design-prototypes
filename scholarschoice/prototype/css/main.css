@@ -2015,6 +2015,23 @@ body.is-modal-open { overflow: hidden; }
   .video-modal__nav--prev { left: var(--sc-space-3); }
   .video-modal__nav--next { right: var(--sc-space-3); }
   .video-modal__video { max-height: 56vh; }
+  /* One swipeable row instead of wrapping onto several lines */
+  .video-modal__dots {
+    position: relative;
+    align-self: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding: 2px 0;
+  }
+  .video-modal__dots::-webkit-scrollbar { display: none; }
+  .video-modal__dot {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

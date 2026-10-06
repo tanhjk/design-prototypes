@@ -410,6 +410,13 @@
         dot.classList.toggle('is-current', i === current);
         dot.setAttribute('aria-current', i === current ? 'true' : 'false');
       });
+      /* On mobile the strip scrolls sideways — keep the current reel centred
+         in it. A no-op on desktop, where every thumbnail already fits. */
+      var currentDot = dots[current];
+      elDots.scrollTo({
+        left: currentDot.offsetLeft - (elDots.clientWidth - currentDot.offsetWidth) / 2,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
 
       /* Autoplay with sound where the browser allows it; fall back to muted,
          which every browser permits, rather than leaving a frozen poster. The
@@ -499,6 +506,8 @@
     /* Swipe between reels on touch. */
     var touchStartX = null;
     modal.addEventListener('touchstart', function (e) {
+      /* The thumbnail strip scrolls on its own; don't treat that as a swipe. */
+      if (elDots.contains(e.target)) { touchStartX = null; return; }
       touchStartX = e.changedTouches[0].clientX;
     }, { passive: true });
     modal.addEventListener('touchend', function (e) {
